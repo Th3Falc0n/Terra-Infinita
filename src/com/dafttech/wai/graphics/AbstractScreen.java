@@ -7,30 +7,36 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class AbstractScreen implements Screen {
 
-	public void dispose() {
-	}
+    @Override
+    public void dispose() {
+    }
 
-	public void hide() {
-	}
+    @Override
+    public void hide() {
+    }
 
-	public void resize(int arg0, int arg1) {
-	}
+    @Override
+    public void resize(int arg0, int arg1) {
+    }
 
-	public void resume() {
-	}
+    @Override
+    public void resume() {
+    }
 
-	public void show() {
-	}
+    @Override
+    public void show() {
+    }
 
-	public void pause() {
-	}
+    @Override
+    public void pause() {
+    }
 
-	public SpriteBatch batch = new SpriteBatch();
+    public SpriteBatch batch = new SpriteBatch();
 
-	@Override
-	public void render(float arg0) {
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	}
+    @Override
+    public void render(float arg0) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
 
 }
