@@ -1,4 +1,4 @@
-package com.dafttech.terra.entity;
+package com.dafttech.terra.world.entity;
 
 import com.dafttech.terra.world.Vector2;
 
