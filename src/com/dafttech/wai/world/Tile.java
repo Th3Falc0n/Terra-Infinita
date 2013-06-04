@@ -4,20 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.wai.world.materials.TileDirt;
+import com.dafttech.wai.world.materials.*;
 import com.dafttech.wai.world.renderers.RendererBlock;
 
 @SuppressWarnings("rawtypes")
 public class Tile {
-	static Map<String, Class> registry = new HashMap<String, Class>();
+	static Map<Integer, Class> registry = new HashMap<Integer, Class>();
 	
-	public static void registerTile(String name, Class mat) {
-		registry.put(name, mat);
+	public static void registerTile(Integer id, Class mat) {
+		registry.put(id, mat);
 	}
 	
-	public static Tile getInstanceOf(String name) {
+	public static Tile getInstanceOf(Integer id) {
 		try {
-			return (Tile)registry.get(name).newInstance();
+			return (Tile)registry.get(id).newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
@@ -25,9 +25,10 @@ public class Tile {
 	}
 	
 	public static void init() {
-		registerTile("dirt", TileDirt.class);
+		registerTile(1, TileDirt .class);
+		registerTile(2, TileGrass.class);
+		registerTile(3, TileStone.class);
 	}
-	
 	
 	Position position;
 	TextureRegion image;

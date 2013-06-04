@@ -3,6 +3,7 @@ package com.dafttech.wai.world;
 import com.badlogic.gdx.Gdx;
 import com.dafttech.wai.graphics.AbstractScreen;
 import com.dafttech.wai.world.materials.TileDirt;
+import com.dafttech.wai.world.materials.TileGrass;
 
 public class World {
 	Tile[][] map;
@@ -12,7 +13,7 @@ public class World {
 		
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
-				map[x][y] = new TileDirt(new Position(x, y));
+				map[x][y] = new TileDirt(new Position(x,y));
 			}
 		}
 	}

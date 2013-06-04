@@ -1,5 +1,6 @@
 package com.dafttech.wai.world.renderers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.wai.graphics.AbstractScreen;
 import com.dafttech.wai.world.Player;
 import com.dafttech.wai.world.Renderer;
