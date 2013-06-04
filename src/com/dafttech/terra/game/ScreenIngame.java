@@ -14,6 +14,6 @@ public class ScreenIngame extends AbstractScreen {
         // TODO Auto-generated method stub
         super.render(delta);
 
-        localWorld.drawWorld(this, localPlayer);
+        localWorld.draw(this, localPlayer);
     }
 }

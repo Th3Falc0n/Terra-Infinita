@@ -7,10 +7,11 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.entity.Entity;
 import com.dafttech.terra.entity.Player;
 import com.dafttech.terra.graphics.AbstractScreen;
+import com.dafttech.terra.graphics.IRenderable;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
 
-public class World {
+public class World implements IRenderable {
     Tile[][] map;
     List<Entity> entities = new ArrayList<Entity>();
 
@@ -23,9 +24,10 @@ public class World {
             }
         }
     }
-
-    public void drawWorld(AbstractScreen screen, Player player) {
-        // TODO: draw world
+    
+    @Override
+    public void draw(AbstractScreen screen, Player player) {
+     // TODO: draw world
         screen.batch.begin();
 
         int sx = Gdx.graphics.getWidth() / 8 / 2;
