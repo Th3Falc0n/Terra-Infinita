@@ -2,7 +2,7 @@ package com.dafttech.terra.world;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.materials.TileDirt;
+import com.dafttech.terra.world.tiles.TileDirt;
 
 public class World {
     Tile[][] map;

@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.world.materials.TileDirt;
-import com.dafttech.terra.world.materials.TileGrass;
-import com.dafttech.terra.world.materials.TileStone;
 import com.dafttech.terra.world.renderers.RendererBlock;
+import com.dafttech.terra.world.tiles.TileDirt;
+import com.dafttech.terra.world.tiles.TileGrass;
+import com.dafttech.terra.world.tiles.TileStone;
 
 @SuppressWarnings("rawtypes")
 public class Tile {

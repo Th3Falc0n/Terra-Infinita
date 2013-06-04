@@ -1,4 +1,4 @@
-package com.dafttech.terra.world.materials;
+package com.dafttech.terra.world.tiles;
 
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Position;
