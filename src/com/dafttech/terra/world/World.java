@@ -8,6 +8,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IRenderable;
 import com.dafttech.terra.world.entity.Entity;
@@ -47,6 +48,8 @@ public class World implements IRenderable {
         for (Entity entity : localEntities) {
             entity.update(player, delta);
         }
+
+        Events.EVENT_WORLDTICK.callSync(this);
     }
 
     @Override
