@@ -69,4 +69,11 @@ public class Tile implements IRenderable {
             s.draw(screen, player);
         }
     }
+
+    @Override
+    public void update(Player player, float delta) {
+        for (Subtile subtile : subtiles) {
+            subtile.update(player, delta);
+        }
+    }
 }

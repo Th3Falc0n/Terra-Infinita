@@ -63,4 +63,10 @@ public class Subtile implements IRenderable {
     public void draw(AbstractScreen screen, Player player) {
         getRenderer().draw(screen, this, player);
     }
+
+    @Override
+    public void update(Player player, float delta) {
+        // TODO Auto-generated method stub
+        
+    }
 }
