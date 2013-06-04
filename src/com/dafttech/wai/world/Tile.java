@@ -3,11 +3,12 @@ package com.dafttech.wai.world;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.newdawn.slick.Image;
-
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.wai.world.materials.TileDirt;
 import com.dafttech.wai.world.renderers.RendererBlock;
 
+@SuppressWarnings("rawtypes")
 public class Tile {
 	static Map<String, Class> registry = new HashMap<String, Class>();
 	
@@ -30,15 +31,22 @@ public class Tile {
 	
 	
 	Position position;
-	Image image;
+	TextureRegion image;
 	
-	
+	public Tile(Position pos, TextureRegion textureRegion) {
+		position = pos;
+		image = textureRegion;
+	}
 	
 	public Renderer getRenderer() {
 		return RendererBlock.$Instance;
 	}
 	
-	public Image getTexture() {
+	public TextureRegion getImage() {
 		return image;
+	}
+	
+	public Position getPosition() {
+		return position;
 	}
 }

@@ -1,8 +1,8 @@
 package com.dafttech.wai.world;
 
 public class Vector2 {
-	float x;
-	float y;
+	public float x;
+	public float y;
 	
 	public Vector2(float nx, float ny) {
 		x = nx;

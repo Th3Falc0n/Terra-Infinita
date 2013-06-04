@@ -1,5 +1,7 @@
 package com.dafttech.wai.world;
 
+import com.badlogic.gdx.Gdx;
+
 public class Position {
 	int x, y;
 	
@@ -9,7 +11,7 @@ public class Position {
 	}
 	
 	public Vector2 toScreenPos(Player player) {
-		return new Vector2(player.position.x - x, player.position.y - y);
+		return new Vector2(x * 8 - player.position.x + Gdx.graphics.getWidth() / 2, y * 8 - player.position.y + Gdx.graphics.getHeight() / 2);
 	}
 	
 	public int getX() {

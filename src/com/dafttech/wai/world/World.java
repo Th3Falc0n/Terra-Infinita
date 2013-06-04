@@ -1,5 +1,9 @@
 package com.dafttech.wai.world;
 
+import com.badlogic.gdx.Gdx;
+import com.dafttech.wai.graphics.AbstractScreen;
+import com.dafttech.wai.world.materials.TileDirt;
+
 public class World {
 	Tile[][] map;
 	
@@ -8,19 +12,25 @@ public class World {
 		
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
-				map[x][y] = new Tile(Material.get("dirt"));
+				map[x][y] = new TileDirt(new Position(x, y));
 			}
 		}
 	}
 	
-	public void drawWorld(Player player) {
-		//TODO: Render Bereich an Bildschirm anpassen
-		for(int x = (int)(player.getPosition().x - 10); x < (int)(player.getPosition().x + 10); x++) {
-			for(int y = (int)(player.getPosition().y - 10); x < (int)(player.getPosition().y + 10); x++) {
-				if(x >= 0 && x < map.length && y >= 0 && y < map[0].length) {
-					map[x][y].draw();
-				}
-			}
+	public void drawWorld(AbstractScreen screen, Player player) {
+		//TODO: draw world
+		screen.batch.begin();
+		
+		int sx = (Gdx.graphics.getWidth() / 8) / 2;
+		int sy = (Gdx.graphics.getHeight() / 8) / 2;
+
+		for(int x = (int)player.getPosition().x - sx; x < (int)player.getPosition().x + sx; x++) {
+			for(int y = (int)player.getPosition().y - sy; y < (int)player.getPosition().y + sy; y++) {
+				if(x >= 0 && x < map.length && y >= 0 && y < map[0].length)
+					Renderer.drawTile(screen, map[x][y], player);
+			}	
 		}
+		
+		screen.batch.end();
 	}
 }
