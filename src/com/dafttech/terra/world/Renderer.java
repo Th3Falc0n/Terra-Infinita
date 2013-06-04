@@ -1,5 +1,6 @@
 package com.dafttech.terra.world;
 
+import com.dafttech.terra.entity.Player;
 import com.dafttech.terra.graphics.AbstractScreen;
 
 public abstract class Renderer {

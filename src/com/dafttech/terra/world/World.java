@@ -1,12 +1,19 @@
 package com.dafttech.terra.world;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.entity.Entity;
+import com.dafttech.terra.entity.Player;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileGrass;
 
 public class World {
     Tile[][] map;
+    List<Entity> entities = new ArrayList<Entity>();
+    Player currentPlayer = null;
 
     public World(int width, int height) {
         map = new Tile[width][height];
