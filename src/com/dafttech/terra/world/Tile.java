@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.world.renderers.RendererBlock;
+import com.dafttech.terra.entity.Player;
+import com.dafttech.terra.graphics.AbstractScreen;
+import com.dafttech.terra.graphics.IRenderable;
+import com.dafttech.terra.graphics.Renderer;
+import com.dafttech.terra.graphics.renderers.RendererBlock;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
 
 @SuppressWarnings("rawtypes")
-public class Tile {
+public class Tile implements IRenderable {
     static Map<Integer, Class> registry = new HashMap<Integer, Class>();
 
     public static void registerTile(Integer id, Class mat) {
@@ -48,5 +52,9 @@ public class Tile {
 
     public Position getPosition() {
         return position;
+    }
+
+    public void draw(AbstractScreen screen, Player player) {
+        getRenderer().draw(screen, this, player);
     }
 }

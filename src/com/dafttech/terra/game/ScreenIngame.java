@@ -1,7 +1,7 @@
 package com.dafttech.terra.game;
 
+import com.dafttech.terra.entity.Player;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.Player;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
 

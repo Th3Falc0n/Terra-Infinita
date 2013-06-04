@@ -14,6 +14,6 @@ public class ImageLibrary {
     }
 
     public TextureRegion getImage(String name) {
-        return library.get(name);
+        return library.containsKey(name) ? library.get(name) : library.get("error");
     }
 }

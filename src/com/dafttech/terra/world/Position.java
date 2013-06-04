@@ -1,6 +1,7 @@
 package com.dafttech.terra.world;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.entity.Player;
 
 public class Position {
     int x, y;
@@ -11,7 +12,7 @@ public class Position {
     }
 
     public Vector2 toScreenPos(Player player) {
-        return new Vector2(x * 8 - player.position.x + Gdx.graphics.getWidth() / 2, y * 8 - player.position.y + Gdx.graphics.getHeight() / 2);
+        return new Vector2(x * 8 - player.getPosition().x + Gdx.graphics.getWidth() / 2, y * 8 - player.getPosition().y + Gdx.graphics.getHeight() / 2);
     }
 
     public int getX() {
