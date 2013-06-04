@@ -19,7 +19,7 @@ import com.dafttech.terra.world.tiles.TileStone;
 public class World implements IRenderable {
     Tile[][] map;
     public List<Entity> localEntities = new ArrayList<Entity>();
-    public Player localPlayer = new Player(new Vector2(0, 0));
+    public Player localPlayer = new Player(new Vector2(0, 0), this);
 
     public World(int width, int height) {
         map = new Tile[width][height];
@@ -31,6 +31,22 @@ public class World implements IRenderable {
         }
 
         map[2][2].addSubtile(new SubtileGrass());
+    }
+
+    @Override
+    public void update(Player player, float delta) {
+        int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
+        int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
+
+        for (int x = (int) player.getPosition().x / BLOCK_SIZE - sx; x < (int) player.getPosition().x / BLOCK_SIZE + sx; x++) {
+            for (int y = (int) player.getPosition().y / BLOCK_SIZE - sy; y < (int) player.getPosition().y / BLOCK_SIZE + sy; y++) {
+                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y].update(player, delta);
+            }
+        }
+
+        for (Entity entity : localEntities) {
+            entity.update(player, delta);
+        }
     }
 
     @Override
