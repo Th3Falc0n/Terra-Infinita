@@ -10,6 +10,12 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
         y = ny;
     }
 
+    public Vector2 setNull() {
+        x = 0;
+        y = 0;
+        return this;
+    }
+
     public Position toWorldPosition() {
         return new Position((int) x / BLOCK_SIZE, (int) y / BLOCK_SIZE);
     }

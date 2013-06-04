@@ -13,7 +13,7 @@ import com.dafttech.terra.world.World;
 public class Entity implements IRenderable {
     Vector2 position = new Vector2(0, 0);
     Vector2 velocity = new Vector2(0, 0);
-    Vector2 accelleration = new Vector2(10, 0);
+    Vector2 accelleration = new Vector2(0, 0);
     Vector2 size;
     World worldObj;
 
@@ -89,7 +89,7 @@ public class Entity implements IRenderable {
     }
 
     public Entity accellerate(Vector2 accelleration) {
-        this.accelleration = accelleration;
+        this.accelleration.add(accelleration);
         return this;
     }
 
@@ -97,8 +97,10 @@ public class Entity implements IRenderable {
     public void update(Player player, float delta) {
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
+        accelleration.setNull();
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
+        velocity.mul(0.99f);
     }
 
     public boolean isInRenderRange(Player player) {
