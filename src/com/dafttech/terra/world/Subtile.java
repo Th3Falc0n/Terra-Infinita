@@ -67,6 +67,6 @@ public class Subtile implements IRenderable {
     @Override
     public void update(Player player, float delta) {
         // TODO Auto-generated method stub
-        
+
     }
 }
