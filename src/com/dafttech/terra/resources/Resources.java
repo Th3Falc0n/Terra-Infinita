@@ -5,7 +5,7 @@ public class Resources {
 
     public static void init() {
         TILES.loadImage("dirt", "res/tiles/dirt.png");
-        TILES.loadImage("grass", "res/tiles/grass.png");
+        TILES.loadImage("mask_grass", "res/tiles/grass.png");
         TILES.loadImage("stone", "res/tiles/stone.png");
     }
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.world.renderers.RendererBlock;
 import com.dafttech.terra.world.tiles.TileDirt;
-import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
 @SuppressWarnings("rawtypes")
@@ -28,8 +27,7 @@ public class Tile {
 
     public static void init() {
         registerTile(1, TileDirt.class);
-        registerTile(2, TileGrass.class);
-        registerTile(3, TileStone.class);
+        registerTile(2, TileStone.class);
     }
 
     Position position;
