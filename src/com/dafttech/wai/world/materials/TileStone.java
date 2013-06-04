@@ -6,8 +6,8 @@ import com.dafttech.wai.world.Tile;
 
 public class TileStone extends Tile {
 
-	public TileStone(Position pos) {
-		super(pos, Resources.TILES.getImage("stone"));
-	}
-	
+    public TileStone(Position pos) {
+        super(pos, Resources.TILES.getImage("stone"));
+    }
+
 }

@@ -6,8 +6,8 @@ import com.dafttech.wai.world.Tile;
 
 public class TileGrass extends Tile {
 
-	public TileGrass(Position pos) {
-		super(pos, Resources.TILES.getImage("grass"));
-	}
-	
+    public TileGrass(Position pos) {
+        super(pos, Resources.TILES.getImage("grass"));
+    }
+
 }
