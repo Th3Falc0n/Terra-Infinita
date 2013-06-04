@@ -21,8 +21,8 @@ public class World {
         // TODO: draw world
         screen.batch.begin();
 
-        int sx = (Gdx.graphics.getWidth() / 8) / 2;
-        int sy = (Gdx.graphics.getHeight() / 8) / 2;
+        int sx = Gdx.graphics.getWidth() / 8 / 2;
+        int sy = Gdx.graphics.getHeight() / 8 / 2;
 
         for (int x = (int) player.getPosition().x - sx; x < (int) player.getPosition().x + sx; x++) {
             for (int y = (int) player.getPosition().y - sy; y < (int) player.getPosition().y + sy; y++) {
