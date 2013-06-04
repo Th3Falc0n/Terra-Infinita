@@ -1,8 +1,8 @@
-package com.dafttech.terra.world.renderers;
+package com.dafttech.terra.graphics.renderers;
 
 import com.dafttech.terra.entity.Player;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.Renderer;
+import com.dafttech.terra.graphics.Renderer;
 import com.dafttech.terra.world.Tile;
 import com.dafttech.terra.world.Vector2;
 

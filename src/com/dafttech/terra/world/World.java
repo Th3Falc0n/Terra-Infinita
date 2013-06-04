@@ -20,7 +20,7 @@ public class World {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                map[x][y] = y==0?new TileGrass(new Position(x, y)) : new TileDirt(new Position(x, y));
+                map[x][y] = y == 0 ? new TileGrass(new Position(x, y)) : new TileDirt(new Position(x, y));
             }
         }
     }
@@ -34,7 +34,7 @@ public class World {
 
         for (int x = (int) player.getPosition().x - sx; x < (int) player.getPosition().x + sx; x++) {
             for (int y = (int) player.getPosition().y - sy; y < (int) player.getPosition().y + sy; y++) {
-                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length) Renderer.drawTile(screen, map[x][y], player);
+                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length) map[x][y].draw(screen, player);
             }
         }
 
