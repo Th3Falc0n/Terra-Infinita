@@ -3,6 +3,7 @@ package com.dafttech.terra.world;
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.world.tiles.TileDirt;
+import com.dafttech.terra.world.tiles.TileGrass;
 
 public class World {
     Tile[][] map;
@@ -12,7 +13,7 @@ public class World {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                map[x][y] = new TileDirt(new Position(x, y));
+                map[x][y] = y==0?new TileGrass(new Position(x, y)) : new TileDirt(new Position(x, y));
             }
         }
     }
