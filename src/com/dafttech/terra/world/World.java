@@ -1,5 +1,7 @@
 package com.dafttech.terra.world;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,6 @@ import com.dafttech.terra.world.subtiles.SubtileGrass;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
 
-import static com.dafttech.terra.resources.Options.*;
-
 public class World implements IRenderable {
     Tile[][] map;
     public List<Entity> localEntities = new ArrayList<Entity>();
@@ -29,7 +29,7 @@ public class World implements IRenderable {
                 map[x][y] = y == 0 ? new TileStone(new Position(x, y)) : new TileDirt(new Position(x, y));
             }
         }
-        
+
         map[2][2].addSubtile(new SubtileGrass());
     }
 

@@ -55,7 +55,7 @@ public class Tile implements IRenderable {
     public Position getPosition() {
         return position;
     }
-    
+
     public void addSubtile(Subtile s) {
         s.setTile(this);
         subtiles.add(s);
@@ -64,8 +64,8 @@ public class Tile implements IRenderable {
     @Override
     public void draw(AbstractScreen screen, Player player) {
         getRenderer().draw(screen, this, player);
-        
-        for(Subtile s : subtiles) {
+
+        for (Subtile s : subtiles) {
             s.draw(screen, player);
         }
     }

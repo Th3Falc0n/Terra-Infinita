@@ -11,11 +11,10 @@ import com.dafttech.terra.graphics.renderers.SubtileRendererMask;
 import com.dafttech.terra.world.entity.Player;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
 
-@SuppressWarnings("rawtypes")
 public class Subtile implements IRenderable {
-    static Map<Integer, Class> registry = new HashMap<Integer, Class>();
+    static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();
 
-    public static void registerSubtile(Integer id, Class mat) {
+    public static void registerSubtile(Integer id, Class<?> mat) {
         registry.put(id, mat);
     }
 
@@ -51,11 +50,11 @@ public class Subtile implements IRenderable {
     public Tile getTile() {
         return tile;
     }
-    
+
     public void setTile(Tile t) {
         tile = t;
     }
-    
+
     public boolean canBePlacedOn(Tile tile) {
         return true;
     }
