@@ -1,9 +1,5 @@
 package com.dafttech.wai.world.renderers;
 
-import java.awt.Graphics;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.dafttech.wai.graphics.AbstractScreen;
 import com.dafttech.wai.world.Player;
 import com.dafttech.wai.world.Renderer;

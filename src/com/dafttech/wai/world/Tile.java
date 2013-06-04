@@ -3,7 +3,6 @@ package com.dafttech.wai.world;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.wai.world.materials.TileDirt;
 import com.dafttech.wai.world.renderers.RendererBlock;

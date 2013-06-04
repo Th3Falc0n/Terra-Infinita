@@ -1,11 +1,9 @@
 package com.dafttech.wai.game;
 
 import com.dafttech.wai.graphics.AbstractScreen;
-import com.dafttech.wai.resources.Resources;
 import com.dafttech.wai.world.Player;
 import com.dafttech.wai.world.Vector2;
 import com.dafttech.wai.world.World;
-import com.dafttech.wai.world.materials.TileDirt;
 
 public class ScreenIngame extends AbstractScreen {
 	Player localPlayer = new Player(new Vector2(0, 0));

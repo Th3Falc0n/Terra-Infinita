@@ -1,7 +1,5 @@
 package com.dafttech.wai.world;
 
-import java.awt.Graphics;
-
 import com.dafttech.wai.graphics.AbstractScreen;
 
 public abstract class Renderer {
