@@ -13,7 +13,8 @@ import com.dafttech.terra.world.tiles.TileStone;
 
 public class World implements IRenderable {
     Tile[][] map;
-    List<Entity> entities = new ArrayList<Entity>();
+    public List<Entity> localEntities = new ArrayList<Entity>();
+    public Player localPlayer = new Player(new Vector2(0, 0));
 
     public World(int width, int height) {
         map = new Tile[width][height];
