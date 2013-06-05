@@ -9,6 +9,7 @@ import com.dafttech.terra.graphics.IRenderable;
 import com.dafttech.terra.graphics.SubtileRenderer;
 import com.dafttech.terra.graphics.renderers.SubtileRendererMask;
 import com.dafttech.terra.world.entity.Player;
+import com.dafttech.terra.world.subtiles.SubtileBone;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
 
 public class Subtile implements IRenderable {
@@ -29,6 +30,7 @@ public class Subtile implements IRenderable {
 
     public static void init() {
         registerSubtile(1, SubtileGrass.class);
+        registerSubtile(2, SubtileBone.class);
     }
 
     Tile tile;

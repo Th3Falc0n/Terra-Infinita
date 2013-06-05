@@ -1,5 +1,7 @@
 package com.dafttech.terra;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +13,8 @@ import com.dafttech.terra.world.Tile;
 
 public class TerraInfinita extends Game implements ApplicationListener {
     FPSLogger fpsLogger;
+    
+    public static Random rnd = new Random();
 
     @Override
     public void create() {

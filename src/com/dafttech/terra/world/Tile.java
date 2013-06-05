@@ -13,6 +13,7 @@ import com.dafttech.terra.graphics.renderers.TileRendererBlock;
 import com.dafttech.terra.world.entity.Entity;
 import com.dafttech.terra.world.entity.Player;
 import com.dafttech.terra.world.tiles.TileDirt;
+import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
 public class Tile implements IRenderable {
@@ -34,6 +35,7 @@ public class Tile implements IRenderable {
     public static void init() {
         registerTile(1, TileDirt.class);
         registerTile(2, TileStone.class);
+        registerTile(3, TileGrass.class);
     }
 
     Position position;

@@ -38,7 +38,7 @@ public class Entity implements IRenderable {
         return inAir;
     }
     
-    public void setSize(int x, int y) {
+    public void setSize(float x, float y) {
         size = new Vector2(x, y);
     }
 
@@ -57,7 +57,7 @@ public class Entity implements IRenderable {
                         }
                         
                         if (playerRect.contains(rect.x, rect.y + 0.5f * rect.height)) {
-                            onCollisionRight(rect.x);
+                            onCollisionRight(rect.x - playerRect.width);
                         }
 
                         if (playerRect.contains(rect.x + 0.5f * rect.width, rect.y + rect.height)) {
@@ -65,7 +65,7 @@ public class Entity implements IRenderable {
                         }
                         
                         if (playerRect.contains(rect.x + 0.5f * rect.width, rect.y)) {
-                            onCollisionTop(rect.y);
+                            onCollisionTop(rect.y - playerRect.height);
                         }
                     }
                 }

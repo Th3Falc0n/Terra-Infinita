@@ -1,5 +1,6 @@
 package com.dafttech.terra.game;
 
+import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;

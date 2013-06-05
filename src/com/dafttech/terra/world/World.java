@@ -35,6 +35,10 @@ public class World implements IRenderable {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
         return null;
     }
+    
+    public void destroyTile(int x, int y) {
+        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y] = null;        
+    }
 
     @Override
     public void update(Player player, float delta) {        
