@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IRenderable;
+import com.dafttech.terra.resources.Options;
 import com.dafttech.terra.world.entity.Entity;
 import com.dafttech.terra.world.entity.Player;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
@@ -27,11 +28,14 @@ public class World implements IRenderable {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                map[x][y] = y == 0 ? new TileStone(new Position(x, y)) : new TileDirt(new Position(x, y));
+                map[x][y] = y > height - height / 6 ? new TileDirt(new Position(x, y)).addSubtile(y == height - 1 ? new SubtileGrass() : null)
+                        : new TileStone(new Position(x, y));
             }
         }
 
-        map[2][2].addSubtile(new SubtileGrass());
+        localPlayer.setPosition(new Vector2(0, map[0].length * Options.BLOCK_SIZE));
+
+        // map[2][2].addSubtile(new SubtileGrass());
     }
 
     @Override
