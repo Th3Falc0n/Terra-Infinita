@@ -37,7 +37,7 @@ public class World implements IRenderable {
     }
 
     @Override
-    public void update(Player player, float delta) {
+    public void update(Player player, float delta) {        
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
