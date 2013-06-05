@@ -6,6 +6,8 @@ import com.dafttech.terra.world.Tile;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Item;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 public class ItemTile extends Item {
     Tile wrappedTile;
 
@@ -16,8 +18,8 @@ public class ItemTile extends Item {
 
         setSize(0.5f, 0.5f);
 
-        getPosition().add(TerraInfinita.rnd.nextFloat() * 16, TerraInfinita.rnd.nextFloat() * 16);
-        setVelocity(new Vector2(TerraInfinita.rnd.nextFloat() - 0.5f * 50, TerraInfinita.rnd.nextFloat() - 0.5f * 50));
+        getPosition().add(BLOCK_SIZE / 4, BLOCK_SIZE / 4);
+        setVelocity(new Vector2((TerraInfinita.rnd.nextFloat() - 0.5f) * 80, (TerraInfinita.rnd.nextFloat() - 0.5f) * 80));
     }
 
     @Override
