@@ -11,7 +11,7 @@ import com.dafttech.terra.world.Entity;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
 
-public abstract class Item extends Entity implements IDrawableInventory{
+public abstract class Item extends Entity implements IDrawableInventory {
     static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();
 
     public static void registerItem(Integer id, Class<?> mat) {
@@ -26,7 +26,7 @@ public abstract class Item extends Entity implements IDrawableInventory{
         }
         return null;
     }
-    
+
     public Item(Vector2 pos, World world) {
         super(pos, world);
         // TODO Auto-generated constructor stub
@@ -36,10 +36,10 @@ public abstract class Item extends Entity implements IDrawableInventory{
     public TextureRegion getImage() {
         return Resources.TILES.getImage("error");
     }
-    
+
     @Override
     public void drawInventory(AbstractScreen screen, Player player) {
         // TODO Auto-generated method stub
-        
+
     }
 }

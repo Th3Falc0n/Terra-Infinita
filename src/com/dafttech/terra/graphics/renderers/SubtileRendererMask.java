@@ -13,7 +13,7 @@ public class SubtileRendererMask extends SubtileRenderer {
 
     @Override
     public void draw(AbstractScreen screen, Subtile render, Player player, Object... rendererArguments) {
-        Vector2 screenVec = render.getTile().getPosition().toScreenPos(player);
+        Vector2 screenVec = render.getTile().position.toScreenPos(player);
 
         float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
 
