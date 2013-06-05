@@ -91,6 +91,7 @@ public class Position {
     public Position setTile(World world, Tile tile) {
         if (tile.position == null) {
             tile.position = new Position(this);
+            tile.world = world;
             world.map[x][y] = tile;
             tile.addedToWorld();
         }
