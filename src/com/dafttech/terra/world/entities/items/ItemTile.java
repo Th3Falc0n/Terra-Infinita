@@ -16,7 +16,7 @@ public class ItemTile extends Item {
         
         wrappedTile = tile;
         
-        setSize(BLOCK_SIZE, BLOCK_SIZE);
+        setSize(0.5f, 0.5f);
 
         getPosition().add(TerraInfinita.rnd.nextFloat() * 16, TerraInfinita.rnd.nextFloat() * 16);
         setVelocity(new Vector2(TerraInfinita.rnd.nextFloat() - 0.5f * 20, TerraInfinita.rnd.nextFloat() - 0.5f * 20));
