@@ -37,14 +37,18 @@ public class Entity implements IRenderable {
     public boolean isInAir() {
         return inAir;
     }
+    
+    public void setSize(int x, int y) {
+        size = new Vector2(x, y);
+    }
 
     public void checkTerrainCollisions(World world) {
         Position mid = position.toWorldPosition();
 
-        Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * 2, BLOCK_SIZE * 4);
+        Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
-        for (int x = mid.getX() - 2; x <= mid.getX() + 2; x++) {
-            for (int y = mid.getY() - 2; y <= mid.getY() + 2; y++) {
+        for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
+            for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     if (rect.overlaps(playerRect)) {

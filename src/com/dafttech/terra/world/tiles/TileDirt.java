@@ -9,5 +9,5 @@ public class TileDirt extends Tile {
     public TileDirt(Position pos) {
         super(pos, Resources.TILES.getImage("dirt"));
     }
-
+    
 }
