@@ -33,7 +33,7 @@ public class World implements IRenderable {
             }
         }
 
-        localPlayer.setPosition(new Vector2(0, map[0].length * Options.BLOCK_SIZE));
+        localPlayer.setPosition(new Vector2(0, map[0].length * BLOCK_SIZE));
 
         // map[2][2].addSubtile(new SubtileGrass());
     }
