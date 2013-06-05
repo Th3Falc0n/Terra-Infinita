@@ -56,9 +56,14 @@ public class Tile implements IRenderable {
         return position;
     }
 
-    public void addSubtile(Subtile s) {
-        s.setTile(this);
-        subtiles.add(s);
+    public Tile addSubtile(Subtile... subtile) {
+        for (Subtile s : subtile) {
+            if (s != null) {
+                s.setTile(this);
+                subtiles.add(s);
+            }
+        }
+        return this;
     }
 
     @Override
