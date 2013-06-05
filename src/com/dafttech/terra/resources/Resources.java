@@ -8,5 +8,8 @@ public class Resources {
         TILES.loadImage("dirt", "res/tiles/dirt.png");
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
         TILES.loadImage("stone", "res/tiles/stone.png");
+        for (int i = 0; i <= 4; i++) {
+            TILES.loadImage("grass" + i, "res/tiles/grass_" + i + ".png");
+        }
     }
 }
