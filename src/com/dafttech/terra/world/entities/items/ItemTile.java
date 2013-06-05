@@ -1,7 +1,5 @@
 package com.dafttech.terra.world.entities.items;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.world.Tile;
@@ -15,7 +13,7 @@ public class ItemTile extends Item {
         super(tile.position.toEntityPos(), tile.getWorld());
 
         wrappedTile = tile;
-        
+
         setSize(0.5f, 0.5f);
 
         getPosition().add(TerraInfinita.rnd.nextFloat() * 16, TerraInfinita.rnd.nextFloat() * 16);
