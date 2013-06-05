@@ -103,6 +103,16 @@ public abstract class Tile implements IDrawable {
         return true;
     }
 
+    public Tile addToWorld(World world, Position pos) {
+        if (position == null || world == null) {
+            this.position = new Position(pos);
+            this.world = world;
+            world.map[pos.x][pos.y] = this;
+            addedToWorld();
+        }
+        return this;
+    }
+
     public void spawnAsEntity() {
         world.addEntity(getItemDropped());
     }
