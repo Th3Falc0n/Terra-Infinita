@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.world.entity.Player;
 
 public class Position {
-    int x, y;
+    public int x, y;
 
     public Position(int vx, int vy) {
         x = vx;

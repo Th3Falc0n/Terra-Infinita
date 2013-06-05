@@ -73,5 +73,9 @@ public class World implements IRenderable {
         }
 
         screen.batch.end();
+
+        for (Entity entity : localEntities) {
+            entity.draw(screen, player);
+        }
     }
 }

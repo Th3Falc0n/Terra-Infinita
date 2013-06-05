@@ -56,6 +56,14 @@ public class Tile implements IRenderable {
     public Position getPosition() {
         return position;
     }
+    
+    public float getWalkFriction() {
+        return 1f;
+    }
+    
+    public float getWalkAcceleration() {
+        return 1f;
+    }
 
     public Tile addSubtile(Subtile... subtile) {
         for (Subtile s : subtile) {

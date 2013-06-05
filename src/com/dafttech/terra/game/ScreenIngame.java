@@ -11,7 +11,7 @@ public class ScreenIngame extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        delta *= BLOCK_SIZE;
+        delta *= BLOCK_SIZE / 2;
         
         super.render(delta);
 
