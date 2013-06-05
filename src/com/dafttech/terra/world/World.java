@@ -11,31 +11,26 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IRenderable;
-import com.dafttech.terra.resources.Options;
 import com.dafttech.terra.world.entity.Entity;
 import com.dafttech.terra.world.entity.Player;
+import com.dafttech.terra.world.gen.WorldGenerator;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
 
 public class World implements IRenderable {
-    Tile[][] map;
+    public Vector2 size = new Vector2(0, 0);
+    public Tile[][] map;
+    public WorldGenerator gen;
     public List<Entity> localEntities = new ArrayList<Entity>();
     public Player localPlayer = new Player(new Vector2(0, 0), this);
 
-    public World(int width, int height) {
-        map = new Tile[width][height];
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                map[x][y] = y > height - height / 6 ? new TileDirt(new Position(x, y)).addSubtile(y == height - 1 ? new SubtileGrass() : null)
-                        : new TileStone(new Position(x, y));
-            }
-        }
-
+    public World(Vector2 size) {
+        this.size.x = (int) size.x;
+        this.size.y = (int) size.y;
+        map = new Tile[(int) size.x][(int) size.y];
+        gen = new WorldGenerator(this);
         localPlayer.setPosition(new Vector2(0, map[0].length * BLOCK_SIZE));
-
-        // map[2][2].addSubtile(new SubtileGrass());
     }
 
     @Override
