@@ -19,7 +19,7 @@ public class ItemTile extends Item {
         setSize(0.5f, 0.5f);
 
         getPosition().add(TerraInfinita.rnd.nextFloat() * 16, TerraInfinita.rnd.nextFloat() * 16);
-        setVelocity(new Vector2(TerraInfinita.rnd.nextFloat() - 0.5f * 20, TerraInfinita.rnd.nextFloat() - 0.5f * 20));
+        setVelocity(new Vector2(TerraInfinita.rnd.nextFloat() - 0.5f * 50, TerraInfinita.rnd.nextFloat() - 0.5f * 50));
     }
 
     @Override
