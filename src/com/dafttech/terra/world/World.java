@@ -14,9 +14,6 @@ import com.dafttech.terra.graphics.IRenderable;
 import com.dafttech.terra.world.entity.Entity;
 import com.dafttech.terra.world.entity.Player;
 import com.dafttech.terra.world.gen.WorldGenerator;
-import com.dafttech.terra.world.subtiles.SubtileGrass;
-import com.dafttech.terra.world.tiles.TileDirt;
-import com.dafttech.terra.world.tiles.TileStone;
 
 public class World implements IRenderable {
     public Vector2 size = new Vector2(0, 0);
@@ -30,9 +27,10 @@ public class World implements IRenderable {
         this.size.y = (int) size.y;
         map = new Tile[(int) size.x][(int) size.y];
         gen = new WorldGenerator(this);
+        gen.generate();
         localPlayer.setPosition(new Vector2(0, map[0].length * BLOCK_SIZE));
     }
-    
+
     public Tile getTile(int x, int y) {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
         return null;

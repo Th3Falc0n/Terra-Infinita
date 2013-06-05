@@ -9,7 +9,7 @@ public class Player extends Entity {
     public Player(Vector2 pos, World world) {
         super(pos, world);
     }
-    
+
     @Override
     public void update(Player player, float delta) {
         super.update(player, delta);

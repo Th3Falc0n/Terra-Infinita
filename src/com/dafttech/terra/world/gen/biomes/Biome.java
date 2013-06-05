@@ -7,7 +7,7 @@ import com.dafttech.terra.world.gen.WorldGenerator;
 
 public abstract class Biome {
     public static List<Biome> biomes = new ArrayList<Biome>();
-    
+
     String name;
 
     public Biome(String name) {

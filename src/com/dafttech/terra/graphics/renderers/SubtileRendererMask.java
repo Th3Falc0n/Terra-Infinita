@@ -2,7 +2,6 @@ package com.dafttech.terra.graphics.renderers;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.SubtileRenderer;
 import com.dafttech.terra.world.Subtile;
@@ -15,8 +14,8 @@ public class SubtileRendererMask extends SubtileRenderer {
     @Override
     public void draw(AbstractScreen screen, Subtile render, Player player, Object... rendererArguments) {
         Vector2 screenVec = render.getTile().getPosition().toScreenPos(player);
-        
-        float rotation = rendererArguments.length > 0 ? (float)rendererArguments[0] : 0;
+
+        float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
 
         screen.batch.draw(render.getImage(), screenVec.x, screenVec.y, 1, 1, BLOCK_SIZE, BLOCK_SIZE, 1, 1, rotation);
     }
