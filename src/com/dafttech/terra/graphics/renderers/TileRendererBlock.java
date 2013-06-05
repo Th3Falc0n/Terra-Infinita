@@ -6,7 +6,7 @@ import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.TileRenderer;
 import com.dafttech.terra.world.Tile;
 import com.dafttech.terra.world.Vector2;
-import com.dafttech.terra.world.entity.Player;
+import com.dafttech.terra.world.entities.Player;
 
 public class TileRendererBlock extends TileRenderer {
     public static TileRenderer $Instance = new TileRendererBlock();

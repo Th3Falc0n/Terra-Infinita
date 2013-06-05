@@ -1,20 +1,20 @@
-package com.dafttech.terra.world.entity;
+package com.dafttech.terra.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.IRenderable;
-import com.dafttech.terra.world.Position;
-import com.dafttech.terra.world.Tile;
-import com.dafttech.terra.world.Vector2;
-import com.dafttech.terra.world.World;
+import com.dafttech.terra.graphics.IDrawable;
+import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.world.entities.Player;
 
-public class Entity implements IRenderable {
+public abstract class Entity implements IDrawable {
     Vector2 position = new Vector2(0, 0);
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
@@ -31,6 +31,10 @@ public class Entity implements IRenderable {
 
     public Vector2 getPosition() {
         return position;
+    }
+    
+    public World getWorld() {
+        return worldObj;
     }
 
     public boolean isInAir() {
@@ -103,17 +107,12 @@ public class Entity implements IRenderable {
 
     @Override
     public void draw(AbstractScreen screen, Player player) {
-        Vector2 p = position.toRenderPosition(position);
+        Vector2 screenVec = this.getPosition().toRenderPosition(player.getPosition());
 
-        ShapeRenderer rend = new ShapeRenderer();
-
-        rend.begin(ShapeType.FilledRectangle);
-
-        rend.setColor(Color.WHITE);
-        rend.filledRect(p.x, p.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-
-        rend.end();
+        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
     }
+    
+    public abstract TextureRegion getImage();
 
     public Entity setPosition(Vector2 position) {
         this.position = position;
@@ -148,7 +147,7 @@ public class Entity implements IRenderable {
         position.y += velocity.y * delta;
 
         inAir = true;
-        checkTerrainCollisions(player.worldObj);
+        checkTerrainCollisions(player.getWorld());
 
         velocity.y *= 1 - 0.1f * delta;
         velocity.x *= 1 - getUndergroundFriction() * delta;

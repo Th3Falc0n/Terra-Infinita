@@ -7,16 +7,17 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.IRenderable;
+import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.TileRenderer;
 import com.dafttech.terra.graphics.renderers.TileRendererBlock;
-import com.dafttech.terra.world.entity.Entity;
-import com.dafttech.terra.world.entity.Player;
+import com.dafttech.terra.world.entities.Item;
+import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.items.ItemTile;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
-public abstract class Tile implements IRenderable {
+public abstract class Tile implements IDrawable {
     static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();
 
     public static void registerTile(Integer id, Class<?> mat) {
@@ -40,9 +41,19 @@ public abstract class Tile implements IRenderable {
 
     Position position;
     List<Subtile> subtiles = new ArrayList<Subtile>();
+    World world;
 
-    public Tile(Position pos) {
+    public Tile(Position pos, World w) {
         position = pos;
+        world = w;
+    }
+    
+    public World getWorld() {
+        return world;
+    }
+    
+    public Item getItemDropped() {
+        return new ItemTile(this);
     }
 
     public TileRenderer getRenderer() {
@@ -92,5 +103,9 @@ public abstract class Tile implements IRenderable {
     public boolean onCollisionWith(Entity entity) {
         // TODO Auto-generated method stub
         return true;
+    }
+
+    public void spawnAsEntity() {
+        world.addEntity(getItemDropped());
     }
 }
