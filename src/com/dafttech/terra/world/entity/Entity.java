@@ -111,7 +111,7 @@ public class Entity implements IRenderable {
         rend.begin(ShapeType.FilledRectangle);
         
         rend.setColor(Color.WHITE);
-        rend.filledRect(p.x, p.y, BLOCK_SIZE * 2, BLOCK_SIZE * 4);
+        rend.filledRect(p.x, p.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
          
         rend.end();  
     }
