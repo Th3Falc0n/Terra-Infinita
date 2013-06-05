@@ -35,13 +35,13 @@ public class World implements IRenderable {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
         return null;
     }
-    
+
     public void destroyTile(int x, int y) {
-        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y] = null;        
+        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y] = null;
     }
 
     @Override
-    public void update(Player player, float delta) {        
+    public void update(Player player, float delta) {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 

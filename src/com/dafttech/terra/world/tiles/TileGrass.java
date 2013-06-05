@@ -12,11 +12,12 @@ public class TileGrass extends Tile {
     public TileGrass(Position pos) {
         super(pos);
     }
-    
+
+    @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("grass"+new Random(hashCode()).nextInt(5));
+        return Resources.TILES.getImage("grass" + new Random(hashCode()).nextInt(5));
     }
-    
+
     @Override
     public boolean onCollisionWith(Entity entity) {
         return false;

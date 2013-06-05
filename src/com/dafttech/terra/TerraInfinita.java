@@ -13,7 +13,7 @@ import com.dafttech.terra.world.Tile;
 
 public class TerraInfinita extends Game implements ApplicationListener {
     FPSLogger fpsLogger;
-    
+
     public static Random rnd = new Random();
 
     @Override
@@ -27,7 +27,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         Resources.init();
         Tile.init();
-        
+
         Gdx.graphics.setVSync(false);
 
         setScreen(new ScreenIngame());
