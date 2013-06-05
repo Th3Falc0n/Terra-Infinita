@@ -45,11 +45,11 @@ public abstract class Tile implements IDrawable {
 
     public Tile() {
     }
-    
+
     public World getWorld() {
         return world;
     }
-    
+
     public Item getItemDropped() {
         return new ItemTile(this);
     }

@@ -2,12 +2,7 @@ package com.dafttech.terra.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.lwjgl.opengl.GL11;
@@ -17,7 +12,6 @@ import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.world.entities.Player;
-import com.dafttech.terra.world.entities.items.ItemTile;
 import com.dafttech.terra.world.gen.WorldGenerator;
 
 public class World implements IDrawable {
@@ -25,7 +19,7 @@ public class World implements IDrawable {
     public Tile[][] map;
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
-    
+
     public Player localPlayer = new Player(new Vector2(0, 0), this);
 
     public World(Vector2 size) {
@@ -48,11 +42,11 @@ public class World implements IDrawable {
             map[x][y] = null;
         }
     }
-    
+
     public void addEntity(Entity entity) {
         localEntities.add(entity);
     }
-    
+
     public void removeEntity(Entity entity) {
         localEntities.remove(entity);
     }
@@ -67,7 +61,7 @@ public class World implements IDrawable {
                 if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y].update(player, delta);
             }
         }
-        
+
         for (Entity entity : localEntities) {
             entity.update(player, delta);
         }
@@ -100,7 +94,7 @@ public class World implements IDrawable {
         for (Entity entity : localEntities) {
             entity.draw(screen, player);
         }
-        
+
         screen.batch.end();
     }
 }

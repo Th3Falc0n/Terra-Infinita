@@ -3,15 +3,10 @@ package com.dafttech.terra.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.entities.Player;
 
 public abstract class Entity implements IDrawable {
@@ -32,7 +27,7 @@ public abstract class Entity implements IDrawable {
     public Vector2 getPosition() {
         return position;
     }
-    
+
     public World getWorld() {
         return worldObj;
     }
@@ -111,7 +106,7 @@ public abstract class Entity implements IDrawable {
 
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
     }
-    
+
     public abstract TextureRegion getImage();
 
     public Entity setPosition(Vector2 position) {
