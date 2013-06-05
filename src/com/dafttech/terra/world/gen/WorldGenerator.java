@@ -6,6 +6,7 @@ import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.gen.biomes.Biome;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
 import com.dafttech.terra.world.tiles.TileDirt;
+import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
 public class WorldGenerator {
@@ -18,8 +19,8 @@ public class WorldGenerator {
     public void generate() {
         for (int x = 0; x < world.size.x; x++) {
             for (int y = 0; y < world.size.y; y++) {
-                world.map[x][y] = y > world.size.y - world.size.y / 6 ? new TileDirt(new Position(x, y))
-                        .addSubtile(y == world.size.y - 1 ? new SubtileGrass() : null) : new TileStone(new Position(x, y));
+                world.map[x][y] = y == world.size.y - 1 ? new TileGrass(new Position(x, y))  : y > world.size.y - world.size.y / 6 ? new TileDirt(new Position(x, y))
+                        .addSubtile(y == world.size.y - 2 ? new SubtileGrass() : null) : new TileStone(new Position(x, y));
             }
         }
     }

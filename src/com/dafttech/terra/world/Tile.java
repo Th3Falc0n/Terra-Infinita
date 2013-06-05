@@ -45,6 +45,11 @@ public class Tile implements IRenderable {
         image = textureRegion;
     }
 
+    public Tile(Position pos) {
+        position = pos;
+        image = null;
+    }
+
     public TileRenderer getRenderer() {
         return TileRendererBlock.$Instance;
     }
