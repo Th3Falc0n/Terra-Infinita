@@ -29,9 +29,4 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     public static Vector2 getMouse() {
         return new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
     }
-    
-    public Vector2 setTile(World world, Class<? extends Tile> tile) {
-        
-        return this;
-    }
 }

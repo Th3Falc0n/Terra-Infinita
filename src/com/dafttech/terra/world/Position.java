@@ -8,9 +8,19 @@ import com.dafttech.terra.world.entity.Player;
 public class Position {
     public int x, y;
 
-    public Position(int vx, int vy) {
-        x = vx;
-        y = vy;
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Position(Position pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+    }
+
+    public Position() {
+        this.x = 0;
+        this.y = 0;
     }
 
     public Vector2 toScreenPos(Player player) {
@@ -26,11 +36,64 @@ public class Position {
         return y;
     }
 
-    public void setX(int v) {
-        x = v;
+    public Position setX(int x) {
+        this.x = x;
+        return this;
     }
 
-    public void setY(int v) {
-        y = v;
+    public Position setY(int y) {
+        this.y = y;
+        return this;
+    }
+
+    public Position set(int x, int y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    public Position set(Position pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+        return this;
+    }
+
+    public Position addX(int x) {
+        this.x += x;
+        return this;
+    }
+
+    public Position addY(int y) {
+        this.y += y;
+        return this;
+    }
+
+    public Position add(int x, int y) {
+        this.x += x;
+        this.y += y;
+        return this;
+    }
+
+    public Position add(Position pos) {
+        this.x += pos.x;
+        this.y += pos.y;
+        return this;
+    }
+
+    public Position set(Vector2 pos) {
+        return set(pos.toWorldPosition());
+    }
+
+    public Position setTile(World world, Tile tile) {
+        if (tile.position == null) {
+            tile.position = new Position(this);
+            world.map[x][y] = tile;
+            tile.addedToWorld();
+        }
+        return this;
+    }
+
+    public Tile getTile(World world) {
+        return world.map[x][y];
     }
 }

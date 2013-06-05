@@ -13,7 +13,7 @@ public class TileRendererBlock extends TileRenderer {
 
     @Override
     public void draw(AbstractScreen screen, Tile tile, Player player, Object... rendererArguments) {
-        Vector2 screenVec = tile.getPosition().toScreenPos(player);
+        Vector2 screenVec = tile.position.toScreenPos(player);
 
         screen.batch.draw(tile.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE, BLOCK_SIZE);
     }

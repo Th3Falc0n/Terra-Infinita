@@ -17,15 +17,15 @@ import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
 public abstract class Tile implements IRenderable {
-    static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();
+    static Map<Integer, Class<? extends Tile>> registry = new HashMap<Integer, Class<? extends Tile>>();
 
-    public static void registerTile(Integer id, Class<?> mat) {
+    public static void registerTile(Integer id, Class<? extends Tile> mat) {
         registry.put(id, mat);
     }
 
     public static Tile getInstanceOf(Integer id) {
         try {
-            return (Tile) registry.get(id).newInstance();
+            return registry.get(id).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -38,11 +38,10 @@ public abstract class Tile implements IRenderable {
         registerTile(3, TileGrass.class);
     }
 
-    Position position;
+    public Position position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
 
-    public Tile(Position pos) {
-        position = pos;
+    public Tile() {
     }
 
     public TileRenderer getRenderer() {
@@ -51,12 +50,12 @@ public abstract class Tile implements IRenderable {
 
     public abstract TextureRegion getImage();
 
-    public Position getPosition() {
-        return position;
-    }
-
     public float getWalkFriction() {
         return 1f;
+    }
+
+    public void addedToWorld() {
+
     }
 
     public float getWalkAcceleration() {
