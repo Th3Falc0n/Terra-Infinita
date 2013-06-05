@@ -11,7 +11,7 @@ public class TileDirt extends Tile {
     public TileDirt(Position pos) {
         super(pos, Resources.TILES.getImage("dirt"));
         
-        if(TerraInfinita.rnd.nextDouble() < 0.02) {
+        if(TerraInfinita.rnd.nextDouble() < 0.004) {
             this.addSubtile(new SubtileBone());
         }
     }
