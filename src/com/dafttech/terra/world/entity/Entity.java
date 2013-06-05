@@ -101,8 +101,6 @@ public class Entity implements IRenderable {
 
     @Override
     public void update(Player player, float delta) {
-        delta *= 10;
-
         accellerate(new Vector2(0, -9.81f));
 
         velocity.x += accelleration.x * delta;
@@ -115,7 +113,7 @@ public class Entity implements IRenderable {
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
 
-        velocity.mul(0.99f);
+        velocity.mul(0.9f);
     }
 
     public boolean isInRenderRange(Player player) {
