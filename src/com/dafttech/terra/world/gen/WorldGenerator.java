@@ -1,7 +1,9 @@
 package com.dafttech.terra.world.gen;
 
 import com.dafttech.terra.world.Position;
+import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
+import com.dafttech.terra.world.gen.biomes.Biome;
 import com.dafttech.terra.world.subtiles.SubtileGrass;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
@@ -20,5 +22,9 @@ public class WorldGenerator {
                         .addSubtile(y == world.size.y - 1 ? new SubtileGrass() : null) : new TileStone(new Position(x, y));
             }
         }
+    }
+
+    public Biome getBiome(Vector2 position) {
+        return null;
     }
 }
