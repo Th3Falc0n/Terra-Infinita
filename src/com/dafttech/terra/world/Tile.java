@@ -10,6 +10,7 @@ import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IRenderable;
 import com.dafttech.terra.graphics.TileRenderer;
 import com.dafttech.terra.graphics.renderers.TileRendererBlock;
+import com.dafttech.terra.world.entity.Entity;
 import com.dafttech.terra.world.entity.Player;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileStone;
@@ -80,5 +81,10 @@ public class Tile implements IRenderable {
         for (Subtile subtile : subtiles) {
             subtile.update(player, delta);
         }
+    }
+
+    public boolean onCollisionWith(Entity entity) {
+        // TODO Auto-generated method stub
+        return true;
     }
 }

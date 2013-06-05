@@ -33,23 +33,26 @@ public class Entity implements IRenderable {
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE, BLOCK_SIZE * 2);
 
         for (int x = mid.getX() - 2; x <= mid.getX() + 2; x++) {
-            for (int y = mid.getY() - 2; x <= mid.getY() + 2; y++) {
-                Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                if (rect.overlaps(playerRect)) {
-                    if (rect.x < playerRect.x + playerRect.width) {
-                        onCollisionRight(rect.x);
-                    }
-
-                    if (rect.x + rect.width > playerRect.x) {
-                        onCollisionLeft(rect.x);
-                    }
-
-                    if (rect.y < playerRect.y + playerRect.height) {
-                        onCollisionBottom(rect.y);
-                    }
-
-                    if (rect.y + rect.height > playerRect.y) {
-                        onCollisionTop(rect.y);
+            for (int y = mid.getY() - 2; y <= mid.getY() + 2; y++) {
+                if(world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
+                    Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    if (rect.overlaps(playerRect)) {
+                        if (rect.x < playerRect.x + playerRect.width) {
+                            onCollisionRight(rect.x);
+                        }
+    
+                        if (rect.x + rect.width > playerRect.x) {
+                            onCollisionLeft(rect.x);
+                        }
+    
+                        if (rect.y < playerRect.y + playerRect.height) {
+                            Gdx.app.log("Collision", "Bottom y=" + y);
+                            onCollisionBottom(rect.y);
+                        }
+    
+                        if (rect.y + rect.height > playerRect.y) {
+                            onCollisionTop(rect.y);
+                        }
                     }
                 }
             }
@@ -61,7 +64,10 @@ public class Entity implements IRenderable {
     }
 
     void onCollisionBottom(float y) {
-
+        if(velocity.y < 0) {
+            velocity.y = 0;
+            position.y = y + BLOCK_SIZE;
+        }
     }
 
     void onCollisionLeft(float x) {
@@ -95,11 +101,20 @@ public class Entity implements IRenderable {
 
     @Override
     public void update(Player player, float delta) {
+        delta *= 10;
+        
+        accellerate(new Vector2(0, -9.81f));
+        
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
+        
         accelleration.setNull();
+        
+        checkTerrainCollisions(player.worldObj);
+        
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
+        
         velocity.mul(0.99f);
     }
 

@@ -33,9 +33,15 @@ public class World implements IRenderable {
             }
         }
 
-        localPlayer.setPosition(new Vector2(0, map[0].length * BLOCK_SIZE));
+        localPlayer.setPosition(new Vector2(250, map[0].length * BLOCK_SIZE + 250));
+        //localEntities.add(localPlayer);
 
         // map[2][2].addSubtile(new SubtileGrass());
+    }
+    
+    public Tile getTile(int x, int y) {
+        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
+        return null;
     }
 
     @Override
