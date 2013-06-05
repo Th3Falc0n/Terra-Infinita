@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Tile;
+import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.subtiles.SubtileBone;
 
 public class TileDirt extends Tile {
