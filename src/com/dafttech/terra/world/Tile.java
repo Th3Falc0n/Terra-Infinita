@@ -16,7 +16,7 @@ import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
 
-public class Tile implements IRenderable {
+public abstract class Tile implements IRenderable {
     static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();
 
     public static void registerTile(Integer id, Class<?> mat) {
@@ -39,26 +39,17 @@ public class Tile implements IRenderable {
     }
 
     Position position;
-    TextureRegion image;
     List<Subtile> subtiles = new ArrayList<Subtile>();
-
-    public Tile(Position pos, TextureRegion textureRegion) {
-        position = pos;
-        image = textureRegion;
-    }
 
     public Tile(Position pos) {
         position = pos;
-        image = null;
     }
 
     public TileRenderer getRenderer() {
         return TileRendererBlock.$Instance;
     }
 
-    public TextureRegion getImage() {
-        return image;
-    }
+    public abstract TextureRegion getImage();
 
     public Position getPosition() {
         return position;
