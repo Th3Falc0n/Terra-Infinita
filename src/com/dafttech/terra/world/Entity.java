@@ -50,19 +50,19 @@ public abstract class Entity implements IDrawable {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     if (rect.overlaps(playerRect)) {
-                        if (playerRect.overlaps(new Rectangle(rect.x + rect.width, rect.x + rect.width, rect.y + 2, rect.y + rect.height - 2))) {
+                        if (playerRect.overlaps(new Rectangle(rect.x + rect.width, rect.y + 1, 1, rect.height - 2))) {
                             onCollisionLeft(rect.x + rect.width);
                         }
 
-                        if (playerRect.overlaps(new Rectangle(rect.x, rect.x, rect.y + 2, rect.y + rect.height - 2))) {
+                        if (playerRect.overlaps(new Rectangle(rect.x, rect.y + 1, 1, rect.height - 2))) {
                             onCollisionRight(rect.x - playerRect.width);
                         }
 
-                        if (playerRect.overlaps(new Rectangle(rect.x + 2, rect.x + rect.width - 2, rect.y + rect.height, rect.y + rect.height))) {
+                        if (playerRect.overlaps(new Rectangle(rect.x + 1, rect.y + rect.height, rect.width - 2, 1))) {
                             onCollisionBottom(rect.y + rect.height);
                         }
 
-                        if (playerRect.contains(new Rectangle(rect.x + 2, rect.x + rect.width - 2, rect.y, rect.y))) {
+                        if (playerRect.contains(new Rectangle(rect.x + 1, rect.y, rect.width - 2, 1))) {
                             onCollisionTop(rect.y - playerRect.height);
                         }
                     }
