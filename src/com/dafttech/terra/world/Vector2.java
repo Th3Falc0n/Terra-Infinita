@@ -24,7 +24,7 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     }
 
     public Vector2 toRenderPosition(Vector2 relateTo) {
-        return new Vector2(x - relateTo.x + Gdx.graphics.getWidth() / 2, y - relateTo.y + Gdx.graphics.getHeight() / 2);
+        return new Vector2(x - relateTo.x + (float) Gdx.graphics.getWidth() / 2.0f, y - relateTo.y + (float) Gdx.graphics.getHeight() / 2.0f);
     }
 
     public static Vector2 getMouse() {
