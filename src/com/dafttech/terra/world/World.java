@@ -92,7 +92,7 @@ public class World implements IDrawable {
         }
 
         screen.batch.end();
-        
+
         localPlayer.drawCollisionBoxes(this);
     }
 }
