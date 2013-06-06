@@ -16,7 +16,7 @@ public class TileGrass extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("grass" + grassIndex);
+        return Resources.TILES.getImage("grass", grassIndex);
     }
 
     @Override
