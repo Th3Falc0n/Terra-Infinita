@@ -93,7 +93,7 @@ public abstract class Entity implements IDrawable {
                         bC = Color.CYAN;
                     }
 
-                    if (prTop.contains(rect)) {
+                    if (prTop.overlaps(rect)) {
                         tC = Color.CYAN;
                     }
                 }
@@ -126,15 +126,15 @@ public abstract class Entity implements IDrawable {
                     }
 
                     if (prRight.overlaps(rect)) {
-                        onCollisionRight(rect.x - playerRect.width);
+                        onCollisionRight(rect.x - playerRect.width - 1);
                     }
 
                     if (prBottom.overlaps(rect)) {
                         onCollisionBottom(rect.y + rect.height + 1);
                     }
 
-                    if (prTop.contains(rect)) {
-                        onCollisionTop(rect.y - playerRect.height);
+                    if (prTop.overlaps(rect)) {
+                        onCollisionTop(rect.y - playerRect.height - 1);
                     }
                 }
             }
