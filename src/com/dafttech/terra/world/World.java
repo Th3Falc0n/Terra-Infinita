@@ -87,14 +87,12 @@ public class World implements IDrawable {
             }
         }
 
-        screen.batch.end();
-
-        screen.batch.begin();
-
         for (Entity entity : localEntities) {
             entity.draw(screen, player);
         }
 
         screen.batch.end();
+        
+        localPlayer.drawCollisionBoxes(this);
     }
 }

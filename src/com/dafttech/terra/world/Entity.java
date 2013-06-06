@@ -3,7 +3,10 @@ package com.dafttech.terra.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
@@ -39,32 +42,75 @@ public abstract class Entity implements IDrawable {
     public void setSize(float x, float y) {
         size = new Vector2(x, y);
     }
+    
+    private void drawRect(Rectangle rect, ShapeRenderer rend, Color color) {
+        rend.setColor(color);
 
+        rend.begin(ShapeType.FilledRectangle);
+        rend.filledRect(rect.x, rect.y, rect.width, rect.height);
+        
+        rend.flush();
+
+        rend.end();
+    }
+    
+    public void drawCollisionBoxes(World world) {
+        ShapeRenderer rend = new ShapeRenderer();
+        
+        Position mid = position.toWorldPosition();
+
+        Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+
+        Rectangle prLeft   = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
+        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width + 1, playerRect.y, 1, playerRect.height);
+        Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
+        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height + 1, playerRect.width, 1); 
+   
+        
+        for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
+            for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
+                if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
+                    Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    drawRect(rect, rend, Color.BLUE);
+                }
+            }
+        }
+        
+        drawRect(prLeft, rend, Color.WHITE);
+        drawRect(prRight, rend, Color.WHITE);
+        drawRect(prBottom, rend, Color.WHITE);
+        drawRect(prTop, rend, Color.WHITE);
+    }
+    
     public void checkTerrainCollisions(World world) {
         Position mid = position.toWorldPosition();
 
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
+        Rectangle prLeft   = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
+        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width + 1, playerRect.y, 1, playerRect.height);
+        Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
+        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height + 1, playerRect.width, 1);
+        
         for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                    if (rect.overlaps(playerRect)) {
-                        if (playerRect.overlaps(new Rectangle(rect.x + rect.width, rect.y + 2, 1, rect.height - 4))) {
-                            onCollisionLeft(rect.x + rect.width);
-                        }
+                    
+                    if (prLeft.overlaps(rect)) {
+                        onCollisionLeft(rect.x + rect.width);
+                    }
 
-                        if (playerRect.overlaps(new Rectangle(rect.x, rect.y + 2, 1, rect.height - 4))) {
-                            onCollisionRight(rect.x - playerRect.width);
-                        }
+                    if (prRight.overlaps(rect)) {
+                        onCollisionRight(rect.x - playerRect.width);
+                    }
 
-                        if (playerRect.overlaps(new Rectangle(rect.x + 2, rect.y + rect.height, rect.width - 4, 1))) {
-                            onCollisionBottom(rect.y + rect.height);
-                        }
+                    if (prBottom.overlaps(rect)) {
+                        onCollisionBottom(rect.y + rect.height);
+                    }
 
-                        if (playerRect.contains(new Rectangle(rect.x + 2, rect.y, rect.width - 4, 1))) {
-                            onCollisionTop(rect.y - playerRect.height);
-                        }
+                    if (prTop.contains(rect)) {
+                        onCollisionTop(rect.y - playerRect.height);
                     }
                 }
             }
