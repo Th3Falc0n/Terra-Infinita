@@ -1,12 +1,12 @@
 package com.dafttech.terra.world.entities.items;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.world.Tile;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Item;
-
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class ItemTile extends Item {
     Tile wrappedTile;

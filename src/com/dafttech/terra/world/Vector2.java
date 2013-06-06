@@ -19,12 +19,11 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     }
 
     public Position toWorldPosition() {
-        return new Position((int) (x < (double) (int) x ? (int) x - 1 : (int) x) / BLOCK_SIZE, (int) (y < (double) (int) y ? (int) y - 1 : (int) y)
-                / BLOCK_SIZE);
+        return new Position((x < (double) (int) x ? (int) x - 1 : (int) x) / BLOCK_SIZE, (y < (double) (int) y ? (int) y - 1 : (int) y) / BLOCK_SIZE);
     }
 
     public Vector2 toRenderPosition(Vector2 relateTo) {
-        return new Vector2(x - relateTo.x + Gdx.graphics.getWidth() / 2, y - relateTo.y + Gdx.graphics.getHeight() / 2);
+        return new Vector2(x - relateTo.x + Gdx.graphics.getWidth() / 2.0f, y - relateTo.y + Gdx.graphics.getHeight() / 2.0f);
     }
 
     public static Vector2 getMouse() {

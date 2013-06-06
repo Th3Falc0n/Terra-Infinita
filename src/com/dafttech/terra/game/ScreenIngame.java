@@ -16,6 +16,7 @@ public class ScreenIngame extends AbstractScreen {
         super.render(delta);
 
         localWorld.update(localWorld.localPlayer, delta);
+
         localWorld.draw(this, localWorld.localPlayer);
     }
 }
