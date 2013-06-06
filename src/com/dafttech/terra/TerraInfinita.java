@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.game.ScreenIngame;
 import com.dafttech.terra.resources.Resources;
@@ -19,6 +20,8 @@ public class TerraInfinita extends Game implements ApplicationListener {
     @Override
     public void create() {
         Gdx.app.log(Thread.currentThread().getName(), "Creating game...");
+        
+        Texture.setEnforcePotImages(false);
 
         Events.instance.init();
         Events.EVENT_INITPRE.callSync(this);
