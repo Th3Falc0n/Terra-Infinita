@@ -44,10 +44,14 @@ public abstract class Entity implements IDrawable {
     }
     
     private void drawRect(Rectangle rect, ShapeRenderer rend, Color color) {
-        rend.setColor(color);
-
         rend.begin(ShapeType.FilledRectangle);
-        rend.filledRect(rect.x, rect.y, rect.width, rect.height);
+        
+        rend.setColor(color.r, color.g, color.b, 1);
+        
+        Vector2 v2 = new Vector2(rect.x, rect.y);
+        v2 = v2.toRenderPosition(position);
+        
+        rend.filledRect(v2.x, v2.y, rect.width, rect.height);
         
         rend.flush();
 
@@ -62,24 +66,44 @@ public abstract class Entity implements IDrawable {
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
         Rectangle prLeft   = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
-        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width + 1, playerRect.y, 1, playerRect.height);
+        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
         Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
-        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height + 1, playerRect.width, 1); 
+        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1); 
    
+        Color lC = Color.WHITE;
+        Color rC = Color.WHITE;
+        Color bC = Color.WHITE;
+        Color tC = Color.WHITE;
         
         for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     drawRect(rect, rend, Color.BLUE);
+                    
+                    if (prLeft.overlaps(rect)) {
+                        lC = Color.CYAN;
+                    }
+
+                    if (prRight.overlaps(rect)) {
+                        rC = Color.CYAN;
+                    }
+
+                    if (prBottom.overlaps(rect)) {
+                        bC = Color.CYAN;
+                    }
+
+                    if (prTop.contains(rect)) {
+                        tC = Color.CYAN;
+                    }
                 }
             }
         }
         
-        drawRect(prLeft, rend, Color.WHITE);
-        drawRect(prRight, rend, Color.WHITE);
-        drawRect(prBottom, rend, Color.WHITE);
-        drawRect(prTop, rend, Color.WHITE);
+        drawRect(prLeft, rend, lC);
+        drawRect(prRight, rend, rC);
+        drawRect(prBottom, rend, bC);
+        drawRect(prTop, rend, tC);
     }
     
     public void checkTerrainCollisions(World world) {
@@ -88,9 +112,9 @@ public abstract class Entity implements IDrawable {
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
         Rectangle prLeft   = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
-        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width + 1, playerRect.y, 1, playerRect.height);
+        Rectangle prRight  = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
         Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
-        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height + 1, playerRect.width, 1);
+        Rectangle prTop    = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
         
         for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
@@ -98,7 +122,7 @@ public abstract class Entity implements IDrawable {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     
                     if (prLeft.overlaps(rect)) {
-                        onCollisionLeft(rect.x + rect.width);
+                        onCollisionLeft(rect.x + rect.width + 1);
                     }
 
                     if (prRight.overlaps(rect)) {
@@ -106,7 +130,7 @@ public abstract class Entity implements IDrawable {
                     }
 
                     if (prBottom.overlaps(rect)) {
-                        onCollisionBottom(rect.y + rect.height);
+                        onCollisionBottom(rect.y + rect.height + 1);
                     }
 
                     if (prTop.contains(rect)) {
