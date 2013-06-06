@@ -20,7 +20,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
     @Override
     public void create() {
         Gdx.app.log(Thread.currentThread().getName(), "Creating game...");
-        
+
         Texture.setEnforcePotImages(false);
 
         Events.instance.init();
