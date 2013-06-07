@@ -1,4 +1,4 @@
-package com.dafttech.terra.world;
+package com.dafttech.terra.world.subtiles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,11 +6,10 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.SubtileRenderer;
+import com.dafttech.terra.graphics.renderers.SubtileRenderer;
 import com.dafttech.terra.graphics.renderers.SubtileRendererMask;
 import com.dafttech.terra.world.entities.Player;
-import com.dafttech.terra.world.subtiles.SubtileBone;
-import com.dafttech.terra.world.subtiles.SubtileGrass;
+import com.dafttech.terra.world.tiles.Tile;
 
 public class Subtile implements IDrawable {
     static Map<Integer, Class<?>> registry = new HashMap<Integer, Class<?>>();

@@ -3,8 +3,7 @@ package com.dafttech.terra.world.tiles;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.resources.Resources;
-import com.dafttech.terra.world.Entity;
-import com.dafttech.terra.world.Tile;
+import com.dafttech.terra.world.entities.Entity;
 
 public class TileGrass extends Tile {
     int grassIndex;

@@ -1,4 +1,4 @@
-package com.dafttech.terra.resources;
+package com.dafttech.terra.graphics;
 
 import java.util.HashMap;
 import java.util.Map;

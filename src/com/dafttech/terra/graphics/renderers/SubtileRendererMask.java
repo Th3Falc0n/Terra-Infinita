@@ -3,10 +3,9 @@ package com.dafttech.terra.graphics.renderers;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.SubtileRenderer;
-import com.dafttech.terra.world.Subtile;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.subtiles.Subtile;
 
 public class SubtileRendererMask extends SubtileRenderer {
     public static SubtileRenderer $Instance = new SubtileRendererMask();

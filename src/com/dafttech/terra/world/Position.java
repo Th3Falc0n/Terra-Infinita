@@ -4,6 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.tiles.Tile;
 
 public class Position {
     public int x, y;
@@ -90,6 +91,11 @@ public class Position {
 
     public Position setTile(World world, Tile tile) {
         tile.addToWorld(world, this);
+        return this;
+    }
+
+    public Position destroyTile(Tile tile) {
+        tile.world.destroyTile(x, y);
         return this;
     }
 
