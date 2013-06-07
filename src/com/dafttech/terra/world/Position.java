@@ -93,6 +93,11 @@ public class Position {
         return this;
     }
 
+    public Position destroyTile(Tile tile) {
+        tile.world.destroyTile(x, y);
+        return this;
+    }
+
     public Tile getTile(World world) {
         return world.map[x][y];
     }
