@@ -15,8 +15,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
+import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
 import com.dafttech.terra.world.gen.WorldGenerator;
+import com.dafttech.terra.world.tiles.Tile;
 
 public class World implements IDrawable {
     public Vector2 size = new Vector2(0, 0);

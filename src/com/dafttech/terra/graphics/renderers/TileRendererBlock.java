@@ -3,10 +3,9 @@ package com.dafttech.terra.graphics.renderers;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.TileRenderer;
-import com.dafttech.terra.world.Tile;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.tiles.Tile;
 
 public class TileRendererBlock extends TileRenderer {
     public static TileRenderer $Instance = new TileRendererBlock();

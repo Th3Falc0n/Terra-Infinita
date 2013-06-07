@@ -1,4 +1,4 @@
-package com.dafttech.terra.world;
+package com.dafttech.terra.world.tiles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,14 +8,15 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.TileRenderer;
+import com.dafttech.terra.graphics.renderers.TileRenderer;
 import com.dafttech.terra.graphics.renderers.TileRendererBlock;
-import com.dafttech.terra.world.entities.Item;
+import com.dafttech.terra.world.Position;
+import com.dafttech.terra.world.World;
+import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.items.Item;
 import com.dafttech.terra.world.entities.items.ItemTile;
-import com.dafttech.terra.world.tiles.TileDirt;
-import com.dafttech.terra.world.tiles.TileGrass;
-import com.dafttech.terra.world.tiles.TileStone;
+import com.dafttech.terra.world.subtiles.Subtile;
 
 public abstract class Tile implements IDrawable {
     static Map<Integer, Class<? extends Tile>> registry = new HashMap<Integer, Class<? extends Tile>>();
@@ -41,7 +42,7 @@ public abstract class Tile implements IDrawable {
 
     public Position position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
-    World world = null;
+    public World world = null;
 
     public Tile() {
     }

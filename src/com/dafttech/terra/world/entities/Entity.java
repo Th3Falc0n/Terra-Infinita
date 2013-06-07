@@ -1,4 +1,4 @@
-package com.dafttech.terra.world;
+package com.dafttech.terra.world.entities;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
@@ -10,7 +10,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.Position;
+import com.dafttech.terra.world.Vector2;
+import com.dafttech.terra.world.World;
+import com.dafttech.terra.world.tiles.Tile;
 
 public abstract class Entity implements IDrawable {
     Vector2 position = new Vector2(0, 0);
@@ -82,12 +85,12 @@ public abstract class Entity implements IDrawable {
 
                     Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
                     Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);    
+                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
-                    
+
                     Color c = Color.BLUE;
-                    
+
                     if (prLeft.overlaps(rect)) {
                         lC = Color.CYAN;
                     }
@@ -103,15 +106,15 @@ public abstract class Entity implements IDrawable {
                     if (prTop.overlaps(rect)) {
                         tC = Color.CYAN;
                     }
-                    
-                    if(mDis.y >= mDis.x) {
+
+                    if (mDis.y >= mDis.x) {
                         c = Color.YELLOW;
                     }
-                    
-                    if(mDis.y < mDis.x) {
+
+                    if (mDis.y < mDis.x) {
                         c = Color.GREEN;
                     }
-                    
+
                     drawRect(rect, rend, c);
                 }
             }
@@ -140,10 +143,10 @@ public abstract class Entity implements IDrawable {
 
                     Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
                     Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);    
+                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
-                    
+
                     if (prBottom.overlaps(rect) && (mDis.y >= mDis.x)) {
                         onCollisionBottom(rect.y + rect.height + 1);
                     }
@@ -151,7 +154,7 @@ public abstract class Entity implements IDrawable {
                     if (prTop.overlaps(rect) && (mDis.y >= mDis.x)) {
                         onCollisionTop(rect.y - playerRect.height - 1);
                     }
-                    
+
                     if (prLeft.overlaps(rect) && (mDis.y < mDis.x)) {
                         onCollisionLeft(rect.x + rect.width + 1);
                     }

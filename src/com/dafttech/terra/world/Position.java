@@ -4,6 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.tiles.Tile;
 
 public class Position {
     public int x, y;

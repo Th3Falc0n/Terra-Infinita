@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.resources.Resources;
-import com.dafttech.terra.world.Entity;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
