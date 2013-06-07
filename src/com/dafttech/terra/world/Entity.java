@@ -104,11 +104,11 @@ public abstract class Entity implements IDrawable {
                         tC = Color.CYAN;
                     }
                     
-                    if(mDis.y >= mDis.x) {
+                    if(mDis.y + 1 > mDis.x) {
                         c = Color.YELLOW;
                     }
                     
-                    if(mDis.y < mDis.x) {
+                    if(mDis.y - 1 < mDis.x) {
                         c = Color.GREEN;
                     }
                     
@@ -144,19 +144,19 @@ public abstract class Entity implements IDrawable {
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
                     
-                    if (prBottom.overlaps(rect) && (mDis.y >= mDis.x)) {
+                    if (prBottom.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
                         onCollisionBottom(rect.y + rect.height + 1);
                     }
 
-                    if (prTop.overlaps(rect) && (mDis.y >= mDis.x)) {
+                    if (prTop.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
                         onCollisionTop(rect.y - playerRect.height - 1);
                     }
                     
-                    if (prLeft.overlaps(rect) && (mDis.y < mDis.x)) {
+                    if (prLeft.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
                         onCollisionLeft(rect.x + rect.width + 1);
                     }
 
-                    if (prRight.overlaps(rect) && (mDis.y < mDis.x)) {
+                    if (prRight.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
                         onCollisionRight(rect.x - playerRect.width - 1);
                     }
                 }
