@@ -75,12 +75,19 @@ public abstract class Entity implements IDrawable {
         Color bC = Color.WHITE;
         Color tC = Color.WHITE;
 
-        for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
-            for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
+        for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
+            for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                    drawRect(rect, rend, Color.BLUE);
 
+                    Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
+                    Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
+                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);    
+                    mDis.x = Math.abs(mDis.x);
+                    mDis.y = Math.abs(mDis.y);
+                    
+                    Color c = Color.BLUE;
+                    
                     if (prLeft.overlaps(rect)) {
                         lC = Color.CYAN;
                     }
@@ -96,6 +103,16 @@ public abstract class Entity implements IDrawable {
                     if (prTop.overlaps(rect)) {
                         tC = Color.CYAN;
                     }
+                    
+                    if(mDis.y >= mDis.x) {
+                        c = Color.YELLOW;
+                    }
+                    
+                    if(mDis.y < mDis.x) {
+                        c = Color.GREEN;
+                    }
+                    
+                    drawRect(rect, rend, c);
                 }
             }
         }
@@ -111,30 +128,36 @@ public abstract class Entity implements IDrawable {
 
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
-        Rectangle prLeft = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
-        Rectangle prRight = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
-        Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
-        Rectangle prTop = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
-
-        for (int x = mid.getX() - 1; x <= mid.getX() + 1 + size.x; x++) {
-            for (int y = mid.getY() - 1; y <= mid.getY() + 1 + size.y; y++) {
+        for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
+            for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
+                    Rectangle prLeft = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
+                    Rectangle prRight = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
+                    Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
+                    Rectangle prTop = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
+
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-                    if (prLeft.overlaps(rect)) {
-                        onCollisionLeft(rect.x + rect.width + 1);
-                    }
-
-                    if (prRight.overlaps(rect)) {
-                        onCollisionRight(rect.x - playerRect.width - 1);
-                    }
-
-                    if (prBottom.overlaps(rect)) {
+                    Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
+                    Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
+                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);    
+                    mDis.x = Math.abs(mDis.x);
+                    mDis.y = Math.abs(mDis.y);
+                    
+                    if (prBottom.overlaps(rect) && (mDis.y >= mDis.x)) {
                         onCollisionBottom(rect.y + rect.height + 1);
                     }
 
-                    if (prTop.overlaps(rect)) {
+                    if (prTop.overlaps(rect) && (mDis.y >= mDis.x)) {
                         onCollisionTop(rect.y - playerRect.height - 1);
+                    }
+                    
+                    if (prLeft.overlaps(rect) && (mDis.y < mDis.x)) {
+                        onCollisionLeft(rect.x + rect.width + 1);
+                    }
+
+                    if (prRight.overlaps(rect) && (mDis.y < mDis.x)) {
+                        onCollisionRight(rect.x - playerRect.width - 1);
                     }
                 }
             }
