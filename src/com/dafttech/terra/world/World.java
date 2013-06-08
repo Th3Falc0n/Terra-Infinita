@@ -54,32 +54,6 @@ public class World implements IDrawable {
         lightMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Format.RGBA8888);
         lightMap.setColor(Color.WHITE);
         lightMap.fill();
-        
-        lightMap.setColor(Color.BLACK);
-        lightMap.fill();
-        
-        lightMap.setColor(Color.WHITE);
-        
-        for(int x = 0; x < Gdx.graphics.getWidth(); x++) {
-            System.out.println(x);
-            for(int y = 0; y < Gdx.graphics.getHeight(); y++) {
-                Ray r = new Ray(new Vector3(x, y, 0), new Vector3(20, Gdx.graphics.getHeight() - 20, 0));
-                boolean light = true;        
-
-                for (int tx = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; tx < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx && light; tx++) {
-                    for (int ty = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; ty < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy && light; ty++) {
-                        Vector2 sp = new Position(tx, ty).toScreenPos(localPlayer);
-                        
-                        
-                        light = !Intersector.intersectRayBoundsFast(r, new BoundingBox(new Vector3(sp.x, sp.y, -1), new Vector3(sp.x + BLOCK_SIZE, sp.y + BLOCK_SIZE, 1)));
-                    }
-                }
-                
-                if(light) {
-                    lightMap.drawPixel(x, y);
-                }
-            }
-        }
     }
 
     public Tile getTile(int x, int y) {
