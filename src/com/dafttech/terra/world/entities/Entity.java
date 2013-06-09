@@ -146,7 +146,7 @@ public abstract class Entity implements IDrawable {
                     Vector2 mDis = (Vector2) pvMid.sub(cvMid);
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
-                    
+
                     if (prBottom.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
                         onCollisionBottom(rect.y + rect.height + 1);
                     }
@@ -154,7 +154,7 @@ public abstract class Entity implements IDrawable {
                     if (prTop.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
                         onCollisionTop(rect.y - playerRect.height - 1);
                     }
-                    
+
                     if (prLeft.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
                         onCollisionLeft(rect.x + rect.width + 1);
                     }
