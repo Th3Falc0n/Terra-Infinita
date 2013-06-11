@@ -3,6 +3,7 @@ package com.dafttech.terra.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.event.Events;
 import com.dafttech.terra.world.entities.Player;
 import com.dafttech.terra.world.tiles.Tile;
 
@@ -96,6 +97,7 @@ public class Position {
 
     public Position destroyTile(Tile tile) {
         tile.world.destroyTile(x, y);
+        Events.EVENT_BLOCKNEIGHBORCHANGE.callSync(tile);
         return this;
     }
 
