@@ -8,10 +8,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
@@ -26,9 +22,9 @@ public class World implements IDrawable {
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
 
-    Pixmap lightMap;
-
     public Player localPlayer = new Player(new Vector2(0, 0), this);
+    
+    World physWorld;
 
     public World(Vector2 size) {
         this.size.x = (int) size.x;
@@ -37,20 +33,8 @@ public class World implements IDrawable {
         gen = new WorldGenerator(this);
         gen.generate();
         localPlayer.setPosition(new Vector2(0, map[0].length * BLOCK_SIZE));
-
-        initLightmap();
     }
-
-    @SuppressWarnings("unused")
-    public void initLightmap() {
-        int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
-        int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
-
-        lightMap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Format.RGBA8888);
-        lightMap.setColor(Color.WHITE);
-        lightMap.fill();
-    }
-
+    
     public Tile getTile(int x, int y) {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
         return null;
@@ -112,16 +96,6 @@ public class World implements IDrawable {
         }
 
         screen.batch.end();
-
-        screen.batch.setBlendFunction(GL11.GL_DST_COLOR, GL11.GL_ZERO);
-
-        Texture reg = new Texture(lightMap);
-
-        screen.batch.begin();
-        screen.batch.draw(reg, 0, 0);
-        screen.batch.end();
-
-        reg.dispose();
 
         localPlayer.drawCollisionBoxes(this);
     }

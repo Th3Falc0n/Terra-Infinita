@@ -11,8 +11,7 @@ import com.dafttech.terra.world.World;
 
 public class Player extends Entity {
     public Player(Vector2 pos, World world) {
-        super(pos, world);
-        setSize(1.9f, 3.8f);
+        super(pos, world, new Vector2(1.9f, 3.8f));
     }
 
     @Override

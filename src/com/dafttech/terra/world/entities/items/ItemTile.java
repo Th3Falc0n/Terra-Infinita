@@ -11,11 +11,9 @@ public class ItemTile extends Item {
     Tile wrappedTile;
 
     public ItemTile(Tile tile) {
-        super(tile.position.toEntityPos(), tile.getWorld());
+        super(tile.position.toEntityPos(), tile.getWorld(), new Vector2(0.5f, 0.5f));
 
         wrappedTile = tile;
-
-        setSize(0.5f, 0.5f);
 
         getPosition().add(BLOCK_SIZE / 4, BLOCK_SIZE / 4);
         setVelocity(new Vector2((TerraInfinita.rnd.nextFloat() - 0.5f) * 80, (TerraInfinita.rnd.nextFloat() - 0.5f) * 80));

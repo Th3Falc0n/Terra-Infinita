@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.renderers.TileRenderer;
@@ -43,9 +44,6 @@ public abstract class Tile implements IDrawable {
     public Position position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
-
-    public Tile() {
-    }
 
     public World getWorld() {
         return world;

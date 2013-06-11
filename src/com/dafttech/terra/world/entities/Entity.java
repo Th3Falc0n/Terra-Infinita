@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.world.Position;
@@ -24,9 +25,10 @@ public abstract class Entity implements IDrawable {
 
     boolean inAir = false;
 
-    public Entity(Vector2 pos, World world) {
+    public Entity(Vector2 pos, World world, Vector2 s) {
         position = pos;
         worldObj = world;
+        size = s;
         world.localEntities.add(this);
     }
 
@@ -270,5 +272,9 @@ public abstract class Entity implements IDrawable {
         if (position.x >= player.getPosition().x / BLOCK_SIZE - sx && position.x <= player.getPosition().x / BLOCK_SIZE + sx
                 && position.y >= player.getPosition().y / BLOCK_SIZE - sy && position.y <= player.getPosition().y / BLOCK_SIZE + sy) return true;
         return false;
+    }
+
+    public Vector2 getSize() {
+        return size;
     }
 }

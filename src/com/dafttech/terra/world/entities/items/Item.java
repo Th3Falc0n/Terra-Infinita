@@ -28,9 +28,8 @@ public abstract class Item extends Entity implements IDrawableInventory {
         return null;
     }
 
-    public Item(Vector2 pos, World world) {
-        super(pos, world);
-        // TODO Auto-generated constructor stub
+    public Item(Vector2 pos, World world, Vector2 size) {
+        super(pos, world, size);
     }
 
     @Override
