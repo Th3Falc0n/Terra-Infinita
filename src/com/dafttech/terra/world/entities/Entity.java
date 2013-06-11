@@ -11,13 +11,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
+import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.tiles.Tile;
 
 public abstract class Entity implements IDrawable {
-    Vector2 position = new Vector2(0, 0);
+    protected Vector2 position = new Vector2(0, 0);
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
     Vector2 size;
@@ -150,49 +151,49 @@ public abstract class Entity implements IDrawable {
                     mDis.y = Math.abs(mDis.y);
 
                     if (prBottom.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
-                        onCollisionBottom(rect.y + rect.height + 1);
+                        onCollisionTop(rect.y + rect.height + 1);
                     }
 
                     if (prTop.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
-                        onCollisionTop(rect.y - playerRect.height - 1);
+                        onCollisionBottom(rect.y - playerRect.height - 1);
                     }
 
                     if (prLeft.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onCollisionLeft(rect.x + rect.width + 1);
+                        onCollisionRight(rect.x + rect.width + 1);
                     }
 
                     if (prRight.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onCollisionRight(rect.x - playerRect.width - 1);
+                        onCollisionLeft(rect.x - playerRect.width - 1);
                     }
                 }
             }
         }
     }
 
-    void onCollisionTop(float y) {
-        if (velocity.y > 0) {
-            velocity.y = 0;
-            position.y = y;
-        }
-    }
-
     void onCollisionBottom(float y) {
-        if (velocity.y < 0) {
+        if (velocity.y > 0) {
             velocity.y = 0;
             position.y = y;
             inAir = false;
         }
     }
 
+    void onCollisionTop(float y) {
+        if (velocity.y < 0) {
+            velocity.y = 0;
+            position.y = y;
+        }
+    }
+
     void onCollisionLeft(float x) {
-        if (velocity.x < 0) {
+        if (velocity.x > 0) {
             velocity.x = 0;
             position.x = x;
         }
     }
 
     void onCollisionRight(float x) {
-        if (velocity.x > 0) {
+        if (velocity.x < 0) {
             velocity.x = 0;
             position.x = x;
         }
@@ -229,7 +230,7 @@ public abstract class Entity implements IDrawable {
 
     @Override
     public void update(Player player, float delta) {
-        addForce(new Vector2(0, -20f));
+        addForce(new Vector2(0, 20f));
 
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
@@ -272,6 +273,14 @@ public abstract class Entity implements IDrawable {
         if (position.x >= player.getPosition().x / BLOCK_SIZE - sx && position.x <= player.getPosition().x / BLOCK_SIZE + sx
                 && position.y >= player.getPosition().y / BLOCK_SIZE - sy && position.y <= player.getPosition().y / BLOCK_SIZE + sy) return true;
         return false;
+    }
+    
+    public boolean isLightEmitter() {
+        return false;
+    }
+    
+    public Light getEmittedLight() {
+        return null;
     }
 
     public Vector2 getSize() {

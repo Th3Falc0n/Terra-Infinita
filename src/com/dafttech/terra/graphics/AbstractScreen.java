@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class AbstractScreen implements Screen {
 
@@ -32,6 +33,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     public SpriteBatch batch = new SpriteBatch();
+    public ShapeRenderer shr = new ShapeRenderer();
 
     @Override
     public void render(float arg0) {
