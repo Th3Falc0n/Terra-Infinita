@@ -56,6 +56,10 @@ public class World implements IDrawable {
         return null;
     }
 
+    public void setTile(Tile tile, Position pos) {
+        if (pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y) map[pos.x][pos.y] = tile;
+    }
+
     public void destroyTile(int x, int y) {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) {
             map[x][y].spawnAsEntity();
