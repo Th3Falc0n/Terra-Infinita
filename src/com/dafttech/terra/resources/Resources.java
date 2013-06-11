@@ -1,6 +1,5 @@
 package com.dafttech.terra.resources;
 
-import com.dafttech.terra.graphics.ImageLibrary;
 
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();

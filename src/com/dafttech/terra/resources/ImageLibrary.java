@@ -1,4 +1,4 @@
-package com.dafttech.terra.graphics;
+package com.dafttech.terra.resources;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,12 +11,14 @@ public class ImageLibrary {
 
     public void loadImage(String name, String path) {
         library.put(name, new TextureRegion(new Texture(path)));
+        library.get(name).flip(false, true);
     }
 
     public void loadImage(String name, String path, int num) {
         for (int i = 0; i <= num; i++) {
             library.put(name + i,
                     new TextureRegion(new Texture(path.substring(0, path.lastIndexOf(".")) + "_" + i + path.substring(path.lastIndexOf(".")))));
+            library.get(name + i).flip(false, true);
         }
     }
 
