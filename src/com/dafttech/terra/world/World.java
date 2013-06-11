@@ -5,15 +5,12 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.lwjgl.opengl.GL11;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.passes.PassLighting;
 import com.dafttech.terra.graphics.passes.PassObjects;
-import com.dafttech.terra.graphics.passes.RenderingPass;
 import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
 import com.dafttech.terra.world.gen.WorldGenerator;
@@ -26,10 +23,10 @@ public class World implements IDrawable {
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
 
     public Player localPlayer = new Player(new Vector2(0, 0), this);
-    
+
     World physWorld;
-    
-    PassObjects  rpObjects = new PassObjects();
+
+    PassObjects rpObjects = new PassObjects();
     PassLighting rpLighting = new PassLighting();
 
     public World(Vector2 size) {
@@ -40,7 +37,7 @@ public class World implements IDrawable {
         gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
     }
-    
+
     public Tile getTile(int x, int y) {
         if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
         return null;
@@ -78,8 +75,8 @@ public class World implements IDrawable {
 
         for (Entity entity : localEntities) {
             entity.update(player, delta);
-            
-            if(entity.isLightEmitter()) {
+
+            if (entity.isLightEmitter()) {
                 rpLighting.addLight(entity.getEmittedLight());
             }
         }

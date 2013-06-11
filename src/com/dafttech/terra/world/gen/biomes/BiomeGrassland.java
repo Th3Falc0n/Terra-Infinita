@@ -18,10 +18,9 @@ public class BiomeGrassland extends Biome {
     public void generateTerrain(WorldGenerator gen) {
         for (int x = 0; x < gen.world.size.x; x++) {
             for (int y = 0; y < gen.world.size.y; y++) {
-                new Position(x, y).setTile(
-                        gen.world,
-                        y == gen.world.size.y - 1 ? new TileGrass() : y > gen.world.size.y - gen.world.size.y / 6 ? new TileDirt()
-                                .addSubtile(y == gen.world.size.y - 2 ? new SubtileGrass() : null) : new TileStone());
+                new Position(x, y).setTile(gen.world,
+                        y == 0 ? new TileGrass() : y < gen.world.size.y / 6 ? new TileDirt().addSubtile(y == 1 ? new SubtileGrass() : null)
+                                : new TileStone());
             }
         }
     }

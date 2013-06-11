@@ -14,7 +14,7 @@ public class ScreenIngame extends AbstractScreen {
         localWorld = new World(new Vector2(1000, 500));
         super.show();
     }
-    
+
     @Override
     public void render(float delta) {
         delta *= BLOCK_SIZE / 2;

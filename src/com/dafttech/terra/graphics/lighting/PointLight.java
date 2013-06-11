@@ -9,20 +9,20 @@ public class PointLight extends Light {
 
     Vector2 position = new Vector2(0, 0);
     float size;
-    
+
     public PointLight(Vector2 p, float s) {
         position.set(p);
         size = s;
     }
-    
+
     public void setPosition(Vector2 p) {
         position.set(p);
     }
-    
+
     @Override
     public void drawToLightmap(AbstractScreen screen, Player player) {
         Vector2 p = position.toRenderPosition(player.getPosition());
-        
+
         screen.shr.begin(ShapeType.FilledCircle);
         screen.shr.filledCircle(p.x, p.y, size);
         screen.shr.end();

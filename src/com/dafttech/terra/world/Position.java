@@ -26,7 +26,8 @@ public class Position {
     }
 
     public Vector2 toScreenPos(Player player) {
-        return new Vector2(x * BLOCK_SIZE - player.getPosition().x + Gdx.graphics.getWidth() / 2, y * BLOCK_SIZE - player.getPosition().y + Gdx.graphics.getHeight() / 2);
+        return new Vector2(x * BLOCK_SIZE - player.getPosition().x + Gdx.graphics.getWidth() / 2, y * BLOCK_SIZE - player.getPosition().y
+                + Gdx.graphics.getHeight() / 2);
     }
 
     public Vector2 toEntityPos() {
