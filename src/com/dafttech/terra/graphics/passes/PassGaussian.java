@@ -26,7 +26,13 @@ public class PassGaussian extends RenderingPass {
     @Override
     public void applyPass(AbstractScreen screen, Player player, World w, Object... arguments) {
         if(!(arguments[0] instanceof Texture)) throw new IllegalArgumentException("Need a texture to draw");
-        if(!(arguments[1] instanceof FrameBuffer)) throw new IllegalArgumentException("Need a destination buffer");
+        
+        float size = 0.02f;
+        
+        if(arguments.length > 2 && arguments[2] != null) {
+            size = (float)arguments[2];
+        }
+        
         pass = (Texture)arguments[0];
         
         bfPass1.begin();
@@ -36,6 +42,7 @@ public class PassGaussian extends RenderingPass {
         screen.batch.setShader(ShaderLibrary.getShader("GaussV"));
 
         screen.batch.begin();
+        ShaderLibrary.getShader("GaussV").setUniformf("u_size", size);
         screen.batch.draw(pass, 0, 0);
         screen.batch.end();
         
@@ -50,6 +57,7 @@ public class PassGaussian extends RenderingPass {
         screen.batch.setShader(ShaderLibrary.getShader("GaussH"));
 
         screen.batch.begin();
+        ShaderLibrary.getShader("GaussH").setUniformf("u_size", size);
         screen.batch.draw(pass, 0, 0);
         screen.batch.end();
         
@@ -57,7 +65,8 @@ public class PassGaussian extends RenderingPass {
         
         pass = bfPass2.getColorBufferTexture();
 
-        ((FrameBuffer)(arguments[1])).begin();
+
+        if(arguments.length > 1 && arguments[1] instanceof FrameBuffer) ((FrameBuffer)(arguments[1])).begin();
         
         screen.batch.setShader(null);
 
@@ -65,7 +74,8 @@ public class PassGaussian extends RenderingPass {
         screen.batch.draw(pass, 0, 0);
         screen.batch.end();
         
-        ((FrameBuffer)(arguments[1])).end();
+
+        if(arguments.length > 1 && arguments[1] instanceof FrameBuffer) ((FrameBuffer)(arguments[1])).end();
     }
 
 }
