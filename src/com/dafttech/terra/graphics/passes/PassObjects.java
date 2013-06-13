@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix3;
 import com.dafttech.terra.graphics.AbstractScreen;
+import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
@@ -23,7 +24,8 @@ public class PassObjects extends RenderingPass {
     public void applyPass(AbstractScreen screen, Player player, World w) {
         buffer.begin();
         Gdx.graphics.getGL20().glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
+        
+        screen.batch.setShader(null);
         
         screen.batch.enableBlending();
         screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -46,6 +48,8 @@ public class PassObjects extends RenderingPass {
         screen.batch.end();
         
         buffer.end();
+        
+        screen.batch.setShader(ShaderLibrary.getShader("Test"));
         
         screen.batch.disableBlending();
         screen.batch.begin();

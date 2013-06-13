@@ -1,5 +1,9 @@
 package com.dafttech.terra.resources;
 
+import java.io.IOException;
+
+import com.dafttech.terra.graphics.shaders.ShaderLibrary;
+
 
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
@@ -12,5 +16,12 @@ public class Resources {
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
         TILES.loadImage("bone", "res/tiles/bone.png");
+        
+        try {
+            ShaderLibrary.loadShader("Test", "Test", "Test");
+            ShaderLibrary.loadShader("Test", "Test", "Test");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
