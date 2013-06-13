@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 
-
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
 

@@ -9,7 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.Texture;
+=======
+>>>>>>> branch 'master' of git@github.com:Th3Falc0n/Terra-Infinita.git
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.lighting.Light;
@@ -20,13 +23,13 @@ import com.dafttech.terra.world.entities.Player;
 public class PassLighting extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
     Texture pass;
-    
+
     List<Light> lights = new ArrayList<Light>();
 
     public void addLight(Light l) {
         lights.add(l);
     }
-    
+
     @Override
     public void applyPass(AbstractScreen screen, Player player, World w) {
         buffer.begin();
@@ -34,11 +37,12 @@ public class PassLighting extends RenderingPass {
         Gdx.graphics.getGL20().glClearColor(1f, 1f, 1f, 1);
         Gdx.graphics.getGL20().glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
         
-        
-        for(Light l : lights) {
+        Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        for (Light l : lights) {
             l.drawToLightmap(screen, player);
         }
-        
+
         buffer.end();
         
         pass = buffer.getColorBufferTexture();
@@ -50,7 +54,7 @@ public class PassLighting extends RenderingPass {
         screen.batch.begin();
         screen.batch.draw(pass, 0, 0);
         screen.batch.end();
-        
+
         lights.clear();
     }
 

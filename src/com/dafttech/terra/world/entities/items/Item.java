@@ -20,7 +20,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
     public static void registerItem(Integer id, Class<?> mat) {
         registry.put(id, mat);
     }
-    
+
     PointLight light = new PointLight(position, 12);
 
     public static Item getInstanceOf(Integer id) {
@@ -46,7 +46,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
         // TODO Auto-generated method stub
 
     }
-    
+
     @Override
     public void update(Player player, float delta) {
         // TODO Auto-generated method stub
@@ -54,12 +54,11 @@ public abstract class Item extends Entity implements IDrawableInventory {
         light.setPosition(position);
     }
 
-    
     @Override
     public boolean isLightEmitter() {
         return true;
     }
-    
+
     @Override
     public Light getEmittedLight() {
         return light;

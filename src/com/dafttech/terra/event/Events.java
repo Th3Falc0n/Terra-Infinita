@@ -21,7 +21,7 @@ public class Events {
     public static final EventType EVENT_WINDISPOSE = new EventType(EVENTMANAGER);
 
     public static final EventType EVENT_WORLDTICK = new EventType(EVENTMANAGER);
-    
+
     public static final EventType EVENT_BLOCKNEIGHBORCHANGE = new EventType(EVENTMANAGER);
 
     public void init() {

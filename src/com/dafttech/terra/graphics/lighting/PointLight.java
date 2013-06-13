@@ -13,16 +13,16 @@ public class PointLight extends Light {
 
     Vector2 position = new Vector2(0, 0);
     float size;
-    
+
     public PointLight(Vector2 p, float s) {
         position.set(p);
         size = s;
     }
-    
+
     public void setPosition(Vector2 p) {
         position.set(p);
     }
-    
+
     @Override
     public void drawToLightmap(AbstractScreen screen, Player player) {
         Vector2 p = position.toRenderPosition(player.getPosition());
@@ -45,7 +45,6 @@ public class PointLight extends Light {
             screen.shr.filledTriangle(p.x, p.y, p.x + dxA * size, p.y + dyA * size, p.x + dxB * size, p.y + dyB * size);
         }
 
-        
         screen.shr.end();
     }
 

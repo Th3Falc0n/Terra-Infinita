@@ -5,12 +5,9 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Matrix3;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 import com.dafttech.terra.world.World;
@@ -46,14 +43,14 @@ public class PassObjects extends RenderingPass {
         }
 
         screen.batch.end();
-        
+
         buffer.end();
         
         screen.batch.setShader(ShaderLibrary.getShader("Test"));
-        
+
         screen.batch.disableBlending();
         screen.batch.begin();
-        
+
         screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
         screen.batch.end();
     }

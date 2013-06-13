@@ -15,7 +15,7 @@ public class Player extends Entity {
     public Player(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.9f, 3.8f));
     }
-    
+
     PointLight light = new PointLight(position, 150);
 
     @Override
@@ -31,7 +31,7 @@ public class Player extends Entity {
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y);
         }
-        
+
         light.setPosition(position);
     }
 
@@ -39,12 +39,12 @@ public class Player extends Entity {
     public TextureRegion getImage() {
         return Resources.TILES.getImage("error");
     }
-    
+
     @Override
     public boolean isLightEmitter() {
         return true;
     }
-    
+
     @Override
     public Light getEmittedLight() {
         return light;
