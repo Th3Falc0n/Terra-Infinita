@@ -9,10 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-<<<<<<< HEAD
 import com.badlogic.gdx.graphics.Texture;
-=======
->>>>>>> branch 'master' of git@github.com:Th3Falc0n/Terra-Infinita.git
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.lighting.Light;
