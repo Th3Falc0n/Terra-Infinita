@@ -34,7 +34,7 @@ public class Player extends Entity {
             getWorld().destroyTile(destroy.x, destroy.y);
         }
 
-        light.setPosition(new Vector2(position.x + size.x * BLOCK_SIZE / 2, position.y + size.y * BLOCK_SIZE / 2));
+        light.setPosition(new Vector2(position.x + size.x * BLOCK_SIZE / 2, position.y - size.y * BLOCK_SIZE / 2));
     }
 
     @Override
