@@ -46,7 +46,11 @@ public class PassObjects extends RenderingPass {
 
         buffer.end();
         
-        RenderingPass.rpGaussian.applyPass(screen, player, w, buffer.getColorBufferTexture());
+        screen.batch.setShader(null);
+
+        screen.batch.begin();
+        screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
+        screen.batch.end();
     }
 
 }

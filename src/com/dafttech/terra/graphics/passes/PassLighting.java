@@ -30,10 +30,8 @@ public class PassLighting extends RenderingPass {
     public void applyPass(AbstractScreen screen, Player player, World w, Object... arguments) {
         buffer.begin();
         
-        Gdx.graphics.getGL20().glClearColor(1f, 1f, 1f, 1);
+        Gdx.graphics.getGL20().glClearColor(.1f, .1f, .1f, 1);
         Gdx.graphics.getGL20().glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-        
-        Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         for (Light l : lights) {
             l.drawToLightmap(screen, player);
@@ -41,10 +39,15 @@ public class PassLighting extends RenderingPass {
 
         buffer.end();
         
+        RenderingPass.rpGaussian.applyPass(screen, player, w, buffer.getColorBufferTexture(), buffer);
+        
         screen.batch.setShader(null);
         screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
         screen.batch.enableBlending();
-        
+
+        screen.batch.begin();
+        screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
+        screen.batch.end();
 
         lights.clear();
     }

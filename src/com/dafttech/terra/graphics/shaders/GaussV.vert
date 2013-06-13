@@ -10,6 +10,7 @@ varying vec2 v_blurTexCoords[14];
 
 void main() {
     v_color = a_color;
+    
     v_texCoord = a_texCoord0;
     
     gl_Position = u_projTrans * a_position;   
