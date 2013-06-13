@@ -18,7 +18,7 @@ public class PassObjects extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
     @Override
-    public void applyPass(AbstractScreen screen, Player player, World w) {
+    public void applyPass(AbstractScreen screen, Player player, World w, Object... arguments) {
         buffer.begin();
         Gdx.graphics.getGL20().glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
         
@@ -46,13 +46,7 @@ public class PassObjects extends RenderingPass {
 
         buffer.end();
         
-        screen.batch.setShader(ShaderLibrary.getShader("Test"));
-
-        screen.batch.disableBlending();
-        screen.batch.begin();
-
-        screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
-        screen.batch.end();
+        RenderingPass.rpGaussian.applyPass(screen, player, w, buffer.getColorBufferTexture());
     }
 
 }

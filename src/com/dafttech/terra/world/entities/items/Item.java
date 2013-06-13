@@ -53,14 +53,4 @@ public abstract class Item extends Entity implements IDrawableInventory {
         super.update(player, delta);
         light.setPosition(position);
     }
-
-    @Override
-    public boolean isLightEmitter() {
-        return true;
-    }
-
-    @Override
-    public Light getEmittedLight() {
-        return light;
-    }
 }

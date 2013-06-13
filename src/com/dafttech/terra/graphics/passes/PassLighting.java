@@ -19,7 +19,6 @@ import com.dafttech.terra.world.entities.Player;
 
 public class PassLighting extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-    Texture pass;
 
     List<Light> lights = new ArrayList<Light>();
 
@@ -28,7 +27,7 @@ public class PassLighting extends RenderingPass {
     }
 
     @Override
-    public void applyPass(AbstractScreen screen, Player player, World w) {
+    public void applyPass(AbstractScreen screen, Player player, World w, Object... arguments) {
         buffer.begin();
         
         Gdx.graphics.getGL20().glClearColor(1f, 1f, 1f, 1);
@@ -42,15 +41,10 @@ public class PassLighting extends RenderingPass {
 
         buffer.end();
         
-        pass = buffer.getColorBufferTexture();
-        
         screen.batch.setShader(null);
         screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
         screen.batch.enableBlending();
         
-        screen.batch.begin();
-        screen.batch.draw(pass, 0, 0);
-        screen.batch.end();
 
         lights.clear();
     }

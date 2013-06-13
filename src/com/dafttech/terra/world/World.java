@@ -11,6 +11,7 @@ import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.passes.PassLighting;
 import com.dafttech.terra.graphics.passes.PassObjects;
+import com.dafttech.terra.graphics.passes.RenderingPass;
 import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
 import com.dafttech.terra.world.gen.WorldGenerator;
@@ -26,8 +27,6 @@ public class World implements IDrawable {
 
     World physWorld;
 
-    PassObjects rpObjects = new PassObjects();
-    PassLighting rpLighting = new PassLighting();
 
     public World(Vector2 size) {
         this.size.x = (int) size.x;
@@ -77,7 +76,7 @@ public class World implements IDrawable {
             entity.update(player, delta);
 
             if (entity.isLightEmitter()) {
-                rpLighting.addLight(entity.getEmittedLight());
+                RenderingPass.rpLighting.addLight(entity.getEmittedLight());
             }
         }
 
@@ -86,7 +85,7 @@ public class World implements IDrawable {
 
     @Override
     public void draw(AbstractScreen screen, Player player) {
-        rpObjects.applyPass(screen, player, this);
-        rpLighting.applyPass(screen, player, this);
+        RenderingPass.rpObjects.applyPass(screen, player, this);
+        RenderingPass.rpLighting.applyPass(screen, player, this);
     }
 }

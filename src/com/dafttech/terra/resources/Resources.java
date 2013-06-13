@@ -17,8 +17,8 @@ public class Resources {
         TILES.loadImage("bone", "res/tiles/bone.png");
         
         try {
-            ShaderLibrary.loadShader("Test", "Test", "Test");
-            ShaderLibrary.loadShader("Test", "Test", "Test");
+            ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");
+            ShaderLibrary.loadShader("GaussV", "GaussV", "Gauss");
         } catch (IOException e) {
             e.printStackTrace();
         }
