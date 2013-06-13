@@ -39,7 +39,7 @@ public class Player extends Entity {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("error");
+        return Resources.ENTITIES.getImage("player");
     }
 
     @Override

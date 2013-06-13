@@ -6,6 +6,7 @@ import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
+    public static ImageLibrary ENTITIES = new ImageLibrary();
 
     public static void init() {
         TILES.loadImage("error", "res/error.png");
@@ -15,6 +16,8 @@ public class Resources {
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
         TILES.loadImage("bone", "res/tiles/bone.png");
+        
+        ENTITIES.loadImage("player", "res/entities/player.png");
         
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");
