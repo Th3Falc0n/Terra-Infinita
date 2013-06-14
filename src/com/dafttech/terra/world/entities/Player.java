@@ -4,14 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.graphics.lighting.Light;
-import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
-
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Player extends Entity {
     public Player(Vector2 pos, World world) {
@@ -32,7 +28,7 @@ public class Player extends Entity {
             getWorld().destroyTile(destroy.x, destroy.y);
         }
     }
-    
+
     @Override
     public TextureRegion getImage() {
         return Resources.ENTITIES.getImage("player");

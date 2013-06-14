@@ -6,7 +6,6 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawableInventory;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Vector2;

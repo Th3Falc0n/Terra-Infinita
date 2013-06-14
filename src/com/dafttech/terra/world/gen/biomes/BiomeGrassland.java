@@ -23,8 +23,8 @@ public class BiomeGrassland extends Biome {
             for (int y = 0; y < gen.world.size.y; y++) {
                 new Position(x, y).setTile(gen.world, y == 0 ? TerraInfinita.rnd.nextInt(20) == 0 ? new TileWeed() : new TileGrass()
                         : y < gen.world.size.y / 6 ? new TileDirt().addSubtile(y == 1 ? new SubtileGrass() : null) : new TileStone());
-                                
-                if(y == 0 && x % 16 == 0) {
+
+                if (y == 0 && x % 16 == 0) {
                     new Position(x, y).setTile(gen.world, new TileTorch());
                 }
             }

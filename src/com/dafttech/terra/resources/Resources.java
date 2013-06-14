@@ -18,9 +18,9 @@ public class Resources {
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
         TILES.loadImage("bone", "res/tiles/bone.png");
-        
+
         ENTITIES.loadImage("player", "res/entities/player.png");
-        
+
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");
             ShaderLibrary.loadShader("GaussV", "GaussV", "Gauss");

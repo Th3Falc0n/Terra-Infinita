@@ -16,10 +16,10 @@ public class Particle extends Entity {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     @Override
     public void checkTerrainCollisions(World world) {
-        
+
     }
 
 }

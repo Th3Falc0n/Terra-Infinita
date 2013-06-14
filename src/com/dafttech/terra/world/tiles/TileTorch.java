@@ -25,13 +25,13 @@ public class TileTorch extends Tile {
     public TextureRegion getImage() {
         return Resources.TILES.getImage("torch", grassIndex);
     }
-    
+
     @Override
     public void update(Player player, float delta) {
         super.update(player, delta);
-        
-        if(light == null) light = new PointLight(position.toEntityPos(), 95);
-        
+
+        if (light == null) light = new PointLight(position.toEntityPos(), 95);
+
         light.setPosition((Vector2) position.toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
     }
 

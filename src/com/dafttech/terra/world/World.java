@@ -9,8 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.passes.PassLighting;
-import com.dafttech.terra.graphics.passes.PassObjects;
 import com.dafttech.terra.graphics.passes.RenderingPass;
 import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.entities.Player;
@@ -26,7 +24,6 @@ public class World implements IDrawable {
     public Player localPlayer = new Player(new Vector2(0, 0), this);
 
     World physWorld;
-
 
     public World(Vector2 size) {
         this.size.x = (int) size.x;
