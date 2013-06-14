@@ -6,6 +6,7 @@ import com.dafttech.terra.world.subtiles.SubtileGrass;
 import com.dafttech.terra.world.tiles.TileDirt;
 import com.dafttech.terra.world.tiles.TileGrass;
 import com.dafttech.terra.world.tiles.TileStone;
+import com.dafttech.terra.world.tiles.TileTorch;
 
 public class BiomeGrassland extends Biome {
     public BiomeGrassland(String name) {
@@ -21,6 +22,10 @@ public class BiomeGrassland extends Biome {
                 new Position(x, y).setTile(gen.world,
                         y == 0 ? new TileGrass() : y < gen.world.size.y / 6 ? new TileDirt().addSubtile(y == 1 ? new SubtileGrass() : null)
                                 : new TileStone());
+                
+                if(y == 0 && x % 16 == 0) {
+                    new Position(x, y).setTile(gen.world, new TileTorch());
+                }
             }
         }
     }

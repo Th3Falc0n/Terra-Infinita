@@ -25,7 +25,7 @@ public class PointLight extends Light {
 
     @Override
     public void drawToLightmap(AbstractScreen screen, Player player) {
-        Vector2 p = position.toRenderPosition(player.getPosition());
+        Vector2 p = (Vector2) position.toRenderPosition(player.getPosition());
   
         screen.shr.begin(ShapeType.FilledTriangle);   
         

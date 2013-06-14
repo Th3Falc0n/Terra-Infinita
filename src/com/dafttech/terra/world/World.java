@@ -68,7 +68,13 @@ public class World implements IDrawable {
 
         for (int x = (int) player.getPosition().x / BLOCK_SIZE - sx; x < (int) player.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) player.getPosition().y / BLOCK_SIZE - sy; y < (int) player.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) map[x][y].update(player, delta);
+                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) {
+                    map[x][y].update(player, delta);
+
+                    if (map[x][y].isLightEmitter()) {
+                        RenderingPass.rpLighting.addLight(map[x][y].getEmittedLight());
+                    }
+                }
             }
         }
 

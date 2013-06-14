@@ -64,6 +64,9 @@ public class PassGaussian extends RenderingPass {
         bfPass2.end();
         
         pass = bfPass2.getColorBufferTexture();
+        
+        TextureRegion reg = new TextureRegion(pass);
+        reg.flip(false, true);
 
 
         if(arguments.length > 1 && arguments[1] instanceof FrameBuffer) ((FrameBuffer)(arguments[1])).begin();
@@ -71,7 +74,7 @@ public class PassGaussian extends RenderingPass {
         screen.batch.setShader(null);
 
         screen.batch.begin();
-        screen.batch.draw(pass, 0, 0);
+        screen.batch.draw(reg, 0, 0);
         screen.batch.end();
         
 

@@ -13,6 +13,7 @@ public class Resources {
         TILES.loadImage("dirt", "res/tiles/dirt.png");
         TILES.loadImage("stone", "res/tiles/stone.png");
         TILES.loadImage("grass", "res/tiles/grass.png", 4);
+        TILES.loadImage("torch", "res/tiles/torch.png");
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
         TILES.loadImage("bone", "res/tiles/bone.png");
