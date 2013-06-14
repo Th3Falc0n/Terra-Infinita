@@ -90,18 +90,77 @@ public class Position {
         return set(pos.toWorldPosition());
     }
 
+    public Position setXNew(int x) {
+        Position newPos = new Position(this);
+        newPos.x = x;
+        return newPos;
+    }
+
+    public Position setYNew(int y) {
+        Position newPos = new Position(this);
+        newPos.y = y;
+        return newPos;
+    }
+
+    public Position setNew(int x, int y) {
+        Position newPos = new Position(this);
+        newPos.x = x;
+        newPos.y = y;
+        return newPos;
+    }
+
+    public Position setNew(Position pos) {
+        Position newPos = new Position(this);
+        newPos.x = pos.x;
+        newPos.y = pos.y;
+        return newPos;
+    }
+
+    public Position addXNew(int x) {
+        Position newPos = new Position(this);
+        newPos.x += x;
+        return newPos;
+    }
+
+    public Position addYNew(int y) {
+        Position newPos = new Position(this);
+        newPos.y += y;
+        return newPos;
+    }
+
+    public Position addNew(int x, int y) {
+        Position newPos = new Position(this);
+        newPos.x += x;
+        newPos.y += y;
+        return newPos;
+    }
+
+    public Position addNew(Position pos) {
+        Position newPos = new Position(this);
+        newPos.x += pos.x;
+        newPos.y += pos.y;
+        return newPos;
+    }
+
+    public Position setNew(Vector2 pos) {
+        Position newPos = new Position(this);
+        return newPos.set(pos.toWorldPosition());
+    }
+
     public Position setTile(World world, Tile tile) {
+        if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
         tile.addToWorld(world, this);
         return this;
     }
 
     public Position destroyTile(Tile tile) {
         tile.world.destroyTile(x, y);
-        Events.EVENT_BLOCKNEIGHBORCHANGE.callSync(tile);
+        Events.EVENT_BLOCKCHANGE.callSync(tile);
         return this;
     }
 
     public Tile getTile(World world) {
+        if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
         return world.map[x][y];
     }
 }
