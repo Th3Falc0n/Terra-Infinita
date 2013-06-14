@@ -11,6 +11,8 @@ import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 public class Player extends Entity {
     public Player(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.9f, 3.8f));
@@ -32,12 +34,12 @@ public class Player extends Entity {
             getWorld().destroyTile(destroy.x, destroy.y);
         }
 
-        light.setPosition(position);
+        light.setPosition(new Vector2(position.x + size.x * BLOCK_SIZE / 2, position.y - size.y * BLOCK_SIZE / 2));
     }
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("error");
+        return Resources.ENTITIES.getImage("player");
     }
 
     @Override
