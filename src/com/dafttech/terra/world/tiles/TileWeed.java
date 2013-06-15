@@ -32,10 +32,9 @@ public class TileWeed extends Tile {
     }
 
     public void tryGrow(Position pos) {
-        if (pos.getTile(world) != null || pos.getTile(world) instanceof TileGrass) return;
+        if (pos.getTile(world) != null && !(pos.getTile(world) instanceof TileGrass)) return;
         Tile tile = pos.addYNew(1).getTile(world);
         if (tile instanceof TileWeed || tile instanceof TileDirt) {
-            System.out.println("test");
             pos.setTile(world, new TileWeed());
         }
     }
