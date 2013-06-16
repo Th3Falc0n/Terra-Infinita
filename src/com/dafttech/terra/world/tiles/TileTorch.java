@@ -23,7 +23,7 @@ public class TileTorch extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("torch", grassIndex);
+        return Resources.TILES.getImage("torch");
     }
 
     @Override

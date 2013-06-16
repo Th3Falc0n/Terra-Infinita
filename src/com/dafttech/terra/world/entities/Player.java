@@ -27,6 +27,15 @@ public class Player extends Entity {
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y);
         }
+        
+
+        if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+            EntityArrow a = new EntityArrow(new Vector2(position), worldObj);
+            
+            a.setVelocity((Vector2) Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight()/2)));
+            
+            worldObj.addEntity(a);
+        }
     }
 
     @Override

@@ -150,26 +150,26 @@ public abstract class Entity implements IDrawable {
                     mDis.y = Math.abs(mDis.y);
 
                     if (prBottom.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
-                        onCollisionTop(rect.y + rect.height + 1);
+                        onTerrainCollisionTop(rect.y + rect.height + 1);
                     }
 
                     if (prTop.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
-                        onCollisionBottom(rect.y - playerRect.height - 1);
+                        onTerrainCollisionBottom(rect.y - playerRect.height - 1);
                     }
 
                     if (prLeft.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onCollisionRight(rect.x + rect.width + 1);
+                        onTerrainCollisionRight(rect.x + rect.width + 1);
                     }
 
                     if (prRight.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onCollisionLeft(rect.x - playerRect.width - 1);
+                        onTerrainCollisionLeft(rect.x - playerRect.width - 1);
                     }
                 }
             }
         }
     }
 
-    void onCollisionBottom(float y) {
+    void onTerrainCollisionBottom(float y) {
         if (velocity.y > 0) {
             velocity.y = 0;
             position.y = y;
@@ -177,21 +177,21 @@ public abstract class Entity implements IDrawable {
         }
     }
 
-    void onCollisionTop(float y) {
+    void onTerrainCollisionTop(float y) {
         if (velocity.y < 0) {
             velocity.y = 0;
             position.y = y;
         }
     }
 
-    void onCollisionLeft(float x) {
+    void onTerrainCollisionLeft(float x) {
         if (velocity.x > 0) {
             velocity.x = 0;
             position.x = x;
         }
     }
 
-    void onCollisionRight(float x) {
+    void onTerrainCollisionRight(float x) {
         if (velocity.x < 0) {
             velocity.x = 0;
             position.x = x;
@@ -242,8 +242,12 @@ public abstract class Entity implements IDrawable {
         inAir = true;
         checkTerrainCollisions(player.getWorld());
 
-        velocity.y *= 1 - 0.1f * delta;
-        velocity.x *= 1 - getUndergroundFriction() * delta;
+        velocity.y *= 1 - 0.025f * delta;
+        velocity.x *= 1 - 0.025f * delta;
+        
+        if(!inAir) {
+            velocity.x *= 1 - getUndergroundFriction() * delta;
+        }
     }
 
     public Tile getUndergroundTile() {

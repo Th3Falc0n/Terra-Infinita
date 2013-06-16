@@ -12,6 +12,11 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
         y = ny;
     }
 
+    public Vector2(Vector2 v) {
+        x = v.x;
+        y = v.y;
+    }
+
     public Vector2 setNull() {
         x = 0;
         y = 0;

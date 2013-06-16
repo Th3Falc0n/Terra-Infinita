@@ -20,6 +20,7 @@ public class Resources {
         TILES.loadImage("bone", "res/tiles/bone.png");
 
         ENTITIES.loadImage("player", "res/entities/player.png");
+        ENTITIES.loadImage("arrow", "res/entities/arrow.png");
 
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");
