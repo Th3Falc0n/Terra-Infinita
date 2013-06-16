@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.lighting.Light;
+import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
@@ -282,7 +283,7 @@ public abstract class Entity implements IDrawable {
         return false;
     }
 
-    public Light getEmittedLight() {
+    public PointLight getEmittedLight() {
         return null;
     }
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.lighting.Light;
+import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.graphics.renderers.TileRenderer;
 import com.dafttech.terra.graphics.renderers.TileRendererBlock;
 import com.dafttech.terra.world.Position;
@@ -116,7 +117,7 @@ public abstract class Tile implements IDrawable {
         return false;
     }
 
-    public Light getEmittedLight() {
+    public PointLight getEmittedLight() {
         return null;
     }
 

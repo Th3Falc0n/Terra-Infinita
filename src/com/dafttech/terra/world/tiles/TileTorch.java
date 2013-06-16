@@ -46,7 +46,7 @@ public class TileTorch extends Tile {
     }
 
     @Override
-    public Light getEmittedLight() {
+    public PointLight getEmittedLight() {
         return light;
     }
 
