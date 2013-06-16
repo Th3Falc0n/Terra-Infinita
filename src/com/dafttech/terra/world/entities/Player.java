@@ -17,8 +17,8 @@ public class Player extends Entity {
     @Override
     public void update(Player player, float delta) {
         super.update(player, delta);
-        if (Gdx.input.isKeyPressed(Keys.A)) addForce(new Vector2(-14f * getUndergroundAcceleration(), 0));
-        if (Gdx.input.isKeyPressed(Keys.D)) addForce(new Vector2(14f * getUndergroundAcceleration(), 0));
+        if (Gdx.input.isKeyPressed(Keys.A)) addForce(new Vector2(-14f * getCurrentAcceleration(), 0));
+        if (Gdx.input.isKeyPressed(Keys.D)) addForce(new Vector2(14f * getCurrentAcceleration(), 0));
 
         if (Gdx.input.isKeyPressed(Keys.SPACE) && !this.isInAir()) addVelocity(new Vector2(0, -48));
 
