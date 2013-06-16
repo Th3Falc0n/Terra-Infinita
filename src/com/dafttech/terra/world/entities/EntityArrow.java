@@ -28,5 +28,9 @@ public class EntityArrow extends Entity {
         
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y, 1, 1, v.angle());
     }
-
+    
+    @Override
+    public float getInAirFriction() {
+        return 0.025f;
+    }
 }

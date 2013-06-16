@@ -243,11 +243,7 @@ public abstract class Entity implements IDrawable {
         checkTerrainCollisions(player.getWorld());
 
         velocity.y *= 1 - 0.025f * delta;
-        velocity.x *= 1 - 0.025f * delta;
-        
-        if(!inAir) {
-            velocity.x *= 1 - getUndergroundFriction() * delta;
-        }
+        velocity.x *= 1 - getUndergroundFriction() * delta;
     }
 
     public Tile getUndergroundTile() {
@@ -256,16 +252,20 @@ public abstract class Entity implements IDrawable {
     }
 
     public float getUndergroundFriction() {
-        if (getUndergroundTile() != null) {
+        if (getUndergroundTile() != null && !inAir) {
             return getUndergroundTile().getWalkFriction();
         }
         return 1;
     }
 
     public float getUndergroundAcceleration() {
-        if (getUndergroundTile() != null) {
+        if (getUndergroundTile() != null && !inAir) {
             return getUndergroundTile().getWalkAcceleration();
         }
+        return 1;
+    }
+    
+    public float getInAirFriction() {
         return 1;
     }
 
