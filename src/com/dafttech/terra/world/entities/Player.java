@@ -30,7 +30,7 @@ public class Player extends Entity {
         
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
-            EntityArrow a = new EntityArrow(new Vector2(position), worldObj);
+            EntityFlamingArrow a = new EntityFlamingArrow(new Vector2(position), worldObj);
             
             a.setVelocity((Vector2) Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight()/2)));
             

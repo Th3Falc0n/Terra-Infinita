@@ -1,8 +1,9 @@
-package com.dafttech.terra.world.entities;
+package com.dafttech.terra.world.entities.particles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.World;
+import com.dafttech.terra.world.entities.Entity;
 
 public class Particle extends Entity {
 
