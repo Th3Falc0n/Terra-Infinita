@@ -24,6 +24,7 @@ public class Resources {
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");
             ShaderLibrary.loadShader("GaussV", "GaussV", "Gauss");
+            ShaderLibrary.loadShader("ShadowDistance", "Simple", "ShadowDistance");
         } catch (IOException e) {
             e.printStackTrace();
         }
