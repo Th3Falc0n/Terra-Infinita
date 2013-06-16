@@ -248,7 +248,7 @@ public abstract class Entity implements IDrawable {
 
     public Tile getUndergroundTile() {
         Position pos = position.toWorldPosition();
-        return worldObj.getTile(pos.x, pos.y - 1);
+        return worldObj.getTile(pos.x, pos.y + 1);
     }
 
     public float getCurrentFriction() {
