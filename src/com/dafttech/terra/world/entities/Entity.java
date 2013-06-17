@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
@@ -265,7 +264,7 @@ public abstract class Entity implements IDrawable {
         }
         return 1;
     }
-    
+
     public float getInAirFriction() {
         return 1;
     }

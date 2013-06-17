@@ -4,7 +4,6 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Player;
@@ -20,17 +19,17 @@ public class ItemTile extends Item {
 
         getPosition().add(BLOCK_SIZE / 4, BLOCK_SIZE / 4);
         setVelocity(new Vector2((TerraInfinita.rnd.nextFloat() - 0.5f) * 80, (TerraInfinita.rnd.nextFloat() - 0.5f) * 80));
-        
-        if(wrappedTile.isLightEmitter()) {
+
+        if (wrappedTile.isLightEmitter()) {
             wrappedTile.getEmittedLight().setSize(wrappedTile.getEmittedLight().getSize() / 2);
         }
     }
-    
+
     @Override
     public void update(Player player, float delta) {
         super.update(player, delta);
 
-        if(wrappedTile.isLightEmitter()) {
+        if (wrappedTile.isLightEmitter()) {
             wrappedTile.getEmittedLight().setPosition(position);
         }
     }
@@ -39,12 +38,12 @@ public class ItemTile extends Item {
     public TextureRegion getImage() {
         return wrappedTile.getImage();
     }
-    
+
     @Override
     public boolean isLightEmitter() {
         return wrappedTile.isLightEmitter();
     }
-    
+
     @Override
     public PointLight getEmittedLight() {
         return wrappedTile.getEmittedLight();

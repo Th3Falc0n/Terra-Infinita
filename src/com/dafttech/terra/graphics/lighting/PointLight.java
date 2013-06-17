@@ -15,10 +15,11 @@ public class PointLight extends Light {
         size = s;
     }
 
+    @Override
     public void setPosition(Vector2 p) {
         position.set(p);
     }
-    
+
     public float getSize() {
         return size;
     }
