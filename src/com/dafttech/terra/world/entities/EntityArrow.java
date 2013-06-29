@@ -21,14 +21,15 @@ public class EntityArrow extends Entity {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Player player) {
-        Vector2 screenVec = this.getPosition().toRenderPosition(player.getPosition());
-        
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
+
         Vector2 v = new Vector2(velocity);
-        
-        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y, 1, 1, v.angle());
+
+        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x,
+                BLOCK_SIZE * size.y, 1, 1, v.angle());
     }
-    
+
     @Override
     public float getInAirFriction() {
         return 0.025f;

@@ -8,14 +8,12 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.graphics.renderers.TileRenderer;
 import com.dafttech.terra.graphics.renderers.TileRendererBlock;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.entities.Entity;
-import com.dafttech.terra.world.entities.Player;
 import com.dafttech.terra.world.entities.items.Item;
 import com.dafttech.terra.world.entities.items.ItemTile;
 import com.dafttech.terra.world.subtiles.Subtile;
@@ -83,18 +81,18 @@ public abstract class Tile implements IDrawable {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Player player) {
-        getRenderer().draw(screen, this, player);
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        getRenderer().draw(screen, this, pointOfView);
 
         for (Subtile s : subtiles) {
-            s.draw(screen, player);
+            s.draw(screen, pointOfView);
         }
     }
 
     @Override
-    public void update(Player player, float delta) {
+    public void update(float delta) {
         for (Subtile subtile : subtiles) {
-            subtile.update(player, delta);
+            subtile.update(delta);
         }
     }
 

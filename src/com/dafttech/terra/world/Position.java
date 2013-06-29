@@ -4,7 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.event.Events;
-import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.tiles.Tile;
 
 public class Position {
@@ -25,8 +25,8 @@ public class Position {
         this.y = 0;
     }
 
-    public Vector2 toScreenPos(Player player) {
-        return new Vector2(x * BLOCK_SIZE - player.getPosition().x + Gdx.graphics.getWidth() / 2, y * BLOCK_SIZE - player.getPosition().y
+    public Vector2 toScreenPos(Entity pointOfView) {
+        return new Vector2(x * BLOCK_SIZE - pointOfView.getPosition().x + Gdx.graphics.getWidth() / 2, y * BLOCK_SIZE - pointOfView.getPosition().y
                 + Gdx.graphics.getHeight() / 2);
     }
 

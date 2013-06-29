@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
@@ -24,6 +23,10 @@ public abstract class Entity implements IDrawable {
     Vector2 size;
     World worldObj;
 
+    Color color = Color.WHITE;
+
+    boolean hasGravity = true;
+
     boolean inAir = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
@@ -31,6 +34,14 @@ public abstract class Entity implements IDrawable {
         worldObj = world;
         size = s;
         world.localEntities.add(this);
+    }
+
+    public void setColor(Color clr) {
+        color = clr;
+    }
+
+    public void setAlpha(float v) {
+        color.a = v;
     }
 
     public Vector2 getPosition() {
@@ -43,6 +54,10 @@ public abstract class Entity implements IDrawable {
 
     public boolean isInAir() {
         return inAir;
+    }
+
+    public void setHasGravity(boolean v) {
+        hasGravity = v;
     }
 
     public void setSize(float x, float y) {
@@ -200,10 +215,12 @@ public abstract class Entity implements IDrawable {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Player player) {
-        Vector2 screenVec = this.getPosition().toRenderPosition(player.getPosition());
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
+        screen.batch.setColor(color);
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+        screen.batch.flush();
     }
 
     public abstract TextureRegion getImage();
@@ -229,8 +246,8 @@ public abstract class Entity implements IDrawable {
     }
 
     @Override
-    public void update(Player player, float delta) {
-        addForce(new Vector2(0, 20f));
+    public void update(float delta) {
+        if (hasGravity) addForce(new Vector2(0, 20f));
 
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
@@ -241,7 +258,7 @@ public abstract class Entity implements IDrawable {
         position.y += velocity.y * delta;
 
         inAir = true;
-        checkTerrainCollisions(player.getWorld());
+        checkTerrainCollisions(worldObj.localPlayer.getWorld());
 
         velocity.y *= 1 - 0.025f * delta;
         velocity.x *= 1 - getCurrentFriction() * delta;
@@ -265,7 +282,7 @@ public abstract class Entity implements IDrawable {
         }
         return 1;
     }
-    
+
     public float getInAirFriction() {
         return 1;
     }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 import com.dafttech.terra.world.World;
-import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.Entity;
 
 public class PassGaussian extends RenderingPass {
     FrameBuffer bfPass1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
@@ -18,7 +18,7 @@ public class PassGaussian extends RenderingPass {
     Texture pass;
 
     @Override
-    public void applyPass(AbstractScreen screen, Player player, World w, Object... arguments) {
+    public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
         if (!(arguments[0] instanceof Texture)) throw new IllegalArgumentException("Need a texture to draw");
 
         float size = 0.02f;

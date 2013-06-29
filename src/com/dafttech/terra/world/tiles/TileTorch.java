@@ -4,12 +4,10 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.graphics.lighting.Light;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Entity;
-import com.dafttech.terra.world.entities.Player;
 
 public class TileTorch extends Tile {
     int grassIndex;
@@ -27,8 +25,8 @@ public class TileTorch extends Tile {
     }
 
     @Override
-    public void update(Player player, float delta) {
-        super.update(player, delta);
+    public void update(float delta) {
+        super.update(delta);
 
         if (light == null) light = new PointLight(position.toEntityPos(), 95);
 

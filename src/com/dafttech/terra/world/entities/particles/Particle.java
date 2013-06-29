@@ -6,16 +6,30 @@ import com.dafttech.terra.world.World;
 import com.dafttech.terra.world.entities.Entity;
 
 public class Particle extends Entity {
+    float lifetimeMax = 25;
+    float lifetime = 25;
 
-    public Particle(Vector2 pos, World world, Vector2 s) {
+    public Particle(Vector2 pos, World world, float life, Vector2 s) {
         super(pos, world, s);
-        // TODO Auto-generated constructor stub
+
+        lifetime = life;
+        lifetimeMax = life;
     }
 
     @Override
     public TextureRegion getImage() {
-        // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+
+        lifetime -= delta;
+
+        if (lifetime < 0) {
+            this.getWorld().removeEntity(this);
+        }
     }
 
     @Override

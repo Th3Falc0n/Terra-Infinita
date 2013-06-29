@@ -21,6 +21,8 @@ public class Resources {
 
         ENTITIES.loadImage("player", "res/entities/player.png");
         ENTITIES.loadImage("arrow", "res/entities/arrow.png");
+        ENTITIES.loadImage("flame", "res/entities/flame.png");
+        ENTITIES.loadImage("1px", "res/entities/1px.png");
 
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");

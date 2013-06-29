@@ -59,14 +59,14 @@ public class World implements IDrawable {
     }
 
     @Override
-    public void update(Player player, float delta) {
-        int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
-        int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
+    public void update(float delta) {
+        int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
+        int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        for (int x = (int) player.getPosition().x / BLOCK_SIZE - sx; x < (int) player.getPosition().x / BLOCK_SIZE + sx; x++) {
-            for (int y = (int) player.getPosition().y / BLOCK_SIZE - sy; y < (int) player.getPosition().y / BLOCK_SIZE + sy; y++) {
+        for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
+            for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
                 if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) {
-                    map[x][y].update(player, delta);
+                    map[x][y].update(delta);
 
                     if (map[x][y].isLightEmitter()) {
                         RenderingPass.rpLighting.addLight(map[x][y].getEmittedLight());
@@ -76,9 +76,14 @@ public class World implements IDrawable {
         }
 
         for (Entity entity : localEntities) {
-            entity.update(player, delta);
+            entity.update(delta);
 
-            if (entity.isLightEmitter()) {
+            if (entity.getPosition().x < -100 || entity.getPosition().x > size.x * BLOCK_SIZE + 100
+                    || entity.getPosition().y > size.y * BLOCK_SIZE + 100) {
+                removeEntity(entity);
+            }
+
+            if (entity.isLightEmitter() && isInRenderRange(entity.getPosition())) {
                 RenderingPass.rpLighting.addLight(entity.getEmittedLight());
             }
         }
@@ -86,9 +91,13 @@ public class World implements IDrawable {
         Events.EVENT_WORLDTICK.callSync(this);
     }
 
+    public boolean isInRenderRange(Vector2 position) {
+        return false;
+    }
+
     @Override
-    public void draw(AbstractScreen screen, Player player) {
-        RenderingPass.rpObjects.applyPass(screen, player, this);
-        RenderingPass.rpLighting.applyPass(screen, player, this);
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
+        RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
     }
 }

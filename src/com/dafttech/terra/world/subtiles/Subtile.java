@@ -8,7 +8,7 @@ import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
 import com.dafttech.terra.graphics.renderers.SubtileRenderer;
 import com.dafttech.terra.graphics.renderers.SubtileRendererMask;
-import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.tiles.Tile;
 
 public class Subtile implements IDrawable {
@@ -61,12 +61,12 @@ public class Subtile implements IDrawable {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Player player) {
-        getRenderer().draw(screen, this, player);
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        getRenderer().draw(screen, this, pointOfView);
     }
 
     @Override
-    public void update(Player player, float delta) {
+    public void update(float delta) {
         // TODO Auto-generated method stub
 
     }

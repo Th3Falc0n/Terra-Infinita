@@ -14,9 +14,11 @@ public class Player extends Entity {
         super(pos, world, new Vector2(1.9f, 3.8f));
     }
 
+    boolean right;
+
     @Override
-    public void update(Player player, float delta) {
-        super.update(player, delta);
+    public void update(float delta) {
+        super.update(delta);
         if (Gdx.input.isKeyPressed(Keys.A)) addForce(new Vector2(-14f * getCurrentAcceleration(), 0));
         if (Gdx.input.isKeyPressed(Keys.D)) addForce(new Vector2(14f * getCurrentAcceleration(), 0));
 
@@ -27,14 +29,18 @@ public class Player extends Entity {
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y);
         }
-        
 
-        if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+        if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
+            right = true;
             EntityFlamingArrow a = new EntityFlamingArrow(new Vector2(position), worldObj);
-            
-            a.setVelocity((Vector2) Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight()/2)));
-            
+
+            a.setVelocity((Vector2) Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)));
+
             worldObj.addEntity(a);
+        }
+
+        if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) {
+            right = false;
         }
     }
 

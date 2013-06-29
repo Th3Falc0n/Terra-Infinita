@@ -3,7 +3,7 @@ package com.dafttech.terra.graphics.lighting;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.world.Vector2;
-import com.dafttech.terra.world.entities.Player;
+import com.dafttech.terra.world.entities.Entity;
 
 public class PointLight extends Light {
 
@@ -15,10 +15,11 @@ public class PointLight extends Light {
         size = s;
     }
 
+    @Override
     public void setPosition(Vector2 p) {
         position.set(p);
     }
-    
+
     public float getSize() {
         return size;
     }
@@ -28,8 +29,8 @@ public class PointLight extends Light {
     }
 
     @Override
-    public void drawToLightmap(AbstractScreen screen, Player player) {
-        Vector2 p = position.toRenderPosition(player.getPosition());
+    public void drawToLightmap(AbstractScreen screen, Entity pointOfView) {
+        Vector2 p = position.toRenderPosition(pointOfView.getPosition());
 
         screen.shr.begin(ShapeType.FilledTriangle);
 
