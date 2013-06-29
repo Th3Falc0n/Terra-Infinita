@@ -52,6 +52,11 @@ public class EntityFlamingArrow extends EntityArrow {
     }
 
     @Override
+    public float getInAirFriction() {
+        return 0.025f;
+    }
+
+    @Override
     public boolean isLightEmitter() {
         return true;
     }
