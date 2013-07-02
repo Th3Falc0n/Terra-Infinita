@@ -14,6 +14,10 @@ public class ScreenIngame extends AbstractScreen {
         localWorld = new World(new Vector2(1000, 500));
         super.show();
     }
+    
+    public World getWorld() {
+        return localWorld;
+    }
 
     @Override
     public void render(float delta) {

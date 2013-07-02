@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.game.ScreenIngame;
+import com.dafttech.terra.graphics.passes.RenderingPass;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.tiles.Tile;
 

@@ -42,10 +42,4 @@ public abstract class Item extends Entity implements IDrawableInventory {
         // TODO Auto-generated method stub
 
     }
-
-    @Override
-    public void update(Player player, float delta) {
-        // TODO Auto-generated method stub
-
-    }
 }
