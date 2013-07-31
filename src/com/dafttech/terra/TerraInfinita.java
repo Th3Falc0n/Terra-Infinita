@@ -24,7 +24,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         Texture.setEnforcePotImages(false);
 
-        Events.instance.init();
+        Events.init();
         Events.EVENT_INITPRE.callSync(this);
 
         fpsLogger = new FPSLogger();

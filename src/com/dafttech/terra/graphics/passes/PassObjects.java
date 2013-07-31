@@ -18,6 +18,7 @@ public class PassObjects extends RenderingPass {
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
         buffer.begin();
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 
         screen.batch.setShader(null);
 

@@ -8,10 +8,14 @@ import com.dafttech.terra.world.World;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
+    InputHandler inputHandler;
 
     @Override
     public void show() {
         localWorld = new World(new Vector2(1000, 500));
+        
+        inputHandler = new InputHandler();
+        
         super.show();
     }
     
@@ -25,8 +29,8 @@ public class ScreenIngame extends AbstractScreen {
 
         super.render(delta);
 
+        inputHandler.update();
         localWorld.update(delta);
-
         localWorld.draw(this, localWorld.localPlayer);
     }
 }
