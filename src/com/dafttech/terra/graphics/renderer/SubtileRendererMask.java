@@ -1,4 +1,4 @@
-package com.dafttech.terra.graphics.renderers;
+package com.dafttech.terra.graphics.renderer;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 

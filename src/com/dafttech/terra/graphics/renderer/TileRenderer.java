@@ -1,4 +1,4 @@
-package com.dafttech.terra.graphics.renderers;
+package com.dafttech.terra.graphics.renderer;
 
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.world.entities.Entity;

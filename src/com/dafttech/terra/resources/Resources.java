@@ -7,6 +7,7 @@ import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
+    public static ImageLibrary GUI = new ImageLibrary();
 
     public static void init() {
         TILES.loadImage("error", "res/error.png");
@@ -23,6 +24,12 @@ public class Resources {
         ENTITIES.loadImage("arrow", "res/entities/arrow.png");
         ENTITIES.loadImage("flame", "res/entities/flame.png");
         ENTITIES.loadImage("1px", "res/entities/1px.png");
+        
+        GUI.loadImage("slot", "res/ui/slot.png");
+        GUI.loadImage("bar", "res/ui/bar.png");
+        
+        GUI.loadImage("button"      , "res/ui/button_empty.png");
+        GUI.loadImage("button_hover", "res/ui/button_empty_hover.png");
 
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");

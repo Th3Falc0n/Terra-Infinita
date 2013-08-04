@@ -6,8 +6,8 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.renderers.SubtileRenderer;
-import com.dafttech.terra.graphics.renderers.SubtileRendererMask;
+import com.dafttech.terra.graphics.renderer.SubtileRenderer;
+import com.dafttech.terra.graphics.renderer.SubtileRendererMask;
 import com.dafttech.terra.world.entities.Entity;
 import com.dafttech.terra.world.tiles.Tile;
 

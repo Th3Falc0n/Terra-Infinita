@@ -19,6 +19,8 @@ public class InputHandler {
         mouseDown.put(2, false);
     }
     
+    int lx, ly, x, y;
+    
     public void update() {
         for(int i : registeredKeys) {
             if(!keyDown.get(i) && Gdx.input.isKeyPressed(i)) {
@@ -32,23 +34,26 @@ public class InputHandler {
             }
         }
         
-        int x = Gdx.input.getX();
-        int y = Gdx.input.getY();
+        lx = x;
+        ly = y;
+        x = Gdx.input.getX();
+        y = Gdx.input.getY();
         
         for(int i = 0; i < 2; i++) {
-            if(!mouseDown.get(i) && Gdx.input.isKeyPressed(i)) {
+            if((!mouseDown.get(i)) && Gdx.input.isButtonPressed(i)) {
                 mouseDown.put(i, true);
                 Events.EVENT_MOUSEDOWN.callSync(i, x, y);
             }
             
-            if(mouseDown.get(i) && !Gdx.input.isKeyPressed(i)) {
+            if(mouseDown.get(i) && (!Gdx.input.isButtonPressed(i))) {
                 mouseDown.put(i, false);
                 Events.EVENT_MOUSEUP.callSync(i, x, y);
             }
             
-            if(mouseDown.get(i)) {
-                Events.EVENT_MOUSEMOVE.callAsync(i, x, y);
-            }
+        }
+        
+        if(lx != x || ly != y) {
+            Events.EVENT_MOUSEMOVE.callSync(-1, x, y);
         }
     }
     
