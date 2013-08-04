@@ -16,6 +16,8 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Wasauchimmer/native/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/gdx-freetype-natives.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-freetype.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EventManager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
