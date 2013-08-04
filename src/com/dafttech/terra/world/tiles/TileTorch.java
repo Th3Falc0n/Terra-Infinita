@@ -10,13 +10,11 @@ import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Entity;
 
 public class TileTorch extends Tile {
-    int grassIndex;
 
     PointLight light;
 
     public TileTorch() {
         super();
-        grassIndex = TerraInfinita.rnd.nextInt(5);
     }
 
     @Override

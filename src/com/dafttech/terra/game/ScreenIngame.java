@@ -30,7 +30,7 @@ public class ScreenIngame extends AbstractScreen {
         guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), new Vector2(100, 20), Resources.GUI.getImage("button"), "Exit") {
             @Override
             public void onClick(int button) {
-                System.out.println("Button " + button + " clicked");
+                Gdx.app.exit();
             }
         });
         
