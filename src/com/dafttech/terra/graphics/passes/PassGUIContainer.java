@@ -27,11 +27,7 @@ public class PassGUIContainer extends RenderingPass {
         screen.batch.enableBlending();
         screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        screen.batch.begin();
-
         ((GUIContainer)arguments[0]).draw(screen);
-
-        screen.batch.end();
 
         buffer.end();
 

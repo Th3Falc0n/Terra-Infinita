@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 
 public abstract class AbstractScreen implements Screen {
 
@@ -26,6 +27,9 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
+        Matrix4 normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
+
+        batch.setProjectionMatrix(normalProjection);
     }
 
     @Override

@@ -2,12 +2,18 @@ package com.dafttech.terra.resources;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
 
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
+    
+    public static BitmapFont BUTTON_FONT;
 
     public static void init() {
         TILES.loadImage("error", "res/error.png");
@@ -30,6 +36,12 @@ public class Resources {
         
         GUI.loadImage("button"      , "res/ui/button_empty.png");
         GUI.loadImage("button_hover", "res/ui/button_empty_hover.png");
+        
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("res/ui/button_font.ttf"));
+        
+        BUTTON_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°", true);
+        
+        gen.dispose();
 
         try {
             ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss");

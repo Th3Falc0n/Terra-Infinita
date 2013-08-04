@@ -19,16 +19,18 @@ public class ScreenIngame extends AbstractScreen {
 
     @Override
     public void show() {
+        super.show();
+        
         localWorld = new World(new Vector2(1000, 500));
         
         inputHandler = new InputHandler();
         
         guiContainerScreen = new ContainerOnscreen(new Vector2(0,0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         
-        guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), new Vector2(100, 20), Resources.GUI.getImage("button")) {
+        guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), new Vector2(100, 20), Resources.GUI.getImage("button"), "Exit") {
             @Override
             public void onClick(int button) {
-                System.out.println("onClick");
+                System.out.println("Button " + button + " clicked");
             }
         });
         
