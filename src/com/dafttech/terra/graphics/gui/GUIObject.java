@@ -18,21 +18,20 @@ public abstract class GUIObject {
     public GUIObject(Vector2 p, Vector2 s) {
         position = p;
         size = s;
+
+        Events.EVENTMANAGER.registerEventListener(this);
     }
 
-    public void assignAnchorSet(GUIAnchorSet set) {
-        if(!registeredEvents) {
-            Events.EVENTMANAGER.registerEventListener(this);
-            registeredEvents = true;
-        }
-        
+    public void assignAnchorSet(GUIAnchorSet set) {        
         assignedAnchors = set;
         assignedAnchors.applyAnchorSet(this);
     }
     
     @EventListener(events = { "WINRESIZE" })
     public void onWinResize(Event e) {
-        assignedAnchors.applyAnchorSet(this);
+        if(assignedAnchors != null) {
+            assignedAnchors.applyAnchorSet(this);
+        }
     }
     
     public void onClick(int button) {

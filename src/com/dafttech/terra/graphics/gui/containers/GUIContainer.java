@@ -14,8 +14,6 @@ import com.dafttech.terra.world.Vector2;
 public abstract class GUIContainer extends GUIObject {
     public GUIContainer(Vector2 p, Vector2 s) {
         super(p, s);
-
-        Events.EVENTMANAGER.registerEventListener(this);
     }
 
     List<GUIElement> elements = new ArrayList<GUIElement>();
