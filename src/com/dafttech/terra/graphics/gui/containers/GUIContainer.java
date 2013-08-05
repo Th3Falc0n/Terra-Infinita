@@ -31,6 +31,15 @@ public abstract class GUIContainer extends GUIObject {
     public void addElement(GUIElement element, int index) {
         elements.add(index, element);
     }
+    
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        
+        for (GUIElement e : elements) {
+            e.update(delta);
+        }
+    }
 
     @EventListener(events = { "MOUSEMOVE" })
     public void onEventMouseMove(Event event) {

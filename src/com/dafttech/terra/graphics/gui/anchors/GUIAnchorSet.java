@@ -14,6 +14,13 @@ public class GUIAnchorSet {
         }
     }
     
+    public boolean needsApplyOnFrame() {
+        for(GUIAnchor a : anchors) {
+            if(a.needsApplyOnFrame()) return true;
+        }
+        return false;
+    }
+    
     public void addAnchor(GUIAnchor anchor) {
         anchors.add(anchor);
     }

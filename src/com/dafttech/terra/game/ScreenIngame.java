@@ -4,10 +4,12 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
+import com.dafttech.terra.graphics.gui.anchors.AnchorMouse;
 import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
 import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
 import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
+import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
 import com.dafttech.terra.graphics.gui.elements.ElementButton;
 import com.dafttech.terra.graphics.gui.elements.ElementSlot;
 import com.dafttech.terra.graphics.passes.RenderingPass;
@@ -20,6 +22,10 @@ public class ScreenIngame extends AbstractScreen {
     InputHandler inputHandler;
 
     ContainerOnscreen guiContainerScreen;
+    
+    ContainerWindow testWindow;
+    
+    ElementButton exitButton;
 
     @Override
     public void show() {
@@ -31,7 +37,7 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-        ElementButton exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
+        exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
             @Override
             public void onClick(int button) {
                 Gdx.app.exit();
@@ -46,6 +52,8 @@ public class ScreenIngame extends AbstractScreen {
         exitButton.assignAnchorSet(exitButtonSet);
         
         guiContainerScreen.addElement(exitButton);
+        
+        testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
 
         super.show();
     }

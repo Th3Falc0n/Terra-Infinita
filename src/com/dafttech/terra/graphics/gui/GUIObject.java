@@ -27,11 +27,23 @@ public abstract class GUIObject {
         assignedAnchors.applyAnchorSet(this);
     }
     
-    @EventListener(events = { "WINRESIZE" })
-    public void onWinResize(Event e) {
+    public void applyAnchorSet(GUIAnchorSet set) {
+        set.applyAnchorSet(this);
+    }
+    
+    public void applyAssignedAnchorSet() {
         if(assignedAnchors != null) {
             assignedAnchors.applyAnchorSet(this);
         }
+    }
+    
+    public void update(float delta) {
+        if(assignedAnchors != null && assignedAnchors.needsApplyOnFrame()) applyAssignedAnchorSet();
+    }
+    
+    @EventListener(events = { "WINRESIZE" })
+    public void onWinResize(Event e) {
+        applyAssignedAnchorSet();
     }
     
     public void onClick(int button) {
