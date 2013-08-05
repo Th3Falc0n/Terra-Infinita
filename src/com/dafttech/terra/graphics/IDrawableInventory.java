@@ -1,9 +1,10 @@
 package com.dafttech.terra.graphics;
 
+import com.dafttech.terra.world.Vector2;
 import com.dafttech.terra.world.entities.Entity;
 
 public interface IDrawableInventory {
     public void update(float delta);
 
-    public void drawInventory(AbstractScreen screen, Entity pointOfView);
+    void drawInventory(AbstractScreen screen, Vector2 position);
 }

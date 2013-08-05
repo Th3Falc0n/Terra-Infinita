@@ -37,7 +37,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
     }
 
     @Override
-    public void drawInventory(AbstractScreen screen, Entity pointOfView) {
+    public void drawInventory(AbstractScreen screen, Vector2 position) {
         // TODO Auto-generated method stub
 
     }

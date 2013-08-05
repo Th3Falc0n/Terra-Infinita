@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.graphics.gui.elements.ElementButton;
+import com.dafttech.terra.graphics.gui.elements.ElementSlot;
 import com.dafttech.terra.graphics.passes.RenderingPass;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Vector2;
@@ -27,12 +28,14 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-        guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), new Vector2(100, 20), Resources.GUI.getImage("button"), "Exit") {
+        guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), "Exit") {
             @Override
             public void onClick(int button) {
                 Gdx.app.exit();
             }
         });
+        
+        guiContainerScreen.addElement(new ElementSlot(new Vector2(500, 200)));
 
         super.show();
     }

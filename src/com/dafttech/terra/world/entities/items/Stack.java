@@ -1,6 +1,10 @@
 package com.dafttech.terra.world.entities.items;
 
 public class Stack {
-    Item item;
-    int count;
+    public Item item;
+    public int count;
+    
+    public Item getItem() {
+        return item;
+    }
 }

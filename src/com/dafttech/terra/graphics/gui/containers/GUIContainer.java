@@ -43,7 +43,7 @@ public abstract class GUIContainer extends GUIObject {
             if (x > e.position.x && x < e.position.x + e.size.x && y > e.position.y && y < e.position.y + e.size.y && !e.mouseHover) {
                 e.onMouseIn();
                 e.mouseHover = true;
-            } else if (!e.mouseHover) {
+            } else if (!(x > e.position.x && x < e.position.x + e.size.x && y > e.position.y && y < e.position.y + e.size.y) && e.mouseHover) {
                 e.onMouseOut();
                 e.mouseHover = false;
             }
