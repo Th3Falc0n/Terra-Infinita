@@ -7,7 +7,7 @@ public class AnchorTop extends GUIAnchor {
     public float position = 0;
     
     public AnchorTop(float p) {
-        
+        position = p;
     }
     
     @Override
