@@ -7,9 +7,9 @@ import org.lwjgl.opengl.GL11;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.World;
-import com.dafttech.terra.world.entities.Entity;
 
 public class PassObjects extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);

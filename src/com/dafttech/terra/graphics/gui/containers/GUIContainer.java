@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
-import com.dafttech.terra.event.Events;
+import com.dafttech.terra.game.Events;
+import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.GUIObject;
 import com.dafttech.terra.graphics.gui.elements.GUIElement;
-import com.dafttech.terra.world.Vector2;
 
 public abstract class GUIContainer extends GUIObject {
     public GUIContainer(Vector2 p, Vector2 s) {

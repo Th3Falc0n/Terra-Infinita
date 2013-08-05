@@ -1,8 +1,8 @@
 package com.dafttech.terra.graphics.gui.containers;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.graphics.gui.elements.GUIElement;
-import com.dafttech.terra.world.Vector2;
 
 public class ContainerWindow extends GUIContainer {
     public ContainerWindow(Vector2 p, Vector2 s) {

@@ -2,9 +2,9 @@ package com.dafttech.terra.graphics.gui;
 
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
-import com.dafttech.terra.event.Events;
+import com.dafttech.terra.game.Events;
+import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
-import com.dafttech.terra.world.Vector2;
 
 public abstract class GUIObject {
     public Vector2 position;

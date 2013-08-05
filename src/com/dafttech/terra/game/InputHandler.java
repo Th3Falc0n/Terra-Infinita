@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.dafttech.terra.event.Events;
 
 public class InputHandler {
     static List<Integer> registeredKeys = new ArrayList<Integer>();

@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
-import com.dafttech.terra.world.World;
-import com.dafttech.terra.world.entities.Entity;
 
 public class PassGaussian extends RenderingPass {
     FrameBuffer bfPass1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);

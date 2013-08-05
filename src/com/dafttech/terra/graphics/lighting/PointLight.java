@@ -1,9 +1,9 @@
 package com.dafttech.terra.graphics.lighting;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.Vector2;
-import com.dafttech.terra.world.entities.Entity;
 
 public class PointLight extends Light {
 

@@ -1,10 +1,10 @@
 package com.dafttech.terra.graphics.gui.elements;
 
 import com.badlogic.gdx.graphics.Color;
+import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.game.world.entities.items.IItemSlot;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.resources.Resources;
-import com.dafttech.terra.world.Vector2;
-import com.dafttech.terra.world.entities.items.IItemSlot;
 
 public class ElementSlot extends GUIElement {
     IItemSlot assignedSlot = null;

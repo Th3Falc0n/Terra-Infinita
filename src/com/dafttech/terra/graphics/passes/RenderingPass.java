@@ -1,8 +1,8 @@
 package com.dafttech.terra.graphics.passes;
 
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.world.World;
-import com.dafttech.terra.world.entities.Entity;
 
 public abstract class RenderingPass {
     public static PassObjects rpObjects = new PassObjects();

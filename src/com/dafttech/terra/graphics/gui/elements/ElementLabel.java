@@ -2,9 +2,9 @@ package com.dafttech.terra.graphics.gui.elements;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.resources.Resources;
-import com.dafttech.terra.world.Vector2;
 
 public class ElementLabel extends GUIElement {
     private CharSequence text = "Button";
