@@ -31,7 +31,7 @@ public abstract class ElementButton extends GUIElement {
         super.draw(screen, origin);
         
         screen.batch.begin();
-        Resources.BUTTON_FONT.draw(screen.batch, text, position.x + origin.x + size.x / 2 - Resources.BUTTON_FONT.getBounds(text).width / 2, 6 + origin.y);
+        Resources.BUTTON_FONT.draw(screen.batch, text, position.x + origin.x + size.x / 2 - Resources.BUTTON_FONT.getBounds(text).width / 2, 6 + position.y + origin.y);
         screen.batch.end();
 
         screen.batch.setColor(Color.WHITE);
