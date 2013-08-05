@@ -2,24 +2,43 @@ package com.dafttech.terra;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.Display;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
+import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.InputHandler;
 import com.dafttech.terra.game.ScreenIngame;
+import com.dafttech.terra.game.ScreenPauseMenu;
+import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.graphics.gui.Tooltip;
+import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.resources.Resources;
 
 public class TerraInfinita extends Game implements ApplicationListener {
+    public static TerraInfinita $ = new TerraInfinita();
+    
     FPSLogger fpsLogger;
 
     public static Random rnd = new Random();
-    public static ScreenIngame screenIngame;
+    public ScreenIngame screenIngame;
+    public ScreenPauseMenu screenPause;
+    
+    World world;
+    
+    boolean wasFocused = false;
+
+    public boolean isFocused() {
+        return Display.isActive();
+    }
 
     @Override
     public void create() {
@@ -37,19 +56,27 @@ public class TerraInfinita extends Game implements ApplicationListener {
         InputHandler.init();
         Tooltip.init();
 
-        DisplayMode desktop = Gdx.graphics.getDesktopDisplayMode();
+        world = new World(new Vector2(1000, 500));
+        
+        screenIngame = new ScreenIngame(world);
+        screenPause = new ScreenPauseMenu(world);
 
-        Gdx.graphics.setDisplayMode(desktop);
-
-        screenIngame = new ScreenIngame();
-
-        setScreen(screenIngame);
+        setScreen(screenPause);
 
         Events.EVENT_INITPOST.callSync(this);
     }
-
+    
     @Override
     public void render() {
+        if (!isFocused() && wasFocused) {
+            setScreen(screenPause);
+            wasFocused = false;
+        }
+
+        if (isFocused() && !wasFocused) {
+            wasFocused = true;
+        }
+        
         InputHandler.update();
 
         super.render();

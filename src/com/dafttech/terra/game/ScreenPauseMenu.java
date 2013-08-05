@@ -8,25 +8,27 @@ import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.Tooltip;
+import com.dafttech.terra.graphics.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
 import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
 import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
 import com.dafttech.terra.graphics.gui.elements.ElementButton;
+import com.dafttech.terra.graphics.gui.elements.ElementLabel;
 import com.dafttech.terra.graphics.passes.RenderingPass;
 
-public class ScreenIngame extends AbstractScreen {
+public class ScreenPauseMenu extends AbstractScreen {
     World localWorld;
-    InputHandler inputHandler;
-
+    
     ContainerOnscreen guiContainerScreen;
 
     ContainerWindow testWindow;
 
     ElementButton exitButton;
+    ElementButton resumeButton;
     
-    public ScreenIngame(World w) {
+    public ScreenPauseMenu(World w) {
         localWorld = w;
 
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -47,6 +49,27 @@ public class ScreenIngame extends AbstractScreen {
         exitButton.setTooltip("Close the game");
 
         guiContainerScreen.addElement(exitButton);
+        
+        
+        
+        resumeButton = new ElementButton(new Vector2(0, 0), "Resume") {
+            @Override
+            public void onClick(int button) {
+                TerraInfinita.$.setScreen(TerraInfinita.$.screenIngame);
+            }
+        };
+        
+        GUIAnchorSet resumeButtonSet = new GUIAnchorSet();
+
+        resumeButtonSet.addAnchor(new AnchorCenterX());
+        resumeButtonSet.addAnchor(new AnchorTop(0.2f));
+
+        resumeButton.assignAnchorSet(resumeButtonSet);
+
+        
+        
+        guiContainerScreen.addElement(exitButton);
+        guiContainerScreen.addElement(resumeButton);
         guiContainerScreen.addElement(Tooltip.getLabel());
 
         testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
@@ -57,23 +80,13 @@ public class ScreenIngame extends AbstractScreen {
         super.show();
     }
 
-    public World getWorld() {
-        return localWorld;
-    }
-
     @Override
-    public void render(float delta) {
-        if(delta > 0.5f) {
-            TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
-            return;
-        }
-        
+    public void render(float delta) {        
         super.render(delta);
-
-        localWorld.update(delta);
+        
         localWorld.draw(this, localWorld.localPlayer);
-
+        
         guiContainerScreen.update(delta);
-        RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
+        RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen);
     }
 }

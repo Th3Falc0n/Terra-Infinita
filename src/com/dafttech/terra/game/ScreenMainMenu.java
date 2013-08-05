@@ -3,6 +3,7 @@ package com.dafttech.terra.game;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.graphics.AbstractScreen;
@@ -22,10 +23,7 @@ public class ScreenMainMenu extends AbstractScreen {
 
     ElementButton exitButton;
 
-    @Override
-    public void show() {
-        super.show();
-
+    public ScreenMainMenu() {
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
@@ -47,7 +45,10 @@ public class ScreenMainMenu extends AbstractScreen {
         guiContainerScreen.addElement(Tooltip.getLabel());
 
         testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
-
+    }
+    
+    @Override
+    public void show() {
         super.show();
     }
 
