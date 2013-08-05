@@ -15,10 +15,7 @@ import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
 import com.dafttech.terra.graphics.gui.elements.ElementButton;
 import com.dafttech.terra.graphics.passes.RenderingPass;
 
-public class ScreenIngame extends AbstractScreen {
-    World localWorld;
-    InputHandler inputHandler;
-
+public class ScreenMainMenu extends AbstractScreen {
     ContainerOnscreen guiContainerScreen;
 
     ContainerWindow testWindow;
@@ -28,8 +25,6 @@ public class ScreenIngame extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-
-        localWorld = new World(new Vector2(1000, 500));
 
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
@@ -56,18 +51,11 @@ public class ScreenIngame extends AbstractScreen {
         super.show();
     }
 
-    public World getWorld() {
-        return localWorld;
-    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        localWorld.update(delta);
-        localWorld.draw(this, localWorld.localPlayer);
-
+        
         guiContainerScreen.update(delta);
-        RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
+        RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen);
     }
 }

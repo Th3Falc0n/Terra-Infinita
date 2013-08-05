@@ -247,7 +247,9 @@ public abstract class Entity implements IDrawable {
 
     @Override
     public void update(float delta) {
-        if (hasGravity) addForce(new Vector2(0, 20f));
+        delta *= BLOCK_SIZE;
+        
+        if (hasGravity) addForce(new Vector2(0, 9.81f));
 
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
