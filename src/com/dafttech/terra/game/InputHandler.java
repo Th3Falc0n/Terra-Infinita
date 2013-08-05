@@ -6,22 +6,40 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.dafttech.terra.event.Events;
 
-public class InputHandler {
-    List<Integer> registeredKeys = new ArrayList<Integer>();    
-    Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
-    Map<Integer, Boolean> mouseDown = new HashMap<Integer, Boolean>();
+public class InputHandler {    
+    static List<Integer> registeredKeys = new ArrayList<Integer>(); 
+    static Map<String, Integer> keyNames = new HashMap<String, Integer>();
+    static Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
+    static Map<Integer, Boolean> mouseDown = new HashMap<Integer, Boolean>();
     
-    public InputHandler() {
+    public static void init() {
         mouseDown.put(0, false);
         mouseDown.put(1, false);
         mouseDown.put(2, false);
+
+        registerKey(Keys.W, "UP");
+        registerKey(Keys.A, "LEFT");
+        registerKey(Keys.S, "DOWN");
+        registerKey(Keys.D, "RIGHT");
+        
+        registerKey(Keys.SPACE, "JUMP");
     }
     
-    int lx, ly, x, y;
+    public static boolean isKeyDown(String name) {
+        return keyDown.get(getKeyID(name));
+    }
     
-    public void update() {
+    public static int getKeyID(String name) {
+        if(!keyNames.containsKey(name)) throw new IllegalArgumentException("Key not registered: " + name);
+        return keyNames.get(name);
+    }
+    
+    static int lx, ly, x, y;
+    
+    public static void update() {
         for(int i : registeredKeys) {
             if(!keyDown.get(i) && Gdx.input.isKeyPressed(i)) {
                 keyDown.put(i, true);
@@ -57,7 +75,12 @@ public class InputHandler {
         }
     }
     
-    public void registerKey(int key) {
+    public static void registerKey(int key, String name) {
+        if(registeredKeys.contains(key)) {
+            Gdx.app.log("InputHandler", "Multiple Key Registration: " + key);
+            return;
+        }
+        keyNames.put(name, key);
         registeredKeys.add(key);
         keyDown.put(key, false);
     }

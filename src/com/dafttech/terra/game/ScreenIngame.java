@@ -23,7 +23,7 @@ public class ScreenIngame extends AbstractScreen {
         
         localWorld = new World(new Vector2(1000, 500));
         
-        inputHandler = new InputHandler();
+        InputHandler.init();
         
         guiContainerScreen = new ContainerOnscreen(new Vector2(0,0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         
@@ -47,7 +47,7 @@ public class ScreenIngame extends AbstractScreen {
 
         super.render(delta);
         
-        inputHandler.update();
+        InputHandler.update();
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
         

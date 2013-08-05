@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.game.InputHandler;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Position;
 import com.dafttech.terra.world.Vector2;
@@ -19,10 +20,10 @@ public class Player extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (Gdx.input.isKeyPressed(Keys.A)) addForce(new Vector2(-14f * getCurrentAcceleration(), 0));
-        if (Gdx.input.isKeyPressed(Keys.D)) addForce(new Vector2(14f * getCurrentAcceleration(), 0));
+        if (InputHandler.isKeyDown("LEFT")) addForce(new Vector2(-14f * getCurrentAcceleration(), 0));
+        if (InputHandler.isKeyDown("RIGHT")) addForce(new Vector2(14f * getCurrentAcceleration(), 0));
 
-        if (Gdx.input.isKeyPressed(Keys.SPACE) && !this.isInAir()) addVelocity(new Vector2(0, -48));
+        if (InputHandler.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -48));
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
             Position destroy = ((Vector2) Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
