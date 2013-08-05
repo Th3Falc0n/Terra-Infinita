@@ -1,5 +1,6 @@
 package com.dafttech.terra.graphics.gui.elements;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.event.Events;
 import com.dafttech.terra.graphics.AbstractScreen;
@@ -14,6 +15,7 @@ public abstract class GUIElement extends GUIObject {
     }
 
     public void draw(AbstractScreen screen, Vector2 origin) {
+        screen.batch.setColor(Color.WHITE);
         screen.batch.begin();
         screen.batch.draw(image, position.x + origin.x, position.y + origin.y);
         screen.batch.end();
