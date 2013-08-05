@@ -40,8 +40,8 @@ public class ScreenIngame extends AbstractScreen {
         
         GUIAnchorSet exitButtonSet = new GUIAnchorSet();
         
-        exitButtonSet.addAnchor(new AnchorRight(0.5f));
-        exitButtonSet.addAnchor(new AnchorTop(0.5f));
+        exitButtonSet.addAnchor(new AnchorRight(0.01f));
+        exitButtonSet.addAnchor(new AnchorTop(0.01f));
         
         exitButton.assignAnchorSet(exitButtonSet);
         
