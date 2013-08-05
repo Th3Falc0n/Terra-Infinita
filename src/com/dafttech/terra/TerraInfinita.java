@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
@@ -36,7 +37,9 @@ public class TerraInfinita extends Game implements ApplicationListener {
         InputHandler.init();
         Tooltip.init();
 
-        Gdx.graphics.setVSync(false);
+        DisplayMode desktop = Gdx.graphics.getDesktopDisplayMode();
+        
+        Gdx.graphics.setDisplayMode(desktop);
 
         screenIngame = new ScreenIngame();
         
@@ -57,8 +60,6 @@ public class TerraInfinita extends Game implements ApplicationListener {
     @Override
     public void resize(int arg0, int arg1) {
         Events.EVENT_WINRESIZE.callSync(this);
-        
-        Gdx.graphics.setDisplayMode(arg0, arg1, false);
     }
 
     @Override
