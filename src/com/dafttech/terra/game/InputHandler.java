@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 
 public class InputHandler {
@@ -56,7 +57,7 @@ public class InputHandler {
         x = Gdx.input.getX();
         y = Gdx.input.getY();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i <= 2; i++) {
             if ((!mouseDown.get(i)) && Gdx.input.isButtonPressed(i)) {
                 mouseDown.put(i, true);
                 Events.EVENT_MOUSEDOWN.callSync(i, x, y);
