@@ -1,18 +1,28 @@
 package com.dafttech.terra.graphics.gui.elements;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Vector2;
 
-public abstract class ElementLabel extends GUIElement {
+public class ElementLabel extends GUIElement {
     private CharSequence text = "Button";
 
     public ElementLabel(Vector2 p, String txt) {
-        super(p, new Vector2(100, 20));
-
+        super(p, null);
+        
         text = txt;
+
+        TextBounds bnds = Resources.BUTTON_FONT.getBounds(text);
+        size = new Vector2(bnds.width, bnds.height);
+    }
+    
+    public void setText(String txt) {
+        text = txt;
+
+        TextBounds bnds = Resources.BUTTON_FONT.getBounds(text);
+        size = new Vector2(bnds.width, bnds.height);
     }
 
     @Override

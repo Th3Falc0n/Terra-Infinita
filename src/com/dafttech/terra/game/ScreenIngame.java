@@ -4,6 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.AbstractScreen;
+import com.dafttech.terra.graphics.gui.Tooltip;
 import com.dafttech.terra.graphics.gui.anchors.AnchorMouse;
 import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
 import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
@@ -33,8 +34,6 @@ public class ScreenIngame extends AbstractScreen {
 
         localWorld = new World(new Vector2(1000, 500));
 
-        InputHandler.init();
-
         guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
@@ -50,8 +49,10 @@ public class ScreenIngame extends AbstractScreen {
         exitButtonSet.addAnchor(new AnchorTop(0.01f));
         
         exitButton.assignAnchorSet(exitButtonSet);
+        exitButton.setTooltip("Close the game");
         
         guiContainerScreen.addElement(exitButton);
+        guiContainerScreen.addElement(Tooltip.getLabel());
         
         testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
 
@@ -67,11 +68,11 @@ public class ScreenIngame extends AbstractScreen {
         delta *= BLOCK_SIZE / 2;
 
         super.render(delta);
-
-        InputHandler.update();
+        
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
 
+        guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
     }
 }

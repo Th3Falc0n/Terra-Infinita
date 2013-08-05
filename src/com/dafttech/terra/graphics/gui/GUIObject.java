@@ -14,12 +14,18 @@ public abstract class GUIObject {
     
     boolean registeredEvents = false;
     GUIAnchorSet assignedAnchors = null;
+    
+    String tooltipText = "";
 
     public GUIObject(Vector2 p, Vector2 s) {
         position = p;
         size = s;
 
         Events.EVENTMANAGER.registerEventListener(this);
+    }
+    
+    public void setTooltip(String txt) {
+        tooltipText = txt;
     }
 
     public void assignAnchorSet(GUIAnchorSet set) {        
@@ -51,10 +57,14 @@ public abstract class GUIObject {
     }
 
     public void onMouseIn() {
-
+        if(tooltipText != "") {
+            Tooltip.setText(tooltipText);
+        }
     }
 
     public void onMouseOut() {
-
+        if(tooltipText != "") {
+            Tooltip.setText("");
+        }
     }
 }

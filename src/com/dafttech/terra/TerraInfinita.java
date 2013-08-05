@@ -8,7 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.event.Events;
+import com.dafttech.terra.game.InputHandler;
 import com.dafttech.terra.game.ScreenIngame;
+import com.dafttech.terra.graphics.gui.Tooltip;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.tiles.Tile;
 
@@ -16,6 +18,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
     FPSLogger fpsLogger;
 
     public static Random rnd = new Random();
+    public static ScreenIngame screenIngame;
 
     @Override
     public void create() {
@@ -30,16 +33,22 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         Resources.init();
         Tile.init();
+        InputHandler.init();
+        Tooltip.init();
 
         Gdx.graphics.setVSync(false);
 
-        setScreen(new ScreenIngame());
+        screenIngame = new ScreenIngame();
+        
+        setScreen(screenIngame);
 
         Events.EVENT_INITPOST.callSync(this);
     }
 
     @Override
     public void render() {
+        InputHandler.update();
+        
         super.render();
 
         fpsLogger.log();
