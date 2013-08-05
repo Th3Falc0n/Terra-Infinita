@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
-import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.GUIObject;
@@ -31,11 +30,11 @@ public abstract class GUIContainer extends GUIObject {
     public void addElement(GUIElement element, int index) {
         elements.add(index, element);
     }
-    
+
     @Override
     public void update(float delta) {
         super.update(delta);
-        
+
         for (GUIElement e : elements) {
             e.update(delta);
         }

@@ -11,10 +11,10 @@ public abstract class GUIObject {
     public Vector2 size;
 
     public boolean mouseHover = false;
-    
+
     boolean registeredEvents = false;
     GUIAnchorSet assignedAnchors = null;
-    
+
     String tooltipText = "";
 
     public GUIObject(Vector2 p, Vector2 s) {
@@ -23,47 +23,47 @@ public abstract class GUIObject {
 
         Events.EVENTMANAGER.registerEventListener(this);
     }
-    
+
     public void setTooltip(String txt) {
         tooltipText = txt;
     }
 
-    public void assignAnchorSet(GUIAnchorSet set) {        
+    public void assignAnchorSet(GUIAnchorSet set) {
         assignedAnchors = set;
         assignedAnchors.applyAnchorSet(this);
     }
-    
+
     public void applyAnchorSet(GUIAnchorSet set) {
         set.applyAnchorSet(this);
     }
-    
+
     public void applyAssignedAnchorSet() {
-        if(assignedAnchors != null) {
+        if (assignedAnchors != null) {
             assignedAnchors.applyAnchorSet(this);
         }
     }
-    
+
     public void update(float delta) {
-        if(assignedAnchors != null && assignedAnchors.needsApplyOnFrame()) applyAssignedAnchorSet();
+        if (assignedAnchors != null && assignedAnchors.needsApplyOnFrame()) applyAssignedAnchorSet();
     }
-    
+
     @EventListener(events = { "WINRESIZE" })
     public void onWinResize(Event e) {
         applyAssignedAnchorSet();
     }
-    
+
     public void onClick(int button) {
 
     }
 
     public void onMouseIn() {
-        if(tooltipText != "") {
+        if (tooltipText != "") {
             Tooltip.setText(tooltipText);
         }
     }
 
     public void onMouseOut() {
-        if(tooltipText != "") {
+        if (tooltipText != "") {
             Tooltip.setText("");
         }
     }

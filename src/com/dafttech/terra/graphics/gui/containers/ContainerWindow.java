@@ -9,14 +9,12 @@ public class ContainerWindow extends GUIContainer {
         super(p, s);
         // TODO Auto-generated constructor stub
     }
-    
+
     @Override
     public void addElement(GUIElement e, int index) {
-        if(new Rectangle(position.x, position.y, size.x, size.y).contains(new Rectangle(e.position.x, e.position.y, e.size.x, e.size.y))) {
+        if (new Rectangle(position.x, position.y, size.x, size.y).contains(new Rectangle(e.position.x, e.position.y, e.size.x, e.size.y))) {
             super.addElement(e, index);
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Element is outside of window");
         }
     }

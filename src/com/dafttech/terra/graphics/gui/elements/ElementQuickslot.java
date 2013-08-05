@@ -12,7 +12,7 @@ public class ElementQuickslot extends ElementSlot {
     @Override
     public void draw(AbstractScreen screen, Vector2 origin) {
         super.draw(screen, origin);
-        
-        //TODO: Add Key Text
+
+        // TODO: Add Key Text
     }
 }

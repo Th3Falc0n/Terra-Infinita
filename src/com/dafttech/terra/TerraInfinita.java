@@ -38,11 +38,11 @@ public class TerraInfinita extends Game implements ApplicationListener {
         Tooltip.init();
 
         DisplayMode desktop = Gdx.graphics.getDesktopDisplayMode();
-        
+
         Gdx.graphics.setDisplayMode(desktop);
 
         screenIngame = new ScreenIngame();
-        
+
         setScreen(screenIngame);
 
         Events.EVENT_INITPOST.callSync(this);
@@ -51,7 +51,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
     @Override
     public void render() {
         InputHandler.update();
-        
+
         super.render();
 
         fpsLogger.log();

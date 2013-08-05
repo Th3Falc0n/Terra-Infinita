@@ -1,7 +1,5 @@
 package com.dafttech.terra;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 public class DesktopStarter {

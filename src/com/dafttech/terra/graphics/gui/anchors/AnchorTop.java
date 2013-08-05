@@ -5,11 +5,11 @@ import com.dafttech.terra.graphics.gui.GUIObject;
 
 public class AnchorTop extends GUIAnchor {
     public float position = 0;
-    
+
     public AnchorTop(float p) {
         position = p;
     }
-    
+
     @Override
     public void applyAnchor(GUIObject object) {
         object.position.y = Gdx.graphics.getHeight() * position;

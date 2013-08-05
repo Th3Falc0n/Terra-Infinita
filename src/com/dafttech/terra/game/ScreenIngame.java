@@ -7,25 +7,22 @@ import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.Tooltip;
-import com.dafttech.terra.graphics.gui.anchors.AnchorMouse;
 import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
 import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
 import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
 import com.dafttech.terra.graphics.gui.elements.ElementButton;
-import com.dafttech.terra.graphics.gui.elements.ElementSlot;
 import com.dafttech.terra.graphics.passes.RenderingPass;
-import com.dafttech.terra.resources.Resources;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
     InputHandler inputHandler;
 
     ContainerOnscreen guiContainerScreen;
-    
+
     ContainerWindow testWindow;
-    
+
     ElementButton exitButton;
 
     @Override
@@ -42,18 +39,18 @@ public class ScreenIngame extends AbstractScreen {
                 Gdx.app.exit();
             }
         };
-        
+
         GUIAnchorSet exitButtonSet = new GUIAnchorSet();
-        
+
         exitButtonSet.addAnchor(new AnchorRight(0.01f));
         exitButtonSet.addAnchor(new AnchorTop(0.01f));
-        
+
         exitButton.assignAnchorSet(exitButtonSet);
         exitButton.setTooltip("Close the game");
-        
+
         guiContainerScreen.addElement(exitButton);
         guiContainerScreen.addElement(Tooltip.getLabel());
-        
+
         testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
 
         super.show();
@@ -68,7 +65,7 @@ public class ScreenIngame extends AbstractScreen {
         delta *= BLOCK_SIZE / 2;
 
         super.render(delta);
-        
+
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
 

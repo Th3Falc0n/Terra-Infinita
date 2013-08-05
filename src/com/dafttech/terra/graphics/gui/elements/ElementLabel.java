@@ -11,13 +11,13 @@ public class ElementLabel extends GUIElement {
 
     public ElementLabel(Vector2 p, String txt) {
         super(p, null);
-        
+
         text = txt;
 
         TextBounds bnds = Resources.BUTTON_FONT.getBounds(text);
         size = new Vector2(bnds.width, bnds.height);
     }
-    
+
     public void setText(String txt) {
         text = txt;
 
@@ -29,7 +29,8 @@ public class ElementLabel extends GUIElement {
     public void draw(AbstractScreen screen, Vector2 origin) {
         screen.batch.begin();
         Resources.BUTTON_FONT.setColor(Color.WHITE);
-        Resources.BUTTON_FONT.draw(screen.batch, text, position.x + origin.x + size.x / 2 - Resources.BUTTON_FONT.getBounds(text).width / 2, 6 + position.y + origin.y);
+        Resources.BUTTON_FONT.draw(screen.batch, text, position.x + origin.x + size.x / 2 - Resources.BUTTON_FONT.getBounds(text).width / 2, 6
+                + position.y + origin.y);
         screen.batch.end();
     }
 }
