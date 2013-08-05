@@ -15,9 +15,9 @@ public abstract class GUIElement extends GUIObject {
     }
 
     public void draw(AbstractScreen screen, Vector2 origin) {
-        screen.batch.setColor(Color.WHITE);
         screen.batch.begin();
         screen.batch.draw(image, position.x + origin.x, position.y + origin.y);
         screen.batch.end();
+        screen.batch.setColor(Color.WHITE);
     }
 }
