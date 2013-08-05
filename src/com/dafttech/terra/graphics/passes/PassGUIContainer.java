@@ -1,11 +1,8 @@
 package com.dafttech.terra.graphics.passes;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.graphics.AbstractScreen;
@@ -27,7 +24,7 @@ public class PassGUIContainer extends RenderingPass {
         screen.batch.enableBlending();
         screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        ((GUIContainer)arguments[0]).draw(screen);
+        ((GUIContainer) arguments[0]).draw(screen);
 
         buffer.end();
 

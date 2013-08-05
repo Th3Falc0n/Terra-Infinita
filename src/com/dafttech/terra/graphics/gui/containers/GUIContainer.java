@@ -25,11 +25,11 @@ public abstract class GUIContainer extends GUIObject {
             e.draw(screen, position);
         }
     }
-    
+
     public void addElement(GUIElement element) {
         elements.add(0, element);
     }
-    
+
     public void addElement(GUIElement element, int index) {
         elements.add(index, element);
     }
@@ -56,7 +56,7 @@ public abstract class GUIContainer extends GUIObject {
             int button = (int) event.getInput()[0];
             int x = (int) event.getInput()[1];
             int y = (int) event.getInput()[2];
-    
+
             if (x > e.position.x && x < e.position.x + e.size.x && y > e.position.y && y < e.position.y + e.size.y) {
                 e.onClick(button);
             }

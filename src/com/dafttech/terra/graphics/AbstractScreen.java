@@ -27,7 +27,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        Matrix4 normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
+        Matrix4 normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.setProjectionMatrix(normalProjection);
     }

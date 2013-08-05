@@ -22,7 +22,7 @@ public class World implements IDrawable {
     public Tile[][] map;
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
-    
+
     public Queue<IDrawable> renderJobs = new ConcurrentLinkedQueue<IDrawable>();
 
     public Player localPlayer = new Player(new Vector2(0, 0), this);
@@ -61,9 +61,9 @@ public class World implements IDrawable {
     public void removeEntity(Entity entity) {
         localEntities.remove(entity);
     }
-    
+
     public void enqueueForRender(int x, int y) {
-        if(map[x][y] != null) {
+        if (map[x][y] != null) {
             renderJobs.add(map[x][y]);
         }
     }

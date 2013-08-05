@@ -3,7 +3,6 @@ package com.dafttech.terra.resources;
 import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.dafttech.terra.graphics.shaders.ShaderLibrary;
@@ -12,7 +11,7 @@ public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
-    
+
     public static BitmapFont BUTTON_FONT;
 
     public static void init() {
@@ -30,17 +29,18 @@ public class Resources {
         ENTITIES.loadImage("arrow", "res/entities/arrow.png");
         ENTITIES.loadImage("flame", "res/entities/flame.png");
         ENTITIES.loadImage("1px", "res/entities/1px.png");
-        
+
         GUI.loadImage("slot", "res/ui/slot.png");
         GUI.loadImage("bar", "res/ui/bar.png");
-        
-        GUI.loadImage("button"      , "res/ui/button_empty.png");
+
+        GUI.loadImage("button", "res/ui/button_empty.png");
         GUI.loadImage("button_hover", "res/ui/button_empty_hover.png");
-        
+
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("res/ui/button_font.ttf"));
-        
-        BUTTON_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°", true);
-        
+
+        BUTTON_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°",
+                true);
+
         gen.dispose();
 
         try {

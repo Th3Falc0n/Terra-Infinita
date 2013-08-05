@@ -2,7 +2,6 @@ package com.dafttech.terra.world.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.InputHandler;
 import com.dafttech.terra.resources.Resources;

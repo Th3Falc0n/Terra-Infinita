@@ -23,7 +23,7 @@ public class ItemTile extends Item {
             wrappedTile.getEmittedLight().setSize(wrappedTile.getEmittedLight().getSize() / 2);
         }
     }
-    
+
     @Override
     public void update(float delta) {
         super.update(delta);

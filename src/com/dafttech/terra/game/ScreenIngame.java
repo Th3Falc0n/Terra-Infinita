@@ -14,29 +14,29 @@ import com.dafttech.terra.world.World;
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
     InputHandler inputHandler;
-    
+
     ContainerOnscreen guiContainerScreen;
 
     @Override
     public void show() {
         super.show();
-        
+
         localWorld = new World(new Vector2(1000, 500));
-        
+
         InputHandler.init();
-        
-        guiContainerScreen = new ContainerOnscreen(new Vector2(0,0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        
+
+        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+
         guiContainerScreen.addElement(new ElementButton(new Vector2(0, 0), new Vector2(100, 20), Resources.GUI.getImage("button"), "Exit") {
             @Override
             public void onClick(int button) {
                 Gdx.app.exit();
             }
         });
-        
+
         super.show();
     }
-    
+
     public World getWorld() {
         return localWorld;
     }
@@ -46,11 +46,11 @@ public class ScreenIngame extends AbstractScreen {
         delta *= BLOCK_SIZE / 2;
 
         super.render(delta);
-        
+
         InputHandler.update();
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
-        
+
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
     }
 }

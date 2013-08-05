@@ -5,7 +5,6 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.graphics.AbstractScreen;

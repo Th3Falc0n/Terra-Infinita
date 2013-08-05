@@ -3,7 +3,6 @@ package com.dafttech.terra.world.tiles;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.graphics.lighting.PointLight;
 import com.dafttech.terra.resources.Resources;
 import com.dafttech.terra.world.Vector2;
