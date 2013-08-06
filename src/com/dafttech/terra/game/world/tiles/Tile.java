@@ -1,10 +1,7 @@
 package com.dafttech.terra.game.world.tiles;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.world.Position;
 import com.dafttech.terra.game.world.World;
@@ -19,27 +16,6 @@ import com.dafttech.terra.graphics.renderer.TileRenderer;
 import com.dafttech.terra.graphics.renderer.TileRendererBlock;
 
 public abstract class Tile implements IDrawable {
-    static Map<Integer, Class<? extends Tile>> registry = new HashMap<Integer, Class<? extends Tile>>();
-
-    public static void registerTile(Integer id, Class<? extends Tile> mat) {
-        registry.put(id, mat);
-    }
-
-    public static Tile getInstanceOf(Integer id) {
-        try {
-            return registry.get(id).newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void init() {
-        registerTile(1, TileDirt.class);
-        registerTile(2, TileStone.class);
-        registerTile(3, TileGrass.class);
-    }
-
     public Position position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;

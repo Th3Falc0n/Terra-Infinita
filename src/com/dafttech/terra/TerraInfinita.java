@@ -52,7 +52,6 @@ public class TerraInfinita extends Game implements ApplicationListener {
         fpsLogger = new FPSLogger();
 
         Resources.init();
-        Tile.init();
         InputHandler.init();
         Tooltip.init();
 

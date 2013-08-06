@@ -26,7 +26,6 @@ public class ParticleSpark extends Particle {
 
     @Override
     public void update(float delta) {
-        // TODO Auto-generated method stub
         super.update(delta);
 
         if (light == null) light = new PointLight(position, 30);
