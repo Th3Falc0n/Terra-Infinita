@@ -44,7 +44,7 @@ public class EntityFlamingArrow extends EntityArrow {
 
         light.setPosition((Vector2) new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
-        if (TerraInfinita.rnd.nextDouble() < 0.12) {
+        if (TerraInfinita.rnd.nextDouble() < 15 * delta) {
             worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
         }
 

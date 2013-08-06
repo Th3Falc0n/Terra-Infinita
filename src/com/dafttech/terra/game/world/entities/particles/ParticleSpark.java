@@ -14,9 +14,9 @@ public class ParticleSpark extends Particle {
     PointLight light;
 
     public ParticleSpark(Vector2 pos, World world) {
-        super(pos, world, 3, new Vector2(0.5f, 0.5f));
+        super(pos, world, 0.5f, new Vector2(0.5f, 0.5f));
         setHasGravity(false);
-        setVelocity(new Vector2(10f * (0.5f - TerraInfinita.rnd.nextFloat()), 10f * (0.5f - TerraInfinita.rnd.nextFloat())));
+        setVelocity(new Vector2(2f * (0.5f - TerraInfinita.rnd.nextFloat()), 2f * (0.5f - TerraInfinita.rnd.nextFloat())));
     }
 
     @Override

@@ -37,4 +37,8 @@ public class Particle extends Entity {
 
     }
 
+    public float getInAirFriction() {
+        return 0;
+    }
+
 }
