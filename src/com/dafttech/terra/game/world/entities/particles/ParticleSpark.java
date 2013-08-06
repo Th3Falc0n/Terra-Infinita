@@ -40,6 +40,11 @@ public class ParticleSpark extends Particle {
     }
 
     @Override
+    public void checkTerrainCollisions(World world) {
+
+    }
+
+    @Override
     public PointLight getEmittedLight() {
         return light;
     }

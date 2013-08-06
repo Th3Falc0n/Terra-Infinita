@@ -32,11 +32,6 @@ public class Particle extends Entity {
         }
     }
 
-    @Override
-    public void checkTerrainCollisions(World world) {
-
-    }
-
     public float getInAirFriction() {
         return 0.025f;
     }
