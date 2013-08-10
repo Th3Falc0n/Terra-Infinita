@@ -15,24 +15,12 @@ public class PassGUIContainer extends RenderingPass {
 
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
-        //buffer.begin();
-        GL11.glClearColor(0, 0, 0, 0);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
         screen.batch.setShader(null);
 
         screen.batch.enableBlending();
         screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         ((GUIContainer) arguments[0]).draw(screen);
-
-        /*buffer.end();
-
-        screen.batch.setShader(null);
-
-        screen.batch.begin();
-        screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
-        screen.batch.end();*/
     }
 
 }
