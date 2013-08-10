@@ -12,13 +12,9 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
 
 public class PassObjects extends RenderingPass {
-    FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
-        buffer.begin();
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
         screen.batch.setShader(null);
 
         screen.batch.enableBlending();
@@ -39,14 +35,6 @@ public class PassObjects extends RenderingPass {
             entity.draw(screen, pointOfView);
         }
 
-        screen.batch.end();
-
-        buffer.end();
-
-        screen.batch.setShader(null);
-
-        screen.batch.begin();
-        screen.batch.draw(buffer.getColorBufferTexture(), 0, 0);
         screen.batch.end();
     }
 
