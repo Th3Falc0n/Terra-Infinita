@@ -1,5 +1,6 @@
 package com.dafttech.terra.graphics.lighting;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
@@ -32,6 +33,7 @@ public class PointLight extends Light {
     public void drawToLightmap(AbstractScreen screen, Entity pointOfView) {
         Vector2 p = position.toRenderPosition(pointOfView.getPosition());
 
+        screen.shr.setColor(Color.WHITE);
         screen.shr.begin(ShapeType.FilledTriangle);
 
         float angleA = 0;

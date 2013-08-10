@@ -1,5 +1,5 @@
 package com.dafttech.terra.game.world.inventories;
 
-public class Inventory {
-
+public abstract class Inventory {
+    public abstract Stack insertStack(Stack s);
 }
