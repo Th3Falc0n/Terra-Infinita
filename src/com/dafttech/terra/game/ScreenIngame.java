@@ -51,6 +51,7 @@ public class ScreenIngame extends AbstractScreen {
         
         
         HPBar = new ElementBar(new Vector2(10, 10), Color.RED, 100);
+        HPBar.setValue(12);
 
         guiContainerScreen.addElement(HPBar);
         guiContainerScreen.addElement(exitButton);

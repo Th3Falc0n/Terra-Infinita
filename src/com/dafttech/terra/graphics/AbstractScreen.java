@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.dafttech.terra.TerraInfinita;
 
 public abstract class AbstractScreen implements Screen {
+    public Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
 
     @Override
     public void dispose() {
@@ -33,10 +34,9 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        Matrix4 normalProjection = new Matrix4();
-        normalProjection.setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
 
-        batch.setProjectionMatrix(normalProjection);
+        batch.setProjectionMatrix(projection);
+        shr.setProjectionMatrix(projection);
     }
 
     @Override
