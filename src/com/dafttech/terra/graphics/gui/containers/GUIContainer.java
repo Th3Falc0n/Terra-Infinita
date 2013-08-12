@@ -15,34 +15,45 @@ public abstract class GUIContainer extends GUIObject {
         super(p, s);
     }
 
-    List<GUIElement> elements = new ArrayList<GUIElement>();
+    List<GUIObject> objects = new ArrayList<GUIObject>();
 
-    public void draw(AbstractScreen screen) {
-        for (GUIElement e : elements) {
-            e.draw(screen, position);
+    public void draw(AbstractScreen screen, Vector2 origin) {
+        Vector2 p = new Vector2(position);
+        p.add(origin);
+        for (GUIObject o : objects) {
+            o.draw(screen, p);
         }
     }
 
-    public void addElement(GUIElement element) {
-        elements.add(0, element);
+    public void addObject(GUIObject element) {
+        objects.add(0, element);
+        element.setContainer(this);
     }
 
-    public void addElement(GUIElement element, int index) {
-        elements.add(index, element);
+    public void addObject(GUIObject element, int index) {
+        objects.add(index, element);
+        element.setContainer(this);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
 
-        for (GUIElement e : elements) {
+        for (GUIObject e : objects) {
             e.update(delta);
+        }
+    }
+    
+    public void applyAllAssignedAnchorSets() {
+        applyAssignedAnchorSet();
+        for(GUIObject o : objects) {
+            o.applyAssignedAnchorSet();
         }
     }
 
     @EventListener(events = { "MOUSEMOVE" })
     public void onEventMouseMove(Event event) {
-        for (GUIElement e : elements) {
+        for (GUIObject e : objects) {
             int x = (int) event.getInput()[1];
             int y = (int) event.getInput()[2];
 
@@ -58,7 +69,7 @@ public abstract class GUIContainer extends GUIObject {
 
     @EventListener(events = { "MOUSEDOWN" })
     public void onEventMouseDown(Event event) {
-        for (GUIElement e : elements) {
+        for (GUIObject e : objects) {
             int button = (int) event.getInput()[0];
             int x = (int) event.getInput()[1];
             int y = (int) event.getInput()[2];

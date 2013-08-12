@@ -4,7 +4,9 @@ import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.graphics.AbstractScreen;
 import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.graphics.gui.containers.GUIContainer;
 
 public abstract class GUIObject {
     public Vector2 position;
@@ -14,6 +16,7 @@ public abstract class GUIObject {
 
     boolean registeredEvents = false;
     GUIAnchorSet assignedAnchors = null;
+    GUIContainer container;
 
     String tooltipText = "";
 
@@ -23,6 +26,8 @@ public abstract class GUIObject {
 
         Events.EVENTMANAGER.registerEventListener(this);
     }
+    
+    public abstract void draw(AbstractScreen screen, Vector2 origin);
 
     public void setTooltip(String txt) {
         tooltipText = txt;
@@ -30,16 +35,16 @@ public abstract class GUIObject {
 
     public void assignAnchorSet(GUIAnchorSet set) {
         assignedAnchors = set;
-        assignedAnchors.applyAnchorSet(this);
     }
 
     public void applyAnchorSet(GUIAnchorSet set) {
-        set.applyAnchorSet(this);
+        if(container == null && set.isContainerDependent()) throw new IllegalStateException("AnchorSet needs container");
+        set.applyAnchorSet(this, container);
     }
 
     public void applyAssignedAnchorSet() {
         if (assignedAnchors != null) {
-            assignedAnchors.applyAnchorSet(this);
+            applyAnchorSet(assignedAnchors);
         }
     }
 
@@ -66,5 +71,9 @@ public abstract class GUIObject {
         if (tooltipText != "") {
             Tooltip.setText("");
         }
+    }
+
+    public void setContainer(GUIContainer guiContainer) {
+        container = guiContainer;
     }
 }

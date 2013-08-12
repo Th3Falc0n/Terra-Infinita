@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.graphics.AbstractScreen;
@@ -20,7 +21,7 @@ public class PassGUIContainer extends RenderingPass {
         screen.batch.enableBlending();
         screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        ((GUIContainer) arguments[0]).draw(screen);
+        ((GUIContainer) arguments[0]).draw(screen, new Vector2(0, 0));
     }
 
 }

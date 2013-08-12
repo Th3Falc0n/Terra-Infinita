@@ -23,15 +23,13 @@ public class ScreenPauseMenu extends AbstractScreen {
     
     ContainerOnscreen guiContainerScreen;
 
-    ContainerWindow testWindow;
-
     ElementButton exitButton;
     ElementButton resumeButton;
     
     public ScreenPauseMenu(World w) {
         localWorld = w;
 
-        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0));
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
             @Override
@@ -47,8 +45,6 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         exitButton.assignAnchorSet(exitButtonSet);
         exitButton.setTooltip("Close the game");
-
-        guiContainerScreen.addElement(exitButton);
         
         
         
@@ -68,11 +64,12 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         
         
-        guiContainerScreen.addElement(exitButton);
-        guiContainerScreen.addElement(resumeButton);
-        guiContainerScreen.addElement(Tooltip.getLabel());
+        guiContainerScreen.addObject(exitButton);
+        guiContainerScreen.addObject(resumeButton);
+        guiContainerScreen.addObject(Tooltip.getLabel());
+        
 
-        testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
+        guiContainerScreen.applyAllAssignedAnchorSets();
     }
 
     @Override

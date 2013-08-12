@@ -24,15 +24,13 @@ public class ScreenIngame extends AbstractScreen {
 
     ContainerOnscreen guiContainerScreen;
 
-    ContainerWindow testWindow;
-
     ElementButton exitButton;
     ElementBar HPBar, APBar;
     
     public ScreenIngame(World w) {
         localWorld = w;
 
-        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0));
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
             @Override
@@ -53,11 +51,12 @@ public class ScreenIngame extends AbstractScreen {
         HPBar = new ElementBar(new Vector2(10, 10), Color.RED, 100);
         HPBar.setValue(12);
 
-        guiContainerScreen.addElement(HPBar);
-        guiContainerScreen.addElement(exitButton);
-        guiContainerScreen.addElement(Tooltip.getLabel());
-
-        testWindow = new ContainerWindow(new Vector2(0, 0), new Vector2(300, 300));
+        guiContainerScreen.addObject(HPBar);
+        guiContainerScreen.addObject(exitButton);
+        guiContainerScreen.addObject(Tooltip.getLabel());
+        
+        
+        guiContainerScreen.applyAllAssignedAnchorSets();
     }
 
     @Override

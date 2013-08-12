@@ -2,10 +2,11 @@ package com.dafttech.terra.graphics.gui.anchors;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.graphics.gui.GUIObject;
+import com.dafttech.terra.graphics.gui.containers.GUIContainer;
 
 public class AnchorMouse extends GUIAnchor {
     @Override
-    public void applyAnchor(GUIObject object) {
+    public void applyAnchor(GUIObject object, GUIContainer container) {
         object.position.x = Gdx.input.getX() + 10;
         object.position.y = Gdx.input.getY() - object.size.y - 10;
 
@@ -21,5 +22,10 @@ public class AnchorMouse extends GUIAnchor {
     @Override
     public boolean needsApplyOnFrame() {
         return true;
+    }
+    
+    @Override
+    public boolean isContainerDependent() {
+        return false;
     }
 }
