@@ -23,11 +23,7 @@ public class World implements IDrawable {
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
 
-    public Queue<IDrawable> renderJobs = new ConcurrentLinkedQueue<IDrawable>();
-
     public Player localPlayer = new Player(new Vector2(0, 0), this);
-
-    World physWorld;
 
     public World(Vector2 size) {
         this.size.x = (int) size.x;
@@ -61,13 +57,6 @@ public class World implements IDrawable {
     public void removeEntity(Entity entity) {
         localEntities.remove(entity);
     }
-
-    public void enqueueForRender(int x, int y) {
-        if (map[x][y] != null) {
-            renderJobs.add(map[x][y]);
-        }
-    }
-
     @Override
     public void update(float delta) {
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
@@ -102,7 +91,7 @@ public class World implements IDrawable {
     }
 
     public boolean isInRenderRange(Vector2 position) {
-        return false;
+        return true;
     }
 
     @Override
