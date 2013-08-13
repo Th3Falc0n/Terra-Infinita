@@ -62,7 +62,6 @@ public class ElementBar extends GUIElement {
         screen.shr.setColor(0, 0, 0, 0);
         screen.shr.begin(ShapeType.FilledRectangle);
         float w = 124f - (124f * (value / maxValue));
-        System.out.println(w);
         screen.shr.filledRect(126 - w, 0, w, 16);
         screen.shr.end();
 

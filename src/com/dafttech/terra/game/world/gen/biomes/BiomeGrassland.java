@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world.gen.biomes;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Position;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
+import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileGrass;
@@ -19,14 +20,12 @@ public class BiomeGrassland extends Biome {
 
     @Override
     public void generateTerrain(WorldGenerator gen) {
+        PerlinNoise noise = gen.getNoise();
+        
         for (int x = 0; x < gen.world.size.x; x++) {
-            for (int y = 0; y < gen.world.size.y; y++) {
-                new Position(x, y).setTile(gen.world, y == 0 ? TerraInfinita.rnd.nextInt(20) == 0 ? new TileWeed() : new TileGrass()
-                        : y < gen.world.size.y / 6 ? new TileDirt().addSubtile(y == 1 ? new SubtileGrass() : null) : new TileStone());
-
-                if (y == 0 && x % 16 == 0) {
-                    new Position(x, y).setTile(gen.world, new TileTorch());
-                }
+            System.out.print(noise.perlinNoise(x / 100f));
+            for (int y = (int) gen.world.size.y - 1; y > (1f + noise.perlinNoise(x / 150f)) * 200; y--) {
+                new Position(x, y).setTile(gen.world, new TileDirt());
             }
         }
     }
