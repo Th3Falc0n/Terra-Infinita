@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.entities.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
@@ -26,5 +27,10 @@ public abstract class Item extends Entity implements IDrawableInventory {
     public void drawInventory(AbstractScreen screen, Vector2 position) {
         // TODO Auto-generated method stub
 
+    }
+    
+    @Override
+    public void update(float delta) {
+        super.update(delta);
     }
 }

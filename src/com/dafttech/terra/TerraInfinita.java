@@ -34,7 +34,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
     public ScreenIngame screenIngame;
     public ScreenPauseMenu screenPause;
     
-    World world;
+    public World world;
     
     boolean wasFocused = false;
 
