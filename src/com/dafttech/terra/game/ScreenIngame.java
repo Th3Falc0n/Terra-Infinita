@@ -89,8 +89,6 @@ public class ScreenIngame extends AbstractScreen {
 
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
-        
-        chat.addMessage();
 
         guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);

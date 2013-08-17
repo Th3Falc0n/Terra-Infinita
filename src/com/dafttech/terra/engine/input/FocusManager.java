@@ -15,6 +15,10 @@ public class FocusManager {
         return true;
     }
     
+    public static boolean hasTypeFocus(IFocusableTyping listener) {
+        return typeFocus == listener;
+    }
+    
     public static boolean typeFocusAssigned() {
         return typeFocus != null;
     }

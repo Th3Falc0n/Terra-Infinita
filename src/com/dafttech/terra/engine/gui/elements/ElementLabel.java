@@ -7,7 +7,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementLabel extends GUIElement {
-    private CharSequence text = "Button";
+    private String text = "Button";
     public Color clr = Color.WHITE;
 
     public ElementLabel(Vector2 p, String txt) {
@@ -36,7 +36,7 @@ public class ElementLabel extends GUIElement {
         
         screen.batch.begin();
         Resources.GUI_FONT.setColor(clr);
-        Resources.GUI_FONT.draw(screen.batch, text, p.x + size.x / 2 - Resources.GUI_FONT.getBounds(text).width / 2, 6 + p.y);
+        Resources.GUI_FONT.draw(screen.batch, text, p.x, 6 + p.y);
         screen.batch.end();
     }
 }
