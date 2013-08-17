@@ -60,7 +60,13 @@ public class ElementInputLabel extends GUIElement implements IFocusableTyping {
 
     @Override
     public void onKeyTyped(char c) {
-        text += c;
+        if(c == '\b' && text.length() >= 1) {
+            text = text.substring(0, text.length() - 1);
+        }
+        
+        if(!Character.isIdentifierIgnorable(c)) {
+            text += c;
+        }
     }
 
     @Override

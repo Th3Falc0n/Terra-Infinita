@@ -1,5 +1,6 @@
 package com.dafttech.terra.engine.gui.modules;
 
+import com.badlogic.gdx.Input.Keys;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.TerraInfinita;
@@ -44,7 +45,9 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
 
     @EventListener(events = { "KEYDOWN" })
     public void onEventMouseMove(Event event) {
-        inputLabel.beginStringInput();
+        if((int)event.getInput()[0] == Keys.ENTER) {
+            inputLabel.beginStringInput();
+        }
     }
 
     @Override
