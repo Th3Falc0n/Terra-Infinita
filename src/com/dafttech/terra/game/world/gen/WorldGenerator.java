@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world.gen;
 
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.gen.biomes.Biome;
 import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;

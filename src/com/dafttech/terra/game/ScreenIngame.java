@@ -5,18 +5,24 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.Tooltip;
+import com.dafttech.terra.engine.gui.anchors.AnchorRight;
+import com.dafttech.terra.engine.gui.anchors.AnchorTop;
+import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.engine.gui.containers.ContainerBlock;
+import com.dafttech.terra.engine.gui.containers.ContainerList;
+import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
+import com.dafttech.terra.engine.gui.containers.ContainerWindow;
+import com.dafttech.terra.engine.gui.elements.ElementBar;
+import com.dafttech.terra.engine.gui.elements.ElementButton;
+import com.dafttech.terra.engine.gui.elements.ElementLabel;
+import com.dafttech.terra.engine.gui.modules.GUIModule;
+import com.dafttech.terra.engine.gui.modules.ModuleChat;
+import com.dafttech.terra.engine.input.InputHandler;
+import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.gui.Tooltip;
-import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
-import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
-import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
-import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
-import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
-import com.dafttech.terra.graphics.gui.elements.ElementBar;
-import com.dafttech.terra.graphics.gui.elements.ElementButton;
-import com.dafttech.terra.graphics.passes.RenderingPass;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
@@ -26,11 +32,12 @@ public class ScreenIngame extends AbstractScreen {
 
     ElementButton exitButton;
     ElementBar HPBar, APBar;
+    ModuleChat chat;
     
     public ScreenIngame(World w) {
         localWorld = w;
 
-        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0));
+        guiContainerScreen = new ContainerOnscreen();
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
             @Override
@@ -51,10 +58,13 @@ public class ScreenIngame extends AbstractScreen {
         HPBar = new ElementBar(new Vector2(10, 10), Color.RED, 100);
         HPBar.setValue(12);
 
+        chat = new ModuleChat();
+        chat.create();
+        
+        guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(HPBar);
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
-        
         
         guiContainerScreen.applyAllAssignedAnchorSets();
     }
@@ -79,6 +89,8 @@ public class ScreenIngame extends AbstractScreen {
 
         localWorld.update(delta);
         localWorld.draw(this, localWorld.localPlayer);
+        
+        chat.addMessage();
 
         guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);

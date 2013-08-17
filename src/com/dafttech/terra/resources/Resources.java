@@ -5,14 +5,14 @@ import java.io.IOException;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.dafttech.terra.graphics.shaders.ShaderLibrary;
+import com.dafttech.terra.engine.shaders.ShaderLibrary;
 
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
 
-    public static BitmapFont BUTTON_FONT;
+    public static BitmapFont GUI_FONT;
 
     public static void init() {
         TILES.loadImage("error", "res/error.png");
@@ -37,7 +37,7 @@ public class Resources {
 
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("res/ui/button_font.ttf"));
 
-        BUTTON_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°",
+        GUI_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°",
                 true);
 
         gen.dispose();

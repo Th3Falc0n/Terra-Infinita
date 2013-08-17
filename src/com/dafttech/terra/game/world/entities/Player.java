@@ -3,9 +3,9 @@ package com.dafttech.terra.game.world.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.game.InputHandler;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.world.Position;
-import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 

@@ -14,15 +14,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.Tooltip;
+import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
+import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.Events;
-import com.dafttech.terra.game.InputHandler;
 import com.dafttech.terra.game.ScreenIngame;
 import com.dafttech.terra.game.ScreenPauseMenu;
-import com.dafttech.terra.game.world.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.graphics.gui.Tooltip;
-import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.resources.Resources;
 
 public class TerraInfinita extends Game implements ApplicationListener {

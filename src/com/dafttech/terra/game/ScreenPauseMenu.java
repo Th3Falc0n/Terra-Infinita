@@ -4,19 +4,19 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.Tooltip;
+import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
+import com.dafttech.terra.engine.gui.anchors.AnchorRight;
+import com.dafttech.terra.engine.gui.anchors.AnchorTop;
+import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
+import com.dafttech.terra.engine.gui.containers.ContainerWindow;
+import com.dafttech.terra.engine.gui.elements.ElementButton;
+import com.dafttech.terra.engine.gui.elements.ElementLabel;
+import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.gui.Tooltip;
-import com.dafttech.terra.graphics.gui.anchors.AnchorCenterX;
-import com.dafttech.terra.graphics.gui.anchors.AnchorRight;
-import com.dafttech.terra.graphics.gui.anchors.AnchorTop;
-import com.dafttech.terra.graphics.gui.anchors.GUIAnchorSet;
-import com.dafttech.terra.graphics.gui.containers.ContainerOnscreen;
-import com.dafttech.terra.graphics.gui.containers.ContainerWindow;
-import com.dafttech.terra.graphics.gui.elements.ElementButton;
-import com.dafttech.terra.graphics.gui.elements.ElementLabel;
-import com.dafttech.terra.graphics.passes.RenderingPass;
 
 public class ScreenPauseMenu extends AbstractScreen {
     World localWorld;
@@ -29,7 +29,7 @@ public class ScreenPauseMenu extends AbstractScreen {
     public ScreenPauseMenu(World w) {
         localWorld = w;
 
-        guiContainerScreen = new ContainerOnscreen(new Vector2(0, 0));
+        guiContainerScreen = new ContainerOnscreen();
 
         exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
             @Override

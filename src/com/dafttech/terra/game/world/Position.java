@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;

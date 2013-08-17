@@ -8,14 +8,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.engine.IDrawable;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.IDrawable;
-import com.dafttech.terra.graphics.passes.RenderingPass;
 
 public class World implements IDrawable {
     public Vector2 size = new Vector2(0, 0);

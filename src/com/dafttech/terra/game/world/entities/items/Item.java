@@ -2,11 +2,11 @@ package com.dafttech.terra.game.world.entities.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Vector2;
+import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.engine.IDrawableInventory;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.graphics.AbstractScreen;
-import com.dafttech.terra.graphics.IDrawableInventory;
 import com.dafttech.terra.resources.Resources;
 
 public abstract class Item extends Entity implements IDrawableInventory {
