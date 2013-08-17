@@ -15,8 +15,8 @@ public class ShaderLibrary {
     public static void loadShader(String name, String vertex, String fragment) throws IOException {
         ShaderProgram.pedantic = false;
 
-        InputStream vertIS = ShaderLibrary.class.getResourceAsStream("/com/dafttech/terra/graphics/shaders/" + vertex + ".vert");
-        InputStream fragIS = ShaderLibrary.class.getResourceAsStream("/com/dafttech/terra/graphics/shaders/" + fragment + ".frag");
+        InputStream vertIS = ShaderLibrary.class.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + vertex + ".vert");
+        InputStream fragIS = ShaderLibrary.class.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + fragment + ".frag");
 
         CharBuffer vertBF = CharBuffer.allocate(vertIS.available());
         CharBuffer fragBF = CharBuffer.allocate(fragIS.available());

@@ -34,6 +34,7 @@ public class InputHandler implements InputProcessor {
     }
 
     public boolean isKeyDown(String name) {
+        if(!keyDown.containsKey(getKeyID(name))) return false;
         return keyDown.get(getKeyID(name));
     }
 
@@ -52,19 +53,27 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int i) {
+        if(FocusManager.typeFocusAssigned()) {
+            FocusManager.typeFocus.onKeyDown(i);
+            return true;
+        }
         keyDown.put(i, true);
         Events.EVENT_KEYDOWN.callSync(i);
-        
         return true;
     }
 
     @Override
     public boolean keyTyped(char c) {
+        if(FocusManager.typeFocusAssigned()) {
+            FocusManager.typeFocus.onKeyTyped(c);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean keyUp(int i) {
+        if(FocusManager.typeFocusAssigned()) return false;
         keyDown.put(i, false);
         Events.EVENT_KEYUP.callSync(i);
         
