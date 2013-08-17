@@ -78,8 +78,6 @@ public class TerraInfinita extends Game implements ApplicationListener {
         if (isFocused() && !wasFocused) {
             wasFocused = true;
         }
-        
-        InputHandler.update();
 
         super.render();
 

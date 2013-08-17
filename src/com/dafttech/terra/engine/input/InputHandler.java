@@ -8,18 +8,22 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.dafttech.terra.game.Events;
 
-public class InputHandler {
-    static List<Integer> registeredKeys = new ArrayList<Integer>();
-    static Map<String, Integer> keyNames = new HashMap<String, Integer>();
-    static Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
-    static Map<Integer, Boolean> mouseDown = new HashMap<Integer, Boolean>();
+public class InputHandler implements InputProcessor {
+    List<Integer> registeredKeys = new ArrayList<Integer>();
+    Map<String, Integer> keyNames = new HashMap<String, Integer>();
+    Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
 
+    public static InputHandler $ = new InputHandler();
+    
     public static void init() {
-        mouseDown.put(0, false);
-        mouseDown.put(1, false);
-        mouseDown.put(2, false);
+        $.initialize();
+    }
+    
+    public void initialize() {
+        Gdx.input.setInputProcessor(this);
 
         registerKey(Keys.W, "UP");
         registerKey(Keys.A, "LEFT");
@@ -29,60 +33,71 @@ public class InputHandler {
         registerKey(Keys.SPACE, "JUMP");
     }
 
-    public static boolean isKeyDown(String name) {
+    public boolean isKeyDown(String name) {
         return keyDown.get(getKeyID(name));
     }
 
-    public static int getKeyID(String name) {
+    public int getKeyID(String name) {
         if (!keyNames.containsKey(name)) throw new IllegalArgumentException("Key not registered: " + name);
         return keyNames.get(name);
     }
 
-    static int lx, ly, x, y;
-
-    public static void update() {
-        for (int i : registeredKeys) {
-            if (!keyDown.get(i) && Gdx.input.isKeyPressed(i)) {
-                keyDown.put(i, true);
-                Events.EVENT_KEYDOWN.callSync(i);
-            }
-
-            if (keyDown.get(i) && !Gdx.input.isKeyPressed(i)) {
-                keyDown.put(i, false);
-                Events.EVENT_KEYUP.callSync(i);
-            }
-        }
-
-        lx = x;
-        ly = y;
-        x = Gdx.input.getX();
-        y = Gdx.input.getY();
-
-        for (int i = 0; i <= 2; i++) {
-            if ((!mouseDown.get(i)) && Gdx.input.isButtonPressed(i)) {
-                mouseDown.put(i, true);
-                Events.EVENT_MOUSEDOWN.callSync(i, x, y);
-            }
-
-            if (mouseDown.get(i) && (!Gdx.input.isButtonPressed(i))) {
-                mouseDown.put(i, false);
-                Events.EVENT_MOUSEUP.callSync(i, x, y);
-            }
-
-        }
-
-        if (lx != x || ly != y) {
-            Events.EVENT_MOUSEMOVE.callSync(-1, x, y);
-        }
-    }
-
-    public static void registerKey(int key, String name) {
+    public void registerKey(int key, String name) {
         if (registeredKeys.contains(key)) {
             Gdx.app.log("InputHandler", "Multiple Key Registration: " + key);
             return;
         }
         keyNames.put(name, key);
-        registeredKeys.add(key);
-        keyDown.put(key, false);
+    }
+
+    @Override
+    public boolean keyDown(int i) {
+        keyDown.put(i, true);
+        Events.EVENT_KEYDOWN.callSync(i);
+        
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char c) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int i) {
+        keyDown.put(i, false);
+        Events.EVENT_KEYUP.callSync(i);
+        
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int x, int y) {
+        Events.EVENT_MOUSEMOVE.callSync(-1, x, y);
+        return true;
+    }
+
+    @Override
+    public boolean scrolled(int arg0) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int x, int y, int p, int b) {
+        Events.EVENT_MOUSEDOWN.callSync(b, x, y);
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int x, int y, int p) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int x, int y, int p, int b) {
+        Events.EVENT_MOUSEUP.callSync(b, x, y);
+        return true;
     }
 }

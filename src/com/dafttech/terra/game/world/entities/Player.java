@@ -19,10 +19,10 @@ public class Player extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (InputHandler.isKeyDown("LEFT")) addForce(new Vector2(-10f * getCurrentAcceleration(), 0));
-        if (InputHandler.isKeyDown("RIGHT")) addForce(new Vector2(10f * getCurrentAcceleration(), 0));
+        if (InputHandler.$.isKeyDown("LEFT")) addForce(new Vector2(-10f * getCurrentAcceleration(), 0));
+        if (InputHandler.$.isKeyDown("RIGHT")) addForce(new Vector2(10f * getCurrentAcceleration(), 0));
 
-        if (InputHandler.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
+        if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
             Position destroy = ((Vector2) Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
