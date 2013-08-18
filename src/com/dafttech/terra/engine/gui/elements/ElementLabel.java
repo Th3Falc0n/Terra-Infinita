@@ -25,7 +25,7 @@ public class ElementLabel extends GUIElement {
         TextBounds bnds = Resources.GUI_FONT.getBounds(text);
         size = new Vector2(bnds.width, bnds.height);
     }
-    
+
     public void setColor(Color c) {
         clr = c;
     }
@@ -33,7 +33,7 @@ public class ElementLabel extends GUIElement {
     @Override
     public void draw(AbstractScreen screen) {
         Vector2 p = getScreenPosition();
-        
+
         screen.batch.begin();
         Resources.GUI_FONT.setColor(clr);
         Resources.GUI_FONT.draw(screen.batch, text, p.x, 6 + p.y);

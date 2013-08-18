@@ -1,7 +1,6 @@
 package com.dafttech.terra.game.world.entities.items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInventory;
 import com.dafttech.terra.engine.Vector2;
@@ -18,7 +17,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
     public TextureRegion getImage() {
         return Resources.TILES.getImage("error");
     }
-    
+
     public int getMaxStackSize() {
         return 99;
     }
@@ -28,7 +27,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
         // TODO Auto-generated method stub
 
     }
-    
+
     @Override
     public void update(float delta) {
         super.update(delta);

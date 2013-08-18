@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.dafttech.terra.game.Events;
@@ -17,11 +16,11 @@ public class InputHandler implements InputProcessor {
     Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
 
     public static InputHandler $ = new InputHandler();
-    
+
     public static void init() {
         $.initialize();
     }
-    
+
     public void initialize() {
         Gdx.input.setInputProcessor(this);
 
@@ -34,7 +33,7 @@ public class InputHandler implements InputProcessor {
     }
 
     public boolean isKeyDown(String name) {
-        if(!keyDown.containsKey(getKeyID(name))) return false;
+        if (!keyDown.containsKey(getKeyID(name))) return false;
         return keyDown.get(getKeyID(name));
     }
 
@@ -53,7 +52,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int i) {
-        if(FocusManager.typeFocusAssigned()) {
+        if (FocusManager.typeFocusAssigned()) {
             FocusManager.typeFocus.onKeyDown(i);
             return true;
         }
@@ -64,7 +63,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyTyped(char c) {
-        if(FocusManager.typeFocusAssigned()) {
+        if (FocusManager.typeFocusAssigned()) {
             FocusManager.typeFocus.onKeyTyped(c);
             return true;
         }
@@ -73,10 +72,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int i) {
-        if(FocusManager.typeFocusAssigned()) return false;
+        if (FocusManager.typeFocusAssigned()) return false;
         keyDown.put(i, false);
         Events.EVENT_KEYUP.callSync(i);
-        
+
         return true;
     }
 

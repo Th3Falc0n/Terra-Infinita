@@ -9,7 +9,7 @@ public abstract class GUIAnchor {
     public boolean needsApplyOnFrame() {
         return false;
     }
-    
+
     public boolean isContainerDependent() {
         return true;
     }

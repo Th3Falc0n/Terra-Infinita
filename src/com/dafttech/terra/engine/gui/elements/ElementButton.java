@@ -18,7 +18,7 @@ public abstract class ElementButton extends GUIElement {
     @Override
     public void draw(AbstractScreen screen) {
         Vector2 p = getScreenPosition();
-        
+
         if (mouseHover) {
             screen.batch.setColor(Color.GREEN);
             Resources.GUI_FONT.setColor(Color.GREEN);

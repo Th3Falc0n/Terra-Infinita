@@ -1,9 +1,6 @@
 package com.dafttech.terra.game;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
@@ -11,14 +8,8 @@ import com.dafttech.terra.engine.gui.Tooltip;
 import com.dafttech.terra.engine.gui.anchors.AnchorRight;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
-import com.dafttech.terra.engine.gui.containers.ContainerBlock;
-import com.dafttech.terra.engine.gui.containers.ContainerList;
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
-import com.dafttech.terra.engine.gui.containers.ContainerWindow;
-import com.dafttech.terra.engine.gui.elements.ElementBar;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
-import com.dafttech.terra.engine.gui.elements.ElementLabel;
-import com.dafttech.terra.engine.gui.modules.GUIModule;
 import com.dafttech.terra.engine.gui.modules.ModuleChat;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
@@ -34,7 +25,7 @@ public class ScreenIngame extends AbstractScreen {
     ElementButton exitButton;
     ModuleChat chat;
     ModuleHUDBottom hudBottom;
-    
+
     public ScreenIngame(World w) {
         localWorld = w;
 
@@ -57,15 +48,15 @@ public class ScreenIngame extends AbstractScreen {
 
         chat = new ModuleChat();
         chat.create();
-        
+
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
-        
+
         guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(hudBottom.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
-        
+
         guiContainerScreen.applyAllAssignedAnchorSets();
     }
 
@@ -80,11 +71,11 @@ public class ScreenIngame extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        if(delta > 0.5f) {
+        if (delta > 0.5f) {
             TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
             return;
         }
-        
+
         super.render(delta);
 
         localWorld.update(delta);

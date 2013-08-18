@@ -16,7 +16,7 @@ public class Events {
 
     public static final EventType EVENT_WORLDTICK = new EventType(EVENTMANAGER, "WORLDTICK");
     public static final EventType EVENT_BLOCKCHANGE = new EventType(EVENTMANAGER, "BLOCKCHANGE");
-    
+
     public static final EventType EVENT_CHATCOMMAND = new EventType(EVENTMANAGER, "CHATCOMMAND");
 
     public static final EventType EVENT_KEYDOWN = new EventType(EVENTMANAGER, "KEYDOWN");

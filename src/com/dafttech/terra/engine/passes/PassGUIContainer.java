@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.containers.GUIContainer;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;

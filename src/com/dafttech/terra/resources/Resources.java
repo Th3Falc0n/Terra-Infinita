@@ -37,8 +37,7 @@ public class Resources {
 
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("res/ui/button_font.ttf"));
 
-        GUI_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ίφόδ'*#+~-.,;:_<>|^°",
-                true);
+        GUI_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ίφόδ'*#+~-.,;:_<>|^°", true);
 
         gen.dispose();
 

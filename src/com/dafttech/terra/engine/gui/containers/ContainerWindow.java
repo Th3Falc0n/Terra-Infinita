@@ -3,7 +3,6 @@ package com.dafttech.terra.engine.gui.containers;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.GUIObject;
-import com.dafttech.terra.engine.gui.elements.GUIElement;
 
 public class ContainerWindow extends GUIContainer {
     public ContainerWindow(Vector2 p, Vector2 s) {

@@ -13,9 +13,10 @@ public abstract class GUIElement extends GUIObject {
         super(p, s);
     }
 
+    @Override
     public void draw(AbstractScreen screen) {
         Vector2 p = getScreenPosition();
-        
+
         screen.batch.begin();
         screen.batch.draw(image, p.x, p.y);
         screen.batch.end();

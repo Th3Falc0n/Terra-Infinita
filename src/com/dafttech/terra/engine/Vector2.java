@@ -35,8 +35,8 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     public static Vector2 getMouse() {
         return new Vector2(Gdx.input.getX(), Gdx.input.getY());
     }
-    
+
     public Vector2 addNew(Vector2 v) {
-       return (Vector2) new Vector2(this).add(v); 
+        return (Vector2) new Vector2(this).add(v);
     }
 }

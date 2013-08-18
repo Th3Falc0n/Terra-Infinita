@@ -9,7 +9,7 @@ public class Stack {
     public Item getContent() {
         return content;
     }
-    
+
     public int getAmount() {
         return amount;
     }

@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine;
 
-
 public interface IDrawableInventory {
     public void update(float delta);
 

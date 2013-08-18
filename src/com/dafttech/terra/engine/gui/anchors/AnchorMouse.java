@@ -23,7 +23,7 @@ public class AnchorMouse extends GUIAnchor {
     public boolean needsApplyOnFrame() {
         return true;
     }
-    
+
     @Override
     public boolean isContainerDependent() {
         return false;

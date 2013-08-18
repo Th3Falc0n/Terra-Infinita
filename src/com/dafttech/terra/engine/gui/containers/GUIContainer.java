@@ -2,7 +2,6 @@ package com.dafttech.terra.engine.gui.containers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
@@ -10,7 +9,6 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.GUIObject;
 import com.dafttech.terra.engine.gui.elements.GUIElement;
-import com.dafttech.terra.engine.gui.modules.GUIModule;
 
 public abstract class GUIContainer extends GUIObject {
     public GUIContainer(Vector2 p, Vector2 s) {
@@ -19,6 +17,7 @@ public abstract class GUIContainer extends GUIObject {
 
     List<GUIObject> objects = new ArrayList<GUIObject>();
 
+    @Override
     public void draw(AbstractScreen screen) {
         for (GUIObject o : objects) {
             o.draw(screen);
@@ -33,15 +32,14 @@ public abstract class GUIContainer extends GUIObject {
         objects.add(index, object);
         object.setContainer(this);
     }
-    
+
     public void removeObject(int index) {
         objects.get(index).setContainer(null);
         objects.remove(index);
     }
-    
+
     public void removeObject(GUIObject object) {
-        if(objects.contains(object))
-            removeObject(objects.indexOf(object));
+        if (objects.contains(object)) removeObject(objects.indexOf(object));
     }
 
     @Override
@@ -52,11 +50,11 @@ public abstract class GUIContainer extends GUIObject {
             e.update(delta);
         }
     }
-    
+
     public void applyAllAssignedAnchorSets() {
         applyAssignedAnchorSet();
-        for(GUIObject o : objects) {
-            if(o instanceof GUIContainer) {
+        for (GUIObject o : objects) {
+            if (o instanceof GUIContainer) {
                 ((GUIContainer) o).applyAllAssignedAnchorSets();
             }
             o.applyAssignedAnchorSet();
@@ -66,8 +64,8 @@ public abstract class GUIContainer extends GUIObject {
     @EventListener(events = { "MOUSEMOVE" })
     public void onEventMouseMove(Event event) {
         for (GUIObject e : objects) {
-            if(!(e instanceof GUIElement)) continue;
-            
+            if (!(e instanceof GUIElement)) continue;
+
             int x = (int) event.getInput()[1];
             int y = (int) event.getInput()[2];
 
@@ -86,8 +84,8 @@ public abstract class GUIContainer extends GUIObject {
     @EventListener(events = { "MOUSEDOWN" })
     public void onEventMouseDown(Event event) {
         for (GUIObject e : objects) {
-            if(!(e instanceof GUIElement)) continue;
-            
+            if (!(e instanceof GUIElement)) continue;
+
             int button = (int) event.getInput()[0];
             int x = (int) event.getInput()[1];
             int y = (int) event.getInput()[2];

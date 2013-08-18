@@ -1,7 +1,5 @@
 package com.dafttech.terra.game;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
@@ -12,20 +10,18 @@ import com.dafttech.terra.engine.gui.anchors.AnchorRight;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
-import com.dafttech.terra.engine.gui.containers.ContainerWindow;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
-import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
 
 public class ScreenPauseMenu extends AbstractScreen {
     World localWorld;
-    
+
     ContainerOnscreen guiContainerScreen;
 
     ElementButton exitButton;
     ElementButton resumeButton;
-    
+
     public ScreenPauseMenu(World w) {
         localWorld = w;
 
@@ -45,16 +41,14 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         exitButton.assignAnchorSet(exitButtonSet);
         exitButton.setTooltip("Close the game");
-        
-        
-        
+
         resumeButton = new ElementButton(new Vector2(0, 0), "Resume") {
             @Override
             public void onClick(int button) {
                 TerraInfinita.$.setScreen(TerraInfinita.$.screenIngame);
             }
         };
-        
+
         GUIAnchorSet resumeButtonSet = new GUIAnchorSet();
 
         resumeButtonSet.addAnchor(new AnchorCenterX());
@@ -62,12 +56,9 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         resumeButton.assignAnchorSet(resumeButtonSet);
 
-        
-        
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(resumeButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
-        
 
         guiContainerScreen.applyAllAssignedAnchorSets();
     }
@@ -78,11 +69,11 @@ public class ScreenPauseMenu extends AbstractScreen {
     }
 
     @Override
-    public void render(float delta) {        
+    public void render(float delta) {
         super.render(delta);
-        
+
         localWorld.draw(this, localWorld.localPlayer);
-        
+
         guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen);
     }

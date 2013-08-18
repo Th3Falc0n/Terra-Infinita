@@ -7,35 +7,28 @@ import org.lwjgl.opengl.Display;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.dafttech.eventmanager.Event;
-import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.Tooltip;
-import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.ScreenIngame;
 import com.dafttech.terra.game.ScreenPauseMenu;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
 public class TerraInfinita extends Game implements ApplicationListener {
     public static TerraInfinita $ = new TerraInfinita();
-    
+
     FPSLogger fpsLogger;
 
     public static Random rnd = new Random();
     public ScreenIngame screenIngame;
     public ScreenPauseMenu screenPause;
-    
+
     public World world;
-    
+
     boolean wasFocused = false;
 
     public boolean isFocused() {
@@ -44,7 +37,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
     @Override
     public void create() {
-        
+
         Gdx.app.log(Thread.currentThread().getName(), "Creating game...");
 
         Texture.setEnforcePotImages(false);
@@ -59,7 +52,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
         Tooltip.init();
 
         world = new World(new Vector2(1000, 500));
-        
+
         screenIngame = new ScreenIngame(world);
         screenPause = new ScreenPauseMenu(world);
 
@@ -67,7 +60,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         Events.EVENT_INITPOST.callSync(this);
     }
-    
+
     @Override
     public void render() {
         if (!isFocused() && wasFocused) {

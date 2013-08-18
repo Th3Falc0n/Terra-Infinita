@@ -3,8 +3,6 @@ package com.dafttech.terra.game.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -58,6 +56,7 @@ public class World implements IDrawable {
     public void removeEntity(Entity entity) {
         localEntities.remove(entity);
     }
+
     @Override
     public void update(float delta) {
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;

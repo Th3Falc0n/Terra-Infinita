@@ -3,7 +3,6 @@ package com.dafttech.terra.engine.gui.modules;
 import com.badlogic.gdx.Input.Keys;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
@@ -18,34 +17,34 @@ import com.dafttech.terra.game.Events;
 public class ModuleChat extends GUIModule implements IStringInputHandler {
     public ContainerList messageList;
     public ElementInputLabel inputLabel;
-    
+
     @Override
     public void create() {
         Events.EVENTMANAGER.registerEventListener(this);
-        
+
         container = new ContainerBlock(new Vector2(0, 0), new Vector2(400, 280));
-        
+
         GUIAnchorSet set = new GUIAnchorSet();
-        
+
         set.addAnchor(new AnchorLeft(0.01f));
         set.addAnchor(new AnchorBottom(0.01f));
-        
+
         container.assignAnchorSet(set);
-        
+
         inputLabel = new ElementInputLabel(new Vector2(10, 250), this);
         messageList = new ContainerList(new Vector2(10, 10), new Vector2(380, 230));
-        
+
         container.addObject(messageList);
         container.addObject(inputLabel);
     }
-    
+
     public void addMessage(String msg) {
         messageList.addObject(new ElementLabel(new Vector2(0, 0), msg));
     }
 
     @EventListener(events = { "KEYDOWN" })
     public void onEventMouseMove(Event event) {
-        if((int)event.getInput()[0] == Keys.ENTER) {
+        if ((int) event.getInput()[0] == Keys.ENTER) {
             inputLabel.beginStringInput();
         }
     }

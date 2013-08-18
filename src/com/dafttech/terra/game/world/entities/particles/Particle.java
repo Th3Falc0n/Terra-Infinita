@@ -32,6 +32,7 @@ public class Particle extends Entity {
         }
     }
 
+    @Override
     public float getInAirFriction() {
         return 0.025f;
     }

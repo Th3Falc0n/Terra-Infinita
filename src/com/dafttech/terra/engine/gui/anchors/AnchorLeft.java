@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine.gui.anchors;
 
-import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.gui.GUIObject;
 import com.dafttech.terra.engine.gui.containers.GUIContainer;
 

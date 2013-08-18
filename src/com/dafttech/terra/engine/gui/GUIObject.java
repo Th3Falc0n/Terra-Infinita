@@ -26,16 +26,16 @@ public abstract class GUIObject {
 
         Events.EVENTMANAGER.registerEventListener(this);
     }
-    
+
     public abstract void draw(AbstractScreen screen);
 
     public Vector2 getScreenPosition() {
-        if(container != null) {
+        if (container != null) {
             return container.getScreenPosition().addNew(position);
         }
         return position;
     }
-    
+
     public void setTooltip(String txt) {
         tooltipText = txt;
     }
@@ -45,7 +45,7 @@ public abstract class GUIObject {
     }
 
     public void applyAnchorSet(GUIAnchorSet set) {
-        if(container == null && set.isContainerDependent()) throw new IllegalStateException("AnchorSet needs container");
+        if (container == null && set.isContainerDependent()) throw new IllegalStateException("AnchorSet needs container");
         set.applyAnchorSet(this, container);
     }
 
