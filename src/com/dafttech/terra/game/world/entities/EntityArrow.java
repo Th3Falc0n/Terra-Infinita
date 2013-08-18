@@ -12,7 +12,8 @@ public class EntityArrow extends Entity {
 
     public EntityArrow(Vector2 pos, World world) {
         super(pos, world, new Vector2(2, 0.6f));
-        // TODO Auto-generated constructor stub
+        
+        setGravityFactor(0.25f);
     }
 
     @Override

@@ -17,8 +17,6 @@ public class EntityFlamingArrow extends EntityArrow {
 
     public EntityFlamingArrow(Vector2 pos, World world) {
         super(pos, world); 
-        
-        setGravityFactor(0.25f);
     }
 
     @Override
