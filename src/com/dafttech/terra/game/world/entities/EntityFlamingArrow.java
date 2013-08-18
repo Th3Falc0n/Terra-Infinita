@@ -16,8 +16,9 @@ public class EntityFlamingArrow extends EntityArrow {
     PointLight light;
 
     public EntityFlamingArrow(Vector2 pos, World world) {
-        super(pos, world);
-        // TODO Auto-generated constructor stub
+        super(pos, world); 
+        
+        setGravityFactor(0.25f);
     }
 
     @Override
@@ -37,15 +38,16 @@ public class EntityFlamingArrow extends EntityArrow {
 
     @Override
     public void update(float delta) {
-        // TODO Auto-generated method stub
         super.update(delta);
 
-        if (light == null) light = new PointLight(position, 30);
+        if (light == null) light = new PointLight(position, 95);
 
         light.setPosition((Vector2) new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
-        if (TerraInfinita.rnd.nextDouble() < 15 * delta) {
-            worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
+        for(int i = 0; i < 5; i++) {
+            if(TerraInfinita.rnd.nextDouble() < delta * 4) {
+                worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
+            }
         }
 
         if (!inAir) worldObj.removeEntity(this);

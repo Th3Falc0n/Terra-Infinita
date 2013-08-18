@@ -33,7 +33,7 @@ public class PointLight extends Light {
     public void drawToLightmap(AbstractScreen screen, Entity pointOfView) {
         Vector2 p = position.toRenderPosition(pointOfView.getPosition());
 
-        screen.shr.setColor(Color.WHITE);
+        screen.shr.setColor(color);
         screen.shr.begin(ShapeType.FilledTriangle);
 
         float angleA = 0;

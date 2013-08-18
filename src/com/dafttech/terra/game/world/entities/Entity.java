@@ -26,6 +26,7 @@ public abstract class Entity implements IDrawable {
     Color color = Color.WHITE;
 
     boolean hasGravity = true;
+    float gravityFactor = 1f;
 
     boolean inAir = false;
 
@@ -58,6 +59,10 @@ public abstract class Entity implements IDrawable {
 
     public void setHasGravity(boolean v) {
         hasGravity = v;
+    }
+    
+    public void setGravityFactor(float f) {
+        gravityFactor = f;
     }
 
     public void setSize(float x, float y) {
@@ -249,7 +254,7 @@ public abstract class Entity implements IDrawable {
     public void update(float delta) {
         delta *= BLOCK_SIZE;
 
-        if (hasGravity) addForce(new Vector2(0, 9.81f));
+        if (hasGravity) addForce(new Vector2(0, 9.81f * gravityFactor));
 
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;
