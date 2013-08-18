@@ -47,8 +47,6 @@ public class EntityFlamingArrow extends EntityArrow {
                 worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
             }
         }
-
-        if (!inAir) worldObj.removeEntity(this);
     }
 
     @Override
