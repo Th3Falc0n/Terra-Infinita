@@ -29,7 +29,8 @@ public class GUIAnchorSet {
         return false;
     }
 
-    public void addAnchor(GUIAnchor anchor) {
+    public GUIAnchorSet addAnchor(GUIAnchor anchor) {
         anchors.add(anchor);
+        return this;
     }
 }

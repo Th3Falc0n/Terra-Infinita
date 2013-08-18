@@ -20,6 +20,7 @@ import com.dafttech.terra.engine.gui.elements.ElementButton;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.gui.modules.GUIModule;
 import com.dafttech.terra.engine.gui.modules.ModuleChat;
+import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
@@ -31,8 +32,8 @@ public class ScreenIngame extends AbstractScreen {
     ContainerOnscreen guiContainerScreen;
 
     ElementButton exitButton;
-    ElementBar HPBar, APBar;
     ModuleChat chat;
+    ModuleHUDBottom hudBottom;
     
     public ScreenIngame(World w) {
         localWorld = w;
@@ -53,16 +54,15 @@ public class ScreenIngame extends AbstractScreen {
 
         exitButton.assignAnchorSet(exitButtonSet);
         exitButton.setTooltip("Close the game");
-        
-        
-        HPBar = new ElementBar(new Vector2(10, 10), Color.RED, 100);
-        HPBar.setValue(12);
 
         chat = new ModuleChat();
         chat.create();
         
+        hudBottom = new ModuleHUDBottom();
+        hudBottom.create();
+        
         guiContainerScreen.addObject(chat.getContainer());
-        guiContainerScreen.addObject(HPBar);
+        guiContainerScreen.addObject(hudBottom.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
         
