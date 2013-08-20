@@ -13,7 +13,7 @@ public class EntityArrow extends Entity {
     public EntityArrow(Vector2 pos, World world) {
         super(pos, world, new Vector2(2, 0.6f));
         
-        setGravityFactor(0.25f);
+        setGravityFactor(0.125f);
     }
 
     @Override
