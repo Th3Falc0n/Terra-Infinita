@@ -11,6 +11,7 @@ public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
+    public static ImageLibrary LIGHT = new ImageLibrary();
 
     public static BitmapFont GUI_FONT;
 
@@ -34,6 +35,8 @@ public class Resources {
         GUI.loadImage("bar", "res/ui/bar.png");
         GUI.loadImage("bar_mask", "res/ui/bar_mask.png");
         GUI.loadImage("button", "res/ui/button_empty.png");
+        
+        LIGHT.loadImage("pointlight", "res/lighting/pointlight.png");
 
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("res/ui/button_font.ttf"));
 
