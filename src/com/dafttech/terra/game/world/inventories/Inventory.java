@@ -1,5 +1,7 @@
 package com.dafttech.terra.game.world.inventories;
 
+import com.dafttech.terra.game.world.entities.items.Item;
+
 public abstract class Inventory {
-    public abstract Stack insertStack(Stack s);
+    public abstract boolean dropIn(Item i);
 }

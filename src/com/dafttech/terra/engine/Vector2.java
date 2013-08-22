@@ -39,4 +39,8 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     public Vector2 addNew(Vector2 v) {
         return (Vector2) new Vector2(this).add(v);
     }
+
+    public Vector2 addNew(float x, float y) {
+        return new Vector2(this.x + x, this.y + y);
+    }
 }

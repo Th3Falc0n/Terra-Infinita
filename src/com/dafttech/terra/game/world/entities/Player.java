@@ -7,6 +7,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.world.Position;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.inventories.Inventory;
 import com.dafttech.terra.resources.Resources;
 
 public class Player extends Entity {
@@ -47,5 +48,10 @@ public class Player extends Entity {
     @Override
     public TextureRegion getImage() {
         return Resources.ENTITIES.getImage("player");
+    }
+
+    public Inventory getInventory() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
