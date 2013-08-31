@@ -251,6 +251,11 @@ public class Vector2i {
         return (obj instanceof Vector2i && ((Vector2i) obj).x == x && ((Vector2i) obj).y == y);
     }
 
+    @Override
+    public int hashCode() {
+        return ((Integer) x).hashCode() + ((Integer) y).hashCode();
+    }
+
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {
         return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
     }
