@@ -9,6 +9,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.tiles.Tile;
 
 public class PassObjects extends RenderingPass {
 
@@ -24,8 +25,12 @@ public class PassObjects extends RenderingPass {
 
         screen.batch.begin();
 
-        for (Chunk chunk : world.localChunks) {
-            chunk.draw(screen, pointOfView);
+        Tile tile;
+        for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
+            for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
+                tile = world.getTile(x, y);
+                if (tile != null) tile.draw(screen, pointOfView);
+            }
         }
 
         for (Entity entity : world.localEntities) {
