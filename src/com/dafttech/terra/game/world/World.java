@@ -44,7 +44,7 @@ public class World implements IDrawable {
         Vector2i pos = new Vector2i(x, y);
         Chunk chunk = pos.getChunk(this);
         if (chunk == null) {
-            chunk = new Chunk(this, pos.getChunkCoords(this));
+            chunk = new Chunk(this, pos.getChunkPos(this));
             localChunks.add(chunk);
         }
         chunk.setTile(pos.getChunkPos(this), tile);

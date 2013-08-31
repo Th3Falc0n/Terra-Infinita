@@ -246,6 +246,10 @@ public class Vector2i {
         return new Vector2i(this);
     }
 
+    public boolean isInRect(int x, int y, int sizeX, int sizeY) {
+        return this.x > x && this.y > y && this.x > x + sizeX && this.y > y + sizeY;
+    }
+
     public Vector2i setTile(World world, Tile tile) { // TODO: to world (unused)
         if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
         tile.addToWorld(world, this);
@@ -260,38 +264,38 @@ public class Vector2i {
 
     public Tile getTile(World world) { // TODO: to world (unused)
         if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
-        return null;//world.map[x][y];
+        return null;// world.map[x][y];
     }
 
-    private static int getChunkCoord(int pos, int chunkSize) {
-        return pos >= 0 ? pos / chunkSize : (pos * -1 / chunkSize) * -1;
+    private static int getChunkPos(int blockInChunkPos, int chunkSize) {
+        return blockInChunkPos >= 0 ? blockInChunkPos / chunkSize : (blockInChunkPos * -1 / chunkSize) * -1;
     }
 
-    private static int getChunkPos(int pos, int chunkSize) {
-        return pos % chunkSize;
+    private static int getBlockInChunkPos(int blockInChunkPos, int chunkSize) {
+        return blockInChunkPos % chunkSize;
     }
 
-    private static int getWorldPos(int chunkCoord, int chunkSize, int chunkPos) {
-        return chunkCoord >= 0 ? chunkCoord * chunkSize + chunkPos : chunkCoord * chunkSize - chunkPos;
-    }
-
-    public Vector2i getChunkCoords(World world) {
-        return new Vector2i(getChunkCoord(x, world.chunksize.x), getChunkCoord(y, world.chunksize.y));
-    }
-
-    public Chunk getChunk(World world) {
-        Vector2i chunkCoods = getChunkCoords(world);
-        for (Chunk chunk : world.localChunks) {
-            if (chunk.pos.x == chunkCoods.x && chunk.pos.y == chunkCoods.y) return chunk;
-        }
-        return null;
+    private static int getBlockInWorldPos(int chunkPos, int chunkSize, int blockInChunkPos) {
+        return chunkPos >= 0 ? chunkPos * chunkSize + blockInChunkPos : chunkPos * chunkSize - blockInChunkPos;
     }
 
     public Vector2i getChunkPos(World world) {
         return new Vector2i(getChunkPos(x, world.chunksize.x), getChunkPos(y, world.chunksize.y));
     }
 
-    public Vector2i getWorldPos(Chunk chunk) {
-        return new Vector2i(getWorldPos(chunk.pos.x, chunk.world.chunksize.x, x), getWorldPos(chunk.pos.y, chunk.world.chunksize.y, y));
+    public Chunk getChunk(World world) {
+        Vector2i chunkPos = getChunkPos(world);
+        for (Chunk chunk : world.localChunks) {
+            if (chunk.pos.x == chunkPos.x && chunk.pos.y == chunkPos.y) return chunk;
+        }
+        return null;
+    }
+
+    public Vector2i getBlockInChunkPos(World world) {
+        return new Vector2i(getBlockInChunkPos(x, world.chunksize.x), getBlockInChunkPos(y, world.chunksize.y));
+    }
+
+    public Vector2i getBlockInWorldPos(Chunk chunk) {
+        return new Vector2i(getBlockInWorldPos(chunk.pos.x, chunk.world.chunksize.x, x), getBlockInWorldPos(chunk.pos.y, chunk.world.chunksize.y, y));
     }
 }
