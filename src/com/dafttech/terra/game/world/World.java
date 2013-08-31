@@ -18,9 +18,12 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public class World implements IDrawable {
     public Vector2 size = new Vector2(0, 0);
+    public Vector2 chunksize = new Vector2(16, 16);
     public Tile[][] map;
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+
+    private List<Chunk> localChunks = new CopyOnWriteArrayList<Chunk>();
 
     public Player localPlayer = new Player(new Vector2(0, 0), this);
 
@@ -31,6 +34,17 @@ public class World implements IDrawable {
         gen = new WorldGenerator(this);
         gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
+    }
+
+    public Chunk getChunk(Vector2 pos) {
+        return getChunkByChunkpos((int) (pos.x / chunksize.x), (int) (pos.y / chunksize.y));
+    }
+
+    public Chunk getChunkByChunkpos(int chunkX, int chunkY) {
+        for (Chunk chunk : localChunks) {
+            if (chunk.pos.x == chunkX && chunk.pos.y == chunkY) return chunk;
+        }
+        return null;
     }
 
     public Tile getTile(int x, int y) {
