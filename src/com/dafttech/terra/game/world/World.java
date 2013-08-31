@@ -73,11 +73,6 @@ public class World implements IDrawable {
 
         for (Entity entity : localEntities) {
             entity.update(delta);
-
-            if (entity.getPosition().x < -100 || entity.getPosition().x > size.getX() * BLOCK_SIZE + 100
-                    || entity.getPosition().y > size.getY() * BLOCK_SIZE + 100) {
-                removeEntity(entity);
-            }
         }
 
         Events.EVENT_WORLDTICK.callSync(this);
