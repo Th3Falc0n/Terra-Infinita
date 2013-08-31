@@ -37,7 +37,7 @@ public class PassLighting extends RenderingPass {
     public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         buffer.begin();
 
-        Gdx.graphics.getGL20().glClearColor(.15f, .15f, .15f, 1);
+        Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         screen.batch.enableBlending();
