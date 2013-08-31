@@ -28,8 +28,6 @@ public class PassLighting extends RenderingPass {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        screen.batch.begin();
-
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
                 if (x >= 0 && x < w.map.length && y >= 0 && y < w.map[0].length && w.map[x][y] != null) {
@@ -41,21 +39,16 @@ public class PassLighting extends RenderingPass {
         }
 
         for (Entity entity : w.localEntities) {
-            entity.draw(screen, pointOfView);
-
             if (entity.isLightEmitter() && entity.getEmittedLight() != null && w.isInRenderRange(entity.getPosition())) {
                 entity.getEmittedLight().drawToLightmap(screen, pointOfView);
             }
         }
-        
-        screen.batch.setColor(Color.RED);
-
-        screen.batch.end();
 
         buffer.end();
 
         screen.batch.setShader(null);
         screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
+        screen.batch.setColor(Color.WHITE);
         screen.batch.enableBlending();
 
         screen.batch.begin();
