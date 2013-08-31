@@ -16,12 +16,6 @@ public abstract class Biome {
         biomes.add(this);
     }
 
-    @Deprecated
-    public abstract void generateTerrain(WorldGenerator gen);
-
-    @Deprecated
-    public abstract void populate(WorldGenerator gen);
-
     public abstract void generateChunk(WorldGenerator gen, Chunk chunk);
 
     public abstract void populateChunk(WorldGenerator gen, Chunk chunk);
