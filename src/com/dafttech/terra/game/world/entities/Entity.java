@@ -108,7 +108,7 @@ public abstract class Entity implements IDrawable {
 
                     Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
                     Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);
+                    Vector2 mDis = pvMid.sub(cvMid);
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
 
@@ -166,7 +166,7 @@ public abstract class Entity implements IDrawable {
 
                     Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
                     Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-                    Vector2 mDis = (Vector2) pvMid.sub(cvMid);
+                    Vector2 mDis = pvMid.sub(cvMid);
                     mDis.x = Math.abs(mDis.x);
                     mDis.y = Math.abs(mDis.y);
 

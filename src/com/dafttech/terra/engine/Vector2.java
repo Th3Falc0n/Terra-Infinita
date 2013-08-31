@@ -5,8 +5,8 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.game.world.Vector2i;
 
-public class Vector2 extends com.badlogic.gdx.math.Vector2 {
-    private static final long serialVersionUID = -7851950266404157426L;
+public class Vector2 {
+    public float x, y;
 
     public Vector2(float nx, float ny) {
         x = nx;
@@ -25,8 +25,8 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     }
 
     public Vector2i toWorldPosition() {
-        int ox = (int)x >= 0 ? (int)x / BLOCK_SIZE : ((int)x + 1) / BLOCK_SIZE - 1;
-        int oy = (int)y >= 0 ? (int)y / BLOCK_SIZE : ((int)y + 1) / BLOCK_SIZE - 1;
+        int ox = (int) x >= 0 ? (int) x / BLOCK_SIZE : ((int) x + 1) / BLOCK_SIZE - 1;
+        int oy = (int) y >= 0 ? (int) y / BLOCK_SIZE : ((int) y + 1) / BLOCK_SIZE - 1;
         return new Vector2i(ox, oy);
     }
 
@@ -39,10 +39,61 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     }
 
     public Vector2 addNew(Vector2 v) {
-        return (Vector2) new Vector2(this).add(v);
+        return addNew(v.x, v.y);
     }
 
     public Vector2 addNew(float x, float y) {
         return new Vector2(this.x + x, this.y + y);
+    }
+
+    public Vector2 set(Vector2 p) {
+        x = p.x;
+        y = p.y;
+
+        return this;
+    }
+
+    public Vector2 add(Vector2 v) {
+        return add(v.x, v.y);
+    }
+
+    public Vector2 add(float x2, float y2) {
+        x += x2;
+        y += y2;
+        return this;
+    }
+
+    public Vector2 sub(Vector2 v) {
+        return sub(v.x, v.y);
+    }
+
+    public Vector2 sub(float x2, float y2) {
+        x -= x2;
+        y -= y2;
+        return this;
+    }
+
+    public float len() {
+        return (float) Math.sqrt(len2());
+    }
+
+    public float len2() {
+        return x * x + y * y;
+    }
+
+    public Vector2 nor() {
+        return mul(1f / len());
+    }
+
+    public Vector2 mul(float f) {
+        x *= f;
+        y *= f;
+        return this;
+    }
+
+    public float angle() {
+        float angle = (float) Math.atan2(this.y, this.x) * 57.295776F;
+        if (angle < 0.0F) angle += 360.0F;
+        return angle;
     }
 }

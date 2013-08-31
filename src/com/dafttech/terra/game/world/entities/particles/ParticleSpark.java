@@ -43,7 +43,7 @@ public class ParticleSpark extends Particle {
 
         if (light != null) {
             light.setSize(55 * 2 * (lifetime / lifetimeMax));
-            light.setPosition((Vector2) new Vector2(position).add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
+            light.setPosition(new Vector2(position).add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
         }
     }
 

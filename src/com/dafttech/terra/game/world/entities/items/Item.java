@@ -42,7 +42,7 @@ public abstract class Item extends Entity implements IDrawableInventory {
         }
 
         if (vp.len() < 100) {
-            addForce((Vector2) vp.nor().mul(14f / vp.len2()));
+            addForce(vp.nor().mul(14f / vp.len2()));
         }
 
         super.update(delta);
