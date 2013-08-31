@@ -17,8 +17,8 @@ import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public class World implements IDrawable {
-    public Vector2 size = new Vector2(0, 0);
-    public Vector2 chunksize = new Vector2(16, 16);
+    public Vector2i size = new Vector2i(0, 0);
+    public Vector2i chunksize = new Vector2i(16, 16);
     public Tile[][] map;
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
@@ -52,7 +52,7 @@ public class World implements IDrawable {
         return null;
     }
 
-    public void setTile(Tile tile, Position pos) {
+    public void setTile(Tile tile, Vector2i pos) {
         if (pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y) map[pos.x][pos.y] = tile;
     }
 

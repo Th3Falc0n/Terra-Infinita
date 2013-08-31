@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.resources.Resources;
 
@@ -30,7 +30,7 @@ public class TileWeed extends Tile {
         }
     }
 
-    public void tryGrow(Position pos) {
+    public void tryGrow(Vector2i pos) {
         if (pos.getTile(world) != null && !(pos.getTile(world) instanceof TileGrass)) return;
         Tile tile = pos.addYNew(1).getTile(world);
         if (tile instanceof TileWeed || tile instanceof TileDirt) {

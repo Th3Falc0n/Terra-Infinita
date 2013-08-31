@@ -8,20 +8,20 @@ import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-public class Position {
+public class Vector2i {
     public int x, y;
 
-    public Position(int x, int y) {
+    public Vector2i(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Position(Position pos) {
+    public Vector2i(Vector2i pos) {
         this.x = pos.x;
         this.y = pos.y;
     }
 
-    public Position() {
+    public Vector2i() {
         this.x = 0;
         this.y = 0;
     }
@@ -43,118 +43,118 @@ public class Position {
         return y;
     }
 
-    public Position setX(int x) {
+    public Vector2i setX(int x) {
         this.x = x;
         return this;
     }
 
-    public Position setY(int y) {
+    public Vector2i setY(int y) {
         this.y = y;
         return this;
     }
 
-    public Position set(int x, int y) {
+    public Vector2i set(int x, int y) {
         this.x = x;
         this.y = y;
         return this;
     }
 
-    public Position set(Position pos) {
+    public Vector2i set(Vector2i pos) {
         this.x = pos.x;
         this.y = pos.y;
         return this;
     }
 
-    public Position addX(int x) {
+    public Vector2i addX(int x) {
         this.x += x;
         return this;
     }
 
-    public Position addY(int y) {
+    public Vector2i addY(int y) {
         this.y += y;
         return this;
     }
 
-    public Position add(int x, int y) {
+    public Vector2i add(int x, int y) {
         this.x += x;
         this.y += y;
         return this;
     }
 
-    public Position add(Position pos) {
+    public Vector2i add(Vector2i pos) {
         this.x += pos.x;
         this.y += pos.y;
         return this;
     }
 
-    public Position set(Vector2 pos) {
+    public Vector2i set(Vector2 pos) {
         return set(pos.toWorldPosition());
     }
 
-    public Position setXNew(int x) {
-        Position newPos = new Position(this);
+    public Vector2i setXNew(int x) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x = x;
         return newPos;
     }
 
-    public Position setYNew(int y) {
-        Position newPos = new Position(this);
+    public Vector2i setYNew(int y) {
+        Vector2i newPos = new Vector2i(this);
         newPos.y = y;
         return newPos;
     }
 
-    public Position setNew(int x, int y) {
-        Position newPos = new Position(this);
+    public Vector2i setNew(int x, int y) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x = x;
         newPos.y = y;
         return newPos;
     }
 
-    public Position setNew(Position pos) {
-        Position newPos = new Position(this);
+    public Vector2i setNew(Vector2i pos) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x = pos.x;
         newPos.y = pos.y;
         return newPos;
     }
 
-    public Position addXNew(int x) {
-        Position newPos = new Position(this);
+    public Vector2i addXNew(int x) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x += x;
         return newPos;
     }
 
-    public Position addYNew(int y) {
-        Position newPos = new Position(this);
+    public Vector2i addYNew(int y) {
+        Vector2i newPos = new Vector2i(this);
         newPos.y += y;
         return newPos;
     }
 
-    public Position addNew(int x, int y) {
-        Position newPos = new Position(this);
+    public Vector2i addNew(int x, int y) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x += x;
         newPos.y += y;
         return newPos;
     }
 
-    public Position addNew(Position pos) {
-        Position newPos = new Position(this);
+    public Vector2i addNew(Vector2i pos) {
+        Vector2i newPos = new Vector2i(this);
         newPos.x += pos.x;
         newPos.y += pos.y;
         return newPos;
     }
 
-    public Position setNew(Vector2 pos) {
-        Position newPos = new Position(this);
+    public Vector2i setNew(Vector2 pos) {
+        Vector2i newPos = new Vector2i(this);
         return newPos.set(pos.toWorldPosition());
     }
 
-    public Position setTile(World world, Tile tile) {
+    public Vector2i setTile(World world, Tile tile) {
         if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
         tile.addToWorld(world, this);
         return this;
     }
 
-    public Position destroyTile(Tile tile) {
+    public Vector2i destroyTile(Tile tile) {
         tile.world.destroyTile(x, y);
         Events.EVENT_BLOCKCHANGE.callSync(tile);
         return this;

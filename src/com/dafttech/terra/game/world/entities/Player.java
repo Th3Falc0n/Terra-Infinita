@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.input.InputHandler;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.inventories.Inventory;
 import com.dafttech.terra.resources.Resources;
@@ -26,7 +26,7 @@ public class Player extends Entity {
         if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-            Position destroy = ((Vector2) Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
+            Vector2i destroy = ((Vector2) Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y);
         }

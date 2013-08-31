@@ -12,7 +12,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -87,7 +87,7 @@ public abstract class Entity implements IDrawable {
     public void drawCollisionBoxes(World world) {
         ShapeRenderer rend = new ShapeRenderer();
 
-        Position mid = position.toWorldPosition();
+        Vector2i mid = position.toWorldPosition();
 
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
@@ -150,7 +150,7 @@ public abstract class Entity implements IDrawable {
     }
 
     public void checkTerrainCollisions(World world) {
-        Position mid = position.toWorldPosition();
+        Vector2i mid = position.toWorldPosition();
 
         Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
@@ -272,7 +272,7 @@ public abstract class Entity implements IDrawable {
     }
 
     public Tile getUndergroundTile() {
-        Position pos = position.toWorldPosition();
+        Vector2i pos = position.toWorldPosition();
         return worldObj.getTile(pos.x, pos.y + 1);
     }
 

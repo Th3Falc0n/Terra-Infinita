@@ -9,7 +9,7 @@ import com.dafttech.terra.engine.IDrawable;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererBlock;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.items.Item;
@@ -17,7 +17,7 @@ import com.dafttech.terra.game.world.entities.items.ItemTile;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
 public abstract class Tile implements IDrawable {
-    public Position position = null;
+    public Vector2i position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
 
@@ -78,9 +78,9 @@ public abstract class Tile implements IDrawable {
         return true;
     }
 
-    public Tile addToWorld(World world, Position pos) {
+    public Tile addToWorld(World world, Vector2i pos) {
         if (position == null || world == null) {
-            this.position = new Position(pos);
+            this.position = new Vector2i(pos);
             this.world = world;
             world.map[pos.x][pos.y] = this;
             addedToWorld();

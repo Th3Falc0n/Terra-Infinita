@@ -11,11 +11,11 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public class Chunk implements IDrawable {
     public World world;
-    public Vector2 pos;
+    public Vector2i pos;
     public Tile[][] map;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
 
-    public Chunk(World world, Vector2 pos) {
+    public Chunk(World world, Vector2i pos) {
         this.world = world;
         this.pos = pos;
         this.map = new Tile[(int) world.chunksize.x][(int) world.chunksize.y];
@@ -46,7 +46,7 @@ public class Chunk implements IDrawable {
         return null;
     }
 
-    protected void setTile(Tile tile, Position pos) {
+    protected void setTile(Tile tile, Vector2i pos) {
         // if (pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y)
         // map[pos.x][pos.y] = tile;
     }

@@ -3,7 +3,7 @@ package com.dafttech.terra.engine;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 
 public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     private static final long serialVersionUID = -7851950266404157426L;
@@ -24,8 +24,8 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
         return this;
     }
 
-    public Position toWorldPosition() {
-        return new Position((x < (double) (int) x ? (int) x - 1 : (int) x) / BLOCK_SIZE, (y < (double) (int) y ? (int) y - 1 : (int) y) / BLOCK_SIZE);
+    public Vector2i toWorldPosition() {
+        return new Vector2i((x < (double) (int) x ? (int) x - 1 : (int) x) / BLOCK_SIZE, (y < (double) (int) y ? (int) y - 1 : (int) y) / BLOCK_SIZE);
     }
 
     public Vector2 toRenderPosition(Vector2 relateTo) {

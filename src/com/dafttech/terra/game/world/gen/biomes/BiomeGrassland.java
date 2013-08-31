@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world.gen.biomes;
 
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Position;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
 import com.dafttech.terra.game.world.subtiles.SubtileBone;
@@ -46,7 +46,7 @@ public class BiomeGrassland extends Biome {
                     }
                 }
 
-                new Position(x, y).setTile(gen.world, tile);
+                new Vector2i(x, y).setTile(gen.world, tile);
             }
         }
     }
