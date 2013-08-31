@@ -18,10 +18,11 @@ public class Chunk implements IDrawable {
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
     public boolean stayLoaded = false;
 
-    public Chunk(World world, Vector2i pos) {
+    public Chunk(World world, Vector2i chunkPos) {
         this.world = world;
-        this.pos = pos;
+        this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
+        world.localChunks.put(chunkPos, this);
     }
 
     @Override
@@ -58,18 +59,13 @@ public class Chunk implements IDrawable {
 
     public static Chunk getChunk(World world, Vector2i blockInWorldPos) {
         Vector2i chunkPos = blockInWorldPos.getChunkPos(world);
-        for (Chunk chunk : world.localChunks) {
-            if (chunk.pos.x == chunkPos.x && chunk.pos.y == chunkPos.y) return chunk;
-        }
+        if (world.localChunks.containsKey(chunkPos)) return world.localChunks.get(chunkPos);
         return null;
     }
 
     public static Chunk getOrCreateChunk(World world, Vector2i blockInWorldPos) {
         Chunk chunk = getChunk(world, blockInWorldPos);
-        if (chunk == null) {
-            chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
-            world.localChunks.add(chunk);
-        }
+        if (chunk == null) chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
         return chunk;
     }
 

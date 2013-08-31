@@ -246,6 +246,11 @@ public class Vector2i {
         return new Vector2i(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Vector2i && ((Vector2i) obj).x == x && ((Vector2i) obj).y == y);
+    }
+
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {
         return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
     }
