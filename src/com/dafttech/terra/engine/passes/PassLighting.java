@@ -31,6 +31,8 @@ public class PassLighting extends RenderingPass {
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
                 if (world.getTile(x, y) != null) {
+                    
+                    
                     if (world.getTile(x, y).isLightEmitter() && world.getTile(x, y).getEmittedLight() != null) {
                         world.getTile(x, y).getEmittedLight().drawToLightmap(screen, pointOfView);
                     }

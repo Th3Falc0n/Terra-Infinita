@@ -25,7 +25,9 @@ public class Vector2 extends com.badlogic.gdx.math.Vector2 {
     }
 
     public Vector2i toWorldPosition() {
-        return new Vector2i((x < (double) (int) x ? (int) x - 1 : (int) x) / BLOCK_SIZE, (y < (double) (int) y ? (int) y - 1 : (int) y) / BLOCK_SIZE);
+        int ox = (int)x >= 0 ? (int)x / BLOCK_SIZE : ((int)x + 1) / BLOCK_SIZE - 1;
+        int oy = (int)y >= 0 ? (int)y / BLOCK_SIZE : ((int)y + 1) / BLOCK_SIZE - 1;
+        return new Vector2i(ox, oy);
     }
 
     public Vector2 toRenderPosition(Vector2 relateTo) {
