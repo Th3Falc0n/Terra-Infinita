@@ -51,7 +51,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
         InputHandler.init();
         Tooltip.init();
 
-        world = new World(new Vector2(200, 300));
+        world = new World(new Vector2(1000, 2000));
 
         screenIngame = new ScreenIngame(world);
         screenPause = new ScreenPauseMenu(world);

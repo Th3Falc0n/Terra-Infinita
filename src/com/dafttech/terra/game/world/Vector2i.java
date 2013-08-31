@@ -246,6 +246,11 @@ public class Vector2i {
         return new Vector2i(this);
     }
 
+    @Override
+    public int hashCode() {
+        return ((Integer) x).hashCode() + ((Integer) y).hashCode();
+    }
+
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {
         return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
     }
