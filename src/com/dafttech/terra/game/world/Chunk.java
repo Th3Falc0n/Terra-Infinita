@@ -50,6 +50,10 @@ public class Chunk implements IDrawable {
             }
         }
     }
+    
+    public static Chunk getChunk() {
+        return null;
+    }
 
     protected Tile getTile(int x, int y) {
         if (x >= 0 && x < world.chunksize.x && y >= 0 && y < world.chunksize.y && map[x][y] != null) return map[x][y];
