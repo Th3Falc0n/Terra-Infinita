@@ -71,12 +71,16 @@ public abstract class GUIContainer extends GUIObject {
 
             Vector2 p = e.getScreenPosition();
 
-            if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
-                e.onMouseIn();
-                e.mouseHover = true;
-            } else if (!(x > p.x && x < e.position.x + p.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
-                e.onMouseOut();
-                e.mouseHover = false;
+            if (e.size != null) {
+                if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
+                    e.onMouseIn();
+                    e.mouseHover = true;
+                } else if (!(x > p.x && x < e.position.x + p.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
+                    e.onMouseOut();
+                    e.mouseHover = false;
+                }
+            } else {
+                System.out.println("Size null in " + e);
             }
         }
     }
@@ -92,8 +96,12 @@ public abstract class GUIContainer extends GUIObject {
 
             Vector2 p = e.getScreenPosition();
 
-            if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
-                e.onClick(button);
+            if (e.size != null) {
+                if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
+                    e.onClick(button);
+                }
+            } else {
+                System.out.println("Size null in " + e);
             }
         }
     }

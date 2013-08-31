@@ -37,8 +37,6 @@ public abstract class Item extends Entity implements IDrawableInventory {
         Vector2 vp = new Vector2(p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
         vp.sub(position);
 
-        System.out.println(vp.len2());
-
         if (vp.len() < 20) {
             getWorld().removeEntity(this);
         }

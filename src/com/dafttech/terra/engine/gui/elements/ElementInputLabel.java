@@ -20,7 +20,7 @@ public class ElementInputLabel extends GUIElement implements IFocusableTyping {
     private float time = 0;
 
     public ElementInputLabel(Vector2 p, IStringInputHandler h) {
-        super(p, null);
+        super(p, new Vector2(0, 0));
 
         handler = h;
     }
