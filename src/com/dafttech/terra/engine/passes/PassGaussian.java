@@ -20,6 +20,8 @@ public class PassGaussian extends RenderingPass {
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
         if (!(arguments[0] instanceof Texture)) throw new IllegalArgumentException("Need a texture to draw");
+        
+        screen.batch.disableBlending();
 
         float size = 0.02f;
 
@@ -60,7 +62,6 @@ public class PassGaussian extends RenderingPass {
         pass = bfPass2.getColorBufferTexture();
 
         TextureRegion reg = new TextureRegion(pass);
-        reg.flip(false, true);
 
         if (arguments.length > 1 && arguments[1] instanceof FrameBuffer) ((FrameBuffer) (arguments[1])).begin();
 
@@ -71,6 +72,8 @@ public class PassGaussian extends RenderingPass {
         screen.batch.end();
 
         if (arguments.length > 1 && arguments[1] instanceof FrameBuffer) ((FrameBuffer) (arguments[1])).end();
+        
+        screen.batch.enableBlending();
     }
 
 }

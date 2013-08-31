@@ -19,7 +19,7 @@ public class PassLighting extends RenderingPass {
     public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         buffer.begin();
 
-        Gdx.graphics.getGL20().glClearColor(.2f, .2f, .2f, 1);
+        Gdx.graphics.getGL20().glClearColor(.15f, .15f, .15f, 1);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         screen.batch.enableBlending();
@@ -44,13 +44,14 @@ public class PassLighting extends RenderingPass {
             }
         }
 
+        screen.batch.setColor(Color.WHITE);
+        
         buffer.end();
 
         RenderingPass.rpGaussian.applyPass(screen, world.localPlayer, world, buffer.getColorBufferTexture(), buffer);
         
         screen.batch.setShader(null);
         screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
-        screen.batch.setColor(Color.WHITE);
         screen.batch.enableBlending();
 
         screen.batch.begin();
