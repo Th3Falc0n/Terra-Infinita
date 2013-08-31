@@ -4,7 +4,6 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.Vector2;
-import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -251,21 +250,18 @@ public class Vector2i {
         return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
     }
 
-    public Vector2i setTile(World world, Tile tile) { // TODO: to world (unused)
-        if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
-        tile.addToWorld(world, this);
+    public Tile getTile(World world) {
+        return world.getTile(x, y);
+    }
+
+    public Vector2i setTile(World world, Tile tile) {
+        world.setTile(x, y, tile);
         return this;
     }
 
-    public Vector2i destroyTile(Tile tile) {
-        tile.world.destroyTile(x, y);
-        Events.EVENT_BLOCKCHANGE.callSync(tile);
+    public Vector2i destroyTile(World world) {
+        world.destroyTile(x, y);
         return this;
-    }
-
-    public Tile getTile(World world) { // TODO: to world (unused)
-        if (x < 0 || y < 0 || x > world.size.x || y > world.size.y) return null;
-        return null;// world.map[x][y];
     }
 
     private static int getChunkPos(int blockInChunkPos, int chunkSize) {
@@ -282,23 +278,6 @@ public class Vector2i {
 
     public Vector2i getChunkPos(World world) {
         return new Vector2i(getChunkPos(x, world.chunksize.x), getChunkPos(y, world.chunksize.y));
-    }
-
-    public Chunk getChunk(World world) {
-        Vector2i chunkPos = getChunkPos(world);
-        for (Chunk chunk : world.localChunks) {
-            if (chunk.pos.x == chunkPos.x && chunk.pos.y == chunkPos.y) return chunk;
-        }
-        return null;
-    }
-
-    public Chunk getOrCreateChunk(World world) {
-        Chunk chunk = getChunk(world);
-        if (chunk == null) {
-            chunk = new Chunk(world, getChunkPos(world));
-            world.localChunks.add(chunk);
-        }
-        return chunk;
     }
 
     public Vector2i getBlockInChunkPos(World world) {

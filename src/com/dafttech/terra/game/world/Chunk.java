@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
+import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -55,8 +56,21 @@ public class Chunk implements IDrawable {
         }
     }
 
-    public static Chunk getChunk(Vector2i blockInWorldPos) {
+    public static Chunk getChunk(World world, Vector2i blockInWorldPos) {
+        Vector2i chunkPos = blockInWorldPos.getChunkPos(world);
+        for (Chunk chunk : world.localChunks) {
+            if (chunk.pos.x == chunkPos.x && chunk.pos.y == chunkPos.y) return chunk;
+        }
         return null;
+    }
+
+    public static Chunk getOrCreateChunk(World world, Vector2i blockInWorldPos) {
+        Chunk chunk = getChunk(world, blockInWorldPos);
+        if (chunk == null) {
+            chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
+            world.localChunks.add(chunk);
+        }
+        return chunk;
     }
 
     protected Tile getTile(Vector2i blockInChunkPos) {
@@ -70,7 +84,7 @@ public class Chunk implements IDrawable {
                 tile.world = world;
                 tile.position = blockInChunkPos.getBlockInWorldPos(this);
             }
-            map[blockInChunkPos.x][blockInChunkPos.y] = tile;
+            if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
     }

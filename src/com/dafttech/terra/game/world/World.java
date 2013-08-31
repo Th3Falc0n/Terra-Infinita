@@ -32,14 +32,14 @@ public class World implements IDrawable {
 
     public Tile getTile(int x, int y) {
         Vector2i pos = new Vector2i(x, y);
-        Chunk chunk = pos.getChunk(this);
+        Chunk chunk = Chunk.getOrCreateChunk(this, pos);
         if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
         return null;
     }
 
     public void setTile(int x, int y, Tile tile) {
         Vector2i pos = new Vector2i(x, y);
-        Chunk chunk = pos.getOrCreateChunk(this);
+        Chunk chunk = Chunk.getOrCreateChunk(this, pos);
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
     }
 
