@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.gen.biomes;
 
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
@@ -53,6 +54,47 @@ public class BiomeGrassland extends Biome {
 
     @Override
     public void populate(WorldGenerator gen) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void generateChunk(WorldGenerator gen, Chunk chunk) {
+        PerlinNoise noise = gen.getNoise();
+        
+        Vector2i chunkPos = chunk.pos.getBlockInWorldPos(chunk);
+
+        for (int x = 0; x < gen.world.chunksize.x; x++) {
+            int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);
+
+            for (int y = gen.world.chunksize.y; y > 0; y--) {
+                Tile tile = null;
+
+                if (y - 1 == h) {
+                    tile = new TileGrass();
+                }
+
+                if (tile == null && y < h) {
+                    if (y < (gen.world.size.y - h) / 5 + h) {
+                        tile = new TileDirt();
+                        if (y - 2 == h) {
+                            tile.addSubtile(new SubtileGrass());
+                        }
+                    } else {
+                        tile = new TileStone();
+                        if (TerraInfinita.rnd.nextDouble() < 0.004) {
+                            tile.addSubtile(new SubtileBone());
+                        }
+                    }
+                }
+
+                chunk.setTile(new Vector2i(x, y), tile);
+            }
+        }
+    }
+
+    @Override
+    public void populateChunk(WorldGenerator gen, Chunk chunk) {
         // TODO Auto-generated method stub
 
     }

@@ -9,6 +9,8 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.gen.biomes.Biome;
+import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public class Chunk implements IDrawable {
@@ -23,6 +25,7 @@ public class Chunk implements IDrawable {
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
         world.localChunks.put(chunkPos, this);
+        world.gen.generateChunk(this);
     }
 
     @Override
@@ -57,16 +60,8 @@ public class Chunk implements IDrawable {
         }
     }
 
-    public static Chunk getChunk(World world, Vector2i blockInWorldPos) {
-        Vector2i chunkPos = blockInWorldPos.getChunkPos(world);
-        if (world.localChunks.containsKey(chunkPos)) return world.localChunks.get(chunkPos);
-        return null;
-    }
-
-    public static Chunk getOrCreateChunk(World world, Vector2i blockInWorldPos) {
-        Chunk chunk = getChunk(world, blockInWorldPos);
-        if (chunk == null) chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
-        return chunk;
+    public Biome getBiome() {
+        return BiomeGrassland.instance;
     }
 
     protected Tile getTile(Vector2i blockInChunkPos) {
@@ -83,5 +78,17 @@ public class Chunk implements IDrawable {
             if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
+    }
+
+    public static Chunk getChunk(World world, Vector2i blockInWorldPos) {
+        Vector2i chunkPos = blockInWorldPos.getChunkPos(world);
+        if (world.localChunks.containsKey(chunkPos)) return world.localChunks.get(chunkPos);
+        return null;
+    }
+
+    public static Chunk getOrCreateChunk(World world, Vector2i blockInWorldPos) {
+        Chunk chunk = getChunk(world, blockInWorldPos);
+        if (chunk == null) chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
+        return chunk;
     }
 }

@@ -30,7 +30,7 @@ public class World implements IDrawable {
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
-        gen.generate();
+        //gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
