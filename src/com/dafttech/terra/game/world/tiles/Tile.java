@@ -123,7 +123,7 @@ public abstract class Tile implements IDrawable {
     
     public final Color getSunlightColor() {
         if(sunlightFilter == null) {
-            return Color.RED;
+            return Color.WHITE;
         }
         else
         {
