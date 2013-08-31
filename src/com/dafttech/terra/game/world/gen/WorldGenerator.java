@@ -17,6 +17,7 @@ public class WorldGenerator {
         noise = new PerlinNoise(TerraInfinita.rnd.nextInt(), 9, 0.48f);
     }
 
+    @Deprecated
     public void generate() {
         getBiome(new Vector2(0, 0)).generateTerrain(this);
         getBiome(new Vector2(0, 0)).populate(this);
