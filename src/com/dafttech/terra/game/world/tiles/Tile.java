@@ -3,7 +3,9 @@ package com.dafttech.terra.game.world.tiles;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
 import com.dafttech.terra.engine.lighting.PointLight;
@@ -20,6 +22,9 @@ public abstract class Tile implements IDrawable {
     public Vector2i position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
+
+    public boolean receivesSunlight = false;
+    public Tile sunlightFilter = null;
 
     public World getWorld() {
         return world;
@@ -95,6 +100,35 @@ public abstract class Tile implements IDrawable {
 
     public PointLight getEmittedLight() {
         return null;
+    }
+    
+    public final void setReceivesSunlight(boolean is) {
+        receivesSunlight = is;
+        if(!isOpaque()) {
+            //TODO: pass through sunlight or darkness
+        }
+    }
+    
+    public boolean isOpaque() {
+        return true;
+    }
+    
+    public boolean providesSunlightFilter(){
+        return false;
+    }
+    
+    public Color getFilteredSunlightColor() {
+        return getSunlightColor();
+    }
+    
+    public final Color getSunlightColor() {
+        if(sunlightFilter == null) {
+            return Color.WHITE;
+        }
+        else
+        {
+            return sunlightFilter.getFilteredSunlightColor();
+        }
     }
 
     public void spawnAsEntity() {

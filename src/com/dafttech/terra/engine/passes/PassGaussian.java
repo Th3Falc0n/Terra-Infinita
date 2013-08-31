@@ -23,7 +23,7 @@ public class PassGaussian extends RenderingPass {
 
         screen.batch.disableBlending();
 
-        float size = 0.01f;
+        float size = 0.015f;
 
         if (arguments.length > 2 && arguments[2] != null) {
             size = (float) arguments[2];
