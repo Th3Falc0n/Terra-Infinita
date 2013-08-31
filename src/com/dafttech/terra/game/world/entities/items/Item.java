@@ -33,20 +33,20 @@ public abstract class Item extends Entity implements IDrawableInventory {
     public void update(float delta) {
         Vector2 p = getWorld().localPlayer.getPosition();
         Vector2 s = getWorld().localPlayer.getSize();
-        
-        Vector2 vp = new Vector2((Vector2) p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
+
+        Vector2 vp = new Vector2(p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
         vp.sub(position);
-        
+
         System.out.println(vp.len2());
 
-        if(vp.len() < 20) {
+        if (vp.len() < 20) {
             getWorld().removeEntity(this);
         }
-        
-        if(vp.len() < 100) {
-            addForce((Vector2) vp.nor().mul(14f/vp.len2()));
+
+        if (vp.len() < 100) {
+            addForce((Vector2) vp.nor().mul(14f / vp.len2()));
         }
-        
+
         super.update(delta);
     }
 }

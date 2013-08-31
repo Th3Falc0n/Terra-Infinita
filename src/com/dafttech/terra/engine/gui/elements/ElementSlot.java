@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
-    //ItemSlot assignedSlot = null;
+    // ItemSlot assignedSlot = null;
 
     public ElementSlot(Vector2 p) {
         super(p, new Vector2(32, 32));
@@ -13,13 +13,16 @@ public class ElementSlot extends GUIElement {
         image = Resources.GUI.getImage("slot");
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void draw(AbstractScreen screen) {
         super.draw(screen);
         Vector2 p = getScreenPosition();
 
-        /*if (assignedSlot != null && assignedSlot.getStack().getContent() != null) {
-            assignedSlot.getStack().getContent().drawInventory(screen, new Vector2(p.x, p.y));
-        }*/
+        /*
+         * if (assignedSlot != null && assignedSlot.getStack().getContent() !=
+         * null) { assignedSlot.getStack().getContent().drawInventory(screen,
+         * new Vector2(p.x, p.y)); }
+         */
     }
 }

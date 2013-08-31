@@ -1,12 +1,15 @@
 package com.dafttech.terra.game.world.gen.biomes;
 
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Position;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
+import com.dafttech.terra.game.world.subtiles.SubtileBone;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileGrass;
+import com.dafttech.terra.game.world.tiles.TileStone;
 
 public class BiomeGrassland extends Biome {
     public BiomeGrassland(String name) {
@@ -30,9 +33,16 @@ public class BiomeGrassland extends Biome {
                 }
 
                 if (tile == null) {
-                    tile = new TileDirt();
-                    if (y - 2 == h) {
-                        tile.addSubtile(new SubtileGrass());
+                    if (y < (gen.world.size.y - h) / 5 + h) {
+                        tile = new TileDirt();
+                        if (y - 2 == h) {
+                            tile.addSubtile(new SubtileGrass());
+                        }
+                    } else {
+                        tile = new TileStone();
+                        if (TerraInfinita.rnd.nextDouble() < 0.004) {
+                            tile.addSubtile(new SubtileBone());
+                        }
                     }
                 }
 
