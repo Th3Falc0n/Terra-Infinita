@@ -47,6 +47,12 @@ public class World implements IDrawable {
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
     }
 
+    public void setTileWithoutGen(int x, int y, Tile tile) {
+        Vector2i pos = new Vector2i(x, y);
+        Chunk chunk = Chunk.getChunk(this, pos);
+        if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
+    }
+
     public void destroyTile(int x, int y) {
         Tile tile = getTile(x, y);
         if (tile != null) {
