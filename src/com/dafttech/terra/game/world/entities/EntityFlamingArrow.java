@@ -16,7 +16,7 @@ public class EntityFlamingArrow extends EntityArrow {
     PointLight light;
 
     public EntityFlamingArrow(Vector2 pos, World world) {
-        super(pos, world); 
+        super(pos, world);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class EntityFlamingArrow extends EntityArrow {
 
         light.setPosition((Vector2) new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
-        for(int i = 0; i < 5; i++) {
-            if(TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
+        for (int i = 0; i < 5; i++) {
+            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
                 worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
             }
         }

@@ -2,8 +2,6 @@ package com.dafttech.terra.game.world.entities.particles;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
@@ -17,16 +15,16 @@ public class ParticleSpark extends Particle {
     PointLight light;
 
     float size;
-    
+
     public ParticleSpark(Vector2 pos, World world) {
         super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat()), new Vector2(0.5f, 0.5f));
-        
+
         size = TerraInfinita.rnd.nextFloat() * 0.2f + 0.1f;
-        
+
         getSize().x = size;
         getSize().y = getSize().x;
-        
-        setHasGravity(true);        
+
+        setHasGravity(true);
         setGravityFactor(0.05f);
         setVelocity(new Vector2(4f * (0.5f - TerraInfinita.rnd.nextFloat()), 4f * (0.5f - TerraInfinita.rnd.nextFloat())));
     }
@@ -43,13 +41,12 @@ public class ParticleSpark extends Particle {
         getSize().x = size * (lifetime / lifetimeMax);
         getSize().y = getSize().x;
 
-        if(light != null)
-            light.setPosition((Vector2) new Vector2(position).add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
+        if (light != null) light.setPosition((Vector2) new Vector2(position).add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
     }
 
     @Override
     public boolean isLightEmitter() {
-        return true;     
+        return true;
     }
 
     @Override
@@ -62,8 +59,8 @@ public class ParticleSpark extends Particle {
         if (light == null) {
             light = new PointLight(position, 55);
             light.setColor(new Color(1, 0.9f, 0.9f, 0.4f));
-        }        
-        
+        }
+
         return light;
     }
 

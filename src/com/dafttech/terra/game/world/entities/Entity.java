@@ -60,7 +60,7 @@ public abstract class Entity implements IDrawable {
     public void setHasGravity(boolean v) {
         hasGravity = v;
     }
-    
+
     public void setGravityFactor(float f) {
         gravityFactor = f;
     }
