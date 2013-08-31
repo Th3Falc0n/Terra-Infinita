@@ -134,9 +134,4 @@ public abstract class Tile implements IDrawable {
     public void spawnAsEntity() {
         world.addEntity(getItemDropped());
     }
-
-    // TODO: UNUSED
-    public void onNeighborChange(Vector2i pos) {
-
-    }
 }
