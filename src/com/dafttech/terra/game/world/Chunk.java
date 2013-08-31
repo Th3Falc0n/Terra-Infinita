@@ -15,6 +15,7 @@ public class Chunk implements IDrawable {
     public Vector2i pos;
     public Tile[][] map;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+    public boolean stayLoaded = false;
 
     public Chunk(World world, Vector2i pos) {
         this.world = world;
