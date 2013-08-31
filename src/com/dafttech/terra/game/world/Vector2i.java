@@ -279,16 +279,16 @@ public class Vector2i {
         return this;
     }
 
-    private static int getChunkPos(int blockInChunkPos, int chunkSize) {
-        return blockInChunkPos >= 0 ? blockInChunkPos / chunkSize : (blockInChunkPos * -1 / chunkSize) * -1;
+    private static int getChunkPos(int blockInWorldPos, int chunkSize) {
+        return blockInWorldPos >= 0 ? blockInWorldPos / chunkSize : (blockInWorldPos + 1) / chunkSize - 1;
     }
 
-    private static int getBlockInChunkPos(int blockInChunkPos, int chunkSize) {
-        return blockInChunkPos % chunkSize;
+    private static int getBlockInChunkPos(int blockInWorldPos, int chunkSize) {
+        return blockInWorldPos - getChunkPos(blockInWorldPos, chunkSize) * chunkSize;
     }
 
     private static int getBlockInWorldPos(int chunkPos, int chunkSize, int blockInChunkPos) {
-        return chunkPos >= 0 ? chunkPos * chunkSize + blockInChunkPos : chunkPos * chunkSize - blockInChunkPos;
+        return chunkSize * chunkPos + blockInChunkPos;
     }
 
     public Vector2i getChunkPos(World world) {
