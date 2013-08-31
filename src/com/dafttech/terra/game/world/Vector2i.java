@@ -31,7 +31,7 @@ public class Vector2i {
                 + Gdx.graphics.getHeight() / 2);
     }
 
-    public Vector2 toEntityPos() {        
+    public Vector2 toEntityPos() {
         return new Vector2(x * BLOCK_SIZE, y * BLOCK_SIZE);
     }
 
@@ -244,6 +244,11 @@ public class Vector2i {
     @Override
     public Vector2i clone() {
         return new Vector2i(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Vector2i && ((Vector2i) obj).x == x && ((Vector2i) obj).y == y);
     }
 
     @Override
