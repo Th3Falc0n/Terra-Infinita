@@ -247,7 +247,7 @@ public class Vector2i {
     }
 
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {
-        return this.x > x && this.y > y && this.x > x + sizeX && this.y > y + sizeY;
+        return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
     }
 
     public Vector2i setTile(World world, Tile tile) { // TODO: to world (unused)
@@ -289,6 +289,15 @@ public class Vector2i {
             if (chunk.pos.x == chunkPos.x && chunk.pos.y == chunkPos.y) return chunk;
         }
         return null;
+    }
+
+    public Chunk getOrCreateChunk(World world) {
+        Chunk chunk = getChunk(world);
+        if (chunk == null) {
+            chunk = new Chunk(world, getChunkPos(world));
+            world.localChunks.add(chunk);
+        }
+        return chunk;
     }
 
     public Vector2i getBlockInChunkPos(World world) {
