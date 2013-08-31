@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;

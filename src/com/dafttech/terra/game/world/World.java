@@ -1,11 +1,8 @@
 package com.dafttech.terra.game.world;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
 import com.dafttech.terra.engine.Vector2;
@@ -64,8 +61,8 @@ public class World implements IDrawable {
 
     @Override
     public void update(float delta) {
-        int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
-        int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
+        // int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
+        // int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
         for (Chunk chunk : localChunks) {
             chunk.update(delta);

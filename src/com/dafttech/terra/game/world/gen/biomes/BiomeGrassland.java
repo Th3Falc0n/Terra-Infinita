@@ -25,7 +25,7 @@ public class BiomeGrassland extends Biome {
         for (int x = 0; x < gen.world.size.x; x++) {
             int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);
 
-            for (int y = (int) gen.world.size.y - 1; y > h; y--) {
+            for (int y = gen.world.size.y - 1; y > h; y--) {
                 Tile tile = null;
 
                 if (y - 1 == h) {

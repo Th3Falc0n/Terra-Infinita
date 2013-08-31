@@ -82,7 +82,7 @@ public abstract class Tile implements IDrawable {
         if (position == null || world == null) {
             this.position = new Vector2i(pos);
             this.world = world;
-            //world.map[pos.getX()][pos.getY()] = this;
+            // world.map[pos.getX()][pos.getY()] = this;
             world.setTile(pos.x, pos.y, this);
             addedToWorld();
         }

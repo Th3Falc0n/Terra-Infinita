@@ -13,7 +13,7 @@ public abstract class ElementButton extends GUIElement {
 
         text = txt;
         image = Resources.GUI.getImage("button");
-        
+
         size = new Vector2(100, 20);
     }
 

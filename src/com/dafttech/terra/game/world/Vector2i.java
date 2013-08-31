@@ -242,6 +242,7 @@ public class Vector2i {
         return clone().mul(pos);
     }
 
+    @Override
     public Vector2i clone() {
         return new Vector2i(this);
     }

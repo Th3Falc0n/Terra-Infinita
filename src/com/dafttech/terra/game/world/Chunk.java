@@ -20,7 +20,7 @@ public class Chunk implements IDrawable {
     public Chunk(World world, Vector2i pos) {
         this.world = world;
         this.pos = pos;
-        this.map = new Tile[(int) world.chunksize.x][(int) world.chunksize.y];
+        this.map = new Tile[world.chunksize.x][world.chunksize.y];
     }
 
     @Override
