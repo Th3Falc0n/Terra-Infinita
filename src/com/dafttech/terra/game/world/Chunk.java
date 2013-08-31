@@ -19,13 +19,14 @@ public class Chunk implements IDrawable {
     public Tile[][] map;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
     public boolean stayLoaded = false;
+    private boolean regenerate = false;
 
     public Chunk(World world, Vector2i chunkPos) {
         this.world = world;
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
         world.localChunks.put(chunkPos, this);
-        world.gen.generateChunk(this);
+        regenerate();
     }
 
     @Override
@@ -64,7 +65,17 @@ public class Chunk implements IDrawable {
         return BiomeGrassland.instance;
     }
 
+    public void regenerate() {
+        regenerate = true;
+    }
+
+    private void tryRegenerate() {
+        world.gen.generateChunk(this);
+        regenerate = false;
+    }
+
     protected Tile getTile(Vector2i blockInChunkPos) {
+        if (regenerate) tryRegenerate();
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) return map[blockInChunkPos.x][blockInChunkPos.y];
         return null;
     }

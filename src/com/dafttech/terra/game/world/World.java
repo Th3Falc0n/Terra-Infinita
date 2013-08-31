@@ -1,5 +1,7 @@
 package com.dafttech.terra.game.world;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,7 +17,6 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.Tile;
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class World implements IDrawable {
     public Vector2i size = new Vector2i(0, 0);
@@ -30,7 +31,7 @@ public class World implements IDrawable {
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
-        //gen.generate();
+        // gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
@@ -44,12 +45,6 @@ public class World implements IDrawable {
     public void setTile(int x, int y, Tile tile) {
         Vector2i pos = new Vector2i(x, y);
         Chunk chunk = Chunk.getOrCreateChunk(this, pos);
-        if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
-    }
-
-    public void setTileWithoutGen(int x, int y, Tile tile) {
-        Vector2i pos = new Vector2i(x, y);
-        Chunk chunk = Chunk.getChunk(this, pos);
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
     }
 
