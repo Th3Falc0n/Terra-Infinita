@@ -51,7 +51,7 @@ public class BiomeGrassland extends Biome {
                     }
                 }
 
-                new Vector2i(x, y).setTileWithoutGen(gen.world, tile);
+                new Vector2i(x, y).setTile(gen.world, tile);
             }
         }
     }

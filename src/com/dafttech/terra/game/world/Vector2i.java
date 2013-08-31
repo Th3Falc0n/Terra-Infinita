@@ -269,11 +269,6 @@ public class Vector2i {
         return this;
     }
 
-    public Vector2i setTileWithoutGen(World world, Tile tile) {
-        world.setTileWithoutGen(x, y, tile);
-        return this;        
-    }
-
     public Vector2i destroyTile(World world) {
         world.destroyTile(x, y);
         return this;
