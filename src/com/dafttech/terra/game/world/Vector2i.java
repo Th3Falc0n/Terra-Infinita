@@ -279,7 +279,7 @@ public class Vector2i {
     }
 
     private static int getBlockInChunkPos(int blockInChunkPos, int chunkSize) {
-        return blockInChunkPos % chunkSize;
+        return blockInChunkPos >= 0 ? blockInChunkPos % chunkSize : -16 - (blockInChunkPos % chunkSize);
     }
 
     private static int getBlockInWorldPos(int chunkPos, int chunkSize, int blockInChunkPos) {
