@@ -1,11 +1,12 @@
 package com.dafttech.terra.game.world;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawable;
-import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -23,31 +24,54 @@ public class Chunk implements IDrawable {
 
     @Override
     public void update(float delta) {
-        // TODO Auto-generated method stub
-
+        Tile tile;
+        for (int y = 0; y < world.chunksize.y; y++) {
+            for (int x = 0; x < world.chunksize.x; x++) {
+                tile = getTile(x, y);
+                if (tile != null) tile.update(delta);
+            }
+        }
+        for (Entity entity : localEntities) {
+            entity.update(delta);
+            if (entity.getPosition().x < -100 || entity.getPosition().x > world.size.x * BLOCK_SIZE + 100
+                    || entity.getPosition().y > world.size.y * BLOCK_SIZE + 100) {
+                world.removeEntity(entity);
+            }
+        }
     }
 
     @Override
     public void draw(AbstractScreen screen, Entity pointOfView) {
-        // TODO Auto-generated method stub
-
-    }
-
-    public Chunk getChunk() {
-        return null;
-    }
-
-    public Vector2 getChunkPos(Vector2 pos) {
-        return new Vector2(pos.x % world.chunksize.x, pos.y % world.chunksize.y);
+        Tile tile;
+        for (int y = 0; y < world.chunksize.y; y++) {
+            for (int x = 0; x < world.chunksize.x; x++) {
+                tile = getTile(x, y);
+                if (tile != null) tile.draw(screen, pointOfView);
+            }
+        }
     }
 
     protected Tile getTile(int x, int y) {
-        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
+        if (x >= 0 && x < world.chunksize.x && y >= 0 && y < world.chunksize.y && map[x][y] != null) return map[x][y];
         return null;
     }
 
-    protected void setTile(Tile tile, Vector2i pos) {
-        // if (pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y)
-        // map[pos.x][pos.y] = tile;
+    protected Chunk setTile(int x, int y, Tile tile) {
+        if (x >= 0 && x < world.chunksize.x && y >= 0 && y < world.chunksize.y) {
+            map[x][y] = tile;
+            if (tile != null && (tile.world == null || tile.position == null)) {
+                tile.world = world;
+                tile.position = pos.getWorldPos(this);
+            }
+        }
+        return this;
+    }
+
+    protected Tile getTile(Vector2i pos) {
+        return getTile(pos.getX(), pos.getY());
+    }
+
+    protected Chunk setTile(Vector2i pos, Tile tile) {
+        return setTile(pos.getX(), pos.getY(), tile);
     }
 }

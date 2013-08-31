@@ -19,47 +19,42 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public class World implements IDrawable {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(16, 16);
-    public Tile[][] map;
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
 
-    private List<Chunk> localChunks = new CopyOnWriteArrayList<Chunk>();
+    public List<Chunk> localChunks = new CopyOnWriteArrayList<Chunk>();
 
     public Player localPlayer = new Player(new Vector2(0, 0), this);
 
     public World(Vector2 size) {
-        this.size.x = (int) size.x;
-        this.size.y = (int) size.y;
-        map = new Tile[(int) size.x][(int) size.y];
+        this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
         gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
-    public Chunk getChunk(Vector2 pos) {
-        return getChunkByChunkpos((int) (pos.x / chunksize.x), (int) (pos.y / chunksize.y));
-    }
-
-    public Chunk getChunkByChunkpos(int chunkX, int chunkY) {
-        for (Chunk chunk : localChunks) {
-            if (chunk.pos.x == chunkX && chunk.pos.y == chunkY) return chunk;
-        }
-        return null;
-    }
-
     public Tile getTile(int x, int y) {
-        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) return map[x][y];
+        Vector2i pos = new Vector2i(x, y);
+        Chunk chunk = pos.getChunk(this);
+        if (chunk != null) return chunk.getTile(pos.getChunkPos(this));
         return null;
     }
 
-    public void setTile(Tile tile, Vector2i pos) {
-        if (pos.x >= 0 && pos.y >= 0 && pos.x < size.x && pos.y < size.y) map[pos.x][pos.y] = tile;
+    public void setTile(int x, int y, Tile tile) {
+        Vector2i pos = new Vector2i(x, y);
+        Chunk chunk = pos.getChunk(this);
+        if (chunk == null) {
+            chunk = new Chunk(this, pos.getChunkCoords(this));
+            localChunks.add(chunk);
+        }
+        chunk.setTile(pos.getChunkPos(this), tile);
     }
 
     public void destroyTile(int x, int y) {
-        if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) {
-            map[x][y].spawnAsEntity();
-            map[x][y] = null;
+        Tile tile = getTile(x, y);
+        if (tile != null) {
+            getTile(x, y).spawnAsEntity();
+            setTile(x, y, null);
         }
     }
 
@@ -76,19 +71,15 @@ public class World implements IDrawable {
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
-            for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (x >= 0 && x < map.length && y >= 0 && y < map[0].length && map[x][y] != null) {
-                    map[x][y].update(delta);
-                }
-            }
+        for (Chunk chunk : localChunks) {
+            chunk.update(delta);
         }
 
         for (Entity entity : localEntities) {
             entity.update(delta);
 
-            if (entity.getPosition().x < -100 || entity.getPosition().x > size.x * BLOCK_SIZE + 100
-                    || entity.getPosition().y > size.y * BLOCK_SIZE + 100) {
+            if (entity.getPosition().x < -100 || entity.getPosition().x > size.getX() * BLOCK_SIZE + 100
+                    || entity.getPosition().y > size.getY() * BLOCK_SIZE + 100) {
                 removeEntity(entity);
             }
         }

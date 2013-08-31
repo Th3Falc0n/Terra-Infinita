@@ -6,13 +6,14 @@ import org.lwjgl.opengl.GL11;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
 public class PassObjects extends RenderingPass {
 
     @Override
-    public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
+    public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         screen.batch.setShader(null);
 
         screen.batch.enableBlending();
@@ -23,16 +24,11 @@ public class PassObjects extends RenderingPass {
 
         screen.batch.begin();
 
-        for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
-            for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (x >= 0 && x < w.map.length && y >= 0 && y < w.map[0].length && w.map[x][y] != null) {
-
-                    w.map[x][y].draw(screen, pointOfView);
-                }
-            }
+        for (Chunk chunk : world.localChunks) {
+            chunk.draw(screen, pointOfView);
         }
 
-        for (Entity entity : w.localEntities) {
+        for (Entity entity : world.localEntities) {
             entity.draw(screen, pointOfView);
         }
 

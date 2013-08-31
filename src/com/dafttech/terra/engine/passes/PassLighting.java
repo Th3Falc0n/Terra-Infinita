@@ -30,9 +30,9 @@ public class PassLighting extends RenderingPass {
 
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (x >= 0 && x < world.map.length && y >= 0 && y < world.map[0].length && world.map[x][y] != null) {
-                    if (world.map[x][y].isLightEmitter() && world.map[x][y].getEmittedLight() != null) {
-                        world.map[x][y].getEmittedLight().drawToLightmap(screen, pointOfView);
+                if (world.getTile(x, y) != null) {
+                    if (world.getTile(x, y).isLightEmitter() && world.getTile(x, y).getEmittedLight() != null) {
+                        world.getTile(x, y).getEmittedLight().drawToLightmap(screen, pointOfView);
                     }
                 }
             }
@@ -45,11 +45,11 @@ public class PassLighting extends RenderingPass {
         }
 
         screen.batch.setColor(Color.WHITE);
-        
+
         buffer.end();
 
         RenderingPass.rpGaussian.applyPass(screen, world.localPlayer, world, buffer.getColorBufferTexture(), buffer);
-        
+
         screen.batch.setShader(null);
         screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
         screen.batch.enableBlending();
