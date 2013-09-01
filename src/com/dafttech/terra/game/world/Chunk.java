@@ -90,16 +90,4 @@ public class Chunk implements IDrawable {
         }
         return this;
     }
-
-    public static Chunk getChunk(World world, Vector2i blockInWorldPos) {
-        Vector2i chunkPos = blockInWorldPos.getChunkPos(world);
-        if (world.localChunks.containsKey(chunkPos)) return world.localChunks.get(chunkPos);
-        return null;
-    }
-
-    public static Chunk getOrCreateChunk(World world, Vector2i blockInWorldPos) {
-        Chunk chunk = getChunk(world, blockInWorldPos);
-        if (chunk == null) chunk = new Chunk(world, blockInWorldPos.getChunkPos(world));
-        return chunk;
-    }
 }

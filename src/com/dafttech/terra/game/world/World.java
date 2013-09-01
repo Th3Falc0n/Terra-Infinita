@@ -36,18 +36,62 @@ public class World implements IDrawable {
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
-    public Tile getTile(Vector2i pos) {
-        Chunk chunk = Chunk.getOrCreateChunk(this, pos);
-        if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
+    public Chunk getChunk(Vector2i blockInWorldPos) {
+        Vector2i chunkPos = blockInWorldPos.getChunkPos(this);
+        if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
         return null;
     }
 
+    public Chunk getOrCreateChunk(Vector2i blockInWorldPos) {
+        Chunk chunk = getChunk(blockInWorldPos);
+        if (chunk == null) chunk = new Chunk(this , blockInWorldPos.getChunkPos(this));
+        return chunk;
+    }
+
+    public boolean doesChunkExist(int x, int y) {
+        return getChunk(new Vector2i(x, y)) != null;
+    }
+    
     public Tile getTile(int x, int y) {
         return getTile(new Vector2i(x, y));
     }
+    
+    public Tile getTile(Vector2i pos) {
+        Chunk chunk = getOrCreateChunk(pos);
+        if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
+        return null;
+    }
+    
+    public Tile getNextTileBelow(int x, int y) {
+        y++;
+        while(doesChunkExist(x, y)) {
+            if(getTile(x, y) != null)
+                return getTile(x, y);
+            y++;
+        }
+        return null;
+    }
+    
+    public Tile getNextTileBelow(Vector2i t) {
+        return getNextTileBelow(t.x, t.y);
+    }
+    
+    public Tile getNextTileAbove(int x, int y) {
+        y--;
+        while(doesChunkExist(x, y)) {
+            if(getTile(x, y) != null)
+                return getTile(x, y);
+            y--;
+        }
+        return null;
+    }
+    
+    public Tile getNextTileAbove(Vector2i t) {
+        return getNextTileAbove(t.x, t.y);
+    }
 
     public World setTile(Vector2i pos, Tile tile) {
-        Chunk chunk = Chunk.getOrCreateChunk(this, pos);
+        Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
         return this;
     }

@@ -17,6 +17,5 @@ public abstract class Biome {
     }
 
     public abstract void generateChunk(WorldGenerator gen, Chunk chunk);
-
     public abstract void populateChunk(WorldGenerator gen, Chunk chunk);
 }

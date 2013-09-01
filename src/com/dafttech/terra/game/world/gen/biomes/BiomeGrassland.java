@@ -35,7 +35,6 @@ public class BiomeGrassland extends Biome {
 
                 if (y - 1 == h) {
                     tile = new TileGrass();
-                    tile.setReceivesSunlight(true);
                 }
 
                 if (tile == null) {
@@ -59,7 +58,6 @@ public class BiomeGrassland extends Biome {
 
     @Override
     public void populateChunk(WorldGenerator gen, Chunk chunk) {
-        // TODO Auto-generated method stub
-
+        
     }
 }

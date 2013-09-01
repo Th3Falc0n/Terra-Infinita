@@ -89,7 +89,11 @@ public abstract class Tile implements IDrawable {
     public final void setReceivesSunlight(boolean is) {
         receivesSunlight = is;
         if (!isOpaque()) {
-            // TODO: pass through sunlight or darkness
+            Tile b = world.getNextTileBelow(position);
+            if(b != null) {
+                b.setReceivesSunlight(is);
+                b.sunlightFilter = is ? this : null;
+            }
         }
     }
 
