@@ -20,7 +20,7 @@ public class ParticleExplosion extends Particle {
         super(pos, world, 0.3f, new Vector2(radius * 2, radius * 2));
         this.radius = radius;
         midpos = pos;
-        setGravityFactor(0.01f);
+        setGravityFactor(0);
     }
 
     @Override
