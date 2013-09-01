@@ -18,21 +18,19 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public class PassLighting extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-    
+
     public int sunlevel = 64;
 
     public Rectangle getSunlightRect(Tile t, Entity pointOfView) {
         Vector2 v = t.position.toScreenPos(pointOfView);
-        if(t.sunlightFilter == null) {
+        if (t.sunlightFilter == null) {
             return new Rectangle(v.x - sunlevel, 0, BLOCK_SIZE + sunlevel, v.y + sunlevel);
-        }
-        else
-        {
+        } else {
             Vector2 f = t.sunlightFilter.position.toScreenPos(pointOfView);
             return new Rectangle(v.x - sunlevel, f.y, BLOCK_SIZE + sunlevel, v.y - f.y + sunlevel);
         }
     }
-    
+
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         buffer.begin();
@@ -46,21 +44,20 @@ public class PassLighting extends RenderingPass {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
                 if (world.getTile(x, y) != null) {
-                    if(world.getTile(x, y).receivesSunlight) {
+                    if (world.getTile(x, y).receivesSunlight) {
                         screen.shr.begin(ShapeType.FilledRectangle);
                         screen.shr.setColor(world.getTile(x, y).getSunlightColor());
-                        
+
                         Rectangle rect = getSunlightRect(world.getTile(x, y), pointOfView);
-                        
+
                         screen.shr.filledRect(rect.x, rect.y, rect.width, rect.height);
-                        
+
                         screen.shr.end();
                     }
-                    
+
                     if (world.getTile(x, y).isLightEmitter() && world.getTile(x, y).getEmittedLight() != null) {
                         world.getTile(x, y).getEmittedLight().drawToLightmap(screen, pointOfView);
                     }
