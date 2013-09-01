@@ -14,11 +14,13 @@ import com.dafttech.terra.resources.Resources;
 public class ParticleExplosion extends Particle {
     PointLight light;
     int radius;
+    Vector2 midpos;
 
     public ParticleExplosion(Vector2 pos, World world, int radius) {
-        super(pos, world, 0.6f, new Vector2(radius * 2, radius * 2));
+        super(pos, world, 0.3f, new Vector2(radius * 2, radius * 2));
         this.radius = radius;
-        setGravityFactor(0);
+        midpos = pos;
+        setGravityFactor(0.01f);
     }
 
     @Override
@@ -29,10 +31,12 @@ public class ParticleExplosion extends Particle {
     @Override
     public void update(float delta) {
         super.update(delta);
-        worldObj.addEntity(new ParticleSpark(position.clone().add(-radius, -radius).add(new Random().nextFloat() * (getSize().x + radius * 2) * BLOCK_SIZE,
-                new Random().nextFloat() * (getSize().y + radius * 2) * BLOCK_SIZE), worldObj));
-        getSize().add(delta * 8, delta * 8);
-        setPosition(getPosition().add(delta * -4 * BLOCK_SIZE, delta * -4 * BLOCK_SIZE));
+        Random rnd = new Random();
+        int blockSRad = radius * BLOCK_SIZE * 3;
+        worldObj.addEntity(new ParticleSpark(midpos.clone().add(-blockSRad, -blockSRad)
+                .add(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj));
+        getSize().add(delta * 30, delta * 30);
+        setMidPos(midpos);
     }
 
     @Override
@@ -45,8 +49,7 @@ public class ParticleExplosion extends Particle {
             light = new PointLight(position, 60);
             light.setColor(new Color(1, 0.9f, 0.9f, 0.4f));
         }
-        light.setSize((getSize().x + getSize().y) * 10 + BLOCK_SIZE);
-        light.setPosition(new Vector2(position.clone()).add(light.getSize() / 2, light.getSize() / 2));
+        light.setSize((getSize().x + getSize().y) * 6 + BLOCK_SIZE);
         return light;
     }
 }
