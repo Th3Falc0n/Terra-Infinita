@@ -52,7 +52,7 @@ public class Player extends Entity {
 
     @EventListener(events = "KEYDOWN", filter = "filterOnBombKeyPressed")
     public void onBombKeyPressed(Event event) {
-        EntityDynamite dynamite = new EntityDynamite(position.clone(), worldObj, 3, 40);
+        EntityDynamite dynamite = new EntityDynamite(position.clone(), worldObj, 3, 4);
         worldObj.addEntity(dynamite);
     }
 

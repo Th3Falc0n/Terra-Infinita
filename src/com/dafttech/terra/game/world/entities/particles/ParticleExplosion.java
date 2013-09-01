@@ -29,8 +29,8 @@ public class ParticleExplosion extends Particle {
     @Override
     public void update(float delta) {
         super.update(delta);
-        worldObj.addEntity(new ParticleSpark(position.clone().add(new Random().nextFloat() * getSize().x * BLOCK_SIZE,
-                new Random().nextFloat() * getSize().y * BLOCK_SIZE), worldObj));
+        worldObj.addEntity(new ParticleSpark(position.clone().add(-radius, -radius).add(new Random().nextFloat() * (getSize().x + radius * 2) * BLOCK_SIZE,
+                new Random().nextFloat() * (getSize().y + radius * 2) * BLOCK_SIZE), worldObj));
         getSize().add(delta * 8, delta * 8);
         setPosition(getPosition().add(delta * -4 * BLOCK_SIZE, delta * -4 * BLOCK_SIZE));
     }
