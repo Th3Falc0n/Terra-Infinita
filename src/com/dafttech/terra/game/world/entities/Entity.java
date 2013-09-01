@@ -102,31 +102,30 @@ public abstract class Entity implements IDrawable {
                 if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
                     Rectangle prLeft = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
                     Rectangle prRight = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
-                    Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
-                    Rectangle prTop = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
+                    Rectangle prTop = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
+                    Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
 
                     Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-                    Vector2 pvMid = new Vector2(playerRect.x + playerRect.width / 2, playerRect.y + playerRect.height / 2);
-                    Vector2 cvMid = new Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-                    Vector2 mDis = pvMid.sub(cvMid);
-                    mDis.x = Math.abs(mDis.x);
-                    mDis.y = Math.abs(mDis.y);
-
-                    if (prBottom.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
+                    boolean cTop = prTop.overlaps(rect);
+                    boolean cBottom = prBottom.overlaps(rect);
+                    boolean cLeft = prLeft.overlaps(rect);
+                    boolean cRight = prRight.overlaps(rect);
+                    
+                    if(cTop && rect.y - prTop.y < rect.y - prLeft.y) {
                         onTerrainCollisionTop(rect.y + rect.height + 1);
                     }
-
-                    if (prTop.overlaps(rect) && (mDis.y + 1 > mDis.x)) {
+                    
+                    if(cBottom && rect.y - prTop.y > rect.y - prLeft.y) {
                         onTerrainCollisionBottom(rect.y - playerRect.height - 1);
                     }
-
-                    if (prLeft.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onTerrainCollisionRight(rect.x + rect.width + 1);
+                    
+                    if(cLeft && rect.x - prLeft.x < rect.x - prTop.x) {
+                        onTerrainCollisionLeft(rect.x + rect.width + 1);
                     }
 
-                    if (prRight.overlaps(rect) && (mDis.y - 1 < mDis.x)) {
-                        onTerrainCollisionLeft(rect.x - playerRect.width - 1);
+                    if(cRight && rect.x - prLeft.x > rect.x - prTop.x) {
+                        onTerrainCollisionRight(rect.x - playerRect.width - 1);
                     }
                 }
             }
@@ -148,14 +147,14 @@ public abstract class Entity implements IDrawable {
         }
     }
 
-    void onTerrainCollisionLeft(float x) {
+    void onTerrainCollisionRight(float x) {
         if (velocity.x > 0) {
             velocity.x = 0;
             position.x = x;
         }
     }
 
-    void onTerrainCollisionRight(float x) {
+    void onTerrainCollisionLeft(float x) {
         if (velocity.x < 0) {
             velocity.x = 0;
             position.x = x;
@@ -204,20 +203,22 @@ public abstract class Entity implements IDrawable {
 
         accelleration.setNull();
 
-        float stepLength = 5f / velocity.len();
-
-        inAir = true;
-
-        for(float i = 0; i < delta; i += stepLength) {
-            float asl = stepLength;
-            if(i + asl > delta) {
-                asl -= (i + asl) - delta;
+        if(velocity.len() > 0) {
+            float stepLength = 5f / velocity.len();
+    
+            inAir = true;
+    
+            for(float i = 0; i < delta; i += stepLength) {
+                float asl = stepLength;
+                if(i + asl > delta) {
+                    asl -= (i + asl) - delta;
+                }
+                
+                position.x += velocity.x * asl;
+                position.y += velocity.y * asl;
+    
+                checkTerrainCollisions(worldObj.localPlayer.getWorld());
             }
-            
-            position.x += velocity.x * asl;
-            position.y += velocity.y * asl;
-
-            checkTerrainCollisions(worldObj.localPlayer.getWorld());
         }
 
         velocity.y *= 1 - 0.025f * delta;
