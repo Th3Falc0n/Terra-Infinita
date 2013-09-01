@@ -36,17 +36,24 @@ public class World implements IDrawable {
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
-    public Tile getTile(int x, int y) {
-        Vector2i pos = new Vector2i(x, y);
+    public Tile getTile(Vector2i pos) {
         Chunk chunk = Chunk.getOrCreateChunk(this, pos);
         if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
         return null;
     }
 
-    public void setTile(int x, int y, Tile tile) {
-        Vector2i pos = new Vector2i(x, y);
+    public Tile getTile(int x, int y) {
+        return getTile(new Vector2i(x, y));
+    }
+
+    public World setTile(Vector2i pos, Tile tile) {
         Chunk chunk = Chunk.getOrCreateChunk(this, pos);
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
+        return this;
+    }
+
+    public World setTile(int x, int y, Tile tile) {
+        return setTile(new Vector2i(x, y), tile);
     }
 
     public void destroyTile(int x, int y, Entity causer) {
@@ -55,21 +62,35 @@ public class World implements IDrawable {
             tile.spawnAsEntity();
             setTile(x, y, null);
 
-            if(tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents)tile).onTileDestroyed(causer);
+            if (tile instanceof ITileInworldEvents) {
+                ((ITileInworldEvents) tile).onTileDestroyed(causer);
             }
+            notifyNeighborTiles(x, y);
         }
     }
-    
+
     public void placeTile(int x, int y, Tile t, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile == null) {
             setTile(x, y, t);
 
-            if(tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents)tile).onTilePlaced(causer);
+            if (tile instanceof ITileInworldEvents) {
+                ((ITileInworldEvents) tile).onTilePlaced(causer);
             }
+            notifyNeighborTiles(x, y);
         }
+    }
+
+    private void notifyNeighborTiles(int x, int y) {
+        Tile tile;
+        tile = getTile(x + 1, y);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        tile = getTile(x, y + 1);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        tile = getTile(x - 1, y);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        tile = getTile(x, y - 1);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
     }
 
     public void addEntity(Entity entity) {
