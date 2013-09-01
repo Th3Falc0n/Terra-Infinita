@@ -95,7 +95,7 @@ public abstract class Entity implements IDrawable {
     public void checkTerrainCollisions(World world) {
         Vector2i mid = position.toWorldPosition();
 
-        Rectangle playerRect = new Rectangle(position.x - BLOCK_SIZE * size.x / 2, position.y - BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+        Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
         for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
@@ -167,7 +167,7 @@ public abstract class Entity implements IDrawable {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch.setColor(color);
-        screen.batch.draw(this.getImage(), screenVec.x - BLOCK_SIZE * size.x / 2, screenVec.y - BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
         screen.batch.flush();
     }
 
