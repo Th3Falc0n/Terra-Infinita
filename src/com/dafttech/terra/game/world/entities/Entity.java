@@ -204,11 +204,21 @@ public abstract class Entity implements IDrawable {
 
         accelleration.setNull();
 
-        position.x += velocity.x * delta;
-        position.y += velocity.y * delta;
+        float stepLength = 5f / velocity.len();
 
         inAir = true;
-        checkTerrainCollisions(worldObj.localPlayer.getWorld());
+
+        for(float i = 0; i < delta; i += stepLength) {
+            float asl = stepLength;
+            if(i + asl > delta) {
+                asl -= (i + asl) - delta;
+            }
+            
+            position.x += velocity.x * asl;
+            position.y += velocity.y * asl;
+
+            checkTerrainCollisions(worldObj.localPlayer.getWorld());
+        }
 
         velocity.y *= 1 - 0.025f * delta;
         velocity.x *= 1 - getCurrentFriction() * delta;
