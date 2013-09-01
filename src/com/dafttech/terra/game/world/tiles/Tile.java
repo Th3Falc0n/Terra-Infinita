@@ -43,11 +43,7 @@ public abstract class Tile implements IDrawable {
     public float getWalkFriction() {
         return 1f;
     }
-
-    public void addedToWorld() {
-
-    }
-
+        
     public float getWalkAcceleration() {
         return 1f;
     }
@@ -81,17 +77,6 @@ public abstract class Tile implements IDrawable {
     public boolean onCollisionWith(Entity entity) {
         // TODO Auto-generated method stub
         return true;
-    }
-
-    public Tile addToWorld(World world, Vector2i pos) {
-        if (position == null || world == null) {
-            this.position = new Vector2i(pos);
-            this.world = world;
-            // world.map[pos.getX()][pos.getY()] = this;
-            world.setTile(pos.x, pos.y, this);
-            addedToWorld();
-        }
-        return this;
     }
 
     public boolean isLightEmitter() {

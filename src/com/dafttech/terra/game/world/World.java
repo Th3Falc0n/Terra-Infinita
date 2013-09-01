@@ -16,6 +16,7 @@ import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
+import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public class World implements IDrawable {
@@ -48,11 +49,26 @@ public class World implements IDrawable {
         if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
     }
 
-    public void destroyTile(int x, int y) {
+    public void destroyTile(int x, int y, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile != null) {
             tile.spawnAsEntity();
             setTile(x, y, null);
+
+            if(tile instanceof ITileInworldEvents) {
+                ((ITileInworldEvents)tile).onTileDestroyed(causer);
+            }
+        }
+    }
+    
+    public void placeTile(int x, int y, Tile t, Entity causer) {
+        Tile tile = getTile(x, y);
+        if (tile == null) {
+            setTile(x, y, t);
+
+            if(tile instanceof ITileInworldEvents) {
+                ((ITileInworldEvents)tile).onTilePlaced(causer);
+            }
         }
     }
 

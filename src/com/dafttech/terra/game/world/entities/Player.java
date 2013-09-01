@@ -28,7 +28,7 @@ public class Player extends Entity {
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
-            getWorld().destroyTile(destroy.x, destroy.y);
+            getWorld().destroyTile(destroy.x, destroy.y, this);
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
