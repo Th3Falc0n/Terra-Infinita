@@ -21,7 +21,7 @@ public abstract class Entity implements IDrawable {
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
     Vector2 size;
-    World worldObj;
+    public World worldObj;
 
     Color color = Color.WHITE;
 

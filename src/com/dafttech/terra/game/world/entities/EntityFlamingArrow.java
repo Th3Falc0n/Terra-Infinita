@@ -2,6 +2,9 @@ package com.dafttech.terra.game.world.entities;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
@@ -38,8 +41,13 @@ public class EntityFlamingArrow extends EntityArrow {
     public void update(float delta) {
         super.update(delta);
 
-        if (light == null) light = new PointLight(position, 95);
+        if (light == null) {
+            light = new PointLight(position, 95);
+            light.setColor(new Color(255, 200, 40, 255));
+        }
 
+        light.setSize(90 + new Random().nextInt(10));
+        
         light.setPosition(new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {

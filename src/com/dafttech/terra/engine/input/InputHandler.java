@@ -1,8 +1,6 @@
 package com.dafttech.terra.engine.input;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -11,8 +9,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.dafttech.terra.game.Events;
 
 public class InputHandler implements InputProcessor {
-    List<Integer> registeredKeys = new ArrayList<Integer>();
     Map<String, Integer> keyNames = new HashMap<String, Integer>();
+    Map<Integer, String> keyIds = new HashMap<Integer, String>();
     Map<Integer, Boolean> keyDown = new HashMap<Integer, Boolean>();
 
     public static InputHandler $ = new InputHandler();
@@ -29,7 +27,10 @@ public class InputHandler implements InputProcessor {
         registerKey(Keys.S, "DOWN");
         registerKey(Keys.D, "RIGHT");
 
+        registerKey(Keys.B, "BOMB");
+
         registerKey(Keys.SPACE, "JUMP");
+        registerKey(Keys.ENTER, "CHAT");
     }
 
     public boolean isKeyDown(String name) {
@@ -37,17 +38,31 @@ public class InputHandler implements InputProcessor {
         return keyDown.get(getKeyID(name));
     }
 
+    public boolean isKeyRegistered(int id) {
+        return keyIds.containsKey(id);
+    }
+
+    public boolean isKeyRegistered(String name) {
+        return keyNames.containsKey(name);
+    }
+
     public int getKeyID(String name) {
         if (!keyNames.containsKey(name)) throw new IllegalArgumentException("Key not registered: " + name);
         return keyNames.get(name);
     }
 
+    public String getKeyName(int id) {
+        if (!keyIds.containsKey(id)) throw new IllegalArgumentException("Key not registered: " + id);
+        return keyIds.get(id);
+    }
+
     public void registerKey(int key, String name) {
-        if (registeredKeys.contains(key)) {
+        if (isKeyRegistered(key) || isKeyRegistered(name)) {
             Gdx.app.log("InputHandler", "Multiple Key Registration: " + key);
             return;
         }
         keyNames.put(name, key);
+        keyIds.put(key, name);
     }
 
     @Override
@@ -57,7 +72,7 @@ public class InputHandler implements InputProcessor {
             return true;
         }
         keyDown.put(i, true);
-        Events.EVENT_KEYDOWN.callSync(i);
+        if (isKeyRegistered(i)) Events.EVENT_KEYDOWN.callSync(getKeyName(i));
         return true;
     }
 
@@ -74,8 +89,7 @@ public class InputHandler implements InputProcessor {
     public boolean keyUp(int i) {
         if (FocusManager.typeFocusAssigned()) return false;
         keyDown.put(i, false);
-        Events.EVENT_KEYUP.callSync(i);
-
+        if (isKeyRegistered(i)) Events.EVENT_KEYUP.callSync(getKeyName(i));
         return true;
     }
 

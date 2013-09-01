@@ -1,7 +1,7 @@
 package com.dafttech.terra.engine.gui.modules;
 
-import com.badlogic.gdx.Input.Keys;
 import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventFilter;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
@@ -42,11 +42,14 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
         messageList.addObject(new ElementLabel(new Vector2(0, 0), msg));
     }
 
-    @EventListener(events = { "KEYDOWN" })
-    public void onEventMouseMove(Event event) {
-        if ((int) event.getInput()[0] == Keys.ENTER) {
-            inputLabel.beginStringInput();
-        }
+    @EventListener(events = { "KEYDOWN" }, filter = "filterOnChatKeyUsed")
+    public void onChatKeyUsed(Event event) {
+        inputLabel.beginStringInput();
+    }
+
+    @EventFilter(name = "filterOnChatKeyUsed")
+    public Object[] filter1() {
+        return new Object[] { "CHAT" };
     }
 
     @Override

@@ -96,4 +96,9 @@ public class Vector2 {
         if (angle < 0.0F) angle += 360.0F;
         return angle;
     }
+
+    @Override
+    public Vector2 clone() {
+        return new Vector2(this);
+    }
 }
