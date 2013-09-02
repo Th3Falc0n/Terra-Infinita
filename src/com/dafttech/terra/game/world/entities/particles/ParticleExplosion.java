@@ -21,6 +21,7 @@ public class ParticleExplosion extends Particle {
         this.radius = radius;
         midpos = pos;
         setGravityFactor(0);
+        setMidPos(midpos);
     }
 
     @Override
