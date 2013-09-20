@@ -20,6 +20,7 @@ public class Player extends Entity {
         Events.EVENTMANAGER.registerEventListener(this);
     }
 
+    long left;
     boolean right;
 
     @Override
@@ -30,7 +31,8 @@ public class Player extends Entity {
 
         if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
 
-        if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+        if (Gdx.input.isButtonPressed(Buttons.LEFT) && System.currentTimeMillis() - left > 10) {
+            left = System.currentTimeMillis();
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y, this);

@@ -47,4 +47,10 @@ public class TileGrass extends Tile implements ITileInworldEvents {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void onTileSet() {
+        // TODO Auto-generated method stub
+
+    }
 }

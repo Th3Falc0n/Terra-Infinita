@@ -36,13 +36,13 @@ public abstract class Entity implements IDrawable {
         size = s;
         world.localEntities.add(this);
     }
-    
+
     public void setMidPos(Vector2 pos) {
         position = pos.addNew(-size.x * BLOCK_SIZE / 2f, -size.y * BLOCK_SIZE / 2f);
     }
-    
+
     public Vector2 getMidPos() {
-         return position.addNew(size.x * BLOCK_SIZE / 2f, size.y * BLOCK_SIZE / 2f);
+        return position.addNew(size.x * BLOCK_SIZE / 2f, size.y * BLOCK_SIZE / 2f);
     }
 
     public void setColor(Color clr) {
@@ -77,6 +77,7 @@ public abstract class Entity implements IDrawable {
         size = new Vector2(x, y);
     }
 
+    @SuppressWarnings("unused")
     private void drawRect(Rectangle rect, ShapeRenderer rend, Color color) {
         rend.begin(ShapeType.FilledRectangle);
 
@@ -111,20 +112,20 @@ public abstract class Entity implements IDrawable {
                     boolean cBottom = prBottom.overlaps(rect);
                     boolean cLeft = prLeft.overlaps(rect);
                     boolean cRight = prRight.overlaps(rect);
-                    
-                    if(cTop && rect.y - prTop.y < rect.y - prLeft.y) {
+
+                    if (cTop && rect.y - prTop.y < rect.y - prLeft.y) {
                         onTerrainCollisionTop(rect.y + rect.height + 1);
                     }
-                    
-                    if(cBottom && rect.y - prTop.y > rect.y - prLeft.y) {
+
+                    if (cBottom && rect.y - prTop.y > rect.y - prLeft.y) {
                         onTerrainCollisionBottom(rect.y - playerRect.height - 1);
                     }
-                    
-                    if(cLeft && rect.x - prLeft.x < rect.x - prTop.x) {
+
+                    if (cLeft && rect.x - prLeft.x < rect.x - prTop.x) {
                         onTerrainCollisionLeft(rect.x + rect.width + 1);
                     }
 
-                    if(cRight && rect.x - prLeft.x > rect.x - prTop.x) {
+                    if (cRight && rect.x - prLeft.x > rect.x - prTop.x) {
                         onTerrainCollisionRight(rect.x - playerRect.width - 1);
                     }
                 }
@@ -203,20 +204,20 @@ public abstract class Entity implements IDrawable {
 
         accelleration.setNull();
 
-        if(velocity.len() > 0) {
+        if (velocity.len() > 0) {
             float stepLength = 5f / velocity.len();
-    
+
             inAir = true;
-    
-            for(float i = 0; i < delta; i += stepLength) {
+
+            for (float i = 0; i < delta; i += stepLength) {
                 float asl = stepLength;
-                if(i + asl > delta) {
+                if (i + asl > delta) {
                     asl -= (i + asl) - delta;
                 }
-                
+
                 position.x += velocity.x * asl;
                 position.y += velocity.y * asl;
-    
+
                 checkTerrainCollisions(worldObj.localPlayer.getWorld());
             }
         }

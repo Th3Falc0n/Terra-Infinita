@@ -45,6 +45,7 @@ public class ParticleExplosion extends Particle {
         return true;
     }
 
+    @Override
     public PointLight getEmittedLight() {
         if (light == null) {
             light = new PointLight(position, 60);

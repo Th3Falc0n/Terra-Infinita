@@ -51,13 +51,13 @@ public class BiomeGrassland extends Biome {
                     }
                 }
 
-                new Vector2i(x, y).setTile(gen.world, tile);
+                gen.world.setTile(x, y, tile, false);
             }
         }
     }
 
     @Override
     public void populateChunk(WorldGenerator gen, Chunk chunk) {
-        
+
     }
 }

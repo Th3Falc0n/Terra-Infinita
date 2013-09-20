@@ -42,7 +42,7 @@ public abstract class Tile implements IDrawable {
     public float getWalkFriction() {
         return 1f;
     }
-        
+
     public float getWalkAcceleration() {
         return 1f;
     }
@@ -90,7 +90,7 @@ public abstract class Tile implements IDrawable {
         receivesSunlight = is;
         if (!isOpaque()) {
             Tile b = world.getNextTileBelow(position);
-            if(b != null) {
+            if (b != null) {
                 b.setReceivesSunlight(is);
                 b.sunlightFilter = is ? this : null;
             }
