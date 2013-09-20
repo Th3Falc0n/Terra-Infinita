@@ -20,6 +20,7 @@ public class Player extends Entity {
         Events.EVENTMANAGER.registerEventListener(this);
     }
 
+    long left;
     boolean right;
 
     @Override
@@ -30,7 +31,8 @@ public class Player extends Entity {
 
         if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
 
-        if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+        if (Gdx.input.isButtonPressed(Buttons.LEFT) && System.currentTimeMillis() - left > 10) {
+            left = System.currentTimeMillis();
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
             getWorld().destroyTile(destroy.x, destroy.y, this);
@@ -38,7 +40,9 @@ public class Player extends Entity {
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
             right = true;
-            EntityFlamingArrow a = new EntityFlamingArrow(position.clone(), worldObj);
+            // EntityFlamingArrow a = new EntityFlamingArrow(position.clone(),
+            // worldObj);
+            EntityGlowstick a = new EntityGlowstick(position.clone(), worldObj);
 
             a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
 

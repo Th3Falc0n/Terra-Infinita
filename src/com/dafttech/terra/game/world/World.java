@@ -44,84 +44,93 @@ public class World implements IDrawable {
 
     public Chunk getOrCreateChunk(Vector2i blockInWorldPos) {
         Chunk chunk = getChunk(blockInWorldPos);
-        if (chunk == null) chunk = new Chunk(this , blockInWorldPos.getChunkPos(this));
+        if (chunk == null) chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
         return chunk;
     }
 
     public boolean doesChunkExist(int x, int y) {
         return getChunk(new Vector2i(x, y)) != null;
     }
-    
+
     public Tile getTile(int x, int y) {
         return getTile(new Vector2i(x, y));
     }
-    
+
     public Tile getTile(Vector2i pos) {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
         return null;
     }
-    
+
     public Tile getNextTileBelow(int x, int y) {
         y++;
-        while(doesChunkExist(x, y)) {
-            if(getTile(x, y) != null)
-                return getTile(x, y);
+        while (doesChunkExist(x, y)) {
+            if (getTile(x, y) != null) return getTile(x, y);
             y++;
         }
         return null;
     }
-    
+
     public Tile getNextTileBelow(Vector2i t) {
         return getNextTileBelow(t.x, t.y);
     }
-    
+
     public Tile getNextTileAbove(int x, int y) {
         y--;
-        while(doesChunkExist(x, y)) {
-            if(getTile(x, y) != null)
-                return getTile(x, y);
+        while (doesChunkExist(x, y)) {
+            if (getTile(x, y) != null) return getTile(x, y);
             y--;
         }
         return null;
     }
-    
+
     public Tile getNextTileAbove(Vector2i t) {
         return getNextTileAbove(t.x, t.y);
     }
 
-    public World setTile(Vector2i pos, Tile tile) {
+    public World setTile(Vector2i pos, Tile tile, boolean notify) {
         Chunk chunk = getOrCreateChunk(pos);
-        if (chunk != null) chunk.setTile(pos.getBlockInChunkPos(this), tile);
+        if (chunk != null) {
+            boolean oldTile = false;
+            Vector2i oldPos = null;
+            if (tile != null && tile.position != null && getTile(tile.position) == tile) {
+                oldTile = true;
+                oldPos = tile.position.clone();
+            }
+            chunk.setTile(pos.getBlockInChunkPos(this), tile);
+            if (notify) {
+                if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet();
+                notifyNeighborTiles(pos.x, pos.y);
+            }
+            if (oldTile) setTile(oldPos, null, notify);
+        }
         return this;
     }
 
-    public World setTile(int x, int y, Tile tile) {
-        return setTile(new Vector2i(x, y), tile);
+    public World setTile(int x, int y, Tile tile, boolean notify) {
+        return setTile(new Vector2i(x, y), tile, notify);
     }
 
     public void destroyTile(int x, int y, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile != null) {
             tile.spawnAsEntity();
-            setTile(x, y, null);
+            setTile(x, y, null, true);
 
             if (tile instanceof ITileInworldEvents) {
                 ((ITileInworldEvents) tile).onTileDestroyed(causer);
             }
-            notifyNeighborTiles(x, y);
         }
     }
 
     public void placeTile(int x, int y, Tile t, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile == null) {
-            setTile(x, y, t);
+            setTile(x, y, t, true);
 
             if (tile instanceof ITileInworldEvents) {
                 ((ITileInworldEvents) tile).onTilePlaced(causer);
             }
-            notifyNeighborTiles(x, y);
         }
     }
 

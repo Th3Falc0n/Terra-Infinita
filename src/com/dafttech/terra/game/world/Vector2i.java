@@ -5,7 +5,6 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.tiles.Tile;
 
 public class Vector2i {
     public int x, y; // TODO make private
@@ -258,20 +257,6 @@ public class Vector2i {
 
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {
         return this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY;
-    }
-
-    public Tile getTile(World world) {
-        return world.getTile(x, y);
-    }
-
-    public Vector2i setTile(World world, Tile tile) {
-        world.setTile(x, y, tile);
-        return this;
-    }
-
-    public Vector2i destroyTile(World world, Entity causer) {
-        world.destroyTile(x, y, causer);
-        return this;
     }
 
     private static int getChunkPos(int blockInWorldPos, int chunkSize) {

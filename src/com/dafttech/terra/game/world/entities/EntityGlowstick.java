@@ -6,25 +6,25 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.resources.Resources;
 
-public class EntityFlamingArrow extends EntityArrow {
+public class EntityGlowstick extends Entity {
 
     PointLight light;
 
-    public EntityFlamingArrow(Vector2 pos, World world) {
-        super(pos, world);
+    public EntityGlowstick(Vector2 pos, World world) {
+        super(pos, world, new Vector2(1.5f, 1.5f));
+
+        setGravityFactor(0.125f);
     }
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("arrow");
+        return Resources.ENTITIES.getImage("glowstick");
     }
 
     @Override
@@ -43,18 +43,12 @@ public class EntityFlamingArrow extends EntityArrow {
 
         if (light == null) {
             light = new PointLight(position, 95);
-            light.setColor(new Color(255, 200, 40, 255));
+            light.setColor(new Color(0, 255, 0, 255));
         }
 
         light.setSize(90 + new Random().nextInt(10));
 
         light.setPosition(new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
-
-        for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
-                worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
-            }
-        }
     }
 
     @Override

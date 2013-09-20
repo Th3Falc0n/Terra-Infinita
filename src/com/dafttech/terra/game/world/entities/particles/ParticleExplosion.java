@@ -20,7 +20,8 @@ public class ParticleExplosion extends Particle {
         super(pos, world, 0.3f, new Vector2(radius * 2, radius * 2));
         this.radius = radius;
         midpos = pos;
-        setGravityFactor(0.01f);
+        setGravityFactor(0);
+        setMidPos(midpos);
     }
 
     @Override
@@ -44,6 +45,7 @@ public class ParticleExplosion extends Particle {
         return true;
     }
 
+    @Override
     public PointLight getEmittedLight() {
         if (light == null) {
             light = new PointLight(position, 60);
