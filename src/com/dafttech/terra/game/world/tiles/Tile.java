@@ -73,7 +73,7 @@ public abstract class Tile implements IDrawable {
         }
     }
 
-    public boolean onCollisionWith(Entity entity) {
+    public boolean canCollideWith(Entity entity) {
         // TODO Auto-generated method stub
         return true;
     }

@@ -95,70 +95,75 @@ public abstract class Entity implements IDrawable {
     public void checkTerrainCollisions(World world) {
         Vector2i mid = position.toWorldPosition();
 
-        Rectangle playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+        Rectangle playerRect;
+        
+        boolean redo = false;
 
-        for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
-            for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
-                if (world.getTile(x, y) != null && world.getTile(x, y).onCollisionWith(this)) {
-                    Rectangle prLeft = new Rectangle(playerRect.x - 1, playerRect.y, 1, playerRect.height);
-                    Rectangle prRight = new Rectangle(playerRect.x + playerRect.width, playerRect.y, 1, playerRect.height);
-                    Rectangle prTop = new Rectangle(playerRect.x, playerRect.y - 1, playerRect.width, 1);
-                    Rectangle prBottom = new Rectangle(playerRect.x, playerRect.y + playerRect.height, playerRect.width, 1);
-
-                    Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-
-                    boolean cTop = prTop.overlaps(rect);
-                    boolean cBottom = prBottom.overlaps(rect);
-                    boolean cLeft = prLeft.overlaps(rect);
-                    boolean cRight = prRight.overlaps(rect);
-                    
-                    if(cTop && rect.y - prTop.y < rect.y - prLeft.y) {
-                        onTerrainCollisionTop(rect.y + rect.height + 1);
-                    }
-                    
-                    if(cBottom && rect.y - prTop.y > rect.y - prLeft.y) {
-                        onTerrainCollisionBottom(rect.y - playerRect.height - 1);
-                    }
-                    
-                    if(cLeft && rect.x - prLeft.x < rect.x - prTop.x) {
-                        onTerrainCollisionLeft(rect.x + rect.width + 1);
-                    }
-
-                    if(cRight && rect.x - prLeft.x > rect.x - prTop.x) {
-                        onTerrainCollisionRight(rect.x - playerRect.width - 1);
+        do {
+            redo = false;
+            playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+            for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
+                for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
+                    if (world.getTile(x, y) != null && world.getTile(x, y).canCollideWith(this)) {
+                        Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    
+                        float tDif = playerRect.y - (rect.y + rect.height);
+                        float bDif = (playerRect.y + playerRect.height) - rect.y;
+    
+                        float lDif = playerRect.x - (rect.x + rect.width);
+                        float rDif = (playerRect.x + playerRect.width) - rect.x;
+                        
+                        if(playerRect.overlaps(rect)) {
+                            if(velocity.x > 0) {
+                                onTerrainCollisionRight(rect.x - playerRect.width + 0.001f);
+                                redo = true;
+                                break;
+                            }
+                            
+                            if(velocity.x < 0) {
+                                onTerrainCollisionLeft(rect.x + rect.width + 0.001f);
+                                redo = true;
+                                break;
+                            }
+                            
+                            if(velocity.y > 0) {
+                                onTerrainCollisionBottom(rect.y - playerRect.height - 0.001f);
+                                redo = true;
+                                break;
+                            }
+                            
+                            if(velocity.y < 0) {
+                                onTerrainCollisionTop(rect.y + rect.height + 0.001f);
+                                redo = true;
+                                break;
+                            }
+                        }
                     }
                 }
+                if(redo) break;
             }
-        }
+        } while (redo);
     }
 
     void onTerrainCollisionBottom(float y) {
-        if (velocity.y > 0) {
-            velocity.y = 0;
-            position.y = y;
-            inAir = false;
-        }
+        velocity.y = 0;
+        position.y = y;
+        inAir = false;
     }
 
     void onTerrainCollisionTop(float y) {
-        if (velocity.y < 0) {
-            velocity.y = 0;
-            position.y = y;
-        }
+        velocity.y = 0;
+        position.y = y;
     }
 
     void onTerrainCollisionRight(float x) {
-        if (velocity.x > 0) {
-            velocity.x = 0;
-            position.x = x;
-        }
+        velocity.x = 0;
+        position.x = x;
     }
 
     void onTerrainCollisionLeft(float x) {
-        if (velocity.x < 0) {
-            velocity.x = 0;
-            position.x = x;
-        }
+        velocity.x = 0;
+        position.x = x;
     }
 
     @Override

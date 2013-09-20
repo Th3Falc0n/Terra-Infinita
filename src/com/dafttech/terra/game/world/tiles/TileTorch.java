@@ -30,7 +30,7 @@ public class TileTorch extends Tile {
     }
 
     @Override
-    public boolean onCollisionWith(Entity entity) {
+    public boolean canCollideWith(Entity entity) {
         return false;
     }
 
