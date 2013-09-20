@@ -40,7 +40,9 @@ public class Player extends Entity {
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
             right = true;
-            EntityFlamingArrow a = new EntityFlamingArrow(position.clone(), worldObj);
+            // EntityFlamingArrow a = new EntityFlamingArrow(position.clone(),
+            // worldObj);
+            EntityGlowstick a = new EntityGlowstick(position.clone(), worldObj);
 
             a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
 

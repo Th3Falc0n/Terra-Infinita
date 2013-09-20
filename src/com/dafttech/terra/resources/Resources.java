@@ -33,6 +33,7 @@ public class Resources {
         ENTITIES.loadImage("1px", "res/entities/1px.png");
         ENTITIES.loadImage("dynamite", "res/entities/dynamite.png");
         ENTITIES.loadImage("explosion", "res/entities/explosion.png");
+        ENTITIES.loadImage("glowstick", "res/entities/glowstick.png");
 
         GUI.loadImage("slot", "res/ui/slot.png");
         GUI.loadImage("bar", "res/ui/bar.png");
