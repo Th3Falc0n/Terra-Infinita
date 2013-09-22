@@ -12,6 +12,7 @@ import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.inventories.Inventory;
+import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
 public class Player extends Entity {
@@ -35,7 +36,9 @@ public class Player extends Entity {
             left = System.currentTimeMillis();
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
-            getWorld().destroyTile(destroy.x, destroy.y, this);
+            // getWorld().destroyTile(destroy.x, destroy.y, this);
+            Tile damagedTile = getWorld().getTile(destroy.x, destroy.y);
+            if (damagedTile != null) damagedTile.damage(0.2f, this);
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {

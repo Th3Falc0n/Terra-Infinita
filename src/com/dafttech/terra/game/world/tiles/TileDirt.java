@@ -7,6 +7,7 @@ public class TileDirt extends Tile {
 
     public TileDirt() {
         super();
+        setHardness(0);
     }
 
     @Override

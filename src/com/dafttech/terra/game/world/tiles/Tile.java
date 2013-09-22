@@ -22,6 +22,9 @@ public abstract class Tile implements IDrawable {
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
 
+    private float breakingProgress = 0;
+    private float hardness = 1;
+
     public boolean receivesSunlight = false;
     public Tile sunlightFilter = null;
 
@@ -71,6 +74,7 @@ public abstract class Tile implements IDrawable {
         for (Subtile subtile : subtiles) {
             subtile.update(delta);
         }
+        if (breakingProgress > 0) breakingProgress -= delta;
     }
 
     public boolean canCollideWith(Entity entity) {
@@ -80,6 +84,11 @@ public abstract class Tile implements IDrawable {
 
     public boolean isLightEmitter() {
         return false;
+    }
+
+    public Tile setHardness(float hardness) {
+        this.hardness = hardness;
+        return this;
     }
 
     public PointLight getEmittedLight() {
@@ -114,6 +123,13 @@ public abstract class Tile implements IDrawable {
             return Color.WHITE;
         } else {
             return sunlightFilter.getFilteredSunlightColor();
+        }
+    }
+
+    public void damage(float damage, Entity causer) {
+        breakingProgress += damage;
+        if (breakingProgress > hardness) {
+            getWorld().destroyTile(position.x, position.y, causer);
         }
     }
 
