@@ -102,41 +102,42 @@ public abstract class Entity implements IDrawable {
 
         do {
             redo = false;
-            playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+            playerRect = new Rectangle(position.x, position.y, (float)BLOCK_SIZE * size.x, (float)BLOCK_SIZE * size.y);
             for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
                 for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                     if (world.getTile(x, y) != null && world.getTile(x, y).canCollideWith(this)) {
-                        Rectangle rect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-    
-                        float tDif = playerRect.y - (rect.y + rect.height);
-                        float bDif = (playerRect.y + playerRect.height) - rect.y;
-    
-                        float lDif = playerRect.x - (rect.x + rect.width);
-                        float rDif = (playerRect.x + playerRect.width) - rect.x;
+                        Rectangle rect = new Rectangle(x * (float)BLOCK_SIZE, y * (float)BLOCK_SIZE, (float)BLOCK_SIZE, (float)BLOCK_SIZE);
                         
                         if(playerRect.overlaps(rect)) {
-                            if(velocity.x > 0) {
-                                onTerrainCollisionRight(rect.x - playerRect.width + 0.001f);
-                                redo = true;
-                                break;
-                            }
+                            Vector2 midDistance = new Vector2((rect.x + rect.width / 2) - (playerRect.x + playerRect.width / 2), (rect.y + rect.height / 2) - (playerRect.y + playerRect.height / 2));
+                            Vector2 absDistance = new Vector2(Math.abs(midDistance.x), Math.abs(midDistance.y));
                             
-                            if(velocity.x < 0) {
-                                onTerrainCollisionLeft(rect.x + rect.width + 0.001f);
-                                redo = true;
-                                break;
+                            if(absDistance.x > absDistance.y) {
+                                if(midDistance.x > 0) {                               
+                                    onTerrainCollisionRight(rect.x - playerRect.width - 0.001f);
+                                    redo = true;
+                                    break;
+                                }
+                                else
+                                {                                
+                                    onTerrainCollisionLeft(rect.x + rect.width + 0.001f);
+                                    redo = true;
+                                    break;
+                                }
                             }
-                            
-                            if(velocity.y > 0) {
-                                onTerrainCollisionBottom(rect.y - playerRect.height - 0.001f);
-                                redo = true;
-                                break;
-                            }
-                            
-                            if(velocity.y < 0) {
-                                onTerrainCollisionTop(rect.y + rect.height + 0.001f);
-                                redo = true;
-                                break;
+                            else
+                            {
+                                if(midDistance.y > 0) {
+                                    onTerrainCollisionBottom(rect.y - playerRect.height - 0.001f);
+                                    redo = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    onTerrainCollisionTop(rect.y + rect.height + 0.001f);
+                                    redo = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -145,7 +146,7 @@ public abstract class Entity implements IDrawable {
             }
         } while (redo);
     }
-
+    
     void onTerrainCollisionBottom(float y) {
         velocity.y = 0;
         position.y = y;
