@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.resources.Resources;
 
@@ -33,11 +34,9 @@ public class TileFire extends Tile {
             int spreadX = position.x + new Random().nextInt(distance * 2) - distance;
             int spreadY = position.y + new Random().nextInt(distance * 2) - distance;
             Tile spreadTile = world.getTile(spreadX, spreadY);
-            if (spreadTile instanceof ITileInteraction) {
-                if (((ITileInteraction) spreadTile).isFlammable()) {
-                    spreadCounter = spreadCounterMax;
-                    world.setTile(spreadX, spreadY, new TileFire(), true);
-                }
+            if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
+                spreadCounter = spreadCounterMax;
+                world.setTile(spreadX, spreadY, new TileFire(), true);
             }
         }
         if (lifetime <= 0) {
@@ -47,6 +46,15 @@ public class TileFire extends Tile {
         if (light == null) light = new PointLight(position.toEntityPos(), 95);
 
         light.setPosition(position.toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+    }
+
+    public static boolean createFire(World world, int x, int y) {
+        Tile spreadTile = world.getTile(x, y);
+        if (spreadTile == null || (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable())) {
+            world.setTile(x, y, new TileFire(), true);
+            return true;
+        }
+        return false;
     }
 
     @Override

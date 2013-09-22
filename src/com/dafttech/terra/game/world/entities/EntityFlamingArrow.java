@@ -58,7 +58,7 @@ public class EntityFlamingArrow extends EntityArrow {
         }
 
         if (velocity.x == 0 && velocity.y == 0) {
-            worldObj.setTile((int) position.x / BLOCK_SIZE, (int) position.y / BLOCK_SIZE, new TileFire(), true);
+            TileFire.createFire(worldObj, (int) position.x / BLOCK_SIZE, (int) position.y / BLOCK_SIZE);
             worldObj.removeEntity(this);
         }
     }
