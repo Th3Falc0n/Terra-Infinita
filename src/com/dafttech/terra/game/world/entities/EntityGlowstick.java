@@ -50,11 +50,6 @@ public class EntityGlowstick extends Entity {
         light.setSize(90 + new Random().nextInt(10));
 
         light.setPosition(new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
-
-        if (velocity.x == 0 && velocity.y == 0) {
-            worldObj.setTile((int) position.x / BLOCK_SIZE, (int) position.y / BLOCK_SIZE, new TileFire(), true);
-            worldObj.removeEntity(this);
-        }
     }
 
     @Override
