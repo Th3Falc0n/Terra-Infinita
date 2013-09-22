@@ -10,6 +10,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.tiles.TileFire;
 import com.dafttech.terra.resources.Resources;
 
 public class EntityGlowstick extends Entity {
@@ -49,6 +50,11 @@ public class EntityGlowstick extends Entity {
         light.setSize(90 + new Random().nextInt(10));
 
         light.setPosition(new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+
+        if (velocity.x == 0 && velocity.y == 0) {
+            worldObj.setTile((int) position.x / BLOCK_SIZE, (int) position.y / BLOCK_SIZE, new TileFire(), true);
+            worldObj.removeEntity(this);
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.items.Item;
 import com.dafttech.terra.resources.Resources;
 
-public class TileGrass extends Tile implements ITileInworldEvents {
+public class TileGrass extends Tile implements ITileInworldEvents, ITileInteraction {
     int grassIndex;
 
     public TileGrass() {
@@ -52,5 +52,10 @@ public class TileGrass extends Tile implements ITileInworldEvents {
     public void onTileSet() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public boolean isFlammable() {
+        return true;
     }
 }

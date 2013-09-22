@@ -97,43 +97,40 @@ public abstract class Entity implements IDrawable {
         Vector2i mid = position.toWorldPosition();
 
         Rectangle playerRect;
-        
+
         boolean redo = false;
+
+        int autoShutdown = 30;
 
         do {
             redo = false;
-            playerRect = new Rectangle(position.x, position.y, (float)BLOCK_SIZE * size.x, (float)BLOCK_SIZE * size.y);
+            playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
             for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
                 for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                     if (world.getTile(x, y) != null && world.getTile(x, y).canCollideWith(this)) {
-                        Rectangle rect = new Rectangle(x * (float)BLOCK_SIZE, y * (float)BLOCK_SIZE, (float)BLOCK_SIZE, (float)BLOCK_SIZE);
-                        
-                        if(playerRect.overlaps(rect)) {
-                            Vector2 midDistance = new Vector2((rect.x + rect.width / 2) - (playerRect.x + playerRect.width / 2), (rect.y + rect.height / 2) - (playerRect.y + playerRect.height / 2));
+                        Rectangle rect = new Rectangle(x * (float) BLOCK_SIZE, y * (float) BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+
+                        if (playerRect.overlaps(rect)) {
+                            Vector2 midDistance = new Vector2((rect.x + rect.width / 2) - (playerRect.x + playerRect.width / 2),
+                                    (rect.y + rect.height / 2) - (playerRect.y + playerRect.height / 2));
                             Vector2 absDistance = new Vector2(Math.abs(midDistance.x), Math.abs(midDistance.y));
-                            
-                            if(absDistance.x > absDistance.y) {
-                                if(midDistance.x > 0) {                               
+
+                            if (absDistance.x > absDistance.y) {
+                                if (midDistance.x > 0) {
                                     onTerrainCollisionRight(rect.x - playerRect.width - 0.001f);
                                     redo = true;
                                     break;
-                                }
-                                else
-                                {                                
+                                } else {
                                     onTerrainCollisionLeft(rect.x + rect.width + 0.001f);
                                     redo = true;
                                     break;
                                 }
-                            }
-                            else
-                            {
-                                if(midDistance.y > 0) {
+                            } else {
+                                if (midDistance.y > 0) {
                                     onTerrainCollisionBottom(rect.y - playerRect.height - 0.001f);
                                     redo = true;
                                     break;
-                                }
-                                else
-                                {
+                                } else {
                                     onTerrainCollisionTop(rect.y + rect.height + 0.001f);
                                     redo = true;
                                     break;
@@ -142,11 +139,16 @@ public abstract class Entity implements IDrawable {
                         }
                     }
                 }
-                if(redo) break;
+                if (redo) break;
+            }
+            autoShutdown--;
+            if (autoShutdown <= 0) {
+                System.out.println("ERROR!!! Cancelling collision detection loop!");
+                redo = false;
             }
         } while (redo);
     }
-    
+
     void onTerrainCollisionBottom(float y) {
         velocity.y = 0;
         position.y = y;
