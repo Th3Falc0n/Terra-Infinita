@@ -36,7 +36,6 @@ public class Player extends Entity {
             left = System.currentTimeMillis();
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
-            // getWorld().destroyTile(destroy.x, destroy.y, this);
             Tile damagedTile = getWorld().getTile(destroy.x, destroy.y);
             if (damagedTile != null) damagedTile.damage(0.2f, this);
         }
