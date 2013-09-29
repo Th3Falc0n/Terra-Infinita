@@ -59,8 +59,8 @@ public class Player extends Entity {
     }
 
     @EventFilter(name = "filterOnBombKeyPressed")
-    public Object[] filter1() {
-        return new Object[] { "BOMB" };
+    public String filter1() {
+        return "BOMB";
     }
 
     @EventListener(events = "KEYDOWN", filter = "filterOnGlowstickKeyPressed")
@@ -71,8 +71,8 @@ public class Player extends Entity {
     }
 
     @EventFilter(name = "filterOnGlowstickKeyPressed")
-    public Object[] filter2() {
-        return new Object[] { "GLOWSTICK" };
+    public String filter2() {
+        return "GLOWSTICK";
     }
 
     @Override

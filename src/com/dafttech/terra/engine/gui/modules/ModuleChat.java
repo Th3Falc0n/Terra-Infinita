@@ -48,8 +48,8 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
     }
 
     @EventFilter(name = "filterOnChatKeyUsed")
-    public Object[] filter1() {
-        return new Object[] { "CHAT" };
+    public String filter1() {
+        return "CHAT";
     }
 
     @Override
