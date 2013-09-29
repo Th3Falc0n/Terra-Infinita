@@ -52,25 +52,25 @@ public class Player extends Entity {
         }
     }
 
-    @EventListener(events = "KEYDOWN", filter = "filterOnBombKeyPressed")
+    @EventListener(value = "KEYDOWN", filter = "filterOnBombKeyPressed")
     public void onBombKeyPressed(Event event) {
         EntityDynamite dynamite = new EntityDynamite(position.clone(), worldObj, 3, 4);
         worldObj.addEntity(dynamite);
     }
 
-    @EventFilter(name = "filterOnBombKeyPressed")
+    @EventFilter("filterOnBombKeyPressed")
     public String filter1() {
         return "BOMB";
     }
 
-    @EventListener(events = "KEYDOWN", filter = "filterOnGlowstickKeyPressed")
+    @EventListener(value = "KEYDOWN", filter = "filterOnGlowstickKeyPressed")
     public void onGlowstickKeyPressed(Event event) {
         EntityGlowstick a = new EntityGlowstick(position.clone(), worldObj);
         a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.08f));
         worldObj.addEntity(a);
     }
 
-    @EventFilter(name = "filterOnGlowstickKeyPressed")
+    @EventFilter("filterOnGlowstickKeyPressed")
     public String filter2() {
         return "GLOWSTICK";
     }

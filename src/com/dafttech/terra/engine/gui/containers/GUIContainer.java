@@ -61,7 +61,7 @@ public abstract class GUIContainer extends GUIObject {
         }
     }
 
-    @EventListener(events = { "MOUSEMOVE" })
+    @EventListener("MOUSEMOVE")
     public void onEventMouseMove(Event event) {
         for (GUIObject e : objects) {
             if (!(e instanceof GUIElement)) continue;
@@ -85,7 +85,7 @@ public abstract class GUIContainer extends GUIObject {
         }
     }
 
-    @EventListener(events = { "MOUSEDOWN" })
+    @EventListener("MOUSEDOWN")
     public void onEventMouseDown(Event event) {
         for (GUIObject e : objects) {
             if (!(e instanceof GUIElement)) continue;

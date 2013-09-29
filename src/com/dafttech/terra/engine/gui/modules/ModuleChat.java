@@ -42,12 +42,12 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
         messageList.addObject(new ElementLabel(new Vector2(0, 0), msg));
     }
 
-    @EventListener(events = { "KEYDOWN" }, filter = "filterOnChatKeyUsed")
+    @EventListener(value = "KEYDOWN", filter = "filterOnChatKeyUsed")
     public void onChatKeyUsed(Event event) {
         inputLabel.beginStringInput();
     }
 
-    @EventFilter(name = "filterOnChatKeyUsed")
+    @EventFilter("filterOnChatKeyUsed")
     public String filter1() {
         return "CHAT";
     }

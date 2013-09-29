@@ -59,7 +59,7 @@ public abstract class GUIObject {
         if (assignedAnchors != null && assignedAnchors.needsApplyOnFrame()) applyAssignedAnchorSet();
     }
 
-    @EventListener(events = { "WINRESIZE" })
+    @EventListener("WINRESIZE")
     public void onWinResize(Event e) {
         applyAssignedAnchorSet();
     }
