@@ -136,4 +136,8 @@ public abstract class Tile implements IDrawable {
     public void spawnAsEntity() {
         world.addEntity(getItemDropped());
     }
+
+    public void onTick(World world) {
+
+    }
 }

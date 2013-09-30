@@ -24,6 +24,7 @@ public class World implements IDrawable {
     public Vector2i chunksize = new Vector2i(32, 32);
     public WorldGenerator gen;
     public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+    private float tickProgress = 0, tickLength = 1;
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
@@ -170,8 +171,11 @@ public class World implements IDrawable {
         for (Entity entity : localEntities) {
             entity.update(delta);
         }
-
-        Events.EVENT_WORLDTICK.callSync(this);
+        tickProgress += delta;
+        if (tickProgress >= tickLength) {
+            tickProgress -= tickLength;
+            Events.EVENT_WORLDTICK.callSync(this);
+        }
     }
 
     public boolean isInRenderRange(Vector2 position) {

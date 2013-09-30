@@ -16,7 +16,7 @@ public class TileFire extends TileSand {
     float spreadCounter = 0.2f;
     float spreadCounterMax = 0.2f;
     float lifetime = 0;
-    int distance = 3;
+    int spreadDistance = 3;
 
     @Override
     public TextureRegion getImage() {
@@ -32,8 +32,8 @@ public class TileFire extends TileSand {
         lifetime -= delta;
 
         if (spreadCounter <= 0) {
-            int spreadX = position.x + new Random().nextInt(distance * 2) - distance;
-            int spreadY = position.y + new Random().nextInt(distance * 2) - distance;
+            int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
+            int spreadY = position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
             Tile spreadTile = world.getTile(spreadX, spreadY);
             if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
                 spreadCounter = spreadCounterMax;

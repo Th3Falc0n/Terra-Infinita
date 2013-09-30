@@ -1,7 +1,10 @@
 package com.dafttech.terra.game.world.tiles;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.items.Item;
 import com.dafttech.terra.resources.Resources;
@@ -57,5 +60,13 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
     @Override
     public boolean isFlammable() {
         return true;
+    }
+
+    int spreadDistance = 3;
+
+    @Override
+    public void onTick(World world) {
+        int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
+        int spreadY = position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
     }
 }
