@@ -15,7 +15,7 @@ import com.dafttech.terra.game.world.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
-public class Player extends Entity {
+public class Player extends EntityLiving {
     public Player(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.9f, 3.8f));
         Events.EVENTMANAGER.registerEventListener(this);

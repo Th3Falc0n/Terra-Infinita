@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.EntityLiving;
 import com.dafttech.terra.resources.Resources;
 
 public class TileFire extends TileSand {
@@ -59,6 +60,7 @@ public class TileFire extends TileSand {
 
     @Override
     public boolean canCollideWith(Entity entity) {
+        if (entity instanceof EntityLiving) ((EntityLiving) entity).damage(0.01f);
         return false;
     }
 

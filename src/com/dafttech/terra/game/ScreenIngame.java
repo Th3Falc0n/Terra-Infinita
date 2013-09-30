@@ -79,9 +79,14 @@ public class ScreenIngame extends AbstractScreen {
         super.render(delta);
 
         localWorld.update(delta);
+        update(delta);
         localWorld.draw(this, localWorld.localPlayer);
 
         guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
+    }
+
+    public void update(float delta) {
+        hudBottom.healthBar.setValue(localWorld.localPlayer.getHealth() / localWorld.localPlayer.getMaxHealth() * 100);
     }
 }
