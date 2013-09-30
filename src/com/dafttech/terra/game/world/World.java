@@ -174,7 +174,7 @@ public class World implements IDrawable {
         tickProgress += delta;
         if (tickProgress >= tickLength) {
             tickProgress -= tickLength;
-            Events.EVENT_WORLDTICK.callSync(this);
+            Events.EVENT_WORLDTICK.callAsync(this);
         }
     }
 
