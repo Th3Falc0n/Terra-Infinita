@@ -7,6 +7,7 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.items.Item;
+import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
 
 public class TileGrass extends Tile implements ITileInworldEvents, ITileInteraction {
@@ -68,5 +69,11 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
     public void onTick(World world) {
         int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
         int spreadY = position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
+        Tile spreadTile = world.getTile(spreadX, spreadY);
+        if (spreadTile != null && spreadTile instanceof TileDirt && world.getTile(spreadX, spreadY - 1) == null) {
+            if (spreadTile.hasSubtile(SubtileGrass.class)) {
+                world.setTile(spreadX, spreadY - 1, new TileGrass(), true);
+            }
+        }
     }
 }

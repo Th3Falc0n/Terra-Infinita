@@ -69,10 +69,17 @@ public abstract class Tile implements IDrawable {
         }
     }
 
+    public final void tick(World world) {
+        onTick(world);
+        for (int i = 0; i < subtiles.size(); i++) {
+            subtiles.get(i).onTick(world);
+        }
+    }
+
     @Override
     public void update(float delta) {
-        for (Subtile subtile : subtiles) {
-            subtile.update(delta);
+        for (int i = 0; i < subtiles.size(); i++) {
+            subtiles.get(i).update(delta);
         }
         if (breakingProgress > 0) breakingProgress -= delta;
     }
@@ -139,5 +146,11 @@ public abstract class Tile implements IDrawable {
 
     public void onTick(World world) {
 
+    }
+
+    public boolean hasSubtile(Class<? extends Subtile> subtileClass) {
+        for (int i = 0; i < subtiles.size(); i++)
+            if (subtiles.get(i).getClass() == subtileClass) return true;
+        return false;
     }
 }
