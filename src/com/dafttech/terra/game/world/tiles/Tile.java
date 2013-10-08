@@ -72,7 +72,7 @@ public abstract class Tile implements IDrawable {
     public final void tick(World world) {
         onTick(world);
         for (int i = 0; i < subtiles.size(); i++) {
-            subtiles.get(i).onTick(world);
+            subtiles.get(i).tick(world);
         }
     }
 

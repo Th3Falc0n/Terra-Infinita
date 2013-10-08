@@ -48,7 +48,11 @@ public class Subtile implements IDrawable {
         // TODO Auto-generated method stub
 
     }
-    
+
+    public final void tick(World world) {
+        onTick(world);
+    }
+
     public void onTick(World world) {
 
     }
