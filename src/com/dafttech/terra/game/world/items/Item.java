@@ -14,16 +14,15 @@ public abstract class Item implements IDrawableInventory {
     public boolean isLightEmitter() {
         return false;
     }
+    
+    public float getWeight() {
+        return 1;
+    }
 
     public PointLight getEmittedLight() {
         return null;
     }
-
-    public int getMaxStackSize() {
-        return 99;
-    }
-
-
+    
     public void spawnAsEntity(Vector2 position, World world) {
         world.addEntity(new EntityItem(position, world, new Vector2(0.5f, 0.5f), this));
     }
