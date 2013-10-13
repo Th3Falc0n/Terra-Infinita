@@ -16,6 +16,19 @@ public abstract class Inventory {
      * @param amount
      * @return Die Menge die von amount überbleibt
      */
+    public Inventory add(Inventory inventory) {
+        inventory.items = add(inventory.items);
+        return inventory;
+    }
+
+    public List<Item> add(List<Item> items) {
+        List<Item> remainingItems = new ArrayList<Item>();
+        for (Item item : items) {
+            if (!add(item)) remainingItems.add(item);
+        }
+        return remainingItems;
+    }
+
     public boolean add(Item item) {
         if (isSpaceFor(item)) {
             items.add(item);
