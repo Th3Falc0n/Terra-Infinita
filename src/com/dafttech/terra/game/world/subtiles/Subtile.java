@@ -1,29 +1,23 @@
 package com.dafttech.terra.game.world.subtiles;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.engine.IDrawable;
+import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.renderer.SubtileRenderer;
 import com.dafttech.terra.engine.renderer.SubtileRendererMask;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-public class Subtile implements IDrawable {
+public abstract class Subtile extends Item implements IDrawableInWorld {
     Tile tile;
-    TextureRegion image;
 
-    public Subtile(Tile t, TextureRegion textureRegion) {
+    public Subtile(Tile t) {
         tile = t;
-        image = textureRegion;
     }
 
     public SubtileRenderer getRenderer() {
         return SubtileRendererMask.$Instance;
-    }
-
-    public TextureRegion getImage() {
-        return image;
     }
 
     public Tile getTile() {

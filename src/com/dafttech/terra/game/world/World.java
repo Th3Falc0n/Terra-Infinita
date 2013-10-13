@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.engine.IDrawable;
+import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.Events;
@@ -19,7 +19,7 @@ import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-public class World implements IDrawable {
+public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
     public WorldGenerator gen;

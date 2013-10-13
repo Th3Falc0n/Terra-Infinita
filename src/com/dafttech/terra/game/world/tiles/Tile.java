@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.engine.IDrawable;
-import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererBlock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.items.Item;
-import com.dafttech.terra.game.world.entities.items.ItemTile;
+import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
-public abstract class Tile implements IDrawable {
+public abstract class Tile extends Item implements IDrawableInWorld {
     public Vector2i position = null;
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
@@ -27,20 +24,18 @@ public abstract class Tile implements IDrawable {
 
     public boolean receivesSunlight = false;
     public Tile sunlightFilter = null;
+    
+    public void spawnAsEntity() {
+        super.spawnAsEntity(position.toEntityPos().addNew(0.5f, 0.5f), world);
+    };
 
     public World getWorld() {
         return world;
     }
 
-    public Item getItemDropped() {
-        return new ItemTile(this);
-    }
-
     public TileRenderer getRenderer() {
         return TileRendererBlock.$Instance;
     }
-
-    public abstract TextureRegion getImage();
 
     public float getWalkFriction() {
         return 1f;
@@ -76,6 +71,10 @@ public abstract class Tile implements IDrawable {
         }
     }
 
+    public void onTick(World world) {
+
+    }
+
     @Override
     public void update(float delta) {
         for (int i = 0; i < subtiles.size(); i++) {
@@ -89,17 +88,9 @@ public abstract class Tile implements IDrawable {
         return true;
     }
 
-    public boolean isLightEmitter() {
-        return false;
-    }
-
     public Tile setHardness(float hardness) {
         this.hardness = hardness;
         return this;
-    }
-
-    public PointLight getEmittedLight() {
-        return null;
     }
 
     public final void setReceivesSunlight(boolean is) {
@@ -138,14 +129,6 @@ public abstract class Tile implements IDrawable {
         if (breakingProgress > hardness) {
             getWorld().destroyTile(position.x, position.y, causer);
         }
-    }
-
-    public void spawnAsEntity() {
-        world.addEntity(getItemDropped());
-    }
-
-    public void onTick(World world) {
-
     }
 
     public boolean hasSubtile(Class<? extends Subtile> subtileClass) {

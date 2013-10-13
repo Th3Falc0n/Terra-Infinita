@@ -2,12 +2,12 @@ package com.dafttech.terra.game.world.inventories;
 
 import java.util.Hashtable;
 
-import com.dafttech.terra.game.world.entities.items.Item;
+import com.dafttech.terra.game.world.entities.EntityItem;
 
 public abstract class Inventory {
-    Hashtable<Item, Integer> amounts = new Hashtable<Item, Integer>();
+    Hashtable<EntityItem, Integer> amounts = new Hashtable<EntityItem, Integer>();
 
-    public boolean dropIn(Item i, int amount) {
+    public boolean dropIn(EntityItem i, int amount) {
         if (!canStore(i, amount)) return false;
         if (amounts.containsKey(i)) {
             amounts.put(i, amounts.get(i) + amount);
@@ -21,9 +21,9 @@ public abstract class Inventory {
         }
     }
 
-    public abstract boolean canStore(Item i, int amount);
+    public abstract boolean canStore(EntityItem i, int amount);
 
-    public abstract void assignToNewSlot(Item i);
+    public abstract void assignToNewSlot(EntityItem i);
 
-    public abstract void assignToSlot(Item i, int id);
+    public abstract void assignToSlot(EntityItem i, int id);
 }

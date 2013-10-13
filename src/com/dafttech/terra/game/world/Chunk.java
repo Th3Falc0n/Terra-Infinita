@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.dafttech.terra.engine.AbstractScreen;
-import com.dafttech.terra.engine.IDrawable;
+import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.gen.biomes.Biome;
 import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-public class Chunk implements IDrawable {
+public class Chunk implements IDrawableInWorld {
     public World world;
     public Vector2i pos;
     public Tile[][] map;

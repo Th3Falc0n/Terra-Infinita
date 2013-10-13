@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.items.Item;
+import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
 
@@ -47,7 +47,7 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
 
     @Override
     @Deprecated
-    public void onTileUsed(Entity causer, Item item) {
+    public void onTileUsed(Entity causer, EntityItem item) {
         // TODO Auto-generated method stub
 
     }

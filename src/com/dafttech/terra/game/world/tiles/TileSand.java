@@ -3,7 +3,7 @@ package com.dafttech.terra.game.world.tiles;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.items.Item;
+import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.resources.Resources;
 
 public class TileSand extends Tile implements ITileInworldEvents, ITileRenderOffset {
@@ -60,7 +60,7 @@ public class TileSand extends Tile implements ITileInworldEvents, ITileRenderOff
     }
 
     @Override
-    public void onTileUsed(Entity causer, Item item) {
+    public void onTileUsed(Entity causer, EntityItem item) {
         // TODO Auto-generated method stub
 
     }

@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world.tiles;
 
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.items.Item;
+import com.dafttech.terra.game.world.entities.EntityItem;
 
 public interface ITileInworldEvents {
     public void onNeighborChange(Tile changed);
@@ -14,5 +14,5 @@ public interface ITileInworldEvents {
 
     @Deprecated
     // TODO: implement!
-    public void onTileUsed(Entity causer, Item item);
+    public void onTileUsed(Entity causer, EntityItem item);
 }

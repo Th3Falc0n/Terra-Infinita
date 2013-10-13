@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world.subtiles;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
@@ -10,7 +11,12 @@ import com.dafttech.terra.resources.Resources;
 public class SubtileGrass extends Subtile {
 
     public SubtileGrass() {
-        super(null, Resources.TILES.getImage("mask_grass"));
+        super(null);
+    }
+    
+    @Override
+    public TextureRegion getImage() {
+        return Resources.TILES.getImage("mask_grass");
     }
 
     int spreadDistance = 3;
