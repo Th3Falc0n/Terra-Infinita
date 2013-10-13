@@ -17,6 +17,7 @@ public class TileFire extends TileSand {
     float spreadCounterMax = 0.2f;
     float lifetime = 0;
     int spreadDistance = 3;
+    float speedMod = 0.05f;
 
     @Override
     public TextureRegion getImage() {
@@ -24,12 +25,11 @@ public class TileFire extends TileSand {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void onTick(World world) {
         if (lifetime == 0) lifetime = new Random().nextFloat() * 2f + 1;
 
-        spreadCounter -= delta;
-        lifetime -= delta;
+        spreadCounter -= speedMod;
+        lifetime -= speedMod;
 
         if (spreadCounter <= 0) {
             int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;

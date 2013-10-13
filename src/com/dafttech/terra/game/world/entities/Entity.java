@@ -277,4 +277,12 @@ public abstract class Entity implements IDrawable {
     public Vector2 getSize() {
         return size;
     }
+
+    public final void tick(World world) {
+        onTick(world);
+    }
+
+    public void onTick(World world) {
+
+    }
 }
