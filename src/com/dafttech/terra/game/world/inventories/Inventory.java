@@ -1,50 +1,44 @@
 package com.dafttech.terra.game.world.inventories;
 
-import java.util.Collection;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.items.Item;
 
 public abstract class Inventory {
-    Hashtable<Class<? extends Item>, Integer> amounts = new Hashtable<Class<? extends Item>, Integer>();
-    
+    List<Item> items = new ArrayList<Item>();
+
     float capacity = 100;
 
     /**
-     *     
+     * 
      * @param i
      * @param amount
      * @return Die Menge die von amount überbleibt
      */
-    public int dropIn(Item item, int amount) {
-        Class<? extends Item> i = item.getClass();        
-        
-        int rest = amount - canStore(item);
-        if(rest < 0) rest = 0;
-        amount = amount - rest;
-        if(amount == 0) return rest;
-        
-        if(amounts.containsKey(i)) {
-            amounts.put(i, amounts.get(i) + amount);
+    public boolean add(Item item) {
+        if (isSpaceFor(item)) {
+            items.add(item);
+            return true;
         }
-        
-        return rest;
+        return false;
     }
 
-    public int canStore(Item i) {
-        return (int)(i.getWeight() / getRemainingCapacity());
-    }
-    
-    public float getRemainingCapacity() {
-        float used = 0;
-        
-        for (Class<? extends Item> key : amounts.keySet()) {
-            try {
-                used += ((Item)key.newInstance()).getWeight() * amounts.get(key);
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+    public boolean isSpaceFor(Item item) {
+        float weight = 0;
+        for (Item inventoryItem : items) {
+            weight += inventoryItem.getWeight();
+            if (!inventoryItem.canBeStackedWith(item) || !item.canBeStackedWith(inventoryItem)) return false;
         }
+        if (weight + item.getWeight() > capacity) return false;
+        return true;
+    }
+
+    public float getRemainingCapacity() {
+        float weight = 0;
+        for (Item inventoryItem : items) {
+            weight += inventoryItem.getWeight();
+        }
+        return capacity - weight;
     }
 }

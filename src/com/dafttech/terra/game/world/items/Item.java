@@ -14,7 +14,7 @@ public abstract class Item implements IDrawableInventory {
     public boolean isLightEmitter() {
         return false;
     }
-    
+
     public float getWeight() {
         return 1;
     }
@@ -22,14 +22,18 @@ public abstract class Item implements IDrawableInventory {
     public PointLight getEmittedLight() {
         return null;
     }
-    
+
     public void spawnAsEntity(Vector2 position, World world) {
         world.addEntity(new EntityItem(position, world, new Vector2(0.5f, 0.5f), this));
     }
-    
+
     @Override
     public void drawInventory(AbstractScreen screen, Vector2 position) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    public boolean canBeStackedWith(Item item) {
+        return item.getClass() == getClass();
     }
 }
