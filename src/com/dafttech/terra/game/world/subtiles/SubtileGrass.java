@@ -9,7 +9,6 @@ import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.resources.Resources;
 
 public class SubtileGrass extends Subtile {
-
     public SubtileGrass() {
         super(null);
     }

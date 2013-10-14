@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
-public class Particle extends Entity {
+public abstract class Particle extends Entity {
     float lifetimeMax = 25;
     float lifetime = 25;
 

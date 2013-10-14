@@ -14,9 +14,10 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-public abstract class Entity implements IDrawableInWorld {
+public abstract class Entity extends GameObject implements IDrawableInWorld {
     protected Vector2 position = new Vector2(0, 0);
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
@@ -36,7 +37,7 @@ public abstract class Entity implements IDrawableInWorld {
         size = s;
         world.localEntities.add(this);
     }
-
+    
     public void setMidPos(Vector2 pos) {
         position = pos.addNew(-size.x * BLOCK_SIZE / 2f, -size.y * BLOCK_SIZE / 2f);
     }

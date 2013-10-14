@@ -9,7 +9,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
 public class EntityArrow extends Entity {
-
     public EntityArrow(Vector2 pos, World world) {
         super(pos, world, new Vector2(2, 0.6f));
 

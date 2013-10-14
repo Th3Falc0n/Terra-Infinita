@@ -7,10 +7,12 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
+import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
 
 public class TileGrass extends Tile implements ITileInworldEvents, ITileInteraction {
+    @Persistent
     int grassIndex;
 
     public TileGrass() {

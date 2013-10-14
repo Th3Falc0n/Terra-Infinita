@@ -11,7 +11,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
 public class ParticleSpark extends Particle {
-
     PointLight light;
 
     float size;

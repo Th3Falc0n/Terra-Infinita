@@ -11,7 +11,7 @@ import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.inventories.Inventory;
+import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 

@@ -8,7 +8,6 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.resources.Resources;
 
 public class TileTorch extends Tile {
-
     PointLight light;
 
     public TileTorch() {

@@ -16,7 +16,6 @@ import com.dafttech.terra.game.world.tiles.TileFire;
 import com.dafttech.terra.resources.Resources;
 
 public class EntityFlamingArrow extends EntityArrow {
-
     PointLight light;
 
     public EntityFlamingArrow(Vector2 pos, World world) {

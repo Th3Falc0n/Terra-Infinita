@@ -7,7 +7,6 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.resources.Resources;
 
 public class TileWeed extends Tile {
-
     public TileWeed() {
         super();
     }

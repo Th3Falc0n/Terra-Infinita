@@ -1,4 +1,4 @@
-package com.dafttech.terra.game.world.inventories;
+package com.dafttech.terra.game.world.items.inventories;
 
 import java.util.ArrayList;
 import java.util.List;

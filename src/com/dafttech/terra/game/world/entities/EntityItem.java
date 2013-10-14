@@ -28,6 +28,8 @@ public class EntityItem extends Entity {
         vp.sub(position);
 
         if (vp.len() < 20) {
+            System.out.println(wrapped.hashCode());
+            System.out.println(wrapped.toPrototype().hashCode());
             getWorld().removeEntity(this);
         }
 

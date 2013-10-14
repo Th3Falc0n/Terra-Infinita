@@ -13,7 +13,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
 public class EntityGlowstick extends Entity {
-
     PointLight light;
 
     public EntityGlowstick(Vector2 pos, World world) {
