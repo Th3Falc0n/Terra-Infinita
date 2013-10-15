@@ -15,6 +15,7 @@ import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.tiles.TileDirt;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
@@ -51,6 +52,10 @@ public class ScreenIngame extends AbstractScreen {
 
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
+        
+        
+        hudBottom.slots[0].assignedItem = new TileDirt();
+        hudBottom.slots[0].assignedInventory = localWorld.localPlayer.inventory;
 
         guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(hudBottom.getContainer());

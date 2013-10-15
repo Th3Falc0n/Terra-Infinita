@@ -1,57 +1,43 @@
 package com.dafttech.terra.game.world.items.inventories;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Set;
+import com.dafttech.terra.game.world.items.persistence.GameObject;
+import com.dafttech.terra.game.world.items.persistence.Prototype;
 
-import com.dafttech.terra.game.world.items.Item;
-
-public abstract class Inventory {
-    List<Item> items = new ArrayList<Item>();
-
-    float capacity = 100;
-
-    /**
-     * 
-     * @param i
-     * @param amount
-     * @return Die Menge die von amount überbleibt
-     */
-    public Inventory add(Inventory inventory) {
-        inventory.items = add(inventory.items);
-        return inventory;
-    }
-
-    public List<Item> add(List<Item> items) {
-        List<Item> remainingItems = new ArrayList<Item>();
-        for (Item item : items) {
-            if (!add(item)) remainingItems.add(item);
+public class Inventory {
+    HashMap<Prototype, Integer> amounts = new HashMap<Prototype, Integer>();
+    
+    public void add(GameObject obj, int amount) {
+        if(amounts.containsKey(obj.toPrototype())) {
+            amounts.put(obj.toPrototype(), amounts.get(obj) + amount);
         }
-        return remainingItems;
-    }
-
-    public boolean add(Item item) {
-        if (isSpaceFor(item)) {
-            items.add(item);
-            return true;
+        else
+        {
+            amounts.put(obj.toPrototype(), amount);
         }
-        return false;
     }
-
-    public boolean isSpaceFor(Item item) {
-        float weight = 0;
-        for (Item inventoryItem : items) {
-            weight += inventoryItem.getWeight();
-            if (!inventoryItem.canBeStackedWith(item) || !item.canBeStackedWith(inventoryItem)) return false;
-        }
-        if (weight + item.getWeight() > capacity) return false;
-        return true;
+    
+    public Set<Prototype> getPrototypeSet() {
+        return amounts.keySet();
     }
-
-    public float getRemainingCapacity() {
-        float weight = 0;
-        for (Item inventoryItem : items) {
-            weight += inventoryItem.getWeight();
+    
+    public boolean contains(GameObject obj) {
+        return contains(obj.toPrototype());
+    }
+    
+    public boolean contains(Prototype type) {
+        return getAmount(type) > 0;
+    }
+    
+    public int getAmount(GameObject obj) {
+        return getAmount(obj.toPrototype());
+    }
+    
+    public int getAmount(Prototype type) {
+        if(amounts.containsKey(type)) {
+            return amounts.get(type);
         }
-        return capacity - weight;
+        return 0;
     }
 }

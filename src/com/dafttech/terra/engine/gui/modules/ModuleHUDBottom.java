@@ -12,6 +12,7 @@ import com.dafttech.terra.engine.gui.elements.ElementBar;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.gui.elements.ElementQuickslot;
 import com.dafttech.terra.game.Events;
+import com.dafttech.terra.game.world.items.inventories.Inventory;
 
 public class ModuleHUDBottom extends GUIModule {
     public ElementQuickslot[] slots = new ElementQuickslot[8];

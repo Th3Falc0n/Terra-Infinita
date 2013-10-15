@@ -1,9 +1,11 @@
 package com.dafttech.terra.game.world.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.persistence.Prototype;
 import com.dafttech.terra.resources.Options;
 
 public class EntityItem extends Entity {
@@ -20,6 +22,16 @@ public class EntityItem extends Entity {
     }
     
     @Override
+    public int hashCode() {
+        return wrapped.hashCode();
+    }
+    
+    @Override
+    public Prototype toPrototype() {
+        return wrapped.toPrototype();
+    }
+    
+    @Override
     public void update(float delta) {
         Vector2 p = getWorld().localPlayer.getPosition();
         Vector2 s = getWorld().localPlayer.getSize();
@@ -28,8 +40,8 @@ public class EntityItem extends Entity {
         vp.sub(position);
 
         if (vp.len() < 20) {
-            System.out.println(wrapped.hashCode());
-            System.out.println(wrapped.toPrototype().hashCode());
+            getWorld().localPlayer.inventory.add(this, 1);
+            
             getWorld().removeEntity(this);
         }
 

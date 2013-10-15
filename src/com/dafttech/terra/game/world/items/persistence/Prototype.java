@@ -17,7 +17,6 @@ public class Prototype {
         
         hashBuilder.append(className);
         
-        
         for(Object f : values.values()) {
             hashBuilder.append(f.toString());
         }
