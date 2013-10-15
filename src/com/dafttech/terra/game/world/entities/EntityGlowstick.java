@@ -14,6 +14,8 @@ import com.dafttech.terra.resources.Resources;
 
 public class EntityGlowstick extends Entity {
     PointLight light;
+    
+    float rotation = 0;
 
     public EntityGlowstick(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.5f, 1.5f));
@@ -33,12 +35,14 @@ public class EntityGlowstick extends Entity {
         Vector2 v = new Vector2(velocity);
 
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x,
-                BLOCK_SIZE * size.y, 1, 1, v.angle());
+                BLOCK_SIZE * size.y, 1, 1, (float)(v.angle() + Math.PI/2 + rotation));
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
+        
+        rotation += velocity.x * delta * 50;
 
         if (light == null) {
             light = new PointLight(position, 95);
