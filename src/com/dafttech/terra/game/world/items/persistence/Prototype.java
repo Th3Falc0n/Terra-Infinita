@@ -11,6 +11,14 @@ public class Prototype {
     public int hashCode() {
         return getHashBase().hashCode();
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Prototype) return hashCode() == ((Prototype)obj).hashCode();
+        if(obj instanceof GameObject) return hashCode() == ((GameObject)obj).hashCode();
+        
+        return true;
+    };
         
     public String getHashBase() {
         StringBuilder hashBuilder = new StringBuilder();

@@ -17,7 +17,6 @@ public class ElementSlot extends GUIElement {
         image = Resources.GUI.getImage("slot");
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void draw(AbstractScreen screen) {
         super.draw(screen);

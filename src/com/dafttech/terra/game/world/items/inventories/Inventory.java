@@ -9,12 +9,14 @@ public class Inventory {
     HashMap<Prototype, Integer> amounts = new HashMap<Prototype, Integer>();
     
     public void add(GameObject obj, int amount) {
-        if(amounts.containsKey(obj.toPrototype())) {
-            amounts.put(obj.toPrototype(), amounts.get(obj) + amount);
+        Prototype proto = obj.toPrototype();
+        
+        if(amounts.containsKey(proto)) {
+            amounts.put(proto, amounts.get(proto) + amount);
         }
         else
         {
-            amounts.put(obj.toPrototype(), amount);
+            amounts.put(proto, amount);
         }
     }
     
@@ -36,6 +38,7 @@ public class Inventory {
     
     public int getAmount(Prototype type) {
         if(amounts.containsKey(type)) {
+            System.out.println(type.getHashBase() + type.hashCode() + " = " + amounts.get(type));
             return amounts.get(type);
         }
         return 0;

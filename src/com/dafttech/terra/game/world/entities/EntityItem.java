@@ -40,7 +40,7 @@ public class EntityItem extends Entity {
         vp.sub(position);
 
         if (vp.len() < 20) {
-            getWorld().localPlayer.inventory.add(this, 1);
+            getWorld().localPlayer.inventory.add(wrapped, 1);
             
             getWorld().removeEntity(this);
         }

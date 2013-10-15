@@ -8,8 +8,6 @@ import com.dafttech.terra.game.world.items.inventories.Inventory;
 public abstract class EntityLiving extends Entity {
     private float maxHealth = 10;
     private float health = maxHealth;
-    
-    public Inventory inventory = new Inventory();
 
     public EntityLiving(Vector2 pos, World world, Vector2 s) {
         super(pos, world, s);
