@@ -40,6 +40,7 @@ public class Events {
     public static final EventType EVENT_MOUSEDOWN = new EventType(EVENTMANAGER, "MOUSEDOWN");
     public static final EventType EVENT_MOUSEUP = new EventType(EVENTMANAGER, "MOUSEUP");
     public static final EventType EVENT_MOUSEMOVE = new EventType(EVENTMANAGER, "MOUSEMOVE");
+    public static final EventType EVENT_SCROLL = new EventType(EVENTMANAGER, "SCROLL");
 
     public static final EventType EVENT_BLOCKUPDATE = new EventType(EVENTMANAGER, "BLOCKUPDATE") {
         @Override

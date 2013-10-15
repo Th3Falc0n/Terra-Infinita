@@ -1,6 +1,8 @@
 package com.dafttech.terra.engine.gui.modules;
 
 import com.badlogic.gdx.graphics.Color;
+import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
@@ -10,13 +12,26 @@ import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.elements.ElementBar;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
-import com.dafttech.terra.engine.gui.elements.ElementQuickslot;
+import com.dafttech.terra.engine.gui.elements.ElementSlot;
 import com.dafttech.terra.game.Events;
-import com.dafttech.terra.game.world.items.inventories.Inventory;
 
 public class ModuleHUDBottom extends GUIModule {
-    public ElementQuickslot[] slots = new ElementQuickslot[8];
+    public ElementSlot[] slots = new ElementSlot[8];
+    private int activeSlot = 0;
     public ElementBar healthBar, apBar;
+    
+    @EventListener(value = "SCROLL")
+    public void onScroll(Event event) {
+        int prev = activeSlot;
+        int dir = event.getInput(0, Integer.class);
+        
+        activeSlot += dir;
+        if(activeSlot < 0) activeSlot = 7;
+        if(activeSlot > 7) activeSlot = 0;
+        
+        slots[prev].active = false;
+        slots[activeSlot].active = true;
+    }
 
     @Override
     public void create() {
@@ -32,11 +47,13 @@ public class ModuleHUDBottom extends GUIModule {
         container.assignAnchorSet(set);
 
         for (int i = 0; i < 8; i++) {
-            slots[i] = new ElementQuickslot(new Vector2(i * 40, 0));
+            slots[i] = new ElementSlot(new Vector2(i * 40, 0));
             slots[i].assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorBottom(0.01f)));
 
             container.addObject(slots[i]);
         }
+        
+        slots[0].active = true;
 
         healthBar = new ElementBar(new Vector2(0, 16), Color.RED, 100);
         apBar = new ElementBar(new Vector2(0, 16), Color.BLUE, 100);

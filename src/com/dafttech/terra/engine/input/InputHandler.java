@@ -102,7 +102,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean scrolled(int arg0) {
-        // TODO Auto-generated method stub
+        Events.EVENT_SCROLL.callSync(arg0);
         return false;
     }
 

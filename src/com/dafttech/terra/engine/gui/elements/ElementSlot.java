@@ -10,6 +10,8 @@ import com.dafttech.terra.resources.Resources;
 public class ElementSlot extends GUIElement {
     public Item assignedItem = null;
     public Inventory assignedInventory = null;
+    
+    public boolean active = false;
 
     public ElementSlot(Vector2 p) {
         super(p, new Vector2(32, 32));
@@ -19,16 +21,17 @@ public class ElementSlot extends GUIElement {
 
     @Override
     public void draw(AbstractScreen screen) {
+        screen.batch.setColor(active ? Color.YELLOW : Color.WHITE);
         super.draw(screen);
         Vector2 p = getScreenPosition();
         
         screen.batch.begin();
 
         if(assignedItem != null) {
-            Resources.GUI_FONT.setColor(Color.WHITE);
-            Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedItem), p.x, 6 + p.y);
-            
             assignedItem.drawInventory(screen, p);
+            
+            Resources.GUI_FONT.setColor(active ? Color.YELLOW : Color.WHITE);
+            Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedItem), p.x, 6 + p.y);
         }
         
         screen.batch.end();

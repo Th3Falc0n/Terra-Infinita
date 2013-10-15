@@ -38,7 +38,6 @@ public class Inventory {
     
     public int getAmount(Prototype type) {
         if(amounts.containsKey(type)) {
-            System.out.println(type.getHashBase() + type.hashCode() + " = " + amounts.get(type));
             return amounts.get(type);
         }
         return 0;
