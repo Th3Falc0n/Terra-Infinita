@@ -42,7 +42,7 @@ public class EntityGlowstick extends Entity {
 
         if (light == null) {
             light = new PointLight(position, 95);
-            light.setColor(new Color(0, 255, 0, 255));
+            light.setColor(new Color(0.4f, 1, 0.4f, 1));
         }
 
         light.setSize(90 + new Random().nextInt(10));
