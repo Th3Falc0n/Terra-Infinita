@@ -27,11 +27,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     @Persistent
     Vector2 velocity = new Vector2();
 
-    @Persistent
     Vector2 accelleration = new Vector2();
 
     @Persistent
     Vector2 size = new Vector2();
+    
     public World worldObj;
 
     Color color = Color.WHITE;
