@@ -22,7 +22,7 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     Chunk chunk = null;
     @Persistent
-    Vector2 position = new Vector2();
+    public Vector2 position = new Vector2();
 
     @Persistent
     Vector2 velocity = new Vector2();
