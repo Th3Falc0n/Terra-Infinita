@@ -2,8 +2,6 @@ package com.dafttech.terra.game.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,7 +14,6 @@ import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.TimeKeeping;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
-import com.dafttech.terra.game.world.entities.particles.Particle;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
@@ -182,7 +179,7 @@ public class World implements IDrawableInWorld {
                 if (tile != null) tile.update(delta);
             }
         }
-        
+
         TimeKeeping.timeKeeping("Tile update");
 
         for (Chunk chunk : localChunks.values()) {
@@ -190,15 +187,15 @@ public class World implements IDrawableInWorld {
                 entity.update(delta);
             }
         }
-        
+
         TimeKeeping.timeKeeping("Entity update");
-        
+
         tickProgress += delta;
         if (tickProgress >= tickLength) {
             tickProgress -= tickLength;
             Events.EVENT_WORLDTICK.callAsync(this);
         }
-        
+
         TimeKeeping.timeKeeping("Tick update");
     }
 

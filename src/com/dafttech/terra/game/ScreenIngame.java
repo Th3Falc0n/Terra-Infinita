@@ -84,16 +84,16 @@ public class ScreenIngame extends AbstractScreen {
 
         localWorld.update(delta);
         TimeKeeping.timeKeeping("screen after update");
-        
+
         update(delta);
         TimeKeeping.timeKeeping("Screen update");
-        
+
         localWorld.draw(this, localWorld.localPlayer);
         TimeKeeping.timeKeeping("screen after draw");
 
         guiContainerScreen.update(delta);
         TimeKeeping.timeKeeping("GUI update");
-        
+
         RenderingPass.rpGUIContainer.applyPass(this, null, localWorld, guiContainerScreen);
         TimeKeeping.timeKeeping("GUI draw");
     }
