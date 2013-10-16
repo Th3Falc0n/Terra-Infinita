@@ -35,11 +35,9 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     boolean inAir = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
-        position = pos.clone();
         worldObj = world;
         setPosition(pos);
         size = s;
-        // world.localEntities.add(this);
     }
 
     public void setMidPos(Vector2 pos) {
@@ -64,12 +62,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public Entity setPosition(Vector2 pos) {
         Chunk oldChunk = worldObj.getOrCreateChunk(position);
-        position.set(pos);
-        Chunk newChunk = worldObj.getOrCreateChunk(position);
+        Chunk newChunk = worldObj.getOrCreateChunk(pos);
         if (newChunk != oldChunk) {
-            oldChunk.remove(this);
-            newChunk.add(this);
+            //if (oldChunk != null) oldChunk.remove(this);
+            if (newChunk != null) newChunk.add(this);
         }
+        if (position == null) position = new Vector2();
+        if (pos != null) position.set(pos);
         return this;
     }
 
