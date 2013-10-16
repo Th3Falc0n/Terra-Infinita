@@ -44,7 +44,7 @@ public class Player extends EntityLiving {
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
             right = true;
-            EntityFlamingArrow a = new EntityFlamingArrow(position.clone(), worldObj);
+            EntityFlamingArrow a = new EntityFlamingArrow(getPosition(), worldObj);
             a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
             worldObj.addEntity(a);
         }
@@ -56,7 +56,7 @@ public class Player extends EntityLiving {
 
     @EventListener(value = "KEYDOWN", filter = "filterOnBombKeyPressed")
     public void onBombKeyPressed(Event event) {
-        EntityDynamite dynamite = new EntityDynamite(position.clone(), worldObj, 3, 4);
+        EntityDynamite dynamite = new EntityDynamite(getPosition(), worldObj, 3, 4);
         worldObj.addEntity(dynamite);
     }
 
@@ -67,7 +67,7 @@ public class Player extends EntityLiving {
 
     @EventListener(value = "KEYDOWN", filter = "filterOnGlowstickKeyPressed")
     public void onGlowstickKeyPressed(Event event) {
-        EntityGlowstick a = new EntityGlowstick(position.clone(), worldObj);
+        EntityGlowstick a = new EntityGlowstick(getPosition(), worldObj);
         a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.08f));
         worldObj.addEntity(a);
     }

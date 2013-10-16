@@ -42,22 +42,22 @@ public class EntityFlamingArrow extends EntityArrow {
         super.update(delta);
 
         if (light == null) {
-            light = new PointLight(position, 95);
+            light = new PointLight(getPosition(), 95);
             light.setColor(new Color(255, 200, 40, 255));
         }
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(new Vector2(position).add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {
             if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
-                worldObj.addEntity(new ParticleSpark(new Vector2(position), worldObj));
+                worldObj.addEntity(new ParticleSpark(getPosition(), worldObj));
             }
         }
 
         if (velocity.x == 0 && velocity.y == 0) {
-            TileFire.createFire(worldObj, (int) position.x / BLOCK_SIZE, (int) position.y / BLOCK_SIZE);
+            TileFire.createFire(worldObj, (int) getPosition().x / BLOCK_SIZE, (int) getPosition().y / BLOCK_SIZE);
             worldObj.removeEntity(this);
         }
     }

@@ -18,7 +18,7 @@ import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
-    protected Vector2 position = new Vector2(0, 0);
+    private Vector2 position = new Vector2(0, 0);
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
     Vector2 size;
@@ -55,7 +55,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Vector2 getPosition() {
-        return position;
+        return position.clone();
     }
 
     public World getWorld() {
@@ -183,7 +183,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public abstract TextureRegion getImage();
 
     public Entity setPosition(Vector2 position) {
-        this.position = position;
+        this.position = position.clone();
+        
         return this;
     }
 

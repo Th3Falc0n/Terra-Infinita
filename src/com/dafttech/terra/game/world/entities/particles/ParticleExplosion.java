@@ -48,7 +48,7 @@ public class ParticleExplosion extends Particle {
     @Override
     public PointLight getEmittedLight() {
         if (light == null) {
-            light = new PointLight(position, 60);
+            light = new PointLight(getPosition(), 60);
             light.setColor(new Color(1, 0.9f, 0.9f, 0.4f));
         }
         light.setSize((getSize().x + getSize().y) * 6 + BLOCK_SIZE);

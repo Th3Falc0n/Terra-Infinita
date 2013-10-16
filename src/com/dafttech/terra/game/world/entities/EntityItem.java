@@ -37,7 +37,7 @@ public class EntityItem extends Entity {
         Vector2 s = getWorld().localPlayer.getSize();
 
         Vector2 vp = new Vector2(p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
-        vp.sub(position);
+        vp.sub(getPosition());
 
         if (vp.len() < 20) {
             getWorld().localPlayer.inventory.add(wrapped, 1);

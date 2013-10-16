@@ -42,7 +42,7 @@ public class ParticleSpark extends Particle {
 
         if (light != null) {
             light.setSize(55 * 2 * (lifetime / lifetimeMax));
-            light.setPosition(new Vector2(position).add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
+            light.setPosition(getPosition().add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
         }
     }
 
@@ -59,7 +59,7 @@ public class ParticleSpark extends Particle {
     @Override
     public PointLight getEmittedLight() {
         if (light == null) {
-            light = new PointLight(position, 55);
+            light = new PointLight(getPosition(), 55);
             light.setColor(new Color(1, 0.9f, 0.9f, 0.4f));
         }
 
