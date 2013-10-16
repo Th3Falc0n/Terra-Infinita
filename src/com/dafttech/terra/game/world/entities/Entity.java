@@ -69,24 +69,27 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity setPosition(Vector2 pos) {
-        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) //addToWorld(pos);
-        position.set(pos);
+        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) // addToWorld(pos);
+            position.set(pos);
         return this;
     }
 
     public Entity remove() {
-        if (chunk != null) chunk.remove(this);
+        remove(chunk);
         return this;
     }
 
-    public Entity addToWorld(Vector2 pos) {
+    private void remove(Chunk chunk) {
+        if (chunk != null) chunk.remove(this);
+    }
+
+    private void addToWorld(Vector2 pos) {
         Chunk chunk = worldObj.getOrCreateChunk(pos);
         if (chunk != null) {
-            remove();
+            remove(chunk);
             chunk.add(this);
             this.chunk = chunk;
         }
-        return this;
     }
 
     public World getWorld() {
