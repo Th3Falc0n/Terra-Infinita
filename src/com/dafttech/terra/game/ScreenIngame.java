@@ -32,7 +32,7 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen = new ContainerOnscreen();
 
-        exitButton = new ElementButton(new Vector2(0, 0), "Exit") {
+        exitButton = new ElementButton(new Vector2(), "Exit") {
             @Override
             public void onClick(int button) {
                 Gdx.app.exit();

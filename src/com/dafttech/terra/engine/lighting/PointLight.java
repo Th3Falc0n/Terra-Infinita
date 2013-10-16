@@ -7,7 +7,7 @@ import com.dafttech.terra.resources.Resources;
 
 public class PointLight extends Light {
 
-    Vector2 position = new Vector2(0, 0);
+    Vector2 position = new Vector2();
     float size;
 
     public PointLight(Vector2 p, float s) {

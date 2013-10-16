@@ -26,7 +26,7 @@ public class World implements IDrawableInWorld {
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
-    public Player localPlayer = new Player(new Vector2(0, 0), this);
+    public Player localPlayer = new Player(new Vector2(), this);
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);

@@ -22,7 +22,7 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
     public void create() {
         Events.EVENTMANAGER.registerEventListener(this);
 
-        container = new ContainerBlock(new Vector2(0, 0), new Vector2(400, 280));
+        container = new ContainerBlock(new Vector2(), new Vector2(400, 280));
 
         GUIAnchorSet set = new GUIAnchorSet();
 
@@ -39,7 +39,7 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
     }
 
     public void addMessage(String msg) {
-        messageList.addObject(new ElementLabel(new Vector2(0, 0), msg));
+        messageList.addObject(new ElementLabel(new Vector2(), msg));
     }
 
     @EventListener(value = "KEYDOWN", filter = "filterOnChatKeyUsed")

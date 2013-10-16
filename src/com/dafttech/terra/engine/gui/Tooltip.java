@@ -10,7 +10,7 @@ public class Tooltip {
     public static ElementLabel label;
 
     public static void init() {
-        label = new ElementLabel(new Vector2(0, 0), "");
+        label = new ElementLabel(new Vector2(), "");
 
         GUIAnchorSet labelSet = new GUIAnchorSet();
         labelSet.addAnchor(new AnchorMouse());

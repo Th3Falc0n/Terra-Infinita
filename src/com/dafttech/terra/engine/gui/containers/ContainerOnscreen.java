@@ -5,6 +5,6 @@ import com.dafttech.terra.engine.Vector2;
 
 public class ContainerOnscreen extends GUIContainer {
     public ContainerOnscreen() {
-        super(new Vector2(0, 0), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        super(new Vector2(), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
     }
 }

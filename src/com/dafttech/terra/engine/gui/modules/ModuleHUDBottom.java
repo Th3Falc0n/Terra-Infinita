@@ -37,7 +37,7 @@ public class ModuleHUDBottom extends GUIModule {
     public void create() {
         Events.EVENTMANAGER.registerEventListener(this);
 
-        container = new ContainerBlock(new Vector2(0, 0), new Vector2(312, 80));
+        container = new ContainerBlock(new Vector2(), new Vector2(312, 80));
 
         GUIAnchorSet set = new GUIAnchorSet();
 
@@ -63,8 +63,8 @@ public class ModuleHUDBottom extends GUIModule {
 
         ElementLabel healthLabel, apLabel;
 
-        healthLabel = new ElementLabel(new Vector2(0, 0), "HP");
-        apLabel = new ElementLabel(new Vector2(0, 0), "AP");
+        healthLabel = new ElementLabel(new Vector2(), "HP");
+        apLabel = new ElementLabel(new Vector2(), "AP");
 
         healthLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)));
         apLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorRight(0)));
