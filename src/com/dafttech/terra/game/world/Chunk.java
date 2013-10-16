@@ -2,8 +2,8 @@ package com.dafttech.terra.game.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
@@ -18,7 +18,7 @@ public class Chunk implements IDrawableInWorld {
     public World world;
     public Vector2i pos;
     public Tile[][] map;
-    private List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+    private List<Entity> localEntities = new ArrayList<Entity>();
     public boolean stayLoaded = false;
     private boolean regenerate = false;
 
@@ -106,7 +106,7 @@ public class Chunk implements IDrawableInWorld {
         return this;
     }
 
-    public List<Entity> getLocalEntities() {
-        return localEntities;
+    public Entity[] getLocalEntities() {
+        return localEntities.toArray(new Entity[localEntities.size()]);
     }
 }

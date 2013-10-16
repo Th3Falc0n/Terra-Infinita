@@ -15,6 +15,7 @@ import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.particles.Particle;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
@@ -167,12 +168,23 @@ public class World implements IDrawableInWorld {
     public void removeEntity(Entity entity) {
         entity.remove();
     }
+    
+    long lastTime, currentTime;
+    
+    public void timeKeeping(String msg) {
+        long temp = currentTime;
+        currentTime = System.currentTimeMillis();
+        System.out.println("Time to " + msg + ": " + (currentTime - lastTime));
+        lastTime = temp;
+    }
 
     @Override
     public void update(float delta) {
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
+        timeKeeping("Frame change");
+        
         Tile tile;
         for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
@@ -180,15 +192,24 @@ public class World implements IDrawableInWorld {
                 if (tile != null) tile.update(delta);
             }
         }
+        
+        timeKeeping("Tile update");
 
-        for (Entity entity : getLocalEntities()) {
-            entity.update(delta);
+        for (Chunk chunk : localChunks.values()) {
+            for (Entity entity : chunk.getLocalEntities()) {
+                entity.update(delta);
+            }
         }
+        
+        timeKeeping("Entity update");
+        
         tickProgress += delta;
         if (tickProgress >= tickLength) {
             tickProgress -= tickLength;
             Events.EVENT_WORLDTICK.callAsync(this);
         }
+        
+        timeKeeping("Tick update");
     }
 
     public boolean isInRenderRange(Vector2 position) {
@@ -199,13 +220,5 @@ public class World implements IDrawableInWorld {
     public void draw(AbstractScreen screen, Entity pointOfView) {
         RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
         RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
-    }
-
-    public List<Entity> getLocalEntities() {
-        List<Entity> localEntities = new ArrayList<Entity>();
-        for (Chunk chunk : localChunks.values()) {
-            localEntities.addAll(chunk.getLocalEntities());
-        }
-        return localEntities;
     }
 }

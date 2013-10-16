@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
@@ -65,9 +66,11 @@ public class PassLighting extends RenderingPass {
             }
         }
 
-        for (Entity entity : world.getLocalEntities()) {
-            if (entity.isLightEmitter() && entity.getEmittedLight() != null && world.isInRenderRange(entity.getPosition())) {
-                entity.getEmittedLight().drawToLightmap(screen, pointOfView);
+        for (Chunk chunk : world.localChunks.values()) {
+            for (Entity entity : chunk.getLocalEntities()) {
+                if (entity.isLightEmitter() && entity.getEmittedLight() != null && world.isInRenderRange(entity.getPosition())) {
+                    entity.getEmittedLight().drawToLightmap(screen, pointOfView);
+                }
             }
         }
 
