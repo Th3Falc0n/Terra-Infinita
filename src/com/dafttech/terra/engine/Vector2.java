@@ -265,6 +265,16 @@ public class Vector2 {
         return new Vector2(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Vector2i && ((Vector2i) obj).x == x && ((Vector2i) obj).y == y);
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Float) x).hashCode() + ((Float) y).hashCode();
+    }
+
     private static int getChunkPos(float blockInWorldPos, int chunkSize) {
         return (int) blockInWorldPos >= 0 ? (int) blockInWorldPos / chunkSize : ((int) blockInWorldPos + 1) / chunkSize - 1;
     }
