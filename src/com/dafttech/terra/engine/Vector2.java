@@ -8,14 +8,14 @@ import com.dafttech.terra.game.world.Vector2i;
 public class Vector2 {
     public float x, y;
 
-    public Vector2(float nx, float ny) {
-        x = nx;
-        y = ny;
+    public Vector2(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public Vector2(Vector2 v) {
-        x = v.x;
-        y = v.y;
+    public Vector2(Vector2 vec) {
+        x = vec.x;
+        y = vec.y;
     }
 
     public Vector2 setNull() {
@@ -36,31 +36,6 @@ public class Vector2 {
 
     public static Vector2 getMouse() {
         return new Vector2(Gdx.input.getX(), Gdx.input.getY());
-    }
-
-    public Vector2 addNew(Vector2 v) {
-        return addNew(v.x, v.y);
-    }
-
-    public Vector2 addNew(float x, float y) {
-        return new Vector2(this.x + x, this.y + y);
-    }
-
-    public Vector2 set(Vector2 p) {
-        x = p.x;
-        y = p.y;
-
-        return this;
-    }
-
-    public Vector2 add(Vector2 v) {
-        return add(v.x, v.y);
-    }
-
-    public Vector2 add(float x2, float y2) {
-        x += x2;
-        y += y2;
-        return this;
     }
 
     public Vector2 sub(Vector2 v) {
@@ -85,16 +60,192 @@ public class Vector2 {
         return mul(1f / len());
     }
 
-    public Vector2 mul(float f) {
-        x *= f;
-        y *= f;
-        return this;
-    }
-
     public float angle() {
         float angle = (float) Math.atan2(this.y, this.x) * 57.295776F;
         if (angle < 0.0F) angle += 360.0F;
         return angle;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public Vector2 setX(float x) {
+        this.x = x;
+        return this;
+    }
+
+    public Vector2 setY(float y) {
+        this.y = y;
+        return this;
+    }
+
+    public Vector2 set() {
+        this.x = 0;
+        this.y = 0;
+        return this;
+    }
+
+    public Vector2 set(float val) {
+        this.x = val;
+        this.y = val;
+        return this;
+    }
+
+    public Vector2 set(float x, float y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    public Vector2 set(Vector2 pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+        return this;
+    }
+
+    public Vector2 addX(float x) {
+        this.x += x;
+        return this;
+    }
+
+    public Vector2 addY(float y) {
+        this.y += y;
+        return this;
+    }
+
+    public Vector2 add() {
+        this.x += 0;
+        this.y += 0;
+        return this;
+    }
+
+    public Vector2 add(float val) {
+        this.x += val;
+        this.y += val;
+        return this;
+    }
+
+    public Vector2 add(float x, float y) {
+        this.x += x;
+        this.y += y;
+        return this;
+    }
+
+    public Vector2 add(Vector2 pos) {
+        this.x += pos.x;
+        this.y += pos.y;
+        return this;
+    }
+
+    public Vector2 mulX(float x) {
+        this.x *= x;
+        return this;
+    }
+
+    public Vector2 mulY(float y) {
+        this.y *= y;
+        return this;
+    }
+
+    public Vector2 mul() {
+        this.x *= 1;
+        this.y *= 1;
+        return this;
+    }
+
+    public Vector2 mul(float val) {
+        this.x *= val;
+        this.y *= val;
+        return this;
+    }
+
+    public Vector2 mul(float x, float y) {
+        this.x *= x;
+        this.y *= y;
+        return this;
+    }
+
+    public Vector2 mul(Vector2 pos) {
+        this.x *= pos.x;
+        this.y *= pos.y;
+        return this;
+    }
+
+    public Vector2 setXNew(float x) {
+        return clone().setX(x);
+    }
+
+    public Vector2 setYNew(float y) {
+        return clone().setY(y);
+    }
+
+    public Vector2 setNew() {
+        return clone().set();
+    }
+
+    public Vector2 setNew(float val) {
+        return clone().setNew(val);
+    }
+
+    public Vector2 setNew(float x, float y) {
+        return clone().set(x, y);
+    }
+
+    public Vector2 setNew(Vector2 pos) {
+        return clone().set(pos);
+    }
+
+    public Vector2 addXNew(float x) {
+        return clone().addX(x);
+    }
+
+    public Vector2 addYNew(float y) {
+        return clone().addY(y);
+    }
+
+    public Vector2 addNew() {
+        return clone().add();
+    }
+
+    public Vector2 addNew(float val) {
+        return clone().add(val);
+    }
+
+    public Vector2 addNew(float x, float y) {
+        return clone().add(x, y);
+    }
+
+    public Vector2 addNew(Vector2 pos) {
+        return clone().add(pos);
+    }
+
+    public Vector2 mulXNew(float x) {
+        return clone().mulX(x);
+    }
+
+    public Vector2 mulYNew(float y) {
+        return clone().mulY(y);
+    }
+
+    public Vector2 mulNew() {
+        return clone().mul();
+    }
+
+    public Vector2 mulNew(float val) {
+        return clone().mul(val);
+    }
+
+    public Vector2 mulNew(float x, float y) {
+        return clone().mul(x, y);
+    }
+
+    public Vector2 mulNew(Vector2 pos) {
+        return clone().mul(pos);
     }
 
     @Override

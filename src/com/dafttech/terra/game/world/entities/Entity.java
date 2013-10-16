@@ -32,18 +32,18 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     boolean inAir = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
-        position = pos;
+        setPosition(pos);
         worldObj = world;
         size = s;
         world.localEntities.add(this);
     }
 
     public void setMidPos(Vector2 pos) {
-        position = pos.addNew(-size.x * BLOCK_SIZE / 2f, -size.y * BLOCK_SIZE / 2f);
+        setPosition(pos.addNew(-size.x * BLOCK_SIZE / 2f, -size.y * BLOCK_SIZE / 2f));
     }
 
     public Vector2 getMidPos() {
-        return position.addNew(size.x * BLOCK_SIZE / 2f, size.y * BLOCK_SIZE / 2f);
+        return getPosition().add(size.x * BLOCK_SIZE / 2f, size.y * BLOCK_SIZE / 2f);
     }
 
     public void setColor(Color clr) {
@@ -56,6 +56,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public Vector2 getPosition() {
         return position.clone();
+    }
+
+    public Entity setPosition(Vector2 pos) {
+        this.position.set(pos);
+        return this;
     }
 
     public World getWorld() {
@@ -85,7 +90,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         rend.setColor(color.r, color.g, color.b, 1);
 
         Vector2 v2 = new Vector2(rect.x, rect.y);
-        v2 = v2.toRenderPosition(position);
+        v2 = v2.toRenderPosition(getPosition());
 
         rend.filledRect(v2.x, v2.y, rect.width, rect.height);
 
@@ -95,7 +100,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public void checkTerrainCollisions(World world) {
-        Vector2i mid = position.toWorldPosition();
+        Vector2i mid = getPosition().toWorldPosition();
 
         Rectangle playerRect;
 
@@ -105,7 +110,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         do {
             redo = false;
-            playerRect = new Rectangle(position.x, position.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+            playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
             for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
                 for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                     if (world.getTile(x, y) != null && world.getTile(x, y).canCollideWith(this)) {
@@ -152,23 +157,23 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     void onTerrainCollisionBottom(float y) {
         velocity.y = 0;
-        position.y = y;
+        setPosition(getPosition().setY(y));
         inAir = false;
     }
 
     void onTerrainCollisionTop(float y) {
         velocity.y = 0;
-        position.y = y;
+        setPosition(getPosition().setY(y));
     }
 
     void onTerrainCollisionRight(float x) {
         velocity.x = 0;
-        position.x = x;
+        setPosition(getPosition().setX(x));
     }
 
     void onTerrainCollisionLeft(float x) {
         velocity.x = 0;
-        position.x = x;
+        setPosition(getPosition().setX(x));
     }
 
     @Override
@@ -181,12 +186,6 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public abstract TextureRegion getImage();
-
-    public Entity setPosition(Vector2 position) {
-        this.position = position.clone();
-
-        return this;
-    }
 
     public Entity setVelocity(Vector2 velocity) {
         this.velocity = velocity;
@@ -225,8 +224,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                     asl -= (i + asl) - delta;
                 }
 
-                position.x += velocity.x * asl;
-                position.y += velocity.y * asl;
+                setPosition(getPosition().add(velocity.mulNew(asl)));
 
                 checkTerrainCollisions(worldObj.localPlayer.getWorld());
             }
