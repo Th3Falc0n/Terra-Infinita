@@ -9,7 +9,7 @@ import com.dafttech.terra.resources.Resources;
 public class TileSand extends Tile implements ITileInworldEvents, ITileRenderOffset {
     private Vector2 renderOffset = new Vector2(0, 0);
     private float fallSpeed = 10f;
-    
+
     public TileSand() {
         super();
     }

@@ -37,7 +37,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         size = s;
         world.localEntities.add(this);
     }
-    
+
     public void setMidPos(Vector2 pos) {
         position = pos.addNew(-size.x * BLOCK_SIZE / 2f, -size.y * BLOCK_SIZE / 2f);
     }
@@ -184,7 +184,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public Entity setPosition(Vector2 position) {
         this.position = position.clone();
-        
+
         return this;
     }
 

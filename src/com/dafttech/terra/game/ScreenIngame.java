@@ -52,8 +52,7 @@ public class ScreenIngame extends AbstractScreen {
 
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
-        
-        
+
         hudBottom.slots[0].assignedItem = new TileDirt();
         hudBottom.slots[0].assignedInventory = localWorld.localPlayer.inventory;
 

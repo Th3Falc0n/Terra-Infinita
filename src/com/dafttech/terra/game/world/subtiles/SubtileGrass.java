@@ -12,7 +12,7 @@ public class SubtileGrass extends Subtile {
     public SubtileGrass() {
         super(null);
     }
-    
+
     @Override
     public TextureRegion getImage() {
         return Resources.TILES.getImage("mask_grass");

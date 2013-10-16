@@ -19,16 +19,16 @@ public class ModuleHUDBottom extends GUIModule {
     public ElementSlot[] slots = new ElementSlot[8];
     private int activeSlot = 0;
     public ElementBar healthBar, apBar;
-    
+
     @EventListener(value = "SCROLL")
     public void onScroll(Event event) {
         int prev = activeSlot;
         int dir = event.getInput(0, Integer.class);
-        
+
         activeSlot += dir;
-        if(activeSlot < 0) activeSlot = 7;
-        if(activeSlot > 7) activeSlot = 0;
-        
+        if (activeSlot < 0) activeSlot = 7;
+        if (activeSlot > 7) activeSlot = 0;
+
         slots[prev].active = false;
         slots[activeSlot].active = true;
     }
@@ -52,7 +52,7 @@ public class ModuleHUDBottom extends GUIModule {
 
             container.addObject(slots[i]);
         }
-        
+
         slots[0].active = true;
 
         healthBar = new ElementBar(new Vector2(0, 16), Color.RED, 100);

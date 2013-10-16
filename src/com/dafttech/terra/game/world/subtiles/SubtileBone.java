@@ -7,7 +7,7 @@ public class SubtileBone extends Subtile {
     public SubtileBone() {
         super(null);
     }
-    
+
     @Override
     public TextureRegion getImage() {
         return Resources.TILES.getImage("bone");

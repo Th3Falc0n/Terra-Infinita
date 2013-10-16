@@ -24,7 +24,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     public boolean receivesSunlight = false;
     public Tile sunlightFilter = null;
-    
+
     public void spawnAsEntity() {
         super.spawnAsEntity(position.toEntityPos().addNew(0.5f, 0.5f), world);
     };

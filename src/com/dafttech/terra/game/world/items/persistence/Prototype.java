@@ -11,46 +11,46 @@ public class Prototype {
     public int hashCode() {
         return getHashBase().hashCode();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Prototype) return hashCode() == ((Prototype)obj).hashCode();
-        if(obj instanceof GameObject) return hashCode() == ((GameObject)obj).hashCode();
-        
+        if (obj instanceof Prototype) return hashCode() == ((Prototype) obj).hashCode();
+        if (obj instanceof GameObject) return hashCode() == ((GameObject) obj).hashCode();
+
         return true;
     };
-        
+
     public String getHashBase() {
         StringBuilder hashBuilder = new StringBuilder();
-        
+
         hashBuilder.append(className);
-        
-        for(Object f : values.values()) {
+
+        for (Object f : values.values()) {
             hashBuilder.append(f.toString());
         }
-        
+
         return hashBuilder.toString();
     }
-    
+
     public GameObject toGameObject() {
         GameObject object = null;
-        
+
         try {
             @SuppressWarnings("unchecked")
             Class<GameObject> cl = (Class<GameObject>) Class.forName(className);
-            
-            object = (GameObject) cl.newInstance();
+
+            object = cl.newInstance();
 
             Field[] fields = cl.getFields();
-            
-            for(Field f : fields) {
+
+            for (Field f : fields) {
                 f.set(object, values.get(f.getName()));
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         return object;
     }
 }

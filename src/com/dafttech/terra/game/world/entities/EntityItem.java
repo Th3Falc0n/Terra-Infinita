@@ -1,7 +1,6 @@
 package com.dafttech.terra.game.world.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.Item;
@@ -10,7 +9,7 @@ import com.dafttech.terra.resources.Options;
 
 public class EntityItem extends Entity {
     Item wrapped;
-    
+
     public EntityItem(Vector2 pos, World world, Vector2 size, Item w) {
         super(pos, world, size);
         wrapped = w;
@@ -20,17 +19,17 @@ public class EntityItem extends Entity {
     public TextureRegion getImage() {
         return wrapped.getImage();
     }
-    
+
     @Override
     public int hashCode() {
         return wrapped.hashCode();
     }
-    
+
     @Override
     public Prototype toPrototype() {
         return wrapped.toPrototype();
     }
-    
+
     @Override
     public void update(float delta) {
         Vector2 p = getWorld().localPlayer.getPosition();
@@ -41,7 +40,7 @@ public class EntityItem extends Entity {
 
         if (vp.len() < 20) {
             getWorld().localPlayer.inventory.add(wrapped, 1);
-            
+
             getWorld().removeEntity(this);
         }
 

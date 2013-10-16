@@ -23,7 +23,7 @@ public class Player extends EntityLiving {
 
     long left;
     boolean right;
-    
+
     public Inventory inventory = new Inventory();
 
     @Override

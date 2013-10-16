@@ -3,7 +3,6 @@ package com.dafttech.terra.game.world.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.items.inventories.Inventory;
 
 public abstract class EntityLiving extends Entity {
     private float maxHealth = 10;
