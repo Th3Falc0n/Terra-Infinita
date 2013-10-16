@@ -12,7 +12,7 @@ public abstract class GameObject {
     public int hashCode() {
         return getHashBase().hashCode();
     }
-    
+
     public List<Field> annotatedFields = new LinkedList<Field>();
 
     public GameObject() {
@@ -21,11 +21,11 @@ public abstract class GameObject {
             f.setAccessible(true);
             Persistent p = f.getAnnotation(Persistent.class);
             if (p == null) continue;
-            
+
             annotatedFields.add(f);
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Prototype) return hashCode() == ((Prototype) obj).hashCode();

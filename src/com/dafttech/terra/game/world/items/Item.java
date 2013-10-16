@@ -25,7 +25,7 @@ public abstract class Item extends GameObject implements IDrawableInventory {
     }
 
     public void spawnAsEntity(Vector2 position, World world) {
-        world.addEntity(new EntityItem(position, world, new Vector2(0.5f, 0.5f), this));
+        new EntityItem(position, world, new Vector2(0.5f, 0.5f), this);
     }
 
     @Override

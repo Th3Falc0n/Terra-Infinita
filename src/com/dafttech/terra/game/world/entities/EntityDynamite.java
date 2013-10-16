@@ -31,8 +31,7 @@ public class EntityDynamite extends Entity {
         explodeTimer -= delta;
         if (explodeTimer <= 0) {
             worldObj.removeEntity(this);
-            ParticleExplosion explosion = new ParticleExplosion(getPosition().add(BLOCK_SIZE * 0.75f, BLOCK_SIZE * 0.75f), worldObj, radius);
-            worldObj.addEntity(explosion);
+            new ParticleExplosion(getPosition().add(BLOCK_SIZE * 0.75f, BLOCK_SIZE * 0.75f), worldObj, radius);
             Vector2i destroyPos = new Vector2(getPosition()).toWorldPosition();
             for (int y = -radius + 1; y <= radius; y++) {
                 for (int x = -radius + 1; x <= radius; x++) {

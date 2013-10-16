@@ -52,7 +52,7 @@ public class EntityFlamingArrow extends EntityArrow {
 
         for (int i = 0; i < 5; i++) {
             if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
-                worldObj.addEntity(new ParticleSpark(getPosition(), worldObj));
+                new ParticleSpark(getPosition(), worldObj);
             }
         }
 

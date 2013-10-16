@@ -20,9 +20,8 @@ import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
-    Chunk chunk = null;
     @Persistent
-    public Vector2 position = new Vector2();
+    Vector2 position = new Vector2();
 
     @Persistent
     Vector2 velocity = new Vector2();
@@ -31,7 +30,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     @Persistent
     Vector2 size = new Vector2();
-    
+
     public World worldObj;
 
     Color color = Color.WHITE;
@@ -43,9 +42,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public Entity(Vector2 pos, World world, Vector2 s) {
         worldObj = world;
-        addToWorld(pos);
+        addToWorld(world, pos);
         setPosition(pos);
         size = s;
+    }
+
+    protected Entity() {
+
     }
 
     public void setMidPos(Vector2 pos) {
@@ -69,13 +72,14 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity setPosition(Vector2 pos) {
-        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) // addToWorld(pos);
+        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) // addToWorld(worldObj,
+                                                                         // pos);
             position.set(pos);
         return this;
     }
 
-    public Entity remove() {
-        remove(chunk);
+    public Entity remove(World world) {
+        remove(world.getOrCreateChunk(position));
         return this;
     }
 
@@ -83,12 +87,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         if (chunk != null) chunk.remove(this);
     }
 
-    private void addToWorld(Vector2 pos) {
-        Chunk chunk = worldObj.getOrCreateChunk(pos);
+    private void addToWorld(World world, Vector2 pos) {
+        Chunk chunk = world.getOrCreateChunk(pos);
         if (chunk != null) {
-            remove(chunk);
+            remove(world);
             chunk.add(this);
-            this.chunk = chunk;
         }
     }
 

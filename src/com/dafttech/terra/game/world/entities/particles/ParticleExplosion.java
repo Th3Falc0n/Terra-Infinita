@@ -34,8 +34,7 @@ public class ParticleExplosion extends Particle {
         super.update(delta);
         Random rnd = new Random();
         int blockSRad = radius * BLOCK_SIZE * 3;
-        worldObj.addEntity(new ParticleSpark(midpos.clone().add(-blockSRad, -blockSRad)
-                .add(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj));
+        new ParticleSpark(midpos.clone().add(-blockSRad, -blockSRad).add(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj);
         getSize().add(delta * 30, delta * 30);
         setMidPos(midpos);
     }
