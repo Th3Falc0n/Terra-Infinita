@@ -25,7 +25,7 @@ public abstract class GameObject {
 
         hashBuilder.append(this.getClass().getCanonicalName());
 
-        List<Field> fields = getAllDeclaredFields(this.getClass(), null);
+        Field[] fields = this.getClass().getFields();
         for (Field f : fields) {
             f.setAccessible(true);
             Persistent p = f.getAnnotation(Persistent.class);
