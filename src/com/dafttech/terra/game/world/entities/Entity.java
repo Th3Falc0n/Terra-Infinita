@@ -16,9 +16,11 @@ import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
+import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
+    @Persistent
     private Vector2 position = null;
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);

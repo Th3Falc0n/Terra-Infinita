@@ -278,4 +278,9 @@ public class Vector2 {
     public Vector2 getBlockInWorldPos(Chunk chunk) {
         return new Vector2(getBlockInWorldPos(chunk.pos.x, chunk.world.chunksize.x, x), getBlockInWorldPos(chunk.pos.y, chunk.world.chunksize.y, y));
     }
+
+    @Override
+    public String toString() {
+        return x + "," + y;
+    }
 }

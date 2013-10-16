@@ -24,7 +24,8 @@ public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
     public WorldGenerator gen;
-    public List<Entity> localaEntities = new CopyOnWriteArrayList<Entity>();
+    @Deprecated
+    public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
     private float tickProgress = 0, tickLength = 0.05f;
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
@@ -161,11 +162,11 @@ public class World implements IDrawableInWorld {
     }
 
     public void addEntity(Entity entity) {
-        //localEntities.add(entity);
+        // localEntities.add(entity);
     }
 
     public void removeEntity(Entity entity) {
-        //localEntities.remove(entity);
+        // localEntities.remove(entity);
     }
 
     @Override

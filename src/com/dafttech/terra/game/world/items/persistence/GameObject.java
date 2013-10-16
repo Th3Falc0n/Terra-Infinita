@@ -1,6 +1,8 @@
 package com.dafttech.terra.game.world.items.persistence;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class GameObject {
     @Override
@@ -21,8 +23,9 @@ public abstract class GameObject {
 
         hashBuilder.append(this.getClass().getCanonicalName());
 
-        Field[] fields = this.getClass().getFields();
+        List<Field> fields = getAllDeclaredFields(this.getClass(), null);
         for (Field f : fields) {
+            f.setAccessible(true);
             Persistent p = f.getAnnotation(Persistent.class);
             if (p == null) continue;
 
@@ -35,6 +38,14 @@ public abstract class GameObject {
         }
 
         return hashBuilder.toString();
+    }
+
+    private static List<Field> getAllDeclaredFields(Class<?> targetClass, List<Field> fields) {
+        if (fields == null) fields = new ArrayList<Field>();
+        for (Field field : targetClass.getDeclaredFields())
+            if (!fields.contains(field)) fields.add(field);
+        if (targetClass.getSuperclass() != null) getAllDeclaredFields(targetClass.getSuperclass(), fields);
+        return fields;
     }
 
     public Prototype toPrototype() {
