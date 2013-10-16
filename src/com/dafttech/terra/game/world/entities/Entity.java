@@ -21,9 +21,15 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     @Persistent
-    private Vector2 position = null;
+    Vector2 position = null;
+
+    @Persistent
     Vector2 velocity = new Vector2(0, 0);
+
+    @Persistent
     Vector2 accelleration = new Vector2(0, 0);
+
+    @Persistent
     Vector2 size;
     public World worldObj;
 

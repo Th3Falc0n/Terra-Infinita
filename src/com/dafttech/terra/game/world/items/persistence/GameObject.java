@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Json.Serializable;
+
 public abstract class GameObject {
     @Override
     public int hashCode() {
@@ -53,10 +55,12 @@ public abstract class GameObject {
 
         proto.className = this.getClass().getCanonicalName();
 
-        Field[] fields = this.getClass().getFields();
+        List<Field> fields = getAllDeclaredFields(this.getClass(), null);
         for (Field f : fields) {
+            f.setAccessible(true);
             if (f.getAnnotation(Persistent.class) != null) {
                 try {
+                    if(!(f.get(this) instanceof Serializable)) System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName() + " is not Serializable and cannot be saved!");
                     proto.values.put(f.getName(), f.get(this));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     // TODO Auto-generated catch block
