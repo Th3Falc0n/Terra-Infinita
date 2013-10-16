@@ -51,7 +51,7 @@ public class World implements IDrawableInWorld {
 
     public Chunk getChunk(Vector2 blockInWorldPos) {
         if (blockInWorldPos == null) return null;
-        Vector2 chunkPos = blockInWorldPos.getChunkPos(this);
+        Vector2i chunkPos = new Vector2i(blockInWorldPos.getChunkPos(this));
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
         return null;
     }
