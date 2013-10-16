@@ -159,10 +159,6 @@ public class World implements IDrawableInWorld {
         if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
     }
 
-    public void addEntityy(Entity entity) {
-        // localEntities.add(entity);
-    }
-
     public void removeEntity(Entity entity) {
         entity.remove(this);
     }
