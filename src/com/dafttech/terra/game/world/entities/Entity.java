@@ -69,10 +69,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity setPosition(Vector2 pos) {
-        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) {
-            remove();
-            addToWorld(pos);
-        }
+        if (position.getChunkPos(worldObj) != pos.getChunkPos(worldObj)) //addToWorld(pos);
         position.set(pos);
         return this;
     }
@@ -85,6 +82,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public Entity addToWorld(Vector2 pos) {
         Chunk chunk = worldObj.getOrCreateChunk(pos);
         if (chunk != null) {
+            remove();
             chunk.add(this);
             this.chunk = chunk;
         }
