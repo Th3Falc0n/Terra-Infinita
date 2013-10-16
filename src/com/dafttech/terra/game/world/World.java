@@ -165,7 +165,7 @@ public class World implements IDrawableInWorld {
     }
 
     public void removeEntity(Entity entity) {
-        // localEntities.remove(entity);
+        entity.remove();
     }
 
     @Override
