@@ -266,7 +266,7 @@ public class Vector2 {
     }
 
     private static int getChunkPos(float blockInWorldPos, int chunkSize) {
-        return (int) ((int) blockInWorldPos >= 0 ? (int) blockInWorldPos / chunkSize : ((int) blockInWorldPos + 1) / chunkSize - 1);
+        return (int) blockInWorldPos >= 0 ? (int) blockInWorldPos / chunkSize : ((int) blockInWorldPos + 1) / chunkSize - 1;
     }
 
     private static float getBlockInChunkPos(float blockInWorldPos, int chunkSize) {

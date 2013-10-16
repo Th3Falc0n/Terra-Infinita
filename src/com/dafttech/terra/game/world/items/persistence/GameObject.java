@@ -60,7 +60,9 @@ public abstract class GameObject {
             f.setAccessible(true);
             if (f.getAnnotation(Persistent.class) != null) {
                 try {
-                    if(!(f.get(this) instanceof Serializable)) System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName() + " is not Serializable and cannot be saved!");
+                    if (!(f.get(this) instanceof Serializable))
+                        System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName()
+                                + " is not Serializable and cannot be saved!");
                     proto.values.put(f.getName(), f.get(this));
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     // TODO Auto-generated catch block

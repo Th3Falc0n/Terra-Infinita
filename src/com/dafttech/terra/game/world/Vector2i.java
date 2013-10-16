@@ -78,9 +78,9 @@ public class Vector2i {
 
     public Vector2i set(Vector2 pos) {
         return set(pos.toWorldPosition());
-        /*this.x = (int) pos.x;
-        this.y = (int) pos.y;
-        return this;*/
+        /*
+         * this.x = (int) pos.x; this.y = (int) pos.y; return this;
+         */
     }
 
     public Vector2i addX(int x) {
