@@ -174,7 +174,9 @@ public class World implements IDrawableInWorld {
     public void timeKeeping(String msg) {
         long temp = currentTime;
         currentTime = System.currentTimeMillis();
-        System.out.println("Time to " + msg + ": " + (currentTime - lastTime));
+        if(currentTime - lastTime > 100) {
+            System.out.println("Time to " + msg + ": " + (currentTime - lastTime));
+        }
         lastTime = temp;
     }
 
