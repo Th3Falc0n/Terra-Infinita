@@ -12,13 +12,14 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
-    private Vector2 position = new Vector2(0, 0);
+    private Vector2 position = null;
     Vector2 velocity = new Vector2(0, 0);
     Vector2 accelleration = new Vector2(0, 0);
     Vector2 size;
@@ -32,10 +33,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     boolean inAir = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
-        setPosition(pos);
+        position = pos.clone();
         worldObj = world;
+        setPosition(pos);
         size = s;
-        world.localEntities.add(this);
+        // world.localEntities.add(this);
     }
 
     public void setMidPos(Vector2 pos) {
@@ -59,7 +61,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity setPosition(Vector2 pos) {
-        this.position.set(pos);
+        Chunk oldChunk = worldObj.getOrCreateChunk(position);
+        position.set(pos);
+        Chunk newChunk = worldObj.getOrCreateChunk(position);
+        if (newChunk != oldChunk) {
+            oldChunk.remove(this);
+            newChunk.add(this);
+        }
         return this;
     }
 

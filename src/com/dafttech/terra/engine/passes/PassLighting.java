@@ -65,7 +65,7 @@ public class PassLighting extends RenderingPass {
             }
         }
 
-        for (Entity entity : world.localEntities) {
+        for (Entity entity : world.getLocalEntities()) {
             if (entity.isLightEmitter() && entity.getEmittedLight() != null && world.isInRenderRange(entity.getPosition())) {
                 entity.getEmittedLight().drawToLightmap(screen, pointOfView);
             }

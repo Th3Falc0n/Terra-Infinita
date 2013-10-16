@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +24,7 @@ public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
     public WorldGenerator gen;
-    public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+    public List<Entity> localaEntities = new CopyOnWriteArrayList<Entity>();
     private float tickProgress = 0, tickLength = 0.05f;
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
@@ -49,6 +50,18 @@ public class World implements IDrawableInWorld {
         return chunk;
     }
 
+    public Chunk getChunk(Vector2 blockInWorldPos) {
+        Vector2 chunkPos = blockInWorldPos.getChunkPos(this);
+        if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
+        return null;
+    }
+
+    public Chunk getOrCreateChunk(Vector2 blockInWorldPos) {
+        Chunk chunk = getChunk(blockInWorldPos);
+        if (chunk == null) chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+        return chunk;
+    }
+
     public boolean doesChunkExist(int x, int y) {
         return getChunk(new Vector2i(x, y)) != null;
     }
@@ -59,7 +72,7 @@ public class World implements IDrawableInWorld {
 
     public Tile getTile(Vector2i pos) {
         Chunk chunk = getOrCreateChunk(pos);
-        if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
+        if (chunk != null) return chunk.get(pos.getBlockInChunkPos(this));
         return null;
     }
 
@@ -98,7 +111,7 @@ public class World implements IDrawableInWorld {
                 oldTile = true;
                 oldPos = tile.position.clone();
             }
-            chunk.setTile(pos.getBlockInChunkPos(this), tile);
+            chunk.set(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet();
                 notifyNeighborTiles(pos.x, pos.y);
@@ -148,11 +161,11 @@ public class World implements IDrawableInWorld {
     }
 
     public void addEntity(Entity entity) {
-        localEntities.add(entity);
+        //localEntities.add(entity);
     }
 
     public void removeEntity(Entity entity) {
-        localEntities.remove(entity);
+        //localEntities.remove(entity);
     }
 
     @Override
@@ -168,7 +181,7 @@ public class World implements IDrawableInWorld {
             }
         }
 
-        for (Entity entity : localEntities) {
+        for (Entity entity : getLocalEntities()) {
             entity.update(delta);
         }
         tickProgress += delta;
@@ -186,5 +199,13 @@ public class World implements IDrawableInWorld {
     public void draw(AbstractScreen screen, Entity pointOfView) {
         RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
         RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
+    }
+
+    public List<Entity> getLocalEntities() {
+        List<Entity> localEntities = new ArrayList<Entity>();
+        for (Chunk chunk : localChunks.values()) {
+            localEntities.addAll(chunk.getLocalEntities());
+        }
+        return localEntities;
     }
 }

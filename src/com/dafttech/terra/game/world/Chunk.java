@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.gen.biomes.Biome;
@@ -17,7 +18,7 @@ public class Chunk implements IDrawableInWorld {
     public World world;
     public Vector2i pos;
     public Tile[][] map;
-    public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
+    private List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
     public boolean stayLoaded = false;
     private boolean regenerate = false;
 
@@ -29,13 +30,17 @@ public class Chunk implements IDrawableInWorld {
         regenerate();
     }
 
+    public Chunk(World world, Vector2 chunkPos) {
+        this(world, new Vector2i(chunkPos));
+    }
+
     @Override
     public void update(float delta) {
         Tile tile;
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
-                tile = getTile(pos);
+                tile = get(pos);
                 if (tile != null) tile.update(delta);
             }
         }
@@ -55,7 +60,7 @@ public class Chunk implements IDrawableInWorld {
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
-                tile = getTile(pos);
+                tile = get(pos);
                 if (tile != null) tile.draw(screen, pointOfView);
             }
         }
@@ -74,13 +79,13 @@ public class Chunk implements IDrawableInWorld {
         regenerate = false;
     }
 
-    protected Tile getTile(Vector2i blockInChunkPos) {
+    protected Tile get(Vector2i blockInChunkPos) {
         if (regenerate) tryRegenerate();
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) return map[blockInChunkPos.x][blockInChunkPos.y];
         return null;
     }
 
-    public Chunk setTile(Vector2i blockInChunkPos, Tile tile) {
+    public Chunk set(Vector2i blockInChunkPos, Tile tile) {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
             if (tile != null) {
                 tile.world = world;
@@ -89,5 +94,19 @@ public class Chunk implements IDrawableInWorld {
             if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
+    }
+
+    public Chunk remove(Entity entity) {
+        localEntities.remove(entity);
+        return this;
+    }
+
+    public Chunk add(Entity entity) {
+        localEntities.add(entity);
+        return this;
+    }
+
+    public List<Entity> getLocalEntities() {
+        return localEntities;
     }
 }

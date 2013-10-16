@@ -32,7 +32,7 @@ public class PassObjects extends RenderingPass {
             }
         }
 
-        for (Entity entity : world.localEntities) {
+        for (Entity entity : world.getLocalEntities()) {
             entity.draw(screen, pointOfView);
         }
 

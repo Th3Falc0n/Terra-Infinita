@@ -3,7 +3,9 @@ package com.dafttech.terra.engine;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Vector2i;
+import com.dafttech.terra.game.world.World;
 
 public class Vector2 {
     public float x, y;
@@ -251,5 +253,29 @@ public class Vector2 {
     @Override
     public Vector2 clone() {
         return new Vector2(this);
+    }
+
+    private static int getChunkPos(float blockInWorldPos, int chunkSize) {
+        return (int) ((int) blockInWorldPos >= 0 ? (int) blockInWorldPos / chunkSize : ((int) blockInWorldPos + 1) / chunkSize - 1);
+    }
+
+    private static float getBlockInChunkPos(float blockInWorldPos, int chunkSize) {
+        return blockInWorldPos - getChunkPos(blockInWorldPos, chunkSize) * chunkSize;
+    }
+
+    private static float getBlockInWorldPos(int chunkPos, int chunkSize, float blockInChunkPos) {
+        return chunkSize * chunkPos + blockInChunkPos;
+    }
+
+    public Vector2 getChunkPos(World world) {
+        return new Vector2(getChunkPos(x, world.chunksize.x), getChunkPos(y, world.chunksize.y));
+    }
+
+    public Vector2 getBlockInChunkPos(World world) {
+        return new Vector2(getBlockInChunkPos(x, world.chunksize.x), getBlockInChunkPos(y, world.chunksize.y));
+    }
+
+    public Vector2 getBlockInWorldPos(Chunk chunk) {
+        return new Vector2(getBlockInWorldPos(chunk.pos.x, chunk.world.chunksize.x, x), getBlockInWorldPos(chunk.pos.y, chunk.world.chunksize.y, y));
     }
 }
