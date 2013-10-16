@@ -13,6 +13,7 @@ import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.Events;
+import com.dafttech.terra.game.TimeKeeping;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.entities.particles.Particle;
@@ -168,25 +169,12 @@ public class World implements IDrawableInWorld {
     public void removeEntity(Entity entity) {
         entity.remove();
     }
-    
-    long lastTime, currentTime;
-    
-    public void timeKeeping(String msg) {
-        long temp = currentTime;
-        currentTime = System.currentTimeMillis();
-        if(currentTime - lastTime > 100) {
-            System.out.println("Time to " + msg + ": " + (currentTime - lastTime));
-        }
-        lastTime = temp;
-    }
 
     @Override
     public void update(float delta) {
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        timeKeeping("Frame change");
-        
         Tile tile;
         for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
@@ -195,7 +183,7 @@ public class World implements IDrawableInWorld {
             }
         }
         
-        timeKeeping("Tile update");
+        TimeKeeping.timeKeeping("Tile update");
 
         for (Chunk chunk : localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
@@ -203,7 +191,7 @@ public class World implements IDrawableInWorld {
             }
         }
         
-        timeKeeping("Entity update");
+        TimeKeeping.timeKeeping("Entity update");
         
         tickProgress += delta;
         if (tickProgress >= tickLength) {
@@ -211,7 +199,7 @@ public class World implements IDrawableInWorld {
             Events.EVENT_WORLDTICK.callAsync(this);
         }
         
-        timeKeeping("Tick update");
+        TimeKeeping.timeKeeping("Tick update");
     }
 
     public boolean isInRenderRange(Vector2 position) {
