@@ -24,8 +24,6 @@ public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
     public WorldGenerator gen;
-    @Deprecated
-    public List<Entity> localEntities = new CopyOnWriteArrayList<Entity>();
     private float tickProgress = 0, tickLength = 0.05f;
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
@@ -52,12 +50,14 @@ public class World implements IDrawableInWorld {
     }
 
     public Chunk getChunk(Vector2 blockInWorldPos) {
+        if (blockInWorldPos == null) return null;
         Vector2 chunkPos = blockInWorldPos.getChunkPos(this);
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
         return null;
     }
 
     public Chunk getOrCreateChunk(Vector2 blockInWorldPos) {
+        if (blockInWorldPos == null) return null;
         Chunk chunk = getChunk(blockInWorldPos);
         if (chunk == null) chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
         return chunk;
