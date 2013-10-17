@@ -22,7 +22,7 @@ public class EntityItem extends Entity {
 
     @Override
     public int hashCode() {
-        return wrapped.hashCode();
+        return wrapped != null ? wrapped.hashCode() : super.hashCode();
     }
 
     @Override

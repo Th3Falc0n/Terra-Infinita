@@ -96,9 +96,8 @@ public class Chunk implements IDrawableInWorld {
         return this;
     }
 
-    public Chunk remove(Entity entity) {
-        localEntities.remove(entity);
-        return this;
+    public boolean remove(Entity entity) {
+        return localEntities.remove(entity);
     }
 
     public Chunk add(Entity entity) {

@@ -7,13 +7,13 @@ import com.dafttech.terra.game.world.entities.Entity;
 
 public abstract class Particle extends Entity {
     float lifetimeMax = 25;
-    float lifetime = 25;
+    float lifetime = lifetimeMax;
 
     public Particle(Vector2 pos, World world, float life, Vector2 s) {
         super(pos, world, s);
 
-        lifetime = life;
         lifetimeMax = life;
+        lifetime = lifetimeMax;
     }
 
     @Override
