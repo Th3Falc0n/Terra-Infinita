@@ -1,30 +1,45 @@
 package com.dafttech.terra.game.world.entities;
 
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventFilter;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
+import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
+import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.resources.Resources;
 
 public class Player extends EntityLiving {
     public Player(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.9f, 3.8f));
         Events.EVENTMANAGER.registerEventListener(this);
+
+        hudBottom = new ModuleHUDBottom();
+        hudBottom.create();
+
+        hudBottom.slots[0].assignItem(new TileDirt(), inventory);
     }
 
     long left;
     boolean right;
 
     public Inventory inventory = new Inventory();
+    
+    public ModuleHUDBottom hudBottom;
+    
+    PointLight light;
 
     @Override
     public void update(float delta) {
@@ -43,14 +58,21 @@ public class Player extends EntityLiving {
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
-            right = true;
-            EntityFlamingArrow a = new EntityFlamingArrow(getPosition(), worldObj);
-            a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
+            Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+            hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos);
         }
 
         if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) {
             right = false;
         }
+
+        if (light == null) {
+            light = new PointLight(getPosition(), 95);
+            light.setColor(new Color(255, 200, 40, 255));
+        }
+        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        
+        hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
     }
 
     @EventListener(value = "KEYDOWN", filter = "filterOnBombKeyPressed")
@@ -82,5 +104,15 @@ public class Player extends EntityLiving {
     public Inventory getInventory() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean isLightEmitter() {
+        return true;
+    }
+
+    @Override
+    public PointLight getEmittedLight() {
+        return light;
     }
 }

@@ -6,8 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.Json.Serializable;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.items.inventories.Inventory;
 
 public abstract class GameObject {
+    
+    //****FOLLOWING PERSISTENCE CODE**** May harm your brain
 
     public List<Field> annotatedFields = new LinkedList<Field>();
 
@@ -68,7 +74,7 @@ public abstract class GameObject {
                 if (!(f.get(this) instanceof Serializable))
                     System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName()
                             + " is not Serializable and cannot be saved!");
-                proto.values.put(f.getName(), f.get(this));
+                proto.values.put(f, f.get(this));
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

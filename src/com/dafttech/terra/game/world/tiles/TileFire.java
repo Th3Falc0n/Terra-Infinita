@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityLiving;

@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world.items.inventories;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.items.persistence.Prototype;
 
@@ -21,6 +22,16 @@ public class Inventory {
 
     public Set<Prototype> getPrototypeSet() {
         return amounts.keySet();
+    }
+
+    public boolean remove(Item assignedItem, int i) {
+        if(getAmount(assignedItem) >= i) {
+            Prototype proto = assignedItem.toPrototype();
+            
+            amounts.put(proto, amounts.get(proto) - i);
+            return true;
+        }
+        return false;
     }
 
     public boolean contains(GameObject obj) {

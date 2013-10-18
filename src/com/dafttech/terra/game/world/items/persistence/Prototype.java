@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Prototype {
     public String className = "";
-    public HashMap<String, Object> values = new HashMap<String, Object>();
+    public HashMap<Field, Object> values = new HashMap<Field, Object>();
 
     @Override
     public int hashCode() {
@@ -44,7 +44,8 @@ public class Prototype {
             Field[] fields = cl.getFields();
 
             for (Field f : fields) {
-                f.set(object, values.get(f.getName()));
+                if(f.isAnnotationPresent(Persistent.class))
+                    f.set(object, f);
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             // TODO Auto-generated catch block
