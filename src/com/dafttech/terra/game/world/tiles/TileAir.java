@@ -25,4 +25,9 @@ public class TileAir extends Tile {
     public boolean isReplacable() {
         return true;
     }
+
+    @Override
+    public boolean isOpaque() {
+        return false;
+    }
 }

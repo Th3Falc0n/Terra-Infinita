@@ -16,4 +16,9 @@ public class TileFence extends Tile {
     public boolean canCollideWith(Entity entity) {
         return !(entity instanceof Player);
     }
+
+    @Override
+    public boolean isOpaque() {
+        return false;
+    }
 }

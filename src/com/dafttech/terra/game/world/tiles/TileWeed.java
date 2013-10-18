@@ -22,6 +22,11 @@ public class TileWeed extends Tile {
     }
 
     @Override
+    public boolean isOpaque() {
+        return false;
+    }
+
+    @Override
     public void update(float delta) {
         super.update(delta);
         if (TerraInfinita.rnd.nextInt(20) == 0) {

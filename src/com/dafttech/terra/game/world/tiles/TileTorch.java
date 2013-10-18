@@ -34,6 +34,11 @@ public class TileTorch extends Tile {
     }
 
     @Override
+    public boolean isOpaque() {
+        return false;
+    }
+
+    @Override
     public boolean isLightEmitter() {
         return true;
     }

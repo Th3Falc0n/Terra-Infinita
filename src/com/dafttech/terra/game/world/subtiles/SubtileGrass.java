@@ -7,7 +7,6 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileGrass;
 import com.dafttech.terra.resources.Resources;
 
 public class SubtileGrass extends Subtile {
@@ -24,7 +23,7 @@ public class SubtileGrass extends Subtile {
 
     @Override
     public void onTick(World world) {
-        if (!world.getTile(tile.getPosition().addY(-1)).isAir() && world.getTile(tile.getPosition().addY(-1)).getClass() != TileGrass.class) {
+        if (world.getTile(tile.getPosition().addY(-1)).isOpaque()) {
             tile.removeSubtile(this);
         } else {
             spread(world);

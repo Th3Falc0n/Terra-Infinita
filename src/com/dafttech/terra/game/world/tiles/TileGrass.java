@@ -32,6 +32,11 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
     }
 
     @Override
+    public boolean isOpaque() {
+        return false;
+    }
+
+    @Override
     public void onNeighborChange(Tile changed) {
         if (world.getTile(getPosition().add(0, 1)).isAir()) world.destroyTile(getPosition().getX(), getPosition().getY(), null);
     }
