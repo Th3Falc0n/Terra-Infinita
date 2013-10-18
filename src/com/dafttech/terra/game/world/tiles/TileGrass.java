@@ -77,10 +77,8 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
         int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
         int spreadY = position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
         Tile spreadTile = world.getTile(spreadX, spreadY);
-        if (spreadTile != null && spreadTile instanceof TileDirt && world.getTile(spreadX, spreadY - 1) == null) {
-            if (spreadTile.hasSubtile(SubtileGrass.class)) {
-                world.setTile(spreadX, spreadY - 1, new TileGrass(), true);
-            }
+        if (spreadTile != null && world.getTile(spreadX, spreadY - 1) == null && spreadTile.hasSubtile(SubtileGrass.class, false)) {
+            world.setTile(spreadX, spreadY - 1, new TileGrass(), true);
         }
     }
 }

@@ -149,9 +149,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         }
     }
 
-    public boolean hasSubtile(Class<? extends Subtile> subtileClass) {
+    public boolean hasSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
         for (int i = 0; i < subtiles.size(); i++)
-            if (subtiles.get(i).getClass() == subtileClass) return true;
+            if ((inherited && subtileClass.isAssignableFrom(subtiles.get(i).getClass()))
+                    || (!inherited && subtiles.get(i).getClass() == subtileClass)) return true;
         return false;
     }
 }

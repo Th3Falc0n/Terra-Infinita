@@ -26,7 +26,7 @@ public class SubtileGrass extends Subtile {
         int spreadY = tile.position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
         Tile spreadTile = tile.world.getTile(spreadX, spreadY);
         if (spreadTile != null && spreadTile instanceof TileDirt && tile.world.getTile(spreadX, spreadY - 1) == null) {
-            if (!spreadTile.hasSubtile(SubtileGrass.class)) {
+            if (!spreadTile.hasSubtile(SubtileGrass.class, true)) {
                 spreadTile.addSubtile(new SubtileGrass());
             }
         }
