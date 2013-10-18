@@ -20,6 +20,7 @@ import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
+    Chunk chunk = null;
     @Persistent
     Vector2 position = new Vector2();
 
@@ -72,36 +73,26 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity setPosition(Vector2 pos) {
-        if (!position.getChunkPos(worldObj).equals(pos.getChunkPos(worldObj))) {
-            if (!reChunk(worldObj, pos)) System.out.println("FALSE!! ERROR RECHUNKING");
+        Chunk newChunk = worldObj.getOrCreateChunk(pos);
+        if (newChunk != null && chunk != newChunk) {
+            addToWorld(newChunk, pos);
         }
         position.set(pos);
         return this;
     }
 
-    public boolean remove(World world) {
-        Chunk chunk = world.getOrCreateChunk(position);
+    public boolean remove() {
         if (chunk != null) return chunk.remove(this);
         return false;
     }
 
-    private boolean reChunk(World world, Vector2 pos) {
-        Chunk chunk = world.getOrCreateChunk(pos);
-        if (chunk != null) {
-            if (remove(world)) {
-                chunk.add(this);
-                return true;
-            }
-        }
-        return false;
+    private void addToWorld(World world, Vector2 pos) {
+        addToWorld(world.getOrCreateChunk(pos), pos);
     }
 
-    private void addToWorld(World world, Vector2 pos) {
-        Chunk chunk = world.getOrCreateChunk(pos);
-        if (chunk != null) {
-            remove(world);
-            chunk.add(this);
-        }
+    private void addToWorld(Chunk chunk, Vector2 pos) {
+        remove();
+        if (chunk.add(this)) this.chunk = chunk;
     }
 
     public World getWorld() {
