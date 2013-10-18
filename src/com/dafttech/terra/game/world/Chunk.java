@@ -21,7 +21,7 @@ public class Chunk implements IDrawableInWorld {
     private List<Entity> localEntities = new ArrayList<Entity>();
     public boolean stayLoaded = false;
     private boolean regenerate = false;
-
+    
     public Chunk(World world, Vector2i chunkPos) {
         this.world = world;
         this.pos = chunkPos;
@@ -34,6 +34,7 @@ public class Chunk implements IDrawableInWorld {
         this(world, new Vector2i(chunkPos));
     }
 
+    @Deprecated
     @Override
     public void update(float delta) {
         Tile tile;

@@ -8,10 +8,6 @@ import java.util.List;
 import com.badlogic.gdx.utils.Json.Serializable;
 
 public abstract class GameObject {
-    @Override
-    public int hashCode() {
-        return getHashBase().hashCode();
-    }
 
     public List<Field> annotatedFields = new LinkedList<Field>();
 
@@ -26,8 +22,11 @@ public abstract class GameObject {
         }
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    public int getPrototypeHash() {
+        return getHashBase().hashCode();
+    }
+
+    public boolean isSamePrototype(Object obj) {
         if (obj instanceof Prototype) return hashCode() == ((Prototype) obj).hashCode();
         if (obj instanceof GameObject) return hashCode() == ((GameObject) obj).hashCode();
 
