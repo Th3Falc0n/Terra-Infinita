@@ -4,13 +4,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
-
 
 public class ParticleDust extends Particle {
     TextureRegion assignedTexture;
     float size;
-    
+
     public ParticleDust(Vector2 pos, World world, TextureRegion tex) {
         super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat()), new Vector2(0.0f, 0.0f));
 
