@@ -10,6 +10,7 @@ import com.dafttech.terra.engine.shaders.ShaderLibrary;
 public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
+    public static ImageLibrary ITEMS = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
     public static ImageLibrary LIGHT = new ImageLibrary();
 
@@ -37,6 +38,9 @@ public class Resources {
         ENTITIES.loadImage("dynamite", "res/entities/dynamite.png");
         ENTITIES.loadImage("explosion", "res/entities/explosion.png");
         ENTITIES.loadImage("glowstick", "res/entities/glowstick.png");
+        ENTITIES.loadImage("rainbow", "res/entities/rainbow.png");
+
+        ITEMS.loadImage("rainbowgun", "res/items/rainbowgun.png");
 
         GUI.loadImage("slot", "res/ui/slot.png");
         GUI.loadImage("bar", "res/ui/bar.png");
