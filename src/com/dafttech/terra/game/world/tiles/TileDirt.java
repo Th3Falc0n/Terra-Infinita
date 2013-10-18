@@ -6,7 +6,7 @@ import com.dafttech.terra.resources.Resources;
 public class TileDirt extends Tile {
     public TileDirt() {
         super();
-        setHardness(0);
+        setHardness(3);
     }
 
     @Override

@@ -3,12 +3,14 @@ package com.dafttech.terra.engine.gui.elements;
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
+import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
-    public Item assignedItem = null;
+    private Item assignedItem = null;
     public Inventory assignedInventory = null;
 
     public boolean active = false;
@@ -17,6 +19,19 @@ public class ElementSlot extends GUIElement {
         super(p, new Vector2(32, 32));
 
         image = Resources.GUI.getImage("slot");
+    }
+    
+    public void useAssignedItem(Player causer, Vector2 pos) {
+        if(assignedInventory.getAmount(assignedItem) > 0) {
+            if(((Item)assignedItem.toPrototype().toGameObject()).use(causer, pos)) {
+                assignedInventory.remove(assignedItem, 1);
+            }
+        }
+    }
+
+    public void assignItem(Item item, Inventory inventory) {
+        assignedItem = item;
+        assignedInventory = inventory;
     }
 
     @Override

@@ -64,6 +64,11 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
     public boolean isFlammable() {
         return true;
     }
+    
+    @Override
+    public boolean isReplacable() {
+        return true;
+    }
 
     int spreadDistance = 3;
 

@@ -25,7 +25,6 @@ public class ScreenIngame extends AbstractScreen {
 
     ElementButton exitButton;
     ModuleChat chat;
-    ModuleHUDBottom hudBottom;
 
     public ScreenIngame(World w) {
         localWorld = w;
@@ -50,14 +49,8 @@ public class ScreenIngame extends AbstractScreen {
         chat = new ModuleChat();
         chat.create();
 
-        hudBottom = new ModuleHUDBottom();
-        hudBottom.create();
-
-        hudBottom.slots[0].assignedItem = new TileDirt();
-        hudBottom.slots[0].assignedInventory = localWorld.localPlayer.inventory;
-
         guiContainerScreen.addObject(chat.getContainer());
-        guiContainerScreen.addObject(hudBottom.getContainer());
+        guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
 
@@ -99,6 +92,5 @@ public class ScreenIngame extends AbstractScreen {
     }
 
     public void update(float delta) {
-        hudBottom.healthBar.setValue(localWorld.localPlayer.getHealth() / localWorld.localPlayer.getMaxHealth() * 100);
     }
 }

@@ -106,9 +106,8 @@ public class World implements IDrawableInWorld {
         if (chunk != null) {
             boolean oldTile = false;
             Vector2i oldPos = null;
-            if (tile != null && tile.position != null && getTile(tile.position) == tile) {
-                oldTile = true;
-                oldPos = tile.position.clone();
+            if (tile != null && tile.position != null) {
+                
             }
             chunk.set(pos.getBlockInChunkPos(this), tile);
             if (notify) {
@@ -124,6 +123,19 @@ public class World implements IDrawableInWorld {
         return setTile(new Vector2i(x, y), tile, notify);
     }
 
+    public boolean placeTile(int x, int y, Tile t, Entity causer) {
+        Tile tile = getTile(x, y);
+        if (tile == null || tile.isReplacable()) {
+            setTile(x, y, t, true);
+
+            if (tile instanceof ITileInworldEvents) {
+                ((ITileInworldEvents) tile).onTilePlaced(causer);
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void destroyTile(int x, int y, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile != null) {
@@ -132,17 +144,6 @@ public class World implements IDrawableInWorld {
 
             if (tile instanceof ITileInworldEvents) {
                 ((ITileInworldEvents) tile).onTileDestroyed(causer);
-            }
-        }
-    }
-
-    public void placeTile(int x, int y, Tile t, Entity causer) {
-        Tile tile = getTile(x, y);
-        if (tile == null) {
-            setTile(x, y, t, true);
-
-            if (tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents) tile).onTilePlaced(causer);
             }
         }
     }

@@ -7,10 +7,13 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.EntityItem;
+import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 
 public abstract class Item extends GameObject implements IDrawableInventory {
     public abstract TextureRegion getImage();
+    public abstract boolean use(Player causer, Vector2 position);
+    
 
     public boolean isLightEmitter() {
         return false;

@@ -2,16 +2,24 @@ package com.dafttech.terra.game.world.subtiles;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.renderer.SubtileRenderer;
 import com.dafttech.terra.engine.renderer.SubtileRendererMask;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class Subtile extends Item implements IDrawableInWorld {
     Tile tile;
 
+    @Override
+    public boolean use(Player causer, Vector2 position) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
     public Subtile(Tile t) {
         tile = t;
     }

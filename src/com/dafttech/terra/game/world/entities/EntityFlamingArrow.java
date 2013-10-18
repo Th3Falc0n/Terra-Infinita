@@ -45,10 +45,10 @@ public class EntityFlamingArrow extends EntityArrow {
             light = new PointLight(getPosition(), 95);
             light.setColor(new Color(255, 200, 40, 255));
         }
+        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {
             if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
