@@ -52,7 +52,7 @@ public class TileFire extends TileFalling {
 
     public static boolean createFire(World world, int x, int y) {
         Tile spreadTile = world.getTile(x, y);
-        if (spreadTile == null || (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable())) {
+        if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
             world.setTile(x, y, new TileFire(), true);
             return true;
         }
