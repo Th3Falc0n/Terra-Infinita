@@ -3,8 +3,6 @@ package com.dafttech.terra.game.world.tiles;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
@@ -31,24 +29,21 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     @Override
     public boolean use(Player causer, Vector2 position) {
-        if(causer.getPosition().clone().sub(position).len() < 100) {
+        if (causer.getPosition().clone().sub(position).len() < 100) {
             Vector2i pos = position.toWorldPosition();
             return causer.getWorld().placeTile(pos.x, pos.y, this, causer);
         }
         return false;
     }
-    
+
     public boolean isReplacable() {
         return false;
     }
-    
+
     public void spawnAsEntity() {
         Vector2 p = position.toEntityPos();
         World w = world;
-        
-        world = null;
-        position = null;
-        
+
         super.spawnAsEntity(p.addNew(0.5f, 0.5f), w);
     };
 

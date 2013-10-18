@@ -6,7 +6,6 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
-import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
@@ -20,10 +19,10 @@ public class ElementSlot extends GUIElement {
 
         image = Resources.GUI.getImage("slot");
     }
-    
+
     public void useAssignedItem(Player causer, Vector2 pos) {
-        if(assignedInventory.getAmount(assignedItem) > 0) {
-            if(((Item)assignedItem.toPrototype().toGameObject()).use(causer, pos)) {
+        if (assignedInventory.getAmount(assignedItem) > 0) {
+            if (((Item) assignedItem.toPrototype().toGameObject()).use(causer, pos)) {
                 assignedInventory.remove(assignedItem, 1);
             }
         }

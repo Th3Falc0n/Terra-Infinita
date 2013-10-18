@@ -12,8 +12,8 @@ import com.dafttech.terra.game.world.items.persistence.GameObject;
 
 public abstract class Item extends GameObject implements IDrawableInventory {
     public abstract TextureRegion getImage();
+
     public abstract boolean use(Player causer, Vector2 position);
-    
 
     public boolean isLightEmitter() {
         return false;

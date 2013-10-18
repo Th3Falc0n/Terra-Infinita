@@ -4,6 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
@@ -11,6 +12,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.gen.biomes.Biome;
+import com.dafttech.terra.game.world.gen.biomes.BiomeDesert;
 import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -68,7 +70,7 @@ public class Chunk implements IDrawableInWorld {
     }
 
     public Biome getBiome() {
-        return BiomeGrassland.instance;
+        return new Random().nextBoolean() ? BiomeGrassland.instance : BiomeDesert.instance;
     }
 
     public void regenerate() {

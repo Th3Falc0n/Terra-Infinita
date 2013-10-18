@@ -11,11 +11,9 @@ import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
 import com.dafttech.terra.engine.gui.modules.ModuleChat;
-import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.tiles.TileDirt;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;

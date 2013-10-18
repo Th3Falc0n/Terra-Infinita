@@ -32,7 +32,7 @@ public class ModuleHUDBottom extends GUIModule {
         slots[prev].active = false;
         slots[activeSlot].active = true;
     }
-    
+
     public ElementSlot getActiveSlot() {
         return slots[activeSlot];
     }

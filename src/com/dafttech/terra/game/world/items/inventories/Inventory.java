@@ -25,9 +25,9 @@ public class Inventory {
     }
 
     public boolean remove(Item assignedItem, int i) {
-        if(getAmount(assignedItem) >= i) {
+        if (getAmount(assignedItem) >= i) {
             Prototype proto = assignedItem.toPrototype();
-            
+
             amounts.put(proto, amounts.get(proto) - i);
             return true;
         }

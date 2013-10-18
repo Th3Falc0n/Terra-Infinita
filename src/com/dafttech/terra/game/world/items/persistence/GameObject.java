@@ -6,14 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.Json.Serializable;
-import com.dafttech.terra.engine.Vector2;
-import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.Player;
-import com.dafttech.terra.game.world.items.inventories.Inventory;
 
 public abstract class GameObject {
-    
-    //****FOLLOWING PERSISTENCE CODE**** May harm your brain
+
+    // ****FOLLOWING PERSISTENCE CODE**** May harm your brain
 
     public List<Field> annotatedFields = new LinkedList<Field>();
 
