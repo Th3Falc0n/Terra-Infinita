@@ -58,6 +58,5 @@ public class BiomeGrassland extends Biome {
 
     @Override
     public void populateChunk(WorldGenerator gen, Chunk chunk) {
-
     }
 }
