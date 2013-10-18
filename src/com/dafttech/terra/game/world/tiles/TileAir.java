@@ -20,4 +20,9 @@ public class TileAir extends Tile {
     public boolean isAir() {
         return true;
     }
+
+    @Override
+    public boolean isReplacable() {
+        return true;
+    }
 }

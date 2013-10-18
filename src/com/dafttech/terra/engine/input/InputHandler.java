@@ -27,9 +27,6 @@ public class InputHandler implements InputProcessor {
         registerKey(Keys.S, "DOWN");
         registerKey(Keys.D, "RIGHT");
 
-        registerKey(Keys.B, "BOMB");
-        registerKey(Keys.G, "GLOWSTICK");
-
         registerKey(Keys.SPACE, "JUMP");
         registerKey(Keys.ENTER, "CHAT");
     }

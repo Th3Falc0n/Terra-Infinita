@@ -7,11 +7,7 @@ import com.dafttech.terra.game.world.entities.EntityFlamingArrow;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.resources.Resources;
 
-public class ItemArrow extends Item {
-
-    @Override
-    public void update(float delta) {
-    }
+public class ItemArrow extends ItemEntitySpawner {
 
     @Override
     public TextureRegion getImage() {
@@ -19,10 +15,14 @@ public class ItemArrow extends Item {
     }
 
     @Override
-    public boolean use(Player causer, Vector2 position) {
-        EntityFlamingArrow a = new EntityFlamingArrow(position, causer.worldObj);
+    public float getNextUseDelay(Player causer, Vector2 position) {
+        return 0.2f;
+    }
+
+    @Override
+    public boolean spawnEntity(Player causer, Vector2 position) {
+        EntityFlamingArrow a = new EntityFlamingArrow(causer.getPosition(), causer.worldObj);
         a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
         return true;
     }
-
 }

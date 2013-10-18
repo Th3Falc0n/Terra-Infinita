@@ -11,6 +11,7 @@ import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
     private Prototype assignedType = null;
+    private float cooldownTime = 0;
     public Inventory assignedInventory = null;
 
     public boolean active = false;
@@ -22,9 +23,10 @@ public class ElementSlot extends GUIElement {
     }
 
     public void useAssignedItem(Player causer, Vector2 pos) {
-        if (assignedInventory.getAmount(assignedType) > 0) {
+        if (assignedInventory.getAmount(assignedType) > 0 && causer.worldObj.time > cooldownTime) {
             if (((Item) assignedType.toGameObject()).use(causer, pos)) {
                 assignedInventory.remove(assignedType, 1);
+                cooldownTime = causer.worldObj.time + ((Item) assignedType.toGameObject()).getNextUseDelay(causer, pos);
             }
         }
     }

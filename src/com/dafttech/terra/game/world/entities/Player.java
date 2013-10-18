@@ -6,9 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.eventmanager.Event;
-import com.dafttech.eventmanager.EventFilter;
-import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
@@ -18,6 +15,9 @@ import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.particles.ParticleDust;
+import com.dafttech.terra.game.world.items.ItemArrow;
+import com.dafttech.terra.game.world.items.ItemDynamite;
+import com.dafttech.terra.game.world.items.ItemGlowstick;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
@@ -32,6 +32,13 @@ public class Player extends EntityLiving {
         hudBottom.create();
 
         hudBottom.slots[0].assignItem(new TileDirt(), inventory);
+        hudBottom.slots[1].assignItem(new ItemArrow(), inventory);
+        hudBottom.slots[2].assignItem(new ItemGlowstick(), inventory);
+        hudBottom.slots[3].assignItem(new ItemDynamite(), inventory);
+
+        inventory.add(new ItemArrow(), 100);
+        inventory.add(new ItemGlowstick(), 100);
+        inventory.add(new ItemDynamite(), 10);
     }
 
     long left;
@@ -85,27 +92,6 @@ public class Player extends EntityLiving {
         }
 
         hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
-    }
-
-    @EventListener(value = "KEYDOWN", filter = "filterOnBombKeyPressed")
-    public void onBombKeyPressed(Event event) {
-        new EntityDynamite(getPosition(), worldObj, 3, 4);
-    }
-
-    @EventFilter("filterOnBombKeyPressed")
-    public String filter1() {
-        return "BOMB";
-    }
-
-    @EventListener(value = "KEYDOWN", filter = "filterOnGlowstickKeyPressed")
-    public void onGlowstickKeyPressed(Event event) {
-        EntityGlowstick a = new EntityGlowstick(getPosition(), worldObj);
-        a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.08f));
-    }
-
-    @EventFilter("filterOnGlowstickKeyPressed")
-    public String filter2() {
-        return "GLOWSTICK";
     }
 
     @Override

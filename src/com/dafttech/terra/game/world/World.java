@@ -21,6 +21,7 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
+    public float time = 0;
     public WorldGenerator gen;
     private float tickProgress = 0, tickLength = 0.05f;
 
@@ -31,7 +32,6 @@ public class World implements IDrawableInWorld {
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
-        // gen.generate();
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
@@ -167,6 +167,8 @@ public class World implements IDrawableInWorld {
 
     @Override
     public void update(float delta) {
+        time += delta;
+
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 

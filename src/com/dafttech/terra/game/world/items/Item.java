@@ -15,6 +15,10 @@ public abstract class Item extends GameObject implements IDrawableInventory {
 
     public abstract boolean use(Player causer, Vector2 position);
 
+    public float getNextUseDelay(Player causer, Vector2 position) {
+        return 0;
+    }
+
     public boolean isLightEmitter() {
         return false;
     }
