@@ -82,7 +82,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public boolean remove() {
-        if (chunk != null) return chunk.remove(this);
+        if (chunk != null) return chunk.removeEntity(this);
         return false;
     }
 
@@ -92,7 +92,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     private void addToWorld(Chunk chunk, Vector2 pos) {
         remove();
-        if (chunk.add(this)) this.chunk = chunk;
+        if (chunk.addEntity(this)) this.chunk = chunk;
     }
 
     public World getWorld() {

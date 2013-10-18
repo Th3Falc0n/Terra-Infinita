@@ -17,7 +17,7 @@ import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
-    public Vector2i position = null;
+    private Vector2i position = new Vector2i();
     List<Subtile> subtiles = new ArrayList<Subtile>();
     public World world = null;
 
@@ -41,7 +41,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public void spawnAsEntity() {
-        Vector2 p = position.toEntityPos();
+        Vector2 p = getPosition().toEntityPos();
         World w = world;
 
         super.spawnAsEntity(p.addNew(0.5f, 0.5f), w);
@@ -114,12 +114,16 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public final void setReceivesSunlight(boolean is) {
         receivesSunlight = is;
         if (!isOpaque()) {
-            Tile b = world.getNextTileBelow(position);
+            Tile b = world.getNextTileBelow(getPosition());
             if (b != null) {
                 b.setReceivesSunlight(is);
                 b.sunlightFilter = is ? this : null;
             }
         }
+    }
+
+    public boolean isAir() {
+        return false;
     }
 
     public boolean isOpaque() {
@@ -145,7 +149,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public void damage(float damage, Entity causer) {
         breakingProgress += damage;
         if (breakingProgress > hardness) {
-            getWorld().destroyTile(position.x, position.y, causer);
+            getWorld().destroyTile(getPosition().x, getPosition().y, causer);
         }
     }
 
@@ -154,5 +158,13 @@ public abstract class Tile extends Item implements IDrawableInWorld {
             if ((inherited && subtileClass.isAssignableFrom(subtiles.get(i).getClass()))
                     || (!inherited && subtiles.get(i).getClass() == subtileClass)) return true;
         return false;
+    }
+
+    public Vector2i getPosition() {
+        return position.clone();
+    }
+
+    public void setPosition(Vector2i position) {
+        this.position.set(position);
     }
 }

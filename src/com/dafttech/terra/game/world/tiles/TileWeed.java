@@ -25,7 +25,7 @@ public class TileWeed extends Tile {
     public void update(float delta) {
         super.update(delta);
         if (TerraInfinita.rnd.nextInt(20) == 0) {
-            tryGrow(position.addNew(TerraInfinita.rnd.nextInt(3) - 1, TerraInfinita.rnd.nextInt(3) - 1));
+            tryGrow(getPosition().addNew(TerraInfinita.rnd.nextInt(3) - 1, TerraInfinita.rnd.nextInt(3) - 1));
         }
     }
 

@@ -20,13 +20,13 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     public void fall(int x, int y) {
-        world.setTile(position.x + x, position.y + y, this, true);
+        world.setTile(getPosition().add(x, y), this, true);
         renderOffset.x -= x;
         renderOffset.y -= y;
     }
 
     public void fallIfPossible() {
-        if (world.getTile(position.x, position.y + 1) == null) {
+        if (world.getTile(getPosition().addY(1)).isAir()) {
             fall(0, 1);
         }
     }

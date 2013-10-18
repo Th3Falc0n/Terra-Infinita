@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityLiving;
@@ -32,21 +33,21 @@ public class TileFire extends TileFalling {
         lifetime -= speedMod;
 
         if (spreadCounter <= 0) {
-            int spreadX = position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
-            int spreadY = position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
-            Tile spreadTile = world.getTile(spreadX, spreadY);
+            Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
+                    new Random().nextInt(spreadDistance * 2) - spreadDistance);
+            Tile spreadTile = world.getTile(spreadPosition);
             if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
                 spreadCounter = spreadCounterMax;
-                world.setTile(spreadX, spreadY, new TileFire(), true);
+                world.setTile(spreadPosition, new TileFire(), true);
             }
         }
         if (lifetime <= 0) {
-            world.setTile(position, null, true);
+            world.setTile(getPosition(), null, true);
         }
 
-        if (light == null) light = new PointLight(position.toEntityPos(), 95);
+        if (light == null) light = new PointLight(getPosition().toEntityPos(), 95);
 
-        light.setPosition(position.toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+        light.setPosition(getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
     }
 
     public static boolean createFire(World world, int x, int y) {

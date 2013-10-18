@@ -71,7 +71,7 @@ public class World implements IDrawableInWorld {
 
     public Tile getTile(Vector2i pos) {
         Chunk chunk = getOrCreateChunk(pos);
-        if (chunk != null) return chunk.get(pos.getBlockInChunkPos(this));
+        if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this));
         return null;
     }
 
@@ -106,11 +106,11 @@ public class World implements IDrawableInWorld {
         if (chunk != null) {
             boolean oldTile = false;
             Vector2i oldPos = null;
-            if (tile != null && tile.position != null && getTile(tile.position) == tile) {
+            if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) {
                 oldTile = true;
-                oldPos = tile.position.clone();
+                oldPos = tile.getPosition().clone();
             }
-            chunk.set(pos.getBlockInChunkPos(this), tile);
+            chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet();
                 notifyNeighborTiles(pos.x, pos.y);

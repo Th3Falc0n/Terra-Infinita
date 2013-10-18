@@ -13,7 +13,7 @@ public class TileRendererBlock extends TileRenderer {
 
     @Override
     public void draw(AbstractScreen screen, Tile tile, Entity pointOfView, Object... rendererArguments) {
-        Vector2 screenVec = tile.position.toScreenPos(pointOfView);
+        Vector2 screenVec = tile.getPosition().toScreenPos(pointOfView);
 
         float offX = 0, offY = 0;
         if (tile instanceof ITileRenderOffset) {

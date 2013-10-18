@@ -59,7 +59,7 @@ public abstract class GameObject {
         if (targetClass.getSuperclass() != null) getAllDeclaredFields(targetClass.getSuperclass(), fields);
         return fields;
     }
-    
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         // TODO Auto-generated method stub

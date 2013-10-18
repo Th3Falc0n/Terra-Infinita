@@ -22,10 +22,10 @@ public class SubtileGrass extends Subtile {
 
     @Override
     public void onTick(World world) {
-        int spreadX = tile.position.x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
-        int spreadY = tile.position.y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
+        int spreadX = tile.getPosition().x + new Random().nextInt(spreadDistance * 2) - spreadDistance;
+        int spreadY = tile.getPosition().y + new Random().nextInt(spreadDistance * 2) - spreadDistance;
         Tile spreadTile = tile.world.getTile(spreadX, spreadY);
-        if (spreadTile != null && spreadTile instanceof TileDirt && tile.world.getTile(spreadX, spreadY - 1) == null) {
+        if (spreadTile != null && spreadTile instanceof TileDirt && tile.world.getTile(spreadX, spreadY - 1).isAir()) {
             if (!spreadTile.hasSubtile(SubtileGrass.class, true)) {
                 spreadTile.addSubtile(new SubtileGrass());
             }

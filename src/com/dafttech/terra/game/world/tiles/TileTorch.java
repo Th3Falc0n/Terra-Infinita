@@ -23,9 +23,9 @@ public class TileTorch extends Tile {
     public void update(float delta) {
         super.update(delta);
 
-        if (light == null) light = new PointLight(position.toEntityPos(), 95);
+        if (light == null) light = new PointLight(getPosition().toEntityPos(), 95);
 
-        light.setPosition(position.toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+        light.setPosition(getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.dafttech.terra.game.world.gen.biomes.Biome;
 import com.dafttech.terra.game.world.gen.biomes.BiomeDesert;
 import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;
 import com.dafttech.terra.game.world.tiles.Tile;
+import com.dafttech.terra.game.world.tiles.TileAir;
 
 public class Chunk implements IDrawableInWorld {
     public World world;
@@ -28,6 +29,12 @@ public class Chunk implements IDrawableInWorld {
         this.world = world;
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
+        Vector2i airPos = new Vector2i();
+        for (airPos.y = 0; airPos.y < map[0].length; airPos.y++) {
+            for (airPos.x = 0; airPos.x < map.length; airPos.x++) {
+                setTile(airPos, new TileAir());
+            }
+        }
         world.localChunks.put(chunkPos, this);
         regenerate();
     }
@@ -43,7 +50,7 @@ public class Chunk implements IDrawableInWorld {
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
-                tile = get(pos);
+                tile = getTile(pos);
                 if (tile != null) tile.update(delta);
             }
         }
@@ -63,7 +70,7 @@ public class Chunk implements IDrawableInWorld {
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
-                tile = get(pos);
+                tile = getTile(pos);
                 if (tile != null) tile.draw(screen, pointOfView);
             }
         }
@@ -82,28 +89,32 @@ public class Chunk implements IDrawableInWorld {
         regenerate = false;
     }
 
-    protected Tile get(Vector2i blockInChunkPos) {
+    protected Tile getTile(Vector2i blockInChunkPos) {
         if (regenerate) tryRegenerate();
-        if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) return map[blockInChunkPos.x][blockInChunkPos.y];
+        if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
+            if (map[blockInChunkPos.x][blockInChunkPos.y] == null) setTile(blockInChunkPos, new TileAir());
+            return map[blockInChunkPos.x][blockInChunkPos.y];
+        }
         return null;
     }
 
-    public Chunk set(Vector2i blockInChunkPos, Tile tile) {
+    public Chunk setTile(Vector2i blockInChunkPos, Tile tile) {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
+            if (tile == null) tile = new TileAir();
             if (tile != null) {
                 tile.world = world;
-                tile.position = blockInChunkPos.getBlockInWorldPos(this);
+                tile.setPosition(blockInChunkPos.getBlockInWorldPos(this));
             }
             if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
     }
 
-    public boolean remove(Entity entity) {
+    public boolean removeEntity(Entity entity) {
         return localEntities.remove(entity);
     }
 
-    public boolean add(Entity entity) {
+    public boolean addEntity(Entity entity) {
         return localEntities.add(entity);
     }
 

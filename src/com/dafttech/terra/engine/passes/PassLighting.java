@@ -23,11 +23,11 @@ public class PassLighting extends RenderingPass {
     public int sunlevel = 64;
 
     public Rectangle getSunlightRect(Tile t, Entity pointOfView) {
-        Vector2 v = t.position.toScreenPos(pointOfView);
+        Vector2 v = t.getPosition().toScreenPos(pointOfView);
         if (t.sunlightFilter == null) {
             return new Rectangle(v.x - sunlevel, 0, BLOCK_SIZE + sunlevel, v.y + sunlevel);
         } else {
-            Vector2 f = t.sunlightFilter.position.toScreenPos(pointOfView);
+            Vector2 f = t.sunlightFilter.getPosition().toScreenPos(pointOfView);
             return new Rectangle(v.x - sunlevel, f.y, BLOCK_SIZE + sunlevel, v.y - f.y + sunlevel);
         }
     }

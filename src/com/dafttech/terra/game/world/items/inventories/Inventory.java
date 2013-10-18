@@ -37,7 +37,7 @@ public class Inventory {
         }
         return false;
     }
-    
+
     public boolean contains(GameObject obj) {
         return contains(obj.toPrototype());
     }
