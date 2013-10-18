@@ -21,11 +21,6 @@ public class EntityItem extends Entity {
     }
 
     @Override
-    public int hashCode() {
-        return wrapped != null ? wrapped.hashCode() : super.hashCode();
-    }
-
-    @Override
     public Prototype toPrototype() {
         return wrapped.toPrototype();
     }

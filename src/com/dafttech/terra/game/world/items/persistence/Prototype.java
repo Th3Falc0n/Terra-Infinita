@@ -7,11 +7,13 @@ public class Prototype {
     public String className = "";
     public HashMap<String, Object> values = new HashMap<String, Object>();
 
-    public int getPrototypeHash() {
+    @Override
+    public int hashCode() {
         return getHashBase().hashCode();
     }
 
-    public boolean isSamePrototype(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (obj instanceof Prototype) return hashCode() == ((Prototype) obj).hashCode();
         if (obj instanceof GameObject) return hashCode() == ((GameObject) obj).hashCode();
 
