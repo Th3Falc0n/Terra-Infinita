@@ -11,7 +11,7 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityLiving;
 import com.dafttech.terra.resources.Resources;
 
-public class TileFire extends TileSand {
+public class TileFire extends TileFalling {
     PointLight light;
     float spreadCounter = 0.2f;
     float spreadCounterMax = 0.2f;
