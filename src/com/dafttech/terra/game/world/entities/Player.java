@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventFilter;
 import com.dafttech.eventmanager.EventListener;
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
@@ -16,6 +17,8 @@ import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.particles.ParticleDust;
+import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
@@ -71,6 +74,14 @@ public class Player extends EntityLiving {
             light.setColor(new Color(255, 200, 40, 255));
         }
         light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        
+        for (int i = 0; i < 5; i++) {
+            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 2f) {
+                if(getUndergroundTile() != null && !inAir) {
+                    new ParticleDust(getPosition().addNew(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE).addNew((TerraInfinita.rnd.nextFloat() - 0.5f) * BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat() - 1f) * 4f), worldObj, getUndergroundTile().getImage());
+                }
+            }
+        }
 
         hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
     }

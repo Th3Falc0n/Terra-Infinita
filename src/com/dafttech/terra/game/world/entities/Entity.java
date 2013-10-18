@@ -267,7 +267,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Tile getUndergroundTile() {
-        Vector2i pos = position.toWorldPosition();
+        Vector2i pos = position.addNew(size.x * BLOCK_SIZE, size.y * BLOCK_SIZE).toWorldPosition();
         return worldObj.getTile(pos.x, pos.y + 1);
     }
 
