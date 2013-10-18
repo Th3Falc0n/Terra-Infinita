@@ -85,8 +85,8 @@ public class Chunk implements IDrawableInWorld {
     }
 
     private void tryRegenerate() {
-        world.gen.generateChunk(this);
         regenerate = false;
+        world.gen.generateChunk(this);
     }
 
     protected Tile getTile(Vector2i blockInChunkPos) {

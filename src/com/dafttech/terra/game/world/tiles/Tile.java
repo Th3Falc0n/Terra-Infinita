@@ -73,6 +73,16 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return this;
     }
 
+    public Tile removeSubtile(Subtile... subtile) {
+        for (Subtile s : subtile) {
+            if (s != null) {
+                s.setTile(null);
+                subtiles.remove(s);
+            }
+        }
+        return this;
+    }
+
     @Override
     public void draw(AbstractScreen screen, Entity pointOfView) {
         getRenderer().draw(screen, this, pointOfView);
