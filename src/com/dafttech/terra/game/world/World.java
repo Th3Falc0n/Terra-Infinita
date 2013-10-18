@@ -160,7 +160,7 @@ public class World implements IDrawableInWorld {
     }
 
     public void removeEntity(Entity entity) {
-        entity.remove(this);
+        entity.remove();
     }
 
     @Override
