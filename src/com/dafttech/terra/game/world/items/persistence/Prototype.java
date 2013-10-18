@@ -44,8 +44,7 @@ public class Prototype {
             Field[] fields = cl.getFields();
 
             for (Field f : fields) {
-                if(f.isAnnotationPresent(Persistent.class))
-                    f.set(object, f);
+                if (f.isAnnotationPresent(Persistent.class)) f.set(object, f);
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             // TODO Auto-generated catch block

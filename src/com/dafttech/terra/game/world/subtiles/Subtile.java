@@ -19,7 +19,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
     public Subtile(Tile t) {
         tile = t;
     }

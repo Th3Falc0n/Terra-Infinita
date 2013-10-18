@@ -36,9 +36,9 @@ public class Player extends EntityLiving {
     boolean right;
 
     public Inventory inventory = new Inventory();
-    
+
     public ModuleHUDBottom hudBottom;
-    
+
     PointLight light;
 
     @Override
@@ -71,7 +71,7 @@ public class Player extends EntityLiving {
             light.setColor(new Color(255, 200, 40, 255));
         }
         light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
-        
+
         hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
     }
 

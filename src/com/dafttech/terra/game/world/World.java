@@ -107,7 +107,7 @@ public class World implements IDrawableInWorld {
             boolean oldTile = false;
             Vector2i oldPos = null;
             if (tile != null && tile.position != null) {
-                
+
             }
             chunk.set(pos.getBlockInChunkPos(this), tile);
             if (notify) {

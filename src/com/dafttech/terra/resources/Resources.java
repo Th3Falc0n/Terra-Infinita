@@ -26,6 +26,7 @@ public class Resources {
         TILES.loadImage("fire", "res/tiles/fire.png");
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");
+        TILES.loadImage("mask_grass_dry", "res/tiles/grass_mask_dry.png");
         TILES.loadImage("bone", "res/tiles/bone.png");
 
         ENTITIES.loadImage("player", "res/entities/player.png");
