@@ -106,8 +106,9 @@ public class World implements IDrawableInWorld {
         if (chunk != null) {
             boolean oldTile = false;
             Vector2i oldPos = null;
-            if (tile != null && tile.position != null) {
-
+            if (tile != null && tile.position != null && getTile(tile.position) == tile) {
+                oldTile = true;
+                oldPos = tile.position.clone();
             }
             chunk.set(pos.getBlockInChunkPos(this), tile);
             if (notify) {
