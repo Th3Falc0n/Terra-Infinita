@@ -6,10 +6,11 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
+import com.dafttech.terra.game.world.items.persistence.Prototype;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
-    private Item assignedItem = null;
+    private Prototype assignedType = null;
     public Inventory assignedInventory = null;
 
     public boolean active = false;
@@ -21,15 +22,15 @@ public class ElementSlot extends GUIElement {
     }
 
     public void useAssignedItem(Player causer, Vector2 pos) {
-        if (assignedInventory.getAmount(assignedItem) > 0) {
-            if (((Item) assignedItem.toPrototype().toGameObject()).use(causer, pos)) {
-                assignedInventory.remove(assignedItem, 1);
+        if (assignedInventory.getAmount(assignedType) > 0) {
+            if (((Item) assignedType.toGameObject()).use(causer, pos)) {
+                assignedInventory.remove(assignedType, 1);
             }
         }
     }
 
     public void assignItem(Item item, Inventory inventory) {
-        assignedItem = item;
+        assignedType = item.toPrototype();
         assignedInventory = inventory;
     }
 
@@ -41,11 +42,11 @@ public class ElementSlot extends GUIElement {
 
         screen.batch.begin();
 
-        if (assignedItem != null) {
-            assignedItem.drawInventory(screen, p);
+        if (assignedType != null) {
+            ((Item)assignedType.toGameObject()).drawInventory(screen, p);
 
             Resources.GUI_FONT.setColor(active ? Color.YELLOW : Color.WHITE);
-            Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedItem), p.x, 6 + p.y);
+            Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedType), p.x, 6 + p.y);
         }
 
         screen.batch.end();

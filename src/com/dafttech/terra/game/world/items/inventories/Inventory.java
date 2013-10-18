@@ -25,15 +25,19 @@ public class Inventory {
     }
 
     public boolean remove(Item assignedItem, int i) {
-        if (getAmount(assignedItem) >= i) {
-            Prototype proto = assignedItem.toPrototype();
+        Prototype proto = assignedItem.toPrototype();
+        return remove(proto, i);
+    }
+
+    public boolean remove(Prototype proto, int i) {
+        if (getAmount(proto) >= i) {
 
             amounts.put(proto, amounts.get(proto) - i);
             return true;
         }
         return false;
     }
-
+    
     public boolean contains(GameObject obj) {
         return contains(obj.toPrototype());
     }
