@@ -145,7 +145,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
             for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
                 for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
-                    if (world.getTile(x, y) != null && world.getTile(x, y).canCollideWith(this)) {
+                    if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                         Rectangle rect = new Rectangle(x * (float) BLOCK_SIZE, y * (float) BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
                         if (playerRect.overlaps(rect)) {

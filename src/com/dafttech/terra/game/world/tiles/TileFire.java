@@ -19,6 +19,7 @@ public class TileFire extends TileFalling {
     float lifetime = 0;
     int spreadDistance = 3;
     float speedMod = 0.05f;
+    boolean spread = true;
 
     @Override
     public TextureRegion getImage() {
@@ -32,7 +33,7 @@ public class TileFire extends TileFalling {
         spreadCounter -= speedMod;
         lifetime -= speedMod;
 
-        if (spreadCounter <= 0) {
+        if (spread && spreadCounter <= 0) {
             Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
                     new Random().nextInt(spreadDistance * 2) - spreadDistance);
             Tile spreadTile = world.getTile(spreadPosition);
@@ -55,12 +56,20 @@ public class TileFire extends TileFalling {
         if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
             world.setTile(x, y, new TileFire(), true);
             return true;
+        } else if (spreadTile.isReplacable()) {
+            world.setTile(x, y, new TileFire().dontSpread(), true);
+            return true;
         }
         return false;
     }
 
+    public TileFire dontSpread() {
+        spread = false;
+        return this;
+    }
+
     @Override
-    public boolean canCollideWith(Entity entity) {
+    public boolean isCollidableWith(Entity entity) {
         if (entity instanceof EntityLiving) ((EntityLiving) entity).damage(0.01f);
         return false;
     }

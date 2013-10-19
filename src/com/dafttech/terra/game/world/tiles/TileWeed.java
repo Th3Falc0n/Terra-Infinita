@@ -17,7 +17,7 @@ public class TileWeed extends Tile {
     }
 
     @Override
-    public boolean canCollideWith(Entity entity) {
+    public boolean isCollidableWith(Entity entity) {
         return false;
     }
 

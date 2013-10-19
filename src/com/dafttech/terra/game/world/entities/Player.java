@@ -24,6 +24,7 @@ import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileFence;
 import com.dafttech.terra.game.world.tiles.TileSand;
+import com.dafttech.terra.game.world.tiles.TileTorch;
 import com.dafttech.terra.resources.Resources;
 
 public class Player extends EntityLiving {
@@ -41,12 +42,14 @@ public class Player extends EntityLiving {
         hudBottom.slots[4].assignItem(new ItemDynamite(), inventory);
         hudBottom.slots[5].assignItem(new ItemRainbowGun(), inventory);
         hudBottom.slots[6].assignItem(new TileFence(), inventory);
+        hudBottom.slots[7].assignItem(new TileTorch(), inventory);
 
         inventory.add(new ItemArrow(), 100);
         inventory.add(new ItemGlowstick(), 100);
         inventory.add(new ItemDynamite(), 10);
         inventory.add(new ItemRainbowGun(), 1);
         inventory.add(new TileFence(), 100);
+        inventory.add(new TileTorch(), 20);
     }
 
     long left;

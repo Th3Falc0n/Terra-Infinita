@@ -34,6 +34,10 @@ public class Vector2i {
         return new Vector2(x * BLOCK_SIZE, y * BLOCK_SIZE);
     }
 
+    public Vector2 toVector2() {
+        return new Vector2(x, y);
+    }
+
     public int getX() {
         return x;
     }

@@ -46,6 +46,10 @@ public class Vector2 {
         return new Vector2(x - relateTo.x + Gdx.graphics.getWidth() / 2.0f, y - relateTo.y + Gdx.graphics.getHeight() / 2.0f);
     }
 
+    public Vector2i toVector2i() {
+        return new Vector2i((int) x >= 0 ? (int) x : (int) x - 1, (int) y >= 0 ? (int) y : (int) y - 1);
+    }
+
     public static Vector2 getMouse() {
         return new Vector2(Gdx.input.getX(), Gdx.input.getY());
     }

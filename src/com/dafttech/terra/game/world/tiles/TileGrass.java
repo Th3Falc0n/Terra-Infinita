@@ -27,7 +27,7 @@ public class TileGrass extends Tile implements ITileInworldEvents, ITileInteract
     }
 
     @Override
-    public boolean canCollideWith(Entity entity) {
+    public boolean isCollidableWith(Entity entity) {
         return false;
     }
 

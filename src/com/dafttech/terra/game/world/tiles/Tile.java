@@ -36,8 +36,20 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return false;
     }
 
-    public boolean isReplacable() {
+    public boolean isAir() {
         return false;
+    }
+
+    public boolean isReplacable() {
+        return isAir();
+    }
+
+    public boolean isOpaque() {
+        return isAir();
+    }
+
+    public boolean isCollidableWith(Entity entity) {
+        return !isAir();
     }
 
     public void spawnAsEntity() {
@@ -111,11 +123,6 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         if (breakingProgress > 0) breakingProgress -= delta;
     }
 
-    public boolean canCollideWith(Entity entity) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
     public Tile setHardness(float hardness) {
         this.hardness = hardness;
         return this;
@@ -130,14 +137,6 @@ public abstract class Tile extends Item implements IDrawableInWorld {
                 b.sunlightFilter = is ? this : null;
             }
         }
-    }
-
-    public boolean isAir() {
-        return false;
-    }
-
-    public boolean isOpaque() {
-        return true;
     }
 
     public boolean providesSunlightFilter() {
