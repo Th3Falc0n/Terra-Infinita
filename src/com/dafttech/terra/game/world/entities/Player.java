@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.input.InputHandler;
@@ -111,8 +112,17 @@ public class Player extends EntityLiving {
     }
 
     public Inventory getInventory() {
-        // TODO Auto-generated method stub
-        return null;
+        return inventory;
+    }
+
+    @Override
+    public void draw(AbstractScreen screen, Entity pointOfView) {
+        Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
+
+        screen.batch.setColor(color);
+        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+        screen.batch.flush();
+        // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
     }
 
     @Override
