@@ -45,11 +45,15 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public boolean isOpaque() {
-        return isAir();
+        return !isAir();
     }
 
     public boolean isCollidableWith(Entity entity) {
         return !isAir();
+    }
+
+    public int getTemperature() {
+        return 0;
     }
 
     public void spawnAsEntity() {
@@ -88,7 +92,6 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public Tile removeSubtile(Subtile... subtile) {
         for (Subtile s : subtile) {
             if (s != null) {
-                s.setTile(null);
                 subtiles.remove(s);
             }
         }

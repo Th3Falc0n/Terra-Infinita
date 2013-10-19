@@ -69,6 +69,16 @@ public class TileFire extends TileFalling {
     }
 
     @Override
+    public boolean isOpaque() {
+        return false;
+    }
+
+    @Override
+    public int getTemperature() {
+        return 100;
+    }
+
+    @Override
     public boolean isCollidableWith(Entity entity) {
         if (entity instanceof EntityLiving) ((EntityLiving) entity).damage(0.01f);
         return false;
