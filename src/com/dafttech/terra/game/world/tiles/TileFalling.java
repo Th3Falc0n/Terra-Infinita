@@ -6,7 +6,11 @@ import com.dafttech.terra.game.world.entities.EntityItem;
 
 public abstract class TileFalling extends Tile implements ITileInworldEvents, ITileRenderOffset {
     private Vector2 renderOffset = new Vector2();
-    private float fallSpeed = 10f;
+    private float fallSpeed = 10f, fallDelay = 0.2f;
+    private float createTime = 0;
+
+    public TileFalling() {
+    }
 
     @Override
     public void update(float delta) {
@@ -17,6 +21,7 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
             if (renderOffset.x < 0) renderOffset.x += fallSpeed * delta;
             if (renderOffset.y < 0) renderOffset.y += fallSpeed * delta;
         }
+        fallIfPossible();
     }
 
     public void fall(int x, int y) {
@@ -26,7 +31,8 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     public void fallIfPossible() {
-        if (world.getTile(getPosition().addY(1)).isAir()) {
+        if (createTime == 0) createTime = world.time;
+        if (createTime + fallDelay < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
             fall(0, 1);
         }
     }

@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.resources.Resources;
 
-public class TileTorch extends Tile {
+public class TileTorch extends TileFalling {
     PointLight light;
 
     public TileTorch() {

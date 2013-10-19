@@ -56,9 +56,13 @@ public class EntityFlamingArrow extends EntityArrow {
         }
 
         if (velocity.x == 0 && velocity.y == 0) {
-            TileFire.createFire(worldObj, (int) getPosition().x / BLOCK_SIZE, (int) getPosition().y / BLOCK_SIZE);
+            placeBlockOnHit((int) getPosition().x / BLOCK_SIZE, (int) getPosition().y / BLOCK_SIZE);
             worldObj.removeEntity(this);
         }
+    }
+
+    public void placeBlockOnHit(int x, int y) {
+        TileFire.createFire(worldObj, x, y);
     }
 
     @Override
