@@ -13,7 +13,7 @@ public class TileLeaf extends TileLog {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("leaf_m");
+        return Resources.TILES.getImage("leaf");
     }
 
     @Override
