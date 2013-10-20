@@ -32,7 +32,6 @@ public class TileLog extends Tile {
     public void growTree(World world) {
         Random rnd = new Random();
         if (living) {
-            living = false;
             if (height <= maxHeight && (width == 0 || rnd.nextInt(5) == 0) && world.getTile(getPosition().addY(-1)).isReplacable())
                 world.setTile(
                         getPosition().addY(-1),
@@ -51,6 +50,7 @@ public class TileLog extends Tile {
                 }
             }
         }
+        living = false;
     }
 
     private TileLog setSize(int height, int width, int maxHeight, int maxWidth) {
