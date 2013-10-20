@@ -20,8 +20,9 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
             if (renderOffset.y > 0) renderOffset.y -= fallSpeed * delta;
             if (renderOffset.x < 0) renderOffset.x += fallSpeed * delta;
             if (renderOffset.y < 0) renderOffset.y += fallSpeed * delta;
+        } else {
+            fallIfPossible();
         }
-        fallIfPossible();
     }
 
     public void fall(int x, int y) {

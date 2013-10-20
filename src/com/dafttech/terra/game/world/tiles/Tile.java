@@ -52,6 +52,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return !isAir();
     }
 
+    public boolean isFlammable() {
+        return false;
+    }
+
     public int getTemperature() {
         return 0;
     }
@@ -102,7 +106,9 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public void draw(AbstractScreen screen, Entity pointOfView) {
         getRenderer().draw(screen, this, pointOfView);
 
-        for (Subtile s : subtiles) {
+        Subtile s;
+        for (int i = 0; i < subtiles.size(); i++) {
+            s = subtiles.get(i);
             s.draw(screen, pointOfView);
         }
     }

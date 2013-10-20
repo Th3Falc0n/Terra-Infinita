@@ -12,7 +12,7 @@ import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
 
-public class TileGrass extends Tile implements ITileInworldEvents, ITileInteraction {
+public class TileGrass extends Tile implements ITileInworldEvents {
     @Persistent
     int grassIndex;
 

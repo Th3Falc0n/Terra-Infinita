@@ -37,7 +37,7 @@ public class TileFire extends TileFalling {
             Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
                     new Random().nextInt(spreadDistance * 2) - spreadDistance);
             Tile spreadTile = world.getTile(spreadPosition);
-            if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
+            if (spreadTile.isFlammable()) {
                 spreadCounter = spreadCounterMax;
                 world.setTile(spreadPosition, new TileFire(), true);
             }
@@ -53,7 +53,7 @@ public class TileFire extends TileFalling {
 
     public static boolean createFire(World world, int x, int y) {
         Tile spreadTile = world.getTile(x, y);
-        if (spreadTile instanceof ITileInteraction && ((ITileInteraction) spreadTile).isFlammable()) {
+        if (spreadTile.isFlammable() || areSurroundingTilesFlammable(world, x, y)) {
             world.setTile(x, y, new TileFire(), true);
             return true;
         } else if (spreadTile.isReplacable()) {
@@ -61,6 +61,11 @@ public class TileFire extends TileFalling {
             return true;
         }
         return false;
+    }
+
+    public static boolean areSurroundingTilesFlammable(World world, int x, int y) {
+        return world.getTile(x + 1, y).isFlammable() || world.getTile(x - 1, y).isFlammable() || world.getTile(x, y + 1).isFlammable()
+                || world.getTile(x, y - 1).isFlammable();
     }
 
     public TileFire dontSpread() {

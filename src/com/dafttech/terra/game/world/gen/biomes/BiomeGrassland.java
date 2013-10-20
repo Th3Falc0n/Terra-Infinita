@@ -10,6 +10,7 @@ import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileGrass;
+import com.dafttech.terra.game.world.tiles.TileLog;
 import com.dafttech.terra.game.world.tiles.TileStone;
 
 public class BiomeGrassland extends Biome {
@@ -34,7 +35,7 @@ public class BiomeGrassland extends Biome {
                 Tile tile = null;
 
                 if (y - 1 == h) {
-                    tile = new TileGrass();
+                    tile = TerraInfinita.rnd.nextInt(40) == 0 ? new TileLog().setLiving(true) : new TileGrass();
                 }
 
                 if (tile == null) {
