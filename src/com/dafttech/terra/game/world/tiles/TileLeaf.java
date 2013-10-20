@@ -16,6 +16,6 @@ public class TileLeaf extends TileLog {
 
     @Override
     public boolean isOpaque() {
-        return true;
+        return false;
     }
 }
