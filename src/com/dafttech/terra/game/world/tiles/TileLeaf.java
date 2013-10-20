@@ -5,7 +5,7 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
-public class TileLeaf extends TileLog implements ITileRenderRounded {
+public class TileLeaf extends TileLog {
     @Override
     public TileLog getLog() {
         return new TileLeaf();

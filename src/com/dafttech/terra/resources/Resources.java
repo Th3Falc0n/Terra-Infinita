@@ -31,6 +31,11 @@ public class Resources {
         TILES.loadImage("fence_lianas", "res/tiles/fence_lianas.png");
         TILES.loadImage("fence_lianas_flowers", "res/tiles/fence_lianas_flowers.png");
         TILES.loadImage("log", "res/tiles/log.png");
+        TILES.loadImage("log_m", "res/tiles/log_m.png");
+        TILES.loadImage("log_tl", "res/tiles/log_tl.png");
+        TILES.loadImage("log_tr", "res/tiles/log_tr.png");
+        TILES.loadImage("log_bl", "res/tiles/log_bl.png");
+        TILES.loadImage("log_br", "res/tiles/log_br.png");
         TILES.loadImage("leaf", "res/tiles/leaf.png");
         TILES.loadImage("leaf_m", "res/tiles/leaf_m.png");
         TILES.loadImage("leaf_tl", "res/tiles/leaf_tl.png");

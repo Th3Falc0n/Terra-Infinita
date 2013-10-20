@@ -4,10 +4,11 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
-public class TileLog extends Tile {
+public class TileLog extends Tile implements ITileRenderRounded {
     private boolean living = false;
     private int height = 0, width = 0;
     private int maxHeight = 10, maxWidth = 10;
@@ -20,7 +21,7 @@ public class TileLog extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("log");
+        return Resources.TILES.getImage("log_m");
     }
 
     @Override
@@ -83,4 +84,14 @@ public class TileLog extends Tile {
         return true;
     }
 
+    @Override
+    public boolean isFlatTo(World world, Vector2i pos) {
+        return world.getTile(pos) instanceof TileLog || world.getTile(pos).isOpaque();
+    }
+
+    @Override
+    public TextureRegion[] getEdgeImages() {
+        return new TextureRegion[] { Resources.TILES.getImage("log_tl"), Resources.TILES.getImage("log_tr"), Resources.TILES.getImage("log_bl"),
+                Resources.TILES.getImage("log_br") };
+    }
 }
