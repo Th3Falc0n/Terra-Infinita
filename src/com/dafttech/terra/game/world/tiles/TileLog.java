@@ -25,8 +25,8 @@ public class TileLog extends Tile {
     }
 
     @Override
-    public void onTick(World world) {
-        super.onTick(world);
+    public void onTick(World world, float delta) {
+        super.onTick(world, delta);
         growTree(world);
     }
 

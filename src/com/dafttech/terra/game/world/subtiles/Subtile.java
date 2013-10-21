@@ -55,11 +55,11 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
 
     }
 
-    public final void tick(World world) {
-        onTick(world);
+    public final void tick(World world, float delta) {
+        onTick(world, delta);
     }
 
-    public void onTick(World world) {
+    public void onTick(World world, float delta) {
 
     }
 }

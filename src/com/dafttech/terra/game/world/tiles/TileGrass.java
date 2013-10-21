@@ -71,7 +71,7 @@ public class TileGrass extends Tile implements ITileInworldEvents {
     int spreadDistance = 3;
 
     @Override
-    public void onTick(World world) {
+    public void onTick(World world, float delta) {
         Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
                 new Random().nextInt(spreadDistance * 2) - spreadDistance);
         Tile spreadTile = world.getTile(spreadPosition);

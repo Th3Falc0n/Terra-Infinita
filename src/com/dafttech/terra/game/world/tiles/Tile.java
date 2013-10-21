@@ -106,14 +106,14 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         }
     }
 
-    public final void tick(World world) {
-        onTick(world);
+    public final void tick(World world, float delta) {
+        onTick(world, delta);
         for (int i = 0; i < subtiles.size(); i++) {
-            subtiles.get(i).tick(world);
+            subtiles.get(i).tick(world, delta);
         }
     }
 
-    public void onTick(World world) {
+    public void onTick(World world, float delta) {
 
     }
 

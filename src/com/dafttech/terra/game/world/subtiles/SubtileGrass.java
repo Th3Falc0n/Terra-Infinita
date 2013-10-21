@@ -22,7 +22,7 @@ public class SubtileGrass extends Subtile {
     int spreadDistance = 3;
 
     @Override
-    public void onTick(World world) {
+    public void onTick(World world, float delta) {
         if (world.getTile(tile.getPosition().addY(-1)).isOpaque()) {
             tile.removeSubtile(this);
         } else if (world.getTile(tile.getPosition().addY(-1)).getTemperature() > 50 && !(this instanceof SubtileDryGrass)) {

@@ -185,11 +185,8 @@ public class World implements IDrawableInWorld {
 
         TimeKeeping.timeKeeping("Entity update");
 
-        if (time > lastTick + tickLength * 100) lastTick = time;
-        while (time >= lastTick) {
-            lastTick += tickLength;
-            Events.EVENT_WORLDTICK.callAsync(this);
-        }
+        Events.EVENT_WORLDTICK.callAsync(this, time - lastTick);
+        lastTick = time;
 
         TimeKeeping.timeKeeping("Tick update");
     }

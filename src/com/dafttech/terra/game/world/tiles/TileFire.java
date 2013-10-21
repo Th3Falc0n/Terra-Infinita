@@ -27,7 +27,7 @@ public class TileFire extends TileFalling {
     }
 
     @Override
-    public void onTick(World world) {
+    public void onTick(World world, float delta) {
         if (lifetime == 0) lifetime = new Random().nextFloat() * 2f + 1;
 
         spreadCounter -= speedMod;

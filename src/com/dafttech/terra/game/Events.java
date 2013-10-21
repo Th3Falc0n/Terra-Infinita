@@ -60,7 +60,7 @@ public class Events {
             for (int x = (int) world.localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) world.localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
                 for (int y = (int) world.localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) world.localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
                     tile = world.getTile(x, y);
-                    if (tile != null) tile.tick(world);
+                    if (tile != null) tile.tick(world, event.getInput(1, Float.class));
                 }
             }
         }
