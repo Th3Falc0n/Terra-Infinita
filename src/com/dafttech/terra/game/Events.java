@@ -46,7 +46,7 @@ public class Events {
         @Override
         protected void onEvent(Event event) {
             Tile tile = event.getInput(0, World.class).getTile(event.getInput(1, Integer.class), event.getInput(2, Integer.class));
-            if (tile != null) tile.update(0);
+            if (tile != null) tile.update(event.getInput(0, World.class), 0);
         }
     };
 

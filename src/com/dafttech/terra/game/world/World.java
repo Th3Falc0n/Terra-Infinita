@@ -172,7 +172,7 @@ public class World implements IDrawableInWorld {
         for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
                 tile = getTile(x, y);
-                if (tile != null) tile.update(delta);
+                if (tile != null) tile.update(world, delta);
             }
         }
 

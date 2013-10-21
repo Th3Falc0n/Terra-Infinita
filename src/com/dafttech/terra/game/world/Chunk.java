@@ -51,7 +51,7 @@ public class Chunk implements IDrawableInWorld {
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
                 tile = getTile(pos);
-                if (tile != null) tile.update(delta);
+                if (tile != null) tile.update(world, delta);
             }
         }
 
