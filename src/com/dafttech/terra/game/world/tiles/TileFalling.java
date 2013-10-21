@@ -6,22 +6,26 @@ import com.dafttech.terra.game.world.entities.Entity;
 
 public abstract class TileFalling extends Tile implements ITileInworldEvents, ITileRenderOffset {
     private Vector2 renderOffset = new Vector2();
-    private float fallSpeed = 10f, fallDelay = 0.2f;
+    private float fallSpeed = 0.05f, fallDelay = 0.2f;
     private float createTime = 0;
 
     public TileFalling() {
     }
 
-    // TODO: fix
-
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
+
+    }
+
+    @Override
+    public void onTick(World world) {
+        super.onTick(world);
         if (renderOffset.x != 0 || renderOffset.y != 0) {
-            if (renderOffset.x > 0) renderOffset.x -= fallSpeed * delta;
-            if (renderOffset.y > 0) renderOffset.y -= fallSpeed * delta;
-            if (renderOffset.x < 0) renderOffset.x += fallSpeed * delta;
-            if (renderOffset.y < 0) renderOffset.y += fallSpeed * delta;
+            if (renderOffset.x > 0) renderOffset.x -= fallSpeed;
+            if (renderOffset.y > 0) renderOffset.y -= fallSpeed;
+            if (renderOffset.x < 0) renderOffset.x += fallSpeed;
+            if (renderOffset.y < 0) renderOffset.y += fallSpeed;
         } else {
             fallIfPossible(world);
         }

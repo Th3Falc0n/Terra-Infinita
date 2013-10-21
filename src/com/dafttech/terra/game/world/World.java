@@ -21,9 +21,8 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
     public Vector2i chunksize = new Vector2i(32, 32);
-    public float time = 0;
+    public float time = 0, lastTick = 0, tickLength = 0.005f;
     public WorldGenerator gen;
-    private float tickProgress = 0, tickLength = 0.05f;
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
@@ -186,9 +185,9 @@ public class World implements IDrawableInWorld {
 
         TimeKeeping.timeKeeping("Entity update");
 
-        tickProgress += delta;
-        if (tickProgress >= tickLength) {
-            tickProgress -= tickLength;
+        if (time > lastTick + tickLength * 100) lastTick = time;
+        while (time >= lastTick) {
+            lastTick += tickLength;
             Events.EVENT_WORLDTICK.callAsync(this);
         }
 

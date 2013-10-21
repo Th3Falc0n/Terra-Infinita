@@ -13,5 +13,4 @@ public class TileDirt extends Tile {
     public TextureRegion getImage() {
         return Resources.TILES.getImage("dirt");
     }
-
 }
