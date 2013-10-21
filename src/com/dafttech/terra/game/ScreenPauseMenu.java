@@ -72,7 +72,7 @@ public class ScreenPauseMenu extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
 
-        localWorld.draw(this, localWorld.localPlayer);
+        localWorld.draw(localWorld, this, localWorld.localPlayer);
 
         guiContainerScreen.update(delta);
         RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen);

@@ -30,8 +30,8 @@ public class ParticleExplosion extends Particle {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
         Random rnd = new Random();
         int blockSRad = radius * BLOCK_SIZE * 3;
         new ParticleSpark(midpos.clone().add(-blockSRad, -blockSRad).add(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj);

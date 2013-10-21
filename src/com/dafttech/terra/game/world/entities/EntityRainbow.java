@@ -27,7 +27,7 @@ public class EntityRainbow extends Entity {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         Vector2 v = new Vector2(velocity);
@@ -37,8 +37,8 @@ public class EntityRainbow extends Entity {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
 
         if (light == null) {
             light = new PointLight(getPosition(), 95);

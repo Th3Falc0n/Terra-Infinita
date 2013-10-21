@@ -26,7 +26,7 @@ public class EntityItem extends Entity {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(World world, float delta) {
         Vector2 p = getWorld().localPlayer.getPosition();
         Vector2 s = getWorld().localPlayer.getSize();
 
@@ -43,6 +43,6 @@ public class EntityItem extends Entity {
             addForce(vp.nor().mul(14f / vp.len2()));
         }
 
-        super.update(delta);
+        super.update(world, delta);
     }
 }

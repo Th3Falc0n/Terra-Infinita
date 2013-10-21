@@ -1,8 +1,8 @@
 package com.dafttech.terra.game.world.tiles;
 
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.EntityItem;
 
 public abstract class TileFalling extends Tile implements ITileInworldEvents, ITileRenderOffset {
     private Vector2 renderOffset = new Vector2();
@@ -13,28 +13,28 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
         if (renderOffset.x != 0 || renderOffset.y != 0) {
             if (renderOffset.x > 0) renderOffset.x -= fallSpeed * delta;
             if (renderOffset.y > 0) renderOffset.y -= fallSpeed * delta;
             if (renderOffset.x < 0) renderOffset.x += fallSpeed * delta;
             if (renderOffset.y < 0) renderOffset.y += fallSpeed * delta;
         } else {
-            fallIfPossible();
+            fallIfPossible(world);
         }
     }
 
-    public void fall(int x, int y) {
+    public void fall(World world, int x, int y) {
         world.setTile(getPosition().add(x, y), this, true);
         renderOffset.x -= x;
         renderOffset.y -= y;
     }
 
-    public void fallIfPossible() {
+    public void fallIfPossible(World world) {
         if (createTime == 0) createTime = world.time;
         if (createTime + fallDelay < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
-            fall(0, 1);
+            fall(world, 0, 1);
         }
     }
 
@@ -44,27 +44,23 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     @Override
-    public void onTileSet() {
-        fallIfPossible();
+    public void onTileSet(World world) {
+        fallIfPossible(world);
 
     }
 
     @Override
-    public void onNeighborChange(Tile changed) {
-        fallIfPossible();
+    public void onNeighborChange(World world, Tile changed) {
+        fallIfPossible(world);
     }
 
     @Override
-    public void onTileDestroyed(Entity causer) {
-
-    }
-
-    @Override
-    public void onTilePlaced(Entity causer) {
+    public void onTileDestroyed(World world, Entity causer) {
 
     }
 
     @Override
-    public void onTileUsed(Entity causer, EntityItem item) {
+    public void onTilePlaced(World world, Entity causer) {
+
     }
 }

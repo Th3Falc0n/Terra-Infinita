@@ -14,4 +14,10 @@ public class TileAir extends Tile {
     public boolean isAir() {
         return true;
     }
+
+    @Override
+    public void update(float delta) {
+        // TODO Auto-generated method stub
+
+    }
 }

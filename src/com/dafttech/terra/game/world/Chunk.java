@@ -45,7 +45,7 @@ public class Chunk implements IDrawableInWorld {
 
     @Deprecated
     @Override
-    public void update(float delta) {
+    public void update(World world, float delta) {
         Tile tile;
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
@@ -56,7 +56,7 @@ public class Chunk implements IDrawableInWorld {
         }
 
         for (Entity entity : localEntities) {
-            entity.update(delta);
+            entity.update(world, delta);
             if (entity.getPosition().x < -100 || entity.getPosition().x > world.size.x * BLOCK_SIZE + 100
                     || entity.getPosition().y > world.size.y * BLOCK_SIZE + 100) {
                 world.removeEntity(entity);
@@ -65,13 +65,13 @@ public class Chunk implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         Tile tile;
         Vector2i pos = new Vector2i();
         for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
             for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
                 tile = getTile(pos);
-                if (tile != null) tile.draw(screen, pointOfView);
+                if (tile != null) tile.draw(world, screen, pointOfView);
             }
         }
     }
@@ -101,10 +101,7 @@ public class Chunk implements IDrawableInWorld {
     public Chunk setTile(Vector2i blockInChunkPos, Tile tile) {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
             if (tile == null) tile = new TileAir();
-            if (tile != null) {
-                tile.world = world;
-                tile.setPosition(blockInChunkPos.getBlockInWorldPos(this));
-            }
+            tile.setPosition(blockInChunkPos.getBlockInWorldPos(this));
             if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;

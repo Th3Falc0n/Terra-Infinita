@@ -22,8 +22,8 @@ public abstract class Particle extends Entity {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
 
         lifetime -= delta;
 

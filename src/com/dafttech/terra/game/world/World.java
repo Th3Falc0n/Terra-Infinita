@@ -108,7 +108,7 @@ public class World implements IDrawableInWorld {
             Vector2i oldPos = oldTile ? tile.getPosition().clone() : null;
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
-                if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet();
+                if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
                 notifyNeighborTiles(pos.x, pos.y);
             }
             if (oldTile) setTile(oldPos, null, notify);
@@ -126,7 +126,7 @@ public class World implements IDrawableInWorld {
             setTile(x, y, t, true);
 
             if (tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents) tile).onTilePlaced(causer);
+                ((ITileInworldEvents) tile).onTilePlaced(this, causer);
             }
             return true;
         }
@@ -136,11 +136,11 @@ public class World implements IDrawableInWorld {
     public void destroyTile(int x, int y, Entity causer) {
         Tile tile = getTile(x, y);
         if (tile != null) {
-            tile.spawnAsEntity();
+            tile.spawnAsEntity(this);
             setTile(x, y, null, true);
 
             if (tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents) tile).onTileDestroyed(causer);
+                ((ITileInworldEvents) tile).onTileDestroyed(this, causer);
             }
         }
     }
@@ -148,13 +148,13 @@ public class World implements IDrawableInWorld {
     private void notifyNeighborTiles(int x, int y) {
         Tile tile;
         tile = getTile(x + 1, y);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
         tile = getTile(x, y + 1);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
         tile = getTile(x - 1, y);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
         tile = getTile(x, y - 1);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(tile);
+        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
     }
 
     public void removeEntity(Entity entity) {
@@ -162,7 +162,7 @@ public class World implements IDrawableInWorld {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(World world, float delta) {
         time += delta;
 
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
@@ -180,7 +180,7 @@ public class World implements IDrawableInWorld {
 
         for (Chunk chunk : localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
-                entity.update(delta);
+                entity.update(world, delta);
             }
         }
 
@@ -200,7 +200,7 @@ public class World implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
         RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
     }

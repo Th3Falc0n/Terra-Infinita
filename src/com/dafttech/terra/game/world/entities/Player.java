@@ -63,8 +63,8 @@ public class Player extends EntityLiving {
     PointLight light;
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
         if (InputHandler.$.isKeyDown("LEFT")) addForce(new Vector2(-10f * getCurrentAcceleration(), 0));
         if (InputHandler.$.isKeyDown("RIGHT")) addForce(new Vector2(10f * getCurrentAcceleration(), 0));
 
@@ -75,7 +75,7 @@ public class Player extends EntityLiving {
             Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                     .toWorldPosition();
             Tile damagedTile = getWorld().getTile(destroy.x, destroy.y);
-            if (damagedTile != null) damagedTile.damage(0.2f, this);
+            if (damagedTile != null) damagedTile.damage(world, 0.2f, this);
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
@@ -116,7 +116,7 @@ public class Player extends EntityLiving {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch.setColor(color);

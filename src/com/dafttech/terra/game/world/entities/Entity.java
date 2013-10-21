@@ -209,7 +209,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch.setColor(color);
@@ -235,7 +235,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(World world, float delta) {
         delta *= BLOCK_SIZE;
 
         if (hasGravity) addForce(new Vector2(0, 9.81f * gravityFactor));

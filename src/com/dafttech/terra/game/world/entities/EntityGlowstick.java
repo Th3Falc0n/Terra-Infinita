@@ -29,7 +29,7 @@ public class EntityGlowstick extends Entity {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         Vector2 v = new Vector2(velocity);
@@ -39,8 +39,8 @@ public class EntityGlowstick extends Entity {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
 
         rotation += velocity.x * delta * 50;
 

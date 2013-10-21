@@ -29,17 +29,16 @@ public class PassObjects extends RenderingPass {
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
                 tile = world.getTile(x, y);
-                if (tile != null) tile.draw(screen, pointOfView);
+                if (tile != null) tile.draw(world, screen, pointOfView);
             }
         }
 
         for (Chunk chunk : world.localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
-                entity.draw(screen, pointOfView);
+                entity.draw(world, screen, pointOfView);
             }
         }
 
         screen.batch.end();
     }
-
 }

@@ -19,7 +19,6 @@ import com.dafttech.terra.game.world.subtiles.Subtile;
 public abstract class Tile extends Item implements IDrawableInWorld {
     private Vector2i position = new Vector2i();
     List<Subtile> subtiles = new ArrayList<Subtile>();
-    public World world = null;
 
     private float breakingProgress = 0;
     private float hardness = 1;
@@ -60,16 +59,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return 0;
     }
 
-    public void spawnAsEntity() {
+    public void spawnAsEntity(World world) {
         Vector2 p = getPosition().toEntityPos();
-        World w = world;
-
-        super.spawnAsEntity(p.addNew(0.5f, 0.5f), w);
+        super.spawnAsEntity(p.addNew(0.5f, 0.5f), world);
     };
-
-    public World getWorld() {
-        return world;
-    }
 
     public TileRenderer getRenderer() {
         return TileRendererBlock.$Instance;
@@ -103,13 +96,13 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(AbstractScreen screen, Entity pointOfView) {
-        getRenderer().draw(screen, this, pointOfView);
+    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+        getRenderer().draw(world, screen, this, pointOfView);
 
         Subtile s;
         for (int i = 0; i < subtiles.size(); i++) {
             s = subtiles.get(i);
-            s.draw(screen, pointOfView);
+            s.draw(world, screen, pointOfView);
         }
     }
 
@@ -125,11 +118,15 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(World world, float delta) {
         for (int i = 0; i < subtiles.size(); i++) {
             subtiles.get(i).update(delta);
         }
         if (breakingProgress > 0) breakingProgress -= delta;
+    }
+
+    @Override
+    public void update(float delta) {
     }
 
     public Tile setHardness(float hardness) {
@@ -137,12 +134,12 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return this;
     }
 
-    public final void setReceivesSunlight(boolean is) {
+    public final void setReceivesSunlight(World world, boolean is) {
         receivesSunlight = is;
         if (!isOpaque()) {
             Tile b = world.getNextTileBelow(getPosition());
             if (b != null) {
-                b.setReceivesSunlight(is);
+                b.setReceivesSunlight(world, is);
                 b.sunlightFilter = is ? this : null;
             }
         }
@@ -164,10 +161,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         }
     }
 
-    public void damage(float damage, Entity causer) {
+    public void damage(World world, float damage, Entity causer) {
         breakingProgress += damage;
         if (breakingProgress > hardness) {
-            getWorld().destroyTile(getPosition().x, getPosition().y, causer);
+            world.destroyTile(getPosition().x, getPosition().y, causer);
         }
     }
 

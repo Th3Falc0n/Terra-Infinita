@@ -7,7 +7,6 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
@@ -37,31 +36,24 @@ public class TileGrass extends Tile implements ITileInworldEvents {
     }
 
     @Override
-    public void onNeighborChange(Tile changed) {
+    public void onNeighborChange(World world, Tile changed) {
         if (world.getTile(getPosition().add(0, 1)).isAir()) world.destroyTile(getPosition().getX(), getPosition().getY(), null);
     }
 
     @Override
-    public void onTileDestroyed(Entity causer) {
+    public void onTileDestroyed(World world, Entity causer) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void onTilePlaced(Entity causer) {
+    public void onTilePlaced(World world, Entity causer) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    @Deprecated
-    public void onTileUsed(Entity causer, EntityItem item) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onTileSet() {
+    public void onTileSet(World world) {
         // TODO Auto-generated method stub
 
     }

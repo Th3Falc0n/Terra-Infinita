@@ -25,8 +25,8 @@ public class ParticleDust extends Particle {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update(World world, float delta) {
+        super.update(world, delta);
 
         getSize().x = size * (1 - (lifetime / lifetimeMax));
         getSize().y = getSize().x;

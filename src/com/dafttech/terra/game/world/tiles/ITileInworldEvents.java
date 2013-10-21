@@ -1,18 +1,14 @@
 package com.dafttech.terra.game.world.tiles;
 
+import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.EntityItem;
 
 public interface ITileInworldEvents {
-    public void onNeighborChange(Tile changed);
+    public void onNeighborChange(World world, Tile changed);
 
-    public void onTileDestroyed(Entity causer);
+    public void onTileDestroyed(World world, Entity causer);
 
-    public void onTilePlaced(Entity causer);
+    public void onTilePlaced(World world, Entity causer);
 
-    public void onTileSet();
-
-    @Deprecated
-    // TODO: implement!
-    public void onTileUsed(Entity causer, EntityItem item);
+    public void onTileSet(World world);
 }
