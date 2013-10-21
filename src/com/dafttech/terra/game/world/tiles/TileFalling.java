@@ -13,12 +13,6 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     @Override
-    public void update(World world, float delta) {
-        super.update(world, delta);
-
-    }
-
-    @Override
     public void onTick(World world) {
         super.onTick(world);
         if (renderOffset.x != 0 || renderOffset.y != 0) {
