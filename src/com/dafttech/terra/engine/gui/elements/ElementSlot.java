@@ -45,7 +45,7 @@ public class ElementSlot extends GUIElement {
         screen.batch.begin();
 
         if (assignedType != null) {
-            ((Item) assignedType.toGameObject()).drawInventory(screen, p);
+            ((Item) assignedType.toGameObject()).drawInventory(p, screen);
 
             Resources.GUI_FONT.setColor(active ? Color.YELLOW : Color.WHITE);
             Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedType), p.x, 6 + p.y);

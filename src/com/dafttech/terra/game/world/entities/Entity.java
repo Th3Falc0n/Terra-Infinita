@@ -209,7 +209,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch.setColor(color);

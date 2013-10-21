@@ -15,7 +15,7 @@ public class TileRendererBlock extends TileRenderer {
     public static TileRenderer $Instance = new TileRendererBlock();
 
     @Override
-    public void draw(World world, AbstractScreen screen, Tile tile, Entity pointOfView, Object... rendererArguments) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Tile tile, Entity pointOfView, Object... rendererArguments) {
         Vector2 screenVec = tile.getPosition().toScreenPos(pointOfView);
 
         float offX = 0, offY = 0;

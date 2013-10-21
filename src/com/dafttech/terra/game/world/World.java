@@ -172,7 +172,7 @@ public class World implements IDrawableInWorld {
         for (int x = (int) localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
                 tile = getTile(x, y);
-                if (tile != null) tile.update(world, delta);
+                if (tile != null) tile.update(this, delta);
             }
         }
 
@@ -180,7 +180,7 @@ public class World implements IDrawableInWorld {
 
         for (Chunk chunk : localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
-                entity.update(world, delta);
+                entity.update(this, delta);
             }
         }
 
@@ -200,7 +200,7 @@ public class World implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
         RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
     }

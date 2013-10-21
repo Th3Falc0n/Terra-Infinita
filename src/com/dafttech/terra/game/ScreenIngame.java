@@ -73,13 +73,13 @@ public class ScreenIngame extends AbstractScreen {
 
         super.render(delta);
 
-        localWorld.update(localWorld, delta);
+        localWorld.update(null, delta);
         TimeKeeping.timeKeeping("screen after update");
 
         update(delta);
         TimeKeeping.timeKeeping("Screen update");
 
-        localWorld.draw(localWorld, this, localWorld.localPlayer);
+        localWorld.draw(null, null, this, localWorld.localPlayer);
         TimeKeeping.timeKeeping("screen after draw");
 
         guiContainerScreen.update(delta);

@@ -3,5 +3,5 @@ package com.dafttech.terra.engine;
 public interface IDrawableInventory {
     public void update(float delta);
 
-    void drawInventory(AbstractScreen screen, Vector2 position);
+    void drawInventory(Vector2 pos, AbstractScreen screen);
 }

@@ -65,13 +65,13 @@ public class Chunk implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         Tile tile;
-        Vector2i pos = new Vector2i();
-        for (pos.y = 0; pos.y < world.chunksize.y; pos.y++) {
-            for (pos.x = 0; pos.x < world.chunksize.x; pos.x++) {
-                tile = getTile(pos);
-                if (tile != null) tile.draw(world, screen, pointOfView);
+        Vector2i tilePos = new Vector2i();
+        for (tilePos.y = 0; tilePos.y < world.chunksize.y; tilePos.y++) {
+            for (tilePos.x = 0; tilePos.x < world.chunksize.x; tilePos.x++) {
+                tile = getTile(tilePos);
+                if (tile != null) tile.draw(pos, world, screen, pointOfView);
             }
         }
     }

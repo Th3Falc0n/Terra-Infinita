@@ -41,7 +41,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
     }
 
     @Override
-    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         getRenderer().draw(screen, this, pointOfView);
     }
 

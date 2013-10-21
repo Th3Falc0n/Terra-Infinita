@@ -28,7 +28,7 @@ public class EntityFlamingArrow extends EntityArrow {
     }
 
     @Override
-    public void draw(World world, AbstractScreen screen, Entity pointOfView) {
+    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         Vector2 v = new Vector2(velocity);
