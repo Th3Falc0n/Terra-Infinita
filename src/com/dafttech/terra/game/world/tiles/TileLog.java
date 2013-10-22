@@ -8,10 +8,10 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
-public class TileLog extends Tile implements ITileRenderRounded {
+public class TileLog extends Tile {
     private boolean living = false;
-    private int height = 0, width = 0;
-    private int maxHeight = 10, maxWidth = 10;
+    private int height = 0, width = 0, maxHeight = 10, maxWidth = 10;
+    private float grothDelay = 0.1f;
 
     public TileLog() {
         super();
@@ -21,13 +21,17 @@ public class TileLog extends Tile implements ITileRenderRounded {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getRoundedImage("log");
+        return Resources.TILES.getImage("log");
     }
 
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
-        growTree(world);
+        if (grothDelay <= 0) {
+            growTree(world);
+        } else {
+            grothDelay -= delta;
+        }
     }
 
     public void growTree(World world) {
@@ -84,12 +88,10 @@ public class TileLog extends Tile implements ITileRenderRounded {
         return true;
     }
 
-    @Override
     public boolean isFlatTo(World world, Vector2i pos) {
         return world.getTile(pos) instanceof TileLog || world.getTile(pos).isOpaque();
     }
 
-    @Override
     public TextureRegion[] getEdgeImages() {
         return Resources.TILES.getRoundedImageEdges("log");
     }

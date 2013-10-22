@@ -23,8 +23,8 @@ import com.dafttech.terra.game.world.items.ItemRainbowGun;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileLog;
 import com.dafttech.terra.game.world.tiles.TileSand;
+import com.dafttech.terra.game.world.tiles.TileSapling;
 import com.dafttech.terra.game.world.tiles.TileTorch;
 import com.dafttech.terra.resources.Resources;
 
@@ -42,14 +42,14 @@ public class Player extends EntityLiving {
         hudBottom.slots[3].assignItem(new ItemGlowstick(), inventory);
         hudBottom.slots[4].assignItem(new ItemDynamite(), inventory);
         hudBottom.slots[5].assignItem(new ItemRainbowGun(), inventory);
-        hudBottom.slots[6].assignItem(new TileLog(), inventory);
+        hudBottom.slots[6].assignItem(new TileSapling(), inventory);
         hudBottom.slots[7].assignItem(new TileTorch(), inventory);
 
         inventory.add(new ItemFlamingArrow(), 100);
         inventory.add(new ItemGlowstick(), 100);
         inventory.add(new ItemDynamite(), 10);
         inventory.add(new ItemRainbowGun(), 1);
-        inventory.add(new TileLog(), 100);
+        inventory.add(new TileSapling(), 100);
         inventory.add(new TileTorch(), 20);
     }
 

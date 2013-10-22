@@ -22,6 +22,17 @@ public class ImageLibrary {
         }
     }
 
+    public void loadRoundedImage(String name, String path) {
+        loadImage(name, path);
+        String filename = path.substring(0, path.lastIndexOf('.'));
+        String fileending = path.substring(path.lastIndexOf('.'));
+        loadImage(name + "_m", filename + "_m" + fileending);
+        loadImage(name + "_tl", filename + "_tl" + fileending);
+        loadImage(name + "_tr", filename + "_tr" + fileending);
+        loadImage(name + "_bl", filename + "_bl" + fileending);
+        loadImage(name + "_br", filename + "_br" + fileending);
+    }
+
     public TextureRegion getImage(String name) {
         return library.containsKey(name) ? library.get(name) : library.get("error");
     }
