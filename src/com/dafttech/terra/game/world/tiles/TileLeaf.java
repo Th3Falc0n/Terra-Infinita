@@ -5,7 +5,7 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
-public class TileLeaf extends TileLog {
+public class TileLeaf extends TileLog implements ITileRenderRounded {
     @Override
     public TileLog getLog() {
         return new TileLeaf();
@@ -13,7 +13,7 @@ public class TileLeaf extends TileLog {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("leaf");
+        return Resources.TILES.getRoundedImage("leaf");
     }
 
     @Override
@@ -28,7 +28,6 @@ public class TileLeaf extends TileLog {
 
     @Override
     public TextureRegion[] getEdgeImages() {
-        return new TextureRegion[] { Resources.TILES.getImage("leaf_tl"), Resources.TILES.getImage("leaf_tr"), Resources.TILES.getImage("leaf_bl"),
-                Resources.TILES.getImage("leaf_br") };
+        return Resources.TILES.getRoundedImageEdges("leaf");
     }
 }

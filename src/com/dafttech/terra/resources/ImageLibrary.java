@@ -29,4 +29,12 @@ public class ImageLibrary {
     public TextureRegion getImage(String name, int num) {
         return library.containsKey(name + num) ? library.get(name + num) : library.get("error");
     }
+
+    public TextureRegion getRoundedImage(String name) {
+        return getImage(name + "_m");
+    }
+
+    public TextureRegion[] getRoundedImageEdges(String name) {
+        return new TextureRegion[] { getImage(name + "_tl"), getImage(name + "_tr"), getImage(name + "_bl"), getImage(name + "_br") };
+    }
 }
