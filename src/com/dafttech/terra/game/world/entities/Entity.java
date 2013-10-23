@@ -13,6 +13,7 @@ import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.Chunk;
+import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
@@ -36,7 +37,6 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     Color color = Color.WHITE;
 
-    boolean hasGravity = true;
     float gravityFactor = 1f;
 
     boolean inAir = false;
@@ -104,7 +104,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public void setHasGravity(boolean v) {
-        hasGravity = v;
+        if (!v) gravityFactor = 0;
     }
 
     public void setGravityFactor(float f) {
@@ -155,21 +155,21 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
                             if (absDistance.x > absDistance.y) {
                                 if (midDistance.x > 0) {
-                                    onTerrainCollisionRight(rect.x - playerRect.width - 0.001f);
+                                    onTerrainCollision(Facing.RIGHT, rect.x - playerRect.width - 0.001f);
                                     redo = true;
                                     break;
                                 } else {
-                                    onTerrainCollisionLeft(rect.x + rect.width + 0.001f);
+                                    onTerrainCollision(Facing.LEFT, rect.x + rect.width + 0.001f);
                                     redo = true;
                                     break;
                                 }
                             } else {
                                 if (midDistance.y > 0) {
-                                    onTerrainCollisionBottom(rect.y - playerRect.height - 0.001f);
+                                    onTerrainCollision(Facing.BOTTOM, rect.y - playerRect.height - 0.001f);
                                     redo = true;
                                     break;
                                 } else {
-                                    onTerrainCollisionTop(rect.y + rect.height + 0.001f);
+                                    onTerrainCollision(Facing.TOP, rect.y + rect.height + 0.001f);
                                     redo = true;
                                     break;
                                 }
@@ -187,25 +187,15 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         } while (redo);
     }
 
-    void onTerrainCollisionBottom(float y) {
-        velocity.y = 0;
-        setPosition(getPosition().setY(y));
-        inAir = false;
-    }
-
-    void onTerrainCollisionTop(float y) {
-        velocity.y = 0;
-        setPosition(getPosition().setY(y));
-    }
-
-    void onTerrainCollisionRight(float x) {
-        velocity.x = 0;
-        setPosition(getPosition().setX(x));
-    }
-
-    void onTerrainCollisionLeft(float x) {
-        velocity.x = 0;
-        setPosition(getPosition().setX(x));
+    public void onTerrainCollision(Facing facing, float val) {
+        if (facing.isVertical()) {
+            velocity.y = 0;
+            setPosition(getPosition().setY(val));
+        } else {
+            velocity.x = 0;
+            setPosition(getPosition().setX(val));
+        }
+        if (facing == Facing.BOTTOM) inAir = false;
     }
 
     @Override
@@ -238,7 +228,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public void update(World world, float delta) {
         delta *= BLOCK_SIZE;
 
-        if (hasGravity) addForce(new Vector2(0, 9.81f * gravityFactor));
+        if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor));
 
         velocity.x += accelleration.x * delta;
         velocity.y += accelleration.y * delta;

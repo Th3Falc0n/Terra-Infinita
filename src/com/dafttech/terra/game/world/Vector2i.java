@@ -121,6 +121,10 @@ public class Vector2i {
         return this;
     }
 
+    public Vector2i add(Facing facing) {
+        return add(facing.xOff, facing.yOff);
+    }
+
     public Vector2i add(Vector2 pos) {
         return add(pos.toWorldPosition());
     }
@@ -217,6 +221,10 @@ public class Vector2i {
 
     public Vector2i addNew(Vector2 pos) {
         return clone().add(pos);
+    }
+
+    public Vector2i addNew(Facing facing) {
+        return addNew(facing.xOff, facing.yOff);
     }
 
     public Vector2i mulXNew(int x) {

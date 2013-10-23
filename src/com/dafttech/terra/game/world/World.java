@@ -13,6 +13,7 @@ import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.TimeKeeping;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
@@ -132,16 +133,18 @@ public class World implements IDrawableInWorld {
         return false;
     }
 
-    public void destroyTile(int x, int y, Entity causer) {
+    public EntityItem destroyTile(int x, int y, Entity causer) {
+        EntityItem entity = null;
         Tile tile = getTile(x, y);
         if (tile != null) {
-            tile.spawnAsEntity(this);
+            entity = tile.spawnAsEntity(this);
             setTile(x, y, null, true);
 
             if (tile instanceof ITileInworldEvents) {
                 ((ITileInworldEvents) tile).onTileDestroyed(this, causer);
             }
         }
+        return entity;
     }
 
     private void notifyNeighborTiles(int x, int y) {

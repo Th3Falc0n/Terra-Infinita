@@ -4,6 +4,7 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.game.world.Chunk;
+import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 
@@ -158,6 +159,10 @@ public class Vector2 {
         return this;
     }
 
+    public Vector2 add(Facing facing) {
+        return add(facing.xOff, facing.yOff);
+    }
+
     public Vector2 mulX(float x) {
         this.x *= x;
         return this;
@@ -238,6 +243,10 @@ public class Vector2 {
 
     public Vector2 addNew(Vector2 pos) {
         return clone().add(pos);
+    }
+
+    public Vector2 addNew(Facing facing) {
+        return addNew(facing.xOff, facing.yOff);
     }
 
     public Vector2 mulXNew(float x) {

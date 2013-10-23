@@ -12,6 +12,7 @@ import com.dafttech.terra.engine.renderer.TileRendererBlock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
@@ -59,9 +60,9 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return 0;
     }
 
-    public void spawnAsEntity(World world) {
+    public EntityItem spawnAsEntity(World world) {
         Vector2 p = getPosition().toEntityPos();
-        super.spawnAsEntity(p.addNew(0.5f, 0.5f), world);
+        return super.spawnAsEntity(p.addNew(0.5f, 0.5f), world);
     };
 
     public TileRenderer getRenderer() {
