@@ -134,57 +134,60 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public void checkTerrainCollisions(World world) {
         Vector2i mid = getPosition().toWorldPosition();
 
-        Rectangle playerRect;
+        Rectangle playerRect, tileRect;
+        
+        Vector2 oVel = velocity.clone();
 
-        boolean redo = false;
+        
+        
+        for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
+            for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
+                if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
+                    int redo = 0;
+                    
+                    tileRect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+                    
+                    if(playerRect.overlaps(tileRect)) {
+                        Facing fVertical, fHorizontal;
+                        float distVertical, distHorizontal;
+                        float posVertical, posHorizontal;
+                        
+                        if(oVel.y > 0) {
+                            fVertical = Facing.BOTTOM;
+                            distVertical = (playerRect.y + playerRect.height) - tileRect.y;
+                            posVertical = tileRect.y - 0.01f - playerRect.height;
+                        }
+                        else
+                        {
+                            fVertical = Facing.TOP;
+                            distVertical = (tileRect.y + tileRect.height) - playerRect.y;
+                            posVertical = (tileRect.y + tileRect.height) + 0.01f;
+                        }
+                        
+                        if(oVel.x > 0) {
+                            fHorizontal = Facing.RIGHT;
+                            distHorizontal = (playerRect.x + playerRect.width) - tileRect.x;
+                            posHorizontal = tileRect.x - 0.01f - playerRect.width;
+                        }
+                        else
+                        {
+                            fHorizontal = Facing.LEFT;
+                            distHorizontal = (tileRect.x + tileRect.width) - playerRect.x;
+                            posHorizontal = (tileRect.x + tileRect.width) + 0.01f;
+                        }
 
-        int autoShutdown = 30;
-
-        do {
-            redo = false;
-            playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-            for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
-                for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
-                    if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
-                        Rectangle rect = new Rectangle(x * (float) BLOCK_SIZE, y * (float) BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-
-                        if (playerRect.overlaps(rect)) {
-                            Vector2 midDistance = new Vector2((rect.x + rect.width / 2) - (playerRect.x + playerRect.width / 2),
-                                    (rect.y + rect.height / 2) - (playerRect.y + playerRect.height / 2));
-                            Vector2 absDistance = new Vector2(Math.abs(midDistance.x), Math.abs(midDistance.y));
-
-                            if (absDistance.x > absDistance.y) {
-                                if (midDistance.x > 0) {
-                                    onTerrainCollision(Facing.RIGHT, rect.x - playerRect.width - 0.001f);
-                                    redo = true;
-                                    break;
-                                } else {
-                                    onTerrainCollision(Facing.LEFT, rect.x + rect.width + 0.001f);
-                                    redo = true;
-                                    break;
-                                }
-                            } else {
-                                if (midDistance.y > 0) {
-                                    onTerrainCollision(Facing.BOTTOM, rect.y - playerRect.height - 0.001f);
-                                    redo = true;
-                                    break;
-                                } else {
-                                    onTerrainCollision(Facing.TOP, rect.y + rect.height + 0.001f);
-                                    redo = true;
-                                    break;
-                                }
-                            }
+                        if(distVertical < distHorizontal) {
+                            onTerrainCollision(fVertical, posVertical);   
+                        }
+                        else
+                        {
+                            onTerrainCollision(fHorizontal, posHorizontal);
                         }
                     }
                 }
-                if (redo) break;
             }
-            autoShutdown--;
-            if (autoShutdown <= 0) {
-                System.out.println("ERROR!!! Cancelling collision detection loop!");
-                redo = false;
-            }
-        } while (redo);
+        }
     }
 
     public void onTerrainCollision(Facing facing, float val) {
