@@ -1,4 +1,4 @@
-package com.dafttech.terra.game.world.entities;
+package com.dafttech.terra.game.world.entities.models;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
@@ -6,19 +6,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.entities.models.EntityThrown;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.resources.Resources;
 
-public class EntityArrow extends EntityThrown {
-    public EntityArrow(Vector2 pos, World world) {
-        super(pos, world, new Vector2(2, 0.6f));
-
-        setGravityFactor(0.25f);
+public abstract class EntityThrown extends Entity {
+    public EntityThrown(Vector2 pos, World world, Vector2 size) {
+        super(pos, world, size);
     }
-
+    
     @Override
-    public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("arrow");
+    public void update(World world, float delta) {
+        super.update(world, delta);
+        
+        setRotation(velocity.angle());
     }
     
     @Override

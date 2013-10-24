@@ -23,23 +23,26 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     Chunk chunk = null;
     @Persistent
-    Vector2 position = new Vector2();
+    protected Vector2 position = new Vector2();
 
     @Persistent
-    Vector2 velocity = new Vector2();
+    protected Vector2 velocity = new Vector2();
 
-    Vector2 accelleration = new Vector2();
+    protected Vector2 accelleration = new Vector2();
 
     @Persistent
-    Vector2 size = new Vector2();
+    protected Vector2 size = new Vector2();
+    
+    @Persistent
+    protected float rotation;
 
     public World worldObj;
 
-    Color color = Color.WHITE;
+    protected Color color = Color.WHITE;
 
     float gravityFactor = 1f;
 
-    boolean inAir = false;
+    protected boolean inAir = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
         worldObj = world;
@@ -66,6 +69,10 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public void setAlpha(float v) {
         color.a = v;
+    }
+    
+    public void setRotation(float angle) {
+        rotation = angle;
     }
 
     public Vector2 getPosition() {
@@ -206,8 +213,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch.setColor(color);
-        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-        screen.batch.flush();
+        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x,
+                BLOCK_SIZE * size.y, 1, 1, rotation);
     }
 
     public abstract TextureRegion getImage();

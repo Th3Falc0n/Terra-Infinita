@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
@@ -15,7 +14,7 @@ import com.dafttech.terra.resources.Resources;
 public class EntityGlowstick extends Entity {
     PointLight light;
 
-    float rotation = 0;
+    float gsRotation = 0;
 
     public EntityGlowstick(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.5f, 1.5f));
@@ -27,22 +26,12 @@ public class EntityGlowstick extends Entity {
     public TextureRegion getImage() {
         return Resources.ENTITIES.getImage("glowstick");
     }
-
-    @Override
-    public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
-        Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
-
-        Vector2 v = new Vector2(velocity);
-
-        screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x / 2, BLOCK_SIZE * size.y / 2, BLOCK_SIZE * size.x,
-                BLOCK_SIZE * size.y, 1, 1, (float) (v.angle() + Math.PI / 2 + rotation));
-    }
-
+    
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        rotation += velocity.x * delta * 50;
+        gsRotation += velocity.x * delta * 50;
 
         if (light == null) {
             light = new PointLight(getPosition(), 95);
@@ -52,6 +41,8 @@ public class EntityGlowstick extends Entity {
         light.setSize(90 + new Random().nextInt(10));
 
         light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        
+        setRotation((float) (velocity.angle() + Math.PI / 2 + gsRotation));
     }
 
     @Override

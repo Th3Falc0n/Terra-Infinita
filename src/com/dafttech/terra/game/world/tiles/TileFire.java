@@ -9,7 +9,7 @@ import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.game.world.entities.EntityLiving;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.resources.Resources;
 
 public class TileFire extends TileFalling {

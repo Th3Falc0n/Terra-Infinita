@@ -1,8 +1,9 @@
-package com.dafttech.terra.game.world.entities;
+package com.dafttech.terra.game.world.entities.models;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.Entity;
 
 public abstract class EntityLiving extends Entity {
     private float maxHealth = 10;
