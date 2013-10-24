@@ -6,15 +6,14 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
-import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.models.EntityThrown;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
-public class EntityDiggerBeam extends Entity {
+public class EntityDiggerBeam extends EntityThrown {
     PointLight light;
 
     public EntityDiggerBeam(Vector2 pos, World world) {
@@ -44,7 +43,7 @@ public class EntityDiggerBeam extends Entity {
             worldObj.removeEntity(this);
         }
     }
-    
+
     @Override
     public void onTerrainCollision(Tile tile) {
         if (!tile.isAir()) {
@@ -52,7 +51,7 @@ public class EntityDiggerBeam extends Entity {
             this.remove();
         }
     }
-    
+
     @Override
     public float getInAirFriction() {
         return 0;

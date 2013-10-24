@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
@@ -26,7 +25,7 @@ public class EntityRainbow extends EntityThrown {
     public TextureRegion getImage() {
         return Resources.ENTITIES.getImage("rainbow");
     }
-    
+
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
