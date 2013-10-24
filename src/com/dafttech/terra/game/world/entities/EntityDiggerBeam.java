@@ -44,18 +44,15 @@ public class EntityDiggerBeam extends Entity {
             worldObj.removeEntity(this);
         }
     }
-
+    
     @Override
-    public void onTerrainCollision(Facing facing, float val) {
-        Tile tile = worldObj.getTile(getPosition().toWorldPosition());
+    public void onTerrainCollision(Tile tile) {
         if (!tile.isAir()) {
-            // tile.damage(worldObj, ((velocity.x + velocity.y) / 2) * 20f,
-            // this);
             worldObj.destroyTile(tile.getPosition().x, tile.getPosition().y, this).addVelocity(velocity.mulNew(-5));
             this.remove();
         }
     }
-
+    
     @Override
     public float getInAirFriction() {
         return 0;

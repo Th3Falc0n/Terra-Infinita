@@ -18,7 +18,9 @@ public abstract class EntityThrown extends Entity {
     public void update(World world, float delta) {
         super.update(world, delta);
         
-        setRotation(velocity.angle());
+        if(velocity.len2() > 0.1f) {
+            setRotation(velocity.angle());
+        }
     }
     
     @Override

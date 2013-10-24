@@ -159,6 +159,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                         Facing fVertical, fHorizontal;
                         float distVertical, distHorizontal;
                         float posVertical, posHorizontal;
+                        float mPosX, mPosY;
                         
                         if(oVel.y > 0) {
                             fVertical = Facing.BOTTOM;
@@ -185,19 +186,25 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                         }
 
                         if(distVertical < distHorizontal) {
-                            onTerrainCollision(fVertical, posVertical);   
+                            terrainCollisionResponse(fVertical, posVertical);   
                         }
                         else
                         {
-                            onTerrainCollision(fHorizontal, posHorizontal);
+                            terrainCollisionResponse(fHorizontal, posHorizontal);
                         }
+                        
+                        onTerrainCollision(world.getTile(x, y));
                     }
                 }
             }
         }
     }
+    
+    public void onTerrainCollision(Tile t) {
+        
+    }
 
-    public void onTerrainCollision(Facing facing, float val) {
+    public void terrainCollisionResponse(Facing facing, float val) {
         if (facing.isVertical()) {
             velocity.y = 0;
             setPosition(getPosition().setY(val));

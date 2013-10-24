@@ -12,6 +12,7 @@ import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.models.EntityThrown;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
+import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileFire;
 import com.dafttech.terra.resources.Resources;
 
@@ -44,11 +45,13 @@ public class EntityFlamingArrow extends EntityArrow {
                 new ParticleSpark(getPosition(), worldObj);
             }
         }
-
-        if (velocity.x == 0 && velocity.y == 0) {
-            placeBlockOnHit((int) getPosition().x / BLOCK_SIZE, (int) getPosition().y / BLOCK_SIZE);
-            worldObj.removeEntity(this);
-        }
+    }
+    
+    @Override
+    public void onTerrainCollision(Tile tile) {
+        super.onTerrainCollision(tile);
+        
+        placeBlockOnHit(tile.getPosition().x, tile.getPosition().y);
     }
 
     public void placeBlockOnHit(int x, int y) {
