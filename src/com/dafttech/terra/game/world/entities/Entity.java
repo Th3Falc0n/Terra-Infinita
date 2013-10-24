@@ -32,7 +32,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     @Persistent
     protected Vector2 size = new Vector2();
-    
+
     @Persistent
     protected float rotation;
 
@@ -70,7 +70,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public void setAlpha(float v) {
         color.a = v;
     }
-    
+
     public void setRotation(float angle) {
         rotation = angle;
     }
@@ -142,66 +142,58 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         Vector2i mid = getPosition().toWorldPosition();
 
         Rectangle playerRect, tileRect;
-        
+
         Vector2 oVel = velocity.clone();
 
-        
-        
         for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                     int redo = 0;
-                    
+
                     tileRect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-                    
-                    if(playerRect.overlaps(tileRect)) {
+
+                    if (playerRect.overlaps(tileRect)) {
                         Facing fVertical, fHorizontal;
                         float distVertical, distHorizontal;
                         float posVertical, posHorizontal;
                         float mPosX, mPosY;
-                        
-                        if(oVel.y > 0) {
+
+                        if (oVel.y > 0) {
                             fVertical = Facing.BOTTOM;
                             distVertical = (playerRect.y + playerRect.height) - tileRect.y;
                             posVertical = tileRect.y - 0.01f - playerRect.height;
-                        }
-                        else
-                        {
+                        } else {
                             fVertical = Facing.TOP;
                             distVertical = (tileRect.y + tileRect.height) - playerRect.y;
                             posVertical = (tileRect.y + tileRect.height) + 0.01f;
                         }
-                        
-                        if(oVel.x > 0) {
+
+                        if (oVel.x > 0) {
                             fHorizontal = Facing.RIGHT;
                             distHorizontal = (playerRect.x + playerRect.width) - tileRect.x;
                             posHorizontal = tileRect.x - 0.01f - playerRect.width;
-                        }
-                        else
-                        {
+                        } else {
                             fHorizontal = Facing.LEFT;
                             distHorizontal = (tileRect.x + tileRect.width) - playerRect.x;
                             posHorizontal = (tileRect.x + tileRect.width) + 0.01f;
                         }
 
-                        if(distVertical < distHorizontal) {
-                            terrainCollisionResponse(fVertical, posVertical);   
-                        }
-                        else
-                        {
+                        if (distVertical < distHorizontal) {
+                            terrainCollisionResponse(fVertical, posVertical);
+                        } else {
                             terrainCollisionResponse(fHorizontal, posHorizontal);
                         }
-                        
+
                         onTerrainCollision(world.getTile(x, y));
                     }
                 }
             }
         }
     }
-    
+
     public void onTerrainCollision(Tile t) {
-        
+
     }
 
     public void terrainCollisionResponse(Facing facing, float val) {

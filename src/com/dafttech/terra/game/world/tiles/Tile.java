@@ -60,9 +60,13 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return 0;
     }
 
+    public Item getDroppedItem() {
+        return this;
+    }
+
     public EntityItem spawnAsEntity(World world) {
-        Vector2 p = getPosition().toEntityPos();
-        return super.spawnAsEntity(p.addNew(0.5f, 0.5f), world);
+        Item dropped = getDroppedItem();
+        return dropped == null ? null : new EntityItem(getPosition().toEntityPos().add(0.5f, 0.5f), world, new Vector2(0.5f, 0.5f), dropped);
     };
 
     public TileRenderer getRenderer() {

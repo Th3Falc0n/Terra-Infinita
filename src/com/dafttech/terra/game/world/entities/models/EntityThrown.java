@@ -8,16 +8,15 @@ public abstract class EntityThrown extends Entity {
     public EntityThrown(Vector2 pos, World world, Vector2 size) {
         super(pos, world, size);
     }
-    
+
     @Override
     public void update(World world, float delta) {
-        if(velocity.len2() > 0.1f) {
+        if (velocity.len2() > 0.1f) {
             setRotation(velocity.angle());
         }
-        
         super.update(world, delta);
     }
-    
+
     @Override
     public float getInAirFriction() {
         return 0.025f;
