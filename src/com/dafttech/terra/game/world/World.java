@@ -18,6 +18,8 @@ import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
+import com.dafttech.terra.game.world.weather.Weather;
+import com.dafttech.terra.game.world.weather.WeatherRainy;
 
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
@@ -28,6 +30,8 @@ public class World implements IDrawableInWorld {
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
     public Player localPlayer = new Player(new Vector2(), this);
+    
+    public Weather weather = new WeatherRainy();
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
@@ -167,6 +171,8 @@ public class World implements IDrawableInWorld {
     public void update(World world, float delta) {
         time += delta;
 
+        weather.update(this, delta);
+
         int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
@@ -179,7 +185,7 @@ public class World implements IDrawableInWorld {
         }
 
         TimeKeeping.timeKeeping("Tile update");
-
+        
         for (Chunk chunk : localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
                 entity.update(this, delta);
