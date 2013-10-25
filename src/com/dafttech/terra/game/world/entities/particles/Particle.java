@@ -26,6 +26,10 @@ public abstract class Particle extends Entity {
     public TextureRegion getImage() {
         return null;
     }
+    
+    public boolean isDead() {
+        return lifetime < 0;
+    }
 
     @Override
     public void update(World world, float delta) {
