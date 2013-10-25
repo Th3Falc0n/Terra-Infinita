@@ -24,9 +24,10 @@ public class ElementSlot extends GUIElement {
 
     public void useAssignedItem(Player causer, Vector2 pos) {
         if (assignedInventory.getAmount(assignedType) > 0 && causer.worldObj.time > cooldownTime) {
-            if (((Item) assignedType.toGameObject()).use(causer, pos)) {
-                assignedInventory.remove(assignedType, 1);
-                cooldownTime = causer.worldObj.time + ((Item) assignedType.toGameObject()).getNextUseDelay(causer, pos);
+            Item item = (Item) assignedType.toGameObject();
+            if (item.use(causer, pos)) {
+                assignedInventory.remove(assignedType, item.getUsedItemNum(causer, pos));
+                cooldownTime = causer.worldObj.time + item.getNextUseDelay(causer, pos);
             }
         }
     }

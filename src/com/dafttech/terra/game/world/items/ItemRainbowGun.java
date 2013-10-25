@@ -12,7 +12,12 @@ public class ItemRainbowGun extends ItemEntitySpawner {
     public boolean spawnEntity(Player causer, Vector2 position) {
         EntityRainbow a = new EntityRainbow(causer.getPosition(), causer.worldObj);
         a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.08f));
-        return false;
+        return true;
+    }
+
+    @Override
+    public int getUsedItemNum(Player causer, Vector2 position) {
+        return 0;
     }
 
     @Override

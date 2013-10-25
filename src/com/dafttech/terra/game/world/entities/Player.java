@@ -17,11 +17,11 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.particles.ParticleDust;
-import com.dafttech.terra.game.world.items.ItemDigStaff;
 import com.dafttech.terra.game.world.items.ItemDynamite;
 import com.dafttech.terra.game.world.items.ItemFlamingArrow;
 import com.dafttech.terra.game.world.items.ItemGlowstick;
 import com.dafttech.terra.game.world.items.ItemRainbowGun;
+import com.dafttech.terra.game.world.items.ItemWaterBucket;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
@@ -43,14 +43,14 @@ public class Player extends EntityLiving {
         hudBottom.slots[3].assignItem(new ItemGlowstick(), inventory);
         hudBottom.slots[4].assignItem(new ItemDynamite(), inventory);
         hudBottom.slots[5].assignItem(new ItemRainbowGun(), inventory);
-        hudBottom.slots[6].assignItem(new ItemDigStaff(), inventory);
+        hudBottom.slots[6].assignItem(new ItemWaterBucket(), inventory);
         hudBottom.slots[7].assignItem(new TileTorch(), inventory);
 
         inventory.add(new ItemFlamingArrow(), 100);
         inventory.add(new ItemGlowstick(), 100);
         inventory.add(new ItemDynamite(), 10);
         inventory.add(new ItemRainbowGun(), 1);
-        inventory.add(new ItemDigStaff(), 1);
+        inventory.add(new ItemWaterBucket(), 1);
         inventory.add(new TileTorch(), 20);
     }
 

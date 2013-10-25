@@ -104,14 +104,12 @@ public class World implements IDrawableInWorld {
     public World setTile(Vector2i pos, Tile tile, boolean notify) {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
-            boolean oldTile = tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile;
-            Vector2i oldPos = oldTile ? tile.getPosition().clone() : null;
+            if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
                 notifyNeighborTiles(pos.x, pos.y);
             }
-            if (oldTile) setTile(oldPos, null, notify);
         }
         return this;
     }

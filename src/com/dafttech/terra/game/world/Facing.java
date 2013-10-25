@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world;
 
 public enum Facing {
-    TOP(0, -1, 0), BOTTOM(1, 1, 0), LEFT(2, 0, -1), RIGHT(3, 0, 1);
+    TOP(0, 0, -1), BOTTOM(1, 0, 1), LEFT(2, -1, 0), RIGHT(3, 1, 0);
 
     private final int index;
     public final int xOff, yOff;

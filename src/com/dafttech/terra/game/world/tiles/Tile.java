@@ -18,6 +18,7 @@ import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
+    private World world = null;
     private Vector2i position = new Vector2i();
     List<Subtile> subtiles = new ArrayList<Subtile>();
 
@@ -56,6 +57,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return false;
     }
 
+    public boolean isWaterproof() {
+        return !isAir();
+    }
+
     public int getTemperature() {
         return 0;
     }
@@ -81,6 +86,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return 1f;
     }
 
+    public World getWorld() {
+        return world;
+    }
+
     public Tile addSubtile(Subtile... subtile) {
         for (Subtile s : subtile) {
             if (s != null) {
@@ -97,6 +106,27 @@ public abstract class Tile extends Item implements IDrawableInWorld {
                 subtiles.remove(s);
             }
         }
+        return this;
+    }
+
+    public boolean hasSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
+        return getSubtile(subtileClass, inherited) != null;
+    }
+
+    public Subtile getSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
+        for (int i = 0; i < subtiles.size(); i++)
+            if ((inherited && subtileClass.isAssignableFrom(subtiles.get(i).getClass()))
+                    || (!inherited && subtiles.get(i).getClass() == subtileClass)) return subtiles.get(i);
+        return null;
+    }
+
+    public Tile setWorld(World world) {
+        this.world = world;
+        return this;
+    }
+
+    public Tile setPosition(Vector2i position) {
+        this.position.set(position);
         return this;
     }
 
@@ -173,18 +203,8 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         }
     }
 
-    public boolean hasSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
-        for (int i = 0; i < subtiles.size(); i++)
-            if ((inherited && subtileClass.isAssignableFrom(subtiles.get(i).getClass()))
-                    || (!inherited && subtiles.get(i).getClass() == subtileClass)) return true;
-        return false;
-    }
-
     public Vector2i getPosition() {
         return position.clone();
     }
 
-    public void setPosition(Vector2i position) {
-        this.position.set(position);
-    }
 }

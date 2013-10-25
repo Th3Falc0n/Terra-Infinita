@@ -19,6 +19,10 @@ public abstract class Item extends GameObject implements IDrawableInventory {
         return 0;
     }
 
+    public int getUsedItemNum(Player causer, Vector2 position) {
+        return 1;
+    }
+
     public boolean isLightEmitter() {
         return false;
     }
