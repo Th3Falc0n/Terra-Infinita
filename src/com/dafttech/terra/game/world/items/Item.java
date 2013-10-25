@@ -15,11 +15,11 @@ public abstract class Item extends GameObject implements IDrawableInventory {
 
     public abstract boolean use(Player causer, Vector2 position);
 
-    public float getNextUseDelay(Player causer, Vector2 position) {
+    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
         return 0;
     }
 
-    public int getUsedItemNum(Player causer, Vector2 position) {
+    public int getUsedItemNum(Player causer, Vector2 position, boolean leftClick) {
         return 1;
     }
 
@@ -46,5 +46,9 @@ public abstract class Item extends GameObject implements IDrawableInventory {
 
     public boolean canBeStackedWith(Item item) {
         return item.getClass() == getClass();
+    }
+
+    public boolean leftClick(Player causer, Vector2 pos) {
+        return false;
     }
 }

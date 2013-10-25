@@ -26,12 +26,12 @@ public class ItemWaterBucket extends Item {
     }
 
     @Override
-    public int getUsedItemNum(Player causer, Vector2 position) {
+    public int getUsedItemNum(Player causer, Vector2 position, boolean leftClick) {
         return 0;
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position) {
+    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
         return 1f;
     }
 

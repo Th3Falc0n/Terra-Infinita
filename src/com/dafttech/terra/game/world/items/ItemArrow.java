@@ -15,7 +15,7 @@ public class ItemArrow extends ItemEntitySpawner {
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position) {
+    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
         return 0.2f;
     }
 

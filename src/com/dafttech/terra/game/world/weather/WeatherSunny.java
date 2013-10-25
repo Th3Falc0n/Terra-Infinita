@@ -6,6 +6,6 @@ public class WeatherSunny extends Weather {
     @Override
     public void update(World world, float delta) {
         // TODO Auto-generated method stub
-        
+
     }
 }

@@ -30,7 +30,7 @@ public class World implements IDrawableInWorld {
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
     public Player localPlayer = new Player(new Vector2(), this);
-    
+
     public Weather weather = new WeatherRainy();
 
     public World(Vector2 size) {
@@ -183,7 +183,7 @@ public class World implements IDrawableInWorld {
         }
 
         TimeKeeping.timeKeeping("Tile update");
-        
+
         for (Chunk chunk : localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
                 entity.update(this, delta);

@@ -8,9 +8,11 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class SubtileFluid extends Subtile {
     private float height = 10;
+    private float nextFlow = 0, flowDelay = 0.2f;
 
     public SubtileFluid(Tile t) {
         super(t);
+        nextFlow = t.getWorld().time + flowDelay;
     }
 
     public boolean isFluid(Facing facing) {
@@ -44,18 +46,21 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
-        if (height == 0) {
-            tile.removeSubtile(this);
-        } else {
-            Tile tileBelow = world.getTile(tile.getPosition().add(Facing.BOTTOM));
-            if (!tileBelow.isWaterproof()) {
-                Subtile subtile = tileBelow.getSubtile(getClass(), false);
-                if (subtile == null) {
-                    subtile = getNewFluid(tileBelow).setHeight(0);
-                    tileBelow.addSubtile(subtile);
+        if (world.time >= nextFlow) {
+            nextFlow = world.time + flowDelay;
+            if (height == 0) {
+                tile.removeSubtile(this);
+            } else {
+                Tile tileBelow = world.getTile(tile.getPosition().add(Facing.BOTTOM));
+                if (!tileBelow.isWaterproof()) {
+                    Subtile subtile = tileBelow.getSubtile(getClass(), false);
+                    if (subtile == null) {
+                        subtile = getNewFluid(tileBelow).setHeight(0);
+                        tileBelow.addSubtile(subtile);
 
+                    }
+                    setHeight(((SubtileFluid) subtile).addHeight(height));
                 }
-                setHeight(((SubtileFluid) subtile).addHeight(height));
             }
         }
     }

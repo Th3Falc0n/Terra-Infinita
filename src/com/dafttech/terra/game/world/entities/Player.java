@@ -71,17 +71,20 @@ public class Player extends EntityLiving {
 
         if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
 
-        if (Gdx.input.isButtonPressed(Buttons.LEFT) && System.currentTimeMillis() - left > 10) {
-            left = System.currentTimeMillis();
-            Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
-                    .toWorldPosition();
-            Tile damagedTile = getWorld().getTile(destroy.x, destroy.y);
-            if (damagedTile != null) damagedTile.damage(world, 0.2f, this);
+        if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+            Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+            if (!hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos, true) && System.currentTimeMillis() - left > 10) {
+                left = System.currentTimeMillis();
+                Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
+                        .toWorldPosition();
+                Tile damagedTile = getWorld().getTile(destroy.x, destroy.y);
+                if (damagedTile != null) damagedTile.damage(world, 0.2f, this);
+            }
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
             Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-            hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos);
+            hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos, false);
         }
 
         if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) {

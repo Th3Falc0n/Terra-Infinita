@@ -20,7 +20,7 @@ public class ItemDynamite extends ItemEntitySpawner {
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position) {
+    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
         return 1;
     }
 }
