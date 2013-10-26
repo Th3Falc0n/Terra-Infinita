@@ -35,9 +35,9 @@ public abstract class SubtileFluid extends Subtile {
 
     public float addHeight(float height) {
         this.height += height;
-        if (height > 10) {
-            float remHeight = height - 10;
-            height = 10;
+        if (this.height > 10) {
+            float remHeight = this.height - 10;
+            this.height = 10;
             return remHeight;
         }
         return 0;
@@ -48,21 +48,19 @@ public abstract class SubtileFluid extends Subtile {
         super.onTick(world, delta);
         if (world.time >= nextFlow) {
             nextFlow = world.time + flowDelay;
-            if (height == 0) {
-                tile.removeSubtile(this);
-            } else {
+            if (height != 0) {
                 Tile tileBelow = world.getTile(tile.getPosition().add(Facing.BOTTOM));
                 if (!tileBelow.isWaterproof()) {
-                    Subtile subtile = tileBelow.getSubtile(getClass(), false);
+                    SubtileFluid subtile = (SubtileFluid) tileBelow.getSubtile(getClass(), false);
                     if (subtile == null) {
                         subtile = getNewFluid(tileBelow).setHeight(0);
                         tileBelow.addSubtile(subtile);
-
                     }
-                    setHeight(((SubtileFluid) subtile).addHeight(height));
+                    setHeight(subtile.addHeight(height));
                 }
             }
         }
+        if (height == 0) tile.removeSubtile(this);
     }
 
     public abstract SubtileFluid getNewFluid(Tile tile);
