@@ -13,7 +13,7 @@ public abstract class Particle extends Entity {
 
     public Particle(Vector2 pos, World world, float life, Vector2 s) {
         super(pos, world, s);
-
+ 
         lifetimeMax = life;
         lifetime = lifetimeMax;
     }
