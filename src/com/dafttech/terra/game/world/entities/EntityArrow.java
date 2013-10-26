@@ -32,6 +32,11 @@ public class EntityArrow extends EntityThrown {
 
         super.update(world, delta);
     }
+    
+    @Override
+    public boolean collidesWith(Entity e) {
+        return !(e instanceof Player);
+    }
 
     @Override
     public void onTerrainCollision(Tile tile) {

@@ -26,7 +26,12 @@ public abstract class Particle extends Entity {
     public TextureRegion getImage() {
         return null;
     }
-
+    
+    @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+    
     public boolean isDead() {
         return lifetime < 0;
     }

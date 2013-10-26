@@ -137,6 +137,56 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         rend.end();
     }
+    
+    public boolean collidesWith(Entity e) {
+        return true;
+    }
+
+    public void checkEntityCollisions() {
+        Rectangle playerRect, tileRect;
+
+        Vector2 oVel = velocity.clone();
+
+        for (Entity entity : chunk.getLocalEntities()) {
+            if(entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
+                continue;
+            }
+            tileRect = new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getSize().x * BLOCK_SIZE, entity.getSize().y * BLOCK_SIZE);
+            playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
+
+            if (playerRect.overlaps(tileRect)) {
+                Facing fVertical, fHorizontal;
+                float distVertical, distHorizontal;
+                float posVertical, posHorizontal;
+
+                if (oVel.y > 0) {
+                    fVertical = Facing.BOTTOM;
+                    distVertical = (playerRect.y + playerRect.height) - tileRect.y;
+                    posVertical = tileRect.y - 0.01f - playerRect.height;
+                } else {
+                    fVertical = Facing.TOP;
+                    distVertical = (tileRect.y + tileRect.height) - playerRect.y;
+                    posVertical = (tileRect.y + tileRect.height) + 0.01f;
+                }
+
+                if (oVel.x > 0) {
+                    fHorizontal = Facing.RIGHT;
+                    distHorizontal = (playerRect.x + playerRect.width) - tileRect.x;
+                    posHorizontal = tileRect.x - 0.01f - playerRect.width;
+                } else {
+                    fHorizontal = Facing.LEFT;
+                    distHorizontal = (tileRect.x + tileRect.width) - playerRect.x;
+                    posHorizontal = (tileRect.x + tileRect.width) + 0.01f;
+                }
+
+                if (distVertical < distHorizontal) {
+                    collisionResponse(fVertical, posVertical);
+                } else {
+                    collisionResponse(fHorizontal, posHorizontal);
+                }
+            }
+        }
+    }
 
     public void checkTerrainCollisions(World world) {
         Vector2i mid = getPosition().toWorldPosition();
@@ -148,8 +198,6 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x; x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y; y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
-                    int redo = 0;
-
                     tileRect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
@@ -180,9 +228,9 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                         }
 
                         if (distVertical < distHorizontal) {
-                            terrainCollisionResponse(fVertical, posVertical);
+                            collisionResponse(fVertical, posVertical);
                         } else {
-                            terrainCollisionResponse(fHorizontal, posHorizontal);
+                            collisionResponse(fHorizontal, posHorizontal);
                         }
 
                         onTerrainCollision(world.getTile(x, y));
@@ -196,7 +244,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     }
 
-    public void terrainCollisionResponse(Facing facing, float val) {
+    public void collisionResponse(Facing facing, float val) {
         if (facing.isVertical()) {
             velocity.y = 0;
             setPosition(getPosition().setY(val));
@@ -258,6 +306,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 setPosition(getPosition().add(velocity.mulNew(asl)));
 
                 checkTerrainCollisions(worldObj.localPlayer.getWorld());
+                checkEntityCollisions();
             }
         }
 
