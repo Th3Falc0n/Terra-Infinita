@@ -13,7 +13,7 @@ public abstract class Particle extends Entity {
 
     public Particle(Vector2 pos, World world, float life, Vector2 s) {
         super(pos, world, s);
-
+ 
         lifetimeMax = life;
         lifetime = lifetimeMax;
     }
@@ -26,7 +26,12 @@ public abstract class Particle extends Entity {
     public TextureRegion getImage() {
         return null;
     }
-
+    
+    @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+    
     public boolean isDead() {
         return lifetime < 0;
     }
