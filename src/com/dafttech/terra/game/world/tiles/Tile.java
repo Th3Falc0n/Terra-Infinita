@@ -3,6 +3,8 @@ package com.dafttech.terra.game.world.tiles;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
@@ -19,9 +21,11 @@ import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
+    final Lock lock = new ReentrantReadWriteLock().writeLock();
+
     private World world = null;
     private Vector2i position = new Vector2i();
-    volatile List<Subtile> subtiles = new ArrayList<Subtile>();
+    private List<Subtile> subtiles = new ArrayList<Subtile>();
 
     private float breakingProgress = 0;
     private float hardness = 1;
@@ -92,21 +96,25 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public Tile addSubtile(Subtile... subtile) {
+        lock.lock();
         for (Subtile s : subtile) {
             if (s != null) {
                 s.setTile(this);
                 subtiles.add(s);
             }
         }
+        lock.unlock();
         return this;
     }
 
     public Tile removeSubtile(Subtile... subtile) {
+        lock.lock();
         for (Subtile s : subtile) {
             if (s != null) {
                 subtiles.remove(s);
             }
         }
+        lock.unlock();
         return this;
     }
 
@@ -115,12 +123,16 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public Subtile getSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
+        lock.lock();
         Subtile subtile = null;
         for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext();) {
             subtile = i.next();
-            if ((inherited && subtileClass.isAssignableFrom(subtile.getClass())) || (!inherited && subtile.getClass() == subtileClass))
+            if ((inherited && subtileClass.isAssignableFrom(subtile.getClass())) || (!inherited && subtile.getClass() == subtileClass)) {
+                lock.unlock();
                 return subtile;
+            }
         }
+        lock.unlock();
         return null;
     }
 
@@ -136,6 +148,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     @Override
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
+        lock.lock();
         getRenderer().draw(pos, world, screen, this, pointOfView);
 
         Subtile subtile = null;
@@ -143,13 +156,16 @@ public abstract class Tile extends Item implements IDrawableInWorld {
             subtile = i.next();
             subtile.draw(pos, world, screen, pointOfView);
         }
+        lock.unlock();
     }
 
     public final void tick(World world, float delta) {
+        lock.lock();
         onTick(world, delta);
         for (int i = 0; i < subtiles.size(); i++) {
             subtiles.get(i).tick(world, delta);
         }
+        lock.unlock();
     }
 
     public void onTick(World world, float delta) {
@@ -158,10 +174,12 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     @Override
     public void update(World world, float delta) {
+        lock.lock();
         for (int i = 0; i < subtiles.size(); i++) {
             subtiles.get(i).update(delta);
         }
         if (breakingProgress > 0) breakingProgress -= delta;
+        lock.unlock();
     }
 
     @Override
