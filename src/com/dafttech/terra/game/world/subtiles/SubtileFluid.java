@@ -55,7 +55,6 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
-        checkHeight();
         flow(world, Facing.TOP, delta);
         float waterLeft = delta * 10;
         waterLeft = waterLeft - flow(world, Facing.BOTTOM, waterLeft);
@@ -66,6 +65,7 @@ public abstract class SubtileFluid extends Subtile {
             waterLeft = waterLeft - flow(world, Facing.RIGHT, waterLeft);
             if (!clearFloor()) flow(world, Facing.LEFT, waterLeft);
         }
+        checkHeight();
     }
 
     public float flow(World world, Facing direction, float amount) {
