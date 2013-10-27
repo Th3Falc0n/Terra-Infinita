@@ -136,8 +136,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
         Subtile s;
         for (int i = 0; i < subtiles.size(); i++) {
-            s = subtiles.get(i);
-            s.draw(pos, world, screen, pointOfView);
+            if (i < subtiles.size()) {
+                s = subtiles.get(i);
+                s.draw(pos, world, screen, pointOfView);
+            }
         }
     }
 
