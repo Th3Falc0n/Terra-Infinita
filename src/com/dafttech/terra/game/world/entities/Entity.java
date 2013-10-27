@@ -90,7 +90,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public void onRechunk(Chunk newChunk, Vector2 pos) {
-        
+
     }
 
     public boolean remove() {
@@ -142,7 +142,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         rend.end();
     }
-    
+
     public boolean collidesWith(Entity e) {
         return true;
     }
@@ -153,13 +153,14 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         Vector2 oVel = velocity.clone();
 
         for (Entity entity : chunk.getLocalEntities()) {
-            if(entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
+            if (entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
                 continue;
             }
-            otherRect = new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getSize().x * BLOCK_SIZE, entity.getSize().y * BLOCK_SIZE);
+            otherRect = new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getSize().x * BLOCK_SIZE, entity.getSize().y
+                    * BLOCK_SIZE);
             playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
-            if(collisionDetect(oVel, playerRect, otherRect)) {
+            if (collisionDetect(oVel, playerRect, otherRect)) {
                 onEntityCollision(entity);
             }
         }
@@ -177,8 +178,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                     tileRect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-                    
-                    if(collisionDetect(oVel, playerRect, tileRect)) {
+
+                    if (collisionDetect(oVel, playerRect, tileRect)) {
                         onTerrainCollision(world.getTile(x, y));
                     }
                 }
@@ -189,11 +190,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public void onTerrainCollision(Tile t) {
 
     }
-    
+
     public void onEntityCollision(Entity e) {
-        
+
     }
-    
+
     public boolean collisionDetect(Vector2 oVel, Rectangle a, Rectangle b) {
         if (a.overlaps(b)) {
             Facing fVertical, fHorizontal;
@@ -228,7 +229,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 return true;
             }
         }
-        
+
         return false;
     }
 

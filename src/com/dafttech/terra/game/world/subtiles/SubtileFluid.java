@@ -55,8 +55,8 @@ public abstract class SubtileFluid extends Subtile {
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
         if (height == maxHeight) monitored = true;
-        checkHeight();
-        // flow(world, Facing.TOP, delta);
+
+        flow(world, Facing.TOP, delta);
         if (!flow(world, Facing.BOTTOM, delta * 10)) {
             if (TerraInfinita.rnd.nextBoolean()) {
                 flow(world, Facing.LEFT, delta);
@@ -64,6 +64,7 @@ public abstract class SubtileFluid extends Subtile {
                 flow(world, Facing.RIGHT, delta);
             }
         }
+        checkHeight();
         // if (monitored) System.out.println(height);
     }
 
@@ -80,7 +81,7 @@ public abstract class SubtileFluid extends Subtile {
         } else if (direction == Facing.BOTTOM) {
             addHeight(fluid.addHeight(amount) - amount);
         } else if (direction == Facing.LEFT || direction == Facing.RIGHT) {
-            if (fluid.getHeight() + amount >= height - amount) amount = (fluid.getHeight() + height) / 2 - height;
+            if (fluid.getHeight() + amount >= height - amount) amount = (fluid.getHeight() + height) / 2 - fluid.getHeight();
             addHeight(fluid.addHeight(amount) - amount);
         }
         fluid.checkHeight();

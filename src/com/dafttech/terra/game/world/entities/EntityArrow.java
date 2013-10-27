@@ -33,7 +33,7 @@ public class EntityArrow extends EntityThrown {
 
         super.update(world, delta);
     }
-    
+
     @Override
     public boolean collidesWith(Entity e) {
         return (e instanceof EntityLiving) && !(e instanceof Player);
