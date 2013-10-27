@@ -138,7 +138,7 @@ public class World implements IDrawableInWorld {
     public EntityItem destroyTile(int x, int y, Entity causer) {
         EntityItem entity = null;
         Tile tile = getTile(x, y);
-        if (tile != null) {
+        if (tile.isBreakable()) {
             entity = tile.spawnAsEntity(this);
             setTile(x, y, null, true);
 

@@ -59,6 +59,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public boolean isWaterproof() {
+        return isOpaque();
+    }
+
+    public boolean isBreakable() {
         return !isAir();
     }
 

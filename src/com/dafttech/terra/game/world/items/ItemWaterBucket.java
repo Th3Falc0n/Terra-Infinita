@@ -32,7 +32,7 @@ public class ItemWaterBucket extends Item {
 
     @Override
     public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
-        return 1f;
+        return 0.08f;
     }
 
 }
