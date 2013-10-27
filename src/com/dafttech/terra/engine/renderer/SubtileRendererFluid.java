@@ -6,6 +6,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.subtiles.Subtile;
+import com.dafttech.terra.game.world.subtiles.SubtileFluid;
 
 public class SubtileRendererFluid extends SubtileRendererMask {
     public static SubtileRenderer $Instance = new SubtileRendererFluid();
@@ -16,6 +17,8 @@ public class SubtileRendererFluid extends SubtileRendererMask {
 
         float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
 
-        screen.batch.draw(render.getImage(), screenVec.x, screenVec.y, 1, 1, BLOCK_SIZE, BLOCK_SIZE, 1, 1, rotation);
+        float height = ((SubtileFluid) render).getHeight() / ((SubtileFluid) render).getMaxHeight() * BLOCK_SIZE;
+        if (((SubtileFluid) render).isFluidAbove(render.getTile().getWorld())) height = BLOCK_SIZE;
+        screen.batch.draw(render.getImage(), screenVec.x, screenVec.y + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation);
     }
 }

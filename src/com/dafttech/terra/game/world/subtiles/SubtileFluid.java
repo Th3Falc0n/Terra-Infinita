@@ -64,7 +64,7 @@ public abstract class SubtileFluid extends Subtile {
                 flow(world, Facing.RIGHT, delta);
             }
         }
-        if (monitored) System.out.println(height);
+        // if (monitored) System.out.println(height);
     }
 
     public boolean flow(World world, Facing direction, float amount) {
@@ -80,7 +80,7 @@ public abstract class SubtileFluid extends Subtile {
         } else if (direction == Facing.BOTTOM) {
             addHeight(fluid.addHeight(amount) - amount);
         } else if (direction == Facing.LEFT || direction == Facing.RIGHT) {
-            if (fluid.getHeight() + amount > height - amount) amount = (fluid.getHeight() + height) / 2 - height;
+            if (fluid.getHeight() + amount >= height - amount) amount = (fluid.getHeight() + height) / 2 - height;
             addHeight(fluid.addHeight(amount) - amount);
         }
         fluid.checkHeight();
@@ -102,5 +102,15 @@ public abstract class SubtileFluid extends Subtile {
         return fluid;
     }
 
+    public boolean isFluidAbove(World world) {
+        Tile tile = world.getTile(this.tile.getPosition().add(Facing.TOP));
+        if (tile.isWaterproof()) return false;
+        return tile.hasSubtile(getClass(), false);
+    }
+
     public abstract SubtileFluid getNewFluid(Tile tile);
+
+    public float getMaxHeight() {
+        return maxHeight;
+    }
 }
