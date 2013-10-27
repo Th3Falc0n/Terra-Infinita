@@ -143,7 +143,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public void checkEntityCollisions() {
-        Rectangle playerRect, tileRect;
+        Rectangle playerRect, otherRect;
 
         Vector2 oVel = velocity.clone();
 
@@ -151,39 +151,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             if(entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
                 continue;
             }
-            tileRect = new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getSize().x * BLOCK_SIZE, entity.getSize().y * BLOCK_SIZE);
+            otherRect = new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getSize().x * BLOCK_SIZE, entity.getSize().y * BLOCK_SIZE);
             playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
 
-            if (playerRect.overlaps(tileRect)) {
-                Facing fVertical, fHorizontal;
-                float distVertical, distHorizontal;
-                float posVertical, posHorizontal;
-
-                if (oVel.y > 0) {
-                    fVertical = Facing.BOTTOM;
-                    distVertical = (playerRect.y + playerRect.height) - tileRect.y;
-                    posVertical = tileRect.y - 0.01f - playerRect.height;
-                } else {
-                    fVertical = Facing.TOP;
-                    distVertical = (tileRect.y + tileRect.height) - playerRect.y;
-                    posVertical = (tileRect.y + tileRect.height) + 0.01f;
-                }
-
-                if (oVel.x > 0) {
-                    fHorizontal = Facing.RIGHT;
-                    distHorizontal = (playerRect.x + playerRect.width) - tileRect.x;
-                    posHorizontal = tileRect.x - 0.01f - playerRect.width;
-                } else {
-                    fHorizontal = Facing.LEFT;
-                    distHorizontal = (tileRect.x + tileRect.width) - playerRect.x;
-                    posHorizontal = (tileRect.x + tileRect.width) + 0.01f;
-                }
-
-                if (distVertical < distHorizontal) {
-                    collisionResponse(fVertical, posVertical);
-                } else {
-                    collisionResponse(fHorizontal, posHorizontal);
-                }
+            if(collisionDetect(oVel, playerRect, otherRect)) {
+                onEntityCollision(entity);
             }
         }
     }
@@ -200,39 +172,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                     tileRect = new Rectangle(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                     playerRect = new Rectangle(getPosition().x, getPosition().y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
-
-                    if (playerRect.overlaps(tileRect)) {
-                        Facing fVertical, fHorizontal;
-                        float distVertical, distHorizontal;
-                        float posVertical, posHorizontal;
-                        float mPosX, mPosY;
-
-                        if (oVel.y > 0) {
-                            fVertical = Facing.BOTTOM;
-                            distVertical = (playerRect.y + playerRect.height) - tileRect.y;
-                            posVertical = tileRect.y - 0.01f - playerRect.height;
-                        } else {
-                            fVertical = Facing.TOP;
-                            distVertical = (tileRect.y + tileRect.height) - playerRect.y;
-                            posVertical = (tileRect.y + tileRect.height) + 0.01f;
-                        }
-
-                        if (oVel.x > 0) {
-                            fHorizontal = Facing.RIGHT;
-                            distHorizontal = (playerRect.x + playerRect.width) - tileRect.x;
-                            posHorizontal = tileRect.x - 0.01f - playerRect.width;
-                        } else {
-                            fHorizontal = Facing.LEFT;
-                            distHorizontal = (tileRect.x + tileRect.width) - playerRect.x;
-                            posHorizontal = (tileRect.x + tileRect.width) + 0.01f;
-                        }
-
-                        if (distVertical < distHorizontal) {
-                            collisionResponse(fVertical, posVertical);
-                        } else {
-                            collisionResponse(fHorizontal, posHorizontal);
-                        }
-
+                    
+                    if(collisionDetect(oVel, playerRect, tileRect)) {
                         onTerrainCollision(world.getTile(x, y));
                     }
                 }
@@ -242,6 +183,48 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public void onTerrainCollision(Tile t) {
 
+    }
+    
+    public void onEntityCollision(Entity e) {
+        
+    }
+    
+    public boolean collisionDetect(Vector2 oVel, Rectangle a, Rectangle b) {
+        if (a.overlaps(b)) {
+            Facing fVertical, fHorizontal;
+            float distVertical, distHorizontal;
+            float posVertical, posHorizontal;
+
+            if (oVel.y > 0) {
+                fVertical = Facing.BOTTOM;
+                distVertical = (a.y + a.height) - b.y;
+                posVertical = b.y - 0.01f - a.height;
+            } else {
+                fVertical = Facing.TOP;
+                distVertical = (b.y + b.height) - a.y;
+                posVertical = (b.y + b.height) + 0.01f;
+            }
+
+            if (oVel.x > 0) {
+                fHorizontal = Facing.RIGHT;
+                distHorizontal = (a.x + a.width) - b.x;
+                posHorizontal = b.x - 0.01f - a.width;
+            } else {
+                fHorizontal = Facing.LEFT;
+                distHorizontal = (b.x + b.width) - a.x;
+                posHorizontal = (b.x + b.width) + 0.01f;
+            }
+
+            if (distVertical < distHorizontal) {
+                collisionResponse(fVertical, posVertical);
+                return true;
+            } else {
+                collisionResponse(fHorizontal, posHorizontal);
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public void collisionResponse(Facing facing, float val) {

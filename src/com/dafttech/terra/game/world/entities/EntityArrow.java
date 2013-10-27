@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.models.EntityThrown;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
@@ -35,7 +36,7 @@ public class EntityArrow extends EntityThrown {
     
     @Override
     public boolean collidesWith(Entity e) {
-        return !(e instanceof Player);
+        return (e instanceof EntityLiving) && !(e instanceof Player);
     }
 
     @Override
