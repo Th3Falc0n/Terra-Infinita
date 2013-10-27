@@ -66,10 +66,10 @@ public class Player extends EntityLiving {
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
-        if (InputHandler.$.isKeyDown("LEFT")) addForce(new Vector2(-10f * getCurrentAcceleration(), 0));
-        if (InputHandler.$.isKeyDown("RIGHT")) addForce(new Vector2(10f * getCurrentAcceleration(), 0));
+        if (InputHandler.$.isKeyDown("LEFT")) walkLeft();
+        if (InputHandler.$.isKeyDown("RIGHT")) walkRight();
 
-        if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) addVelocity(new Vector2(0, -30));
+        if (InputHandler.$.isKeyDown("JUMP") && !this.isInAir()) jump();
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
             Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
@@ -90,12 +90,6 @@ public class Player extends EntityLiving {
         if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) {
             right = false;
         }
-
-        if (light == null) {
-            light = new PointLight(getPosition(), 95);
-            light.setColor(new Color(255, 200, 40, 255));
-        }
-        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {
             if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 2f) {
@@ -127,15 +121,5 @@ public class Player extends EntityLiving {
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
         screen.batch.flush();
         // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
-    }
-
-    @Override
-    public boolean isLightEmitter() {
-        return true;
-    }
-
-    @Override
-    public PointLight getEmittedLight() {
-        return light;
     }
 }

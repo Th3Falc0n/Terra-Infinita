@@ -28,6 +28,18 @@ public abstract class EntityLiving extends Entity {
         if (this.health > maxHealth) this.health = maxHealth;
         return this;
     }
+    
+    public void jump() {
+        addVelocity(new Vector2(0, -30));
+    }
+    
+    public void walkLeft() {
+        addForce(new Vector2(-10f * getCurrentAcceleration(), 0));
+    }
+    
+    public void walkRight() {
+        addForce(new Vector2(10f * getCurrentAcceleration(), 0));
+    }
 
     protected EntityLiving setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
