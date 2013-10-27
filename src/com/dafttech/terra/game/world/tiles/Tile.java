@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.badlogic.gdx.graphics.Color;
@@ -21,7 +22,7 @@ import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
-    final Lock lock = new ReentrantReadWriteLock().writeLock();
+    final Lock lock = new ReentrantLock();
 
     private World world = null;
     private Vector2i position = new Vector2i();
