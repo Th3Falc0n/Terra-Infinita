@@ -20,4 +20,9 @@ public class SubtileWater extends SubtileFluid {
         return new SubtileWater(tile);
     }
 
+    @Override
+    public boolean clearFloor() {
+        return true;
+    }
+
 }

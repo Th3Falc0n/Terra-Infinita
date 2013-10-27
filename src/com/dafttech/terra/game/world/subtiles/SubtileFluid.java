@@ -9,11 +9,9 @@ import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class SubtileFluid extends Subtile {
     private float maxHeight = 10, height = maxHeight;
-    private float nextFlow = 0, flowDelay = 0.2f;
 
     public SubtileFluid(Tile t) {
         super(t);
-        nextFlow = t.getWorld().time + flowDelay;
     }
 
     public boolean isFluid(Facing facing) {
@@ -40,6 +38,9 @@ public abstract class SubtileFluid extends Subtile {
         if (height > remainingHeight) {
             remainingFluid = height - remainingHeight;
             height = remainingHeight;
+        } else if (this.height + height < 0) {
+            remainingFluid = this.height + height;
+            height = -this.height;
         }
         this.height += height;
         return remainingFluid;
@@ -54,23 +55,22 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
-        if (height == maxHeight) monitored = true;
-
-        flow(world, Facing.TOP, delta);
-        if (!flow(world, Facing.BOTTOM, delta * 10)) {
-            if (TerraInfinita.rnd.nextBoolean()) {
-                flow(world, Facing.LEFT, delta);
-            } else {
-                flow(world, Facing.RIGHT, delta);
-            }
-        }
         checkHeight();
-        // if (monitored) System.out.println(height);
+        flow(world, Facing.TOP, delta);
+        float waterLeft = delta * 10;
+        waterLeft = waterLeft - flow(world, Facing.BOTTOM, waterLeft);
+        if (TerraInfinita.rnd.nextBoolean()) {
+            waterLeft = waterLeft - flow(world, Facing.LEFT, waterLeft);
+            if (!clearFloor()) flow(world, Facing.RIGHT, waterLeft);
+        } else {
+            waterLeft = waterLeft - flow(world, Facing.RIGHT, waterLeft);
+            if (!clearFloor()) flow(world, Facing.LEFT, waterLeft);
+        }
     }
 
-    public boolean flow(World world, Facing direction, float amount) {
+    public float flow(World world, Facing direction, float amount) {
         SubtileFluid fluid = getFluid(world, direction);
-        if (fluid == null) return false;
+        if (fluid == null) return 0;
         float oldHeight = height;
         if (amount > height) amount = height;
         if (direction == Facing.TOP) {
@@ -85,7 +85,7 @@ public abstract class SubtileFluid extends Subtile {
             addHeight(fluid.addHeight(amount) - amount);
         }
         fluid.checkHeight();
-        return height != oldHeight;
+        return Math.abs(height - oldHeight);
     }
 
     public void checkHeight() {
@@ -110,6 +110,8 @@ public abstract class SubtileFluid extends Subtile {
     }
 
     public abstract SubtileFluid getNewFluid(Tile tile);
+
+    public abstract boolean clearFloor();
 
     public float getMaxHeight() {
         return maxHeight;
