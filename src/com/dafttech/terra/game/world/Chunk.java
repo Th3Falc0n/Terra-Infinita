@@ -102,7 +102,7 @@ public class Chunk implements IDrawableInWorld {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
             if (tile == null) tile = new TileAir();
             tile.setPosition(blockInChunkPos.getBlockInWorldPos(this)).setWorld(world);
-            if (!Events.EVENT_BLOCKCHANGE.callSync(tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
+            if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
     }
