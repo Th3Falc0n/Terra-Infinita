@@ -27,6 +27,11 @@ public class EntityRainbow extends EntityThrown {
     }
 
     @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+
+    @Override
     public void update(World world, float delta) {
         super.update(world, delta);
 
