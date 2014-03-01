@@ -11,6 +11,7 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public abstract class SubtileFluid extends Subtile {
     public float maxPressure = 10;
     public float pressure = maxPressure;
+    private float frozen = 0;
 
     public SubtileFluid(Tile t) {
         super(t);
@@ -30,31 +31,42 @@ public abstract class SubtileFluid extends Subtile {
         if (pressure < maxPressure / 1000) {
             tile.removeSubtile(this);
         } else {
-            float amount = flowSpeed();
-            float overflow = 0;
-            SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
-            if (fluid != null) {
-                addPressure(-amount);
-                overflow += addPressure(fluid.addPressure(amount));
-            }
-            if (pressure > 0) {
-                if (new Random().nextBoolean()) {
-                    fluid = getFluid(world, Facing.RIGHT);
-                } else {
-                    fluid = getFluid(world, Facing.LEFT);
+            if (frozen <= 0) {
+                float viscosity = getViscosity();
+                if (viscosity < 0) viscosity = 0;
+                float amount = maxPressure / (viscosity + 1);
+                float overflow = 0;
+                SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
+                if (fluid != null) {
+                    float possAmount = pressure;
+                    if (possAmount > amount) possAmount = amount;
+                    addPressure(-possAmount);
+                    overflow = fluid.addPressure(possAmount);
+                    amount += -possAmount + overflow;
+                    overflow = addPressure(overflow);
                 }
-                if (fluid != null && fluid.pressure < pressure) {
-                    float avg = (pressure + fluid.pressure) / 2;
-                    float possAmount = avg - fluid.pressure;
-                    if (possAmount < amount) amount = possAmount;
-                    addPressure(-amount);
-                    overflow += addPressure(fluid.addPressure(amount));
+                if (pressure > 0 && amount > 0) {
+                    if (new Random().nextBoolean()) {
+                        fluid = getFluid(world, Facing.RIGHT);
+                    } else {
+                        fluid = getFluid(world, Facing.LEFT);
+                    }
+                    if (fluid != null && fluid.pressure < pressure) {
+                        float avg = (pressure + fluid.pressure) / 2;
+                        float possAmount = avg - fluid.pressure;
+                        if (possAmount > amount) possAmount = amount;
+                        addPressure(-possAmount);
+                        overflow = fluid.addPressure(possAmount + overflow);
+                        overflow = addPressure(overflow);
+                    }
                 }
-            }
-            if (overflow > 0) {
-                fluid = getFluid(world, Facing.TOP);
-                if (fluid != null) overflow = fluid.addPressure(overflow);
-                pressure += overflow;
+                if (overflow > 0) {
+                    fluid = getFluid(world, Facing.TOP);
+                    if (fluid != null) overflow = fluid.addPressure(overflow);
+                    pressure += overflow;
+                }
+            } else {
+                frozen -= delta;
             }
         }
     }
@@ -98,7 +110,5 @@ public abstract class SubtileFluid extends Subtile {
 
     public abstract SubtileFluid getNewFluid(Tile tile);
 
-    public abstract float flowSpeed();
-
-    public abstract boolean clearFloor();
+    public abstract float getViscosity();
 }

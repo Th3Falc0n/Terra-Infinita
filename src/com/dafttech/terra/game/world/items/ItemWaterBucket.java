@@ -3,7 +3,7 @@ package com.dafttech.terra.game.world.items;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Player;
-import com.dafttech.terra.game.world.subtiles.SubtileWater;
+import com.dafttech.terra.game.world.subtiles.SubtileGlowGoo;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
@@ -21,7 +21,7 @@ public class ItemWaterBucket extends Item {
     @Override
     public boolean use(Player causer, Vector2 position) {
         Tile tile = causer.worldObj.getTile(position.toWorldPosition());
-        tile.addSubtile(new SubtileWater(tile));
+        tile.addSubtile(new SubtileGlowGoo(tile));
         return true;
     }
 
