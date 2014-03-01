@@ -18,8 +18,11 @@ public class SubtileRendererFluid extends SubtileRendererMask {
 
         float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
 
-        float height = ((SubtileFluid) render).getHeight() / ((SubtileFluid) render).getMaxHeight() * BLOCK_SIZE;
-        if (((SubtileFluid) render).isFluid(render.getTile().getWorld(), Facing.TOP)) height = BLOCK_SIZE;
+        float height = ((SubtileFluid) render).pressure / ((SubtileFluid) render).maxPressure * BLOCK_SIZE;
+        if (((SubtileFluid) render).isFluid(render.getTile().getWorld(), Facing.TOP)) {
+            SubtileFluid above = ((SubtileFluid) render).getFluid(render.getTile().getWorld(), Facing.TOP);
+            if (above.pressure > above.maxPressure / 10) height = BLOCK_SIZE;
+        }
         screen.batch.draw(render.getImage(), screenVec.x, screenVec.y + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation);
     }
 }

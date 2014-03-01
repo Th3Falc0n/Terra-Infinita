@@ -24,7 +24,7 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public boolean clearFloor() {
-        return true;
+        return false;
     }
 
     @Override
@@ -36,6 +36,6 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public float flowSpeed() {
-        return 10;
+        return 4;
     }
 }

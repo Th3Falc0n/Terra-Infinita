@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.subtiles;
 
-import com.dafttech.terra.TerraInfinita;
+import java.util.Random;
+
 import com.dafttech.terra.engine.renderer.SubtileRenderer;
 import com.dafttech.terra.engine.renderer.SubtileRendererFluid;
 import com.dafttech.terra.game.world.Facing;
@@ -8,8 +9,8 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public abstract class SubtileFluid extends Subtile {
-    private float maxHeight = 10, height = maxHeight;
-    private boolean dead = false;
+    public float maxPressure = 10;
+    public float pressure = maxPressure;
 
     public SubtileFluid(Tile t) {
         super(t);
@@ -18,13 +19,59 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void setTile(Tile t) {
         if (isFluid(t.getWorld(), Facing.NONE)) {
-            getFluid(t.getWorld(), Facing.NONE).addHeight(height);
-            dead = true;
+            getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
+            setPressure(0);
         }
     }
 
-    public float getHeight() {
-        return height;
+    @Override
+    public void onTick(World world, float delta) {
+        super.onTick(world, delta);
+        if (pressure < maxPressure / 1000) {
+            tile.removeSubtile(this);
+        } else {
+            float amount = flowSpeed();
+            float overflow = 0;
+            SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
+            if (fluid != null) {
+                addPressure(-amount);
+                overflow += addPressure(fluid.addPressure(amount));
+            }
+            if (pressure > 0) {
+                if (new Random().nextBoolean()) {
+                    fluid = getFluid(world, Facing.RIGHT);
+                } else {
+                    fluid = getFluid(world, Facing.LEFT);
+                }
+                if (fluid != null && fluid.pressure < pressure) {
+                    float avg = (pressure + fluid.pressure) / 2;
+                    float possAmount = avg - fluid.pressure;
+                    if (possAmount < amount) amount = possAmount;
+                    addPressure(-amount);
+                    overflow += addPressure(fluid.addPressure(amount));
+                }
+            }
+            if (overflow > 0) {
+                fluid = getFluid(world, Facing.TOP);
+                if (fluid != null) overflow = fluid.addPressure(overflow);
+                pressure += overflow;
+            }
+        }
+    }
+
+    public float addPressure(float pressure) {
+        this.pressure += pressure;
+        float remaining = this.pressure - maxPressure;
+        if (remaining > 0) {
+            this.pressure -= remaining;
+            return remaining;
+        }
+        return 0;
+    }
+
+    public SubtileFluid setPressure(float pressure) {
+        this.pressure = pressure;
+        return this;
     }
 
     @Override
@@ -32,83 +79,12 @@ public abstract class SubtileFluid extends Subtile {
         return SubtileRendererFluid.$Instance;
     }
 
-    public SubtileFluid setHeight(float height) {
-        this.height = height;
-        return this;
-    }
-
-    public float addHeight(float height) {
-        float remainingHeight = getRemainingHeight();
-        float remainingFluid = 0;
-        if (height > remainingHeight) {
-            remainingFluid = height - remainingHeight;
-            height = remainingHeight;
-        } else if (this.height + height < 0) {
-            remainingFluid = this.height + height;
-            height = -this.height;
-        }
-        this.height += height;
-        return remainingFluid;
-    }
-
-    public float getRemainingHeight() {
-        return maxHeight - height;
-    }
-
-    boolean monitored = false;
-
-    @Override
-    public void onTick(World world, float delta) {
-        super.onTick(world, delta);
-        if (dead) {
-            tile.removeSubtile(this);
-        } else {
-            flow(world, Facing.TOP, delta);
-            float waterLeft = delta * flowSpeed();
-            waterLeft = (waterLeft - flow(world, Facing.BOTTOM, waterLeft)) * 3;
-            if (TerraInfinita.rnd.nextBoolean()) {
-                waterLeft = waterLeft - flow(world, Facing.LEFT, waterLeft);
-                if (!clearFloor()) flow(world, Facing.RIGHT, waterLeft);
-            } else {
-                waterLeft = waterLeft - flow(world, Facing.RIGHT, waterLeft);
-                if (!clearFloor()) flow(world, Facing.LEFT, waterLeft);
-            }
-            checkHeight();
-        }
-    }
-
-    public float flow(World world, Facing direction, float amount) {
-        SubtileFluid fluid = getFluid(world, direction);
-        if (fluid == null) return 0;
-        float oldHeight = height;
-        if (amount > height) amount = height;
-        if (direction == Facing.TOP) {
-            if (height > maxHeight) {
-                if (amount > height - maxHeight) amount = height - maxHeight;
-                addHeight(fluid.addHeight(amount) - amount);
-            }
-        } else if (direction == Facing.BOTTOM) {
-            // addHeight(1 - fluid.addHeight(amount)); // create ocean
-            addHeight(fluid.addHeight(amount) - amount);
-        } else if (direction == Facing.LEFT || direction == Facing.RIGHT) {
-            if (fluid.getHeight() + amount >= height - amount) amount = (fluid.getHeight() + height) / 2 - fluid.getHeight();
-            addHeight(fluid.addHeight(amount) - amount);
-            fluid.flow(world, Facing.BOTTOM, fluid.getMaxHeight());
-        }
-        fluid.checkHeight();
-        return Math.abs(height - oldHeight);
-    }
-
-    public void checkHeight() {
-        if (height == 0) tile.removeSubtile(this);
-    }
-
     public SubtileFluid getFluid(World world, Facing direction) {
         Tile tile = world.getTile(this.tile.getPosition().add(direction));
         if (tile.isWaterproof()) return null;
         SubtileFluid fluid = (SubtileFluid) tile.getSubtile(getClass(), false);
         if (fluid == null) {
-            fluid = getNewFluid(tile).setHeight(0);
+            fluid = getNewFluid(tile).setPressure(0);
             tile.addSubtile(fluid);
         }
         return fluid;
@@ -125,8 +101,4 @@ public abstract class SubtileFluid extends Subtile {
     public abstract float flowSpeed();
 
     public abstract boolean clearFloor();
-
-    public float getMaxHeight() {
-        return maxHeight;
-    }
 }
