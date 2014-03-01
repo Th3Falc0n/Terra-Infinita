@@ -43,7 +43,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
         Texture.setEnforcePotImages(false);
 
         Events.init();
-        Events.EVENT_INITPRE.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_INITPRE, this);
 
         fpsLogger = new FPSLogger();
 
@@ -58,7 +58,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         setScreen(screenPause);
 
-        Events.EVENT_INITPOST.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_INITPOST, this);
     }
 
     @Override
@@ -79,21 +79,21 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
     @Override
     public void resize(int arg0, int arg1) {
-        Events.EVENT_WINRESIZE.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_WINRESIZE, this);
     }
 
     @Override
     public void pause() {
-        Events.EVENT_WINPAUSE.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_WINPAUSE, this);
     }
 
     @Override
     public void resume() {
-        Events.EVENT_WINRESUME.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_WINRESUME, this);
     }
 
     @Override
     public void dispose() {
-        Events.EVENT_WINDISPOSE.callSync(this);
+        Events.EVENTMANAGER.callSync(Events.EVENT_WINDISPOSE, this);
     }
 }

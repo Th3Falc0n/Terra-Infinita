@@ -1,7 +1,8 @@
 package com.dafttech.terra.game.world.tiles;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
@@ -20,7 +21,7 @@ import com.dafttech.terra.game.world.subtiles.Subtile;
 public abstract class Tile extends Item implements IDrawableInWorld {
     private World world = null;
     private Vector2i position = new Vector2i();
-    List<Subtile> subtiles = new ArrayList<Subtile>();
+    private List<Subtile> subtiles = new CopyOnWriteArrayList<Subtile>();
 
     private float breakingProgress = 0;
     private float hardness = 1;
@@ -58,6 +59,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public boolean isWaterproof() {
+        return isOpaque();
+    }
+
+    public boolean isBreakable() {
         return !isAir();
     }
 
@@ -114,9 +119,13 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public Subtile getSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
-        for (int i = 0; i < subtiles.size(); i++)
-            if ((inherited && subtileClass.isAssignableFrom(subtiles.get(i).getClass()))
-                    || (!inherited && subtiles.get(i).getClass() == subtileClass)) return subtiles.get(i);
+        Subtile subtile = null;
+        for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext();) {
+            subtile = i.next();
+            if ((inherited && subtileClass.isAssignableFrom(subtile.getClass())) || (!inherited && subtile.getClass() == subtileClass)) {
+                return subtile;
+            }
+        }
         return null;
     }
 
@@ -134,12 +143,10 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         getRenderer().draw(pos, world, screen, this, pointOfView);
 
-        Subtile s;
-        for (int i = 0; i < subtiles.size(); i++) {
-            if (i < subtiles.size()) {
-                s = subtiles.get(i);
-                s.draw(pos, world, screen, pointOfView);
-            }
+        Subtile subtile = null;
+        for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext();) {
+            subtile = i.next();
+            subtile.draw(pos, world, screen, pointOfView);
         }
     }
 

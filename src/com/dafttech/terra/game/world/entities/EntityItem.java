@@ -26,6 +26,11 @@ public class EntityItem extends Entity {
     }
 
     @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+
+    @Override
     public void update(World world, float delta) {
         Vector2 p = getWorld().localPlayer.getPosition();
         Vector2 s = getWorld().localPlayer.getSize();

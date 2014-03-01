@@ -70,7 +70,7 @@ public class InputHandler implements InputProcessor {
             return true;
         }
         keyDown.put(i, true);
-        if (isKeyRegistered(i)) Events.EVENT_KEYDOWN.callSync(getKeyName(i));
+        if (isKeyRegistered(i)) Events.EVENTMANAGER.callSync(Events.EVENT_KEYDOWN, getKeyName(i));
         return true;
     }
 
@@ -87,25 +87,25 @@ public class InputHandler implements InputProcessor {
     public boolean keyUp(int i) {
         if (FocusManager.typeFocusAssigned()) return false;
         keyDown.put(i, false);
-        if (isKeyRegistered(i)) Events.EVENT_KEYUP.callSync(getKeyName(i));
+        if (isKeyRegistered(i)) Events.EVENTMANAGER.callSync(Events.EVENT_KEYUP, getKeyName(i));
         return true;
     }
 
     @Override
     public boolean mouseMoved(int x, int y) {
-        Events.EVENT_MOUSEMOVE.callSync(-1, x, y);
+        Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEMOVE, -1, x, y);
         return true;
     }
 
     @Override
     public boolean scrolled(int arg0) {
-        Events.EVENT_SCROLL.callSync(arg0);
+        Events.EVENTMANAGER.callSync(Events.EVENT_SCROLL, arg0);
         return false;
     }
 
     @Override
     public boolean touchDown(int x, int y, int p, int b) {
-        Events.EVENT_MOUSEDOWN.callSync(b, x, y);
+        Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEDOWN, b, x, y);
         return true;
     }
 
@@ -117,7 +117,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int x, int y, int p, int b) {
-        Events.EVENT_MOUSEUP.callSync(b, x, y);
+        Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEUP, b, x, y);
         return true;
     }
 }

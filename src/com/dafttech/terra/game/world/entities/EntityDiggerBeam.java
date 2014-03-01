@@ -45,6 +45,11 @@ public class EntityDiggerBeam extends EntityThrown {
     }
 
     @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+
+    @Override
     public void onTerrainCollision(Tile tile) {
         if (!tile.isAir()) {
             worldObj.destroyTile(tile.getPosition().x, tile.getPosition().y, this).addVelocity(velocity.mulNew(-5));
