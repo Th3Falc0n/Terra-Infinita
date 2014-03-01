@@ -14,8 +14,7 @@ public class WeatherRainy extends Weather {
     public void update(World world, float delta) {
         Vector2 top = world.localPlayer.getPosition().sub(0, 0 + (Gdx.graphics.getHeight() / 2));
 
-        // TODO: Following mechanics are a particle emitter. CREATE A CLASS
-        // PARTICLEEMITTER!
+        // TODO: Following mechanics are a particle emitter. CREATE A CLASS PARTICLEEMITTER!
         for (int i = 0; i < particles.length; i++) {
             if (particles[i] == null || particles[i].isDead()) {
                 particles[i] = new ParticleSpark(top.add((TerraInfinita.rnd.nextFloat() - 0.5f) * Gdx.graphics.getWidth(), 0), world);
