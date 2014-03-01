@@ -88,6 +88,7 @@ public abstract class SubtileFluid extends Subtile {
                 addHeight(fluid.addHeight(amount) - amount);
             }
         } else if (direction == Facing.BOTTOM) {
+            // addHeight(1 - fluid.addHeight(amount)); // create ocean
             addHeight(fluid.addHeight(amount) - amount);
         } else if (direction == Facing.LEFT || direction == Facing.RIGHT) {
             if (fluid.getHeight() + amount >= height - amount) amount = (fluid.getHeight() + height) / 2 - fluid.getHeight();
