@@ -25,6 +25,7 @@ public abstract class SubtileFluid extends Subtile {
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
@@ -48,8 +49,24 @@ public abstract class SubtileFluid extends Subtile {
                 if (pressure > 0 && amount > 0) {
                     if (new Random().nextBoolean()) {
                         fluid = getFluid(world, Facing.RIGHT);
+                        if (fluid != null) {
+                            int reach = getMaxReach();
+                            while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT)
+                                    && fluid.getFluid(world, Facing.RIGHT).pressure > fluid.maxPressure / 1000) {
+                                reach--;
+                                fluid = fluid.getFluid(world, Facing.RIGHT);
+                            }
+                        }
                     } else {
                         fluid = getFluid(world, Facing.LEFT);
+                        if (fluid != null) {
+                            int reach = getMaxReach();
+                            while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT)
+                                    && fluid.getFluid(world, Facing.LEFT).pressure > fluid.maxPressure / 1000) {
+                                reach--;
+                                fluid = fluid.getFluid(world, Facing.LEFT);
+                            }
+                        }
                     }
                     if (fluid != null && fluid.pressure < pressure) {
                         float avg = (pressure + fluid.pressure) / 2;
@@ -79,6 +96,10 @@ public abstract class SubtileFluid extends Subtile {
             return remaining;
         }
         return 0;
+    }
+
+    public void pumpPressure(float pressure) {
+        this.pressure += pressure;
     }
 
     public SubtileFluid setPressure(float pressure) {
@@ -111,4 +132,6 @@ public abstract class SubtileFluid extends Subtile {
     public abstract SubtileFluid getNewFluid(Tile tile);
 
     public abstract float getViscosity();
+
+    public abstract int getMaxReach();
 }
