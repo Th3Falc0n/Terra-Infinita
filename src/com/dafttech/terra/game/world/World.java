@@ -15,6 +15,7 @@ import com.dafttech.terra.game.TimeKeeping;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.environment.SunMap;
 import com.dafttech.terra.game.world.environment.Weather;
 import com.dafttech.terra.game.world.environment.WeatherRainy;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
@@ -32,6 +33,8 @@ public class World implements IDrawableInWorld {
     public Player localPlayer = new Player(new Vector2(), this);
 
     public Weather weather = new WeatherRainy();
+    
+    private SunMap sunmap = new SunMap();
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
@@ -109,6 +112,11 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
+            
+            if(tile != null) {
+                sunmap.postTilePlace(this, tile);
+            }
+            
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
@@ -140,6 +148,7 @@ public class World implements IDrawableInWorld {
         Tile tile = getTile(x, y);
         if (tile.isBreakable()) {
             entity = tile.spawnAsEntity(this);
+            sunmap.postTileRemove(this, tile);
             setTile(x, y, null, true);
 
             if (tile instanceof ITileInworldEvents) {
