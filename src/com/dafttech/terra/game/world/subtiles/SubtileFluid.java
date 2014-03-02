@@ -81,6 +81,10 @@ public abstract class SubtileFluid extends Subtile {
         return 0;
     }
 
+    public void pumpPressure(float pressure) {
+        this.pressure += pressure;
+    }
+
     public SubtileFluid setPressure(float pressure) {
         this.pressure = pressure;
         return this;
