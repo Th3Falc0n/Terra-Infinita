@@ -31,6 +31,6 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public float getViscosity() {
-        return 4;
+        return 0;
     }
 }
