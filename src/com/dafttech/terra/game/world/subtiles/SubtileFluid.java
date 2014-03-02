@@ -20,12 +20,11 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void setTile(Tile t) {
         if (isFluid(t.getWorld(), Facing.NONE)) {
-            getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
+            getFluid(t.getWorld(), Facing.NONE).pumpPressure(pressure);
             setPressure(0);
         }
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
@@ -37,12 +36,16 @@ public abstract class SubtileFluid extends Subtile {
                 if (viscosity < 0) viscosity = 0;
                 float amount = maxPressure / (viscosity + 1);
                 float overflow = 0;
+                if (pressure > maxPressure) {
+                    overflow = pressure - maxPressure;
+                    pressure -= overflow;
+                }
                 SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
                 if (fluid != null) {
                     float possAmount = pressure;
                     if (possAmount > amount) possAmount = amount;
                     addPressure(-possAmount);
-                    overflow = fluid.addPressure(possAmount);
+                    overflow = fluid.addPressure(possAmount + overflow);
                     amount += -possAmount + overflow;
                     overflow = addPressure(overflow);
                 }
