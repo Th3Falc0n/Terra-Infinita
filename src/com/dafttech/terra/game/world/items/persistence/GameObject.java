@@ -29,11 +29,11 @@ public abstract class GameObject {
     }
 
     public boolean isSamePrototype(Object obj) {
-        if (obj instanceof Prototype) return hashCode() == ((Prototype) obj).hashCode();
-        if (obj instanceof GameObject) return hashCode() == ((GameObject) obj).hashCode();
+        if (obj instanceof Prototype) return getHashBase() == ((Prototype) obj).getHashBase();
+        if (obj instanceof GameObject) return getHashBase() == ((GameObject) obj).getHashBase();
 
-        return true;
-    };
+        return false;
+    }
 
     public String getHashBase() {
         StringBuilder hashBuilder = new StringBuilder();
