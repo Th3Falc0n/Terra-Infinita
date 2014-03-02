@@ -23,11 +23,6 @@ public class SubtileWater extends SubtileFluid {
     }
 
     @Override
-    public boolean clearFloor() {
-        return true;
-    }
-
-    @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
         img += delta;
@@ -35,7 +30,7 @@ public class SubtileWater extends SubtileFluid {
     }
 
     @Override
-    public float flowSpeed() {
-        return 10;
+    public float getViscosity() {
+        return 4;
     }
 }

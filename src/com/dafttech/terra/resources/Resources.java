@@ -39,6 +39,7 @@ public class Resources {
         TILES.loadImage("bone", "res/tiles/bone.png");
         TILES.loadImage("water", "res/tiles/water.png");
         TILES.loadImage("wateranim", "res/tiles/water.png", 3);
+        TILES.loadImage("glowgoo", "res/tiles/glowgoo.png", 3);
 
         ENTITIES.loadImage("player", "res/entities/player.png");
         ENTITIES.loadImage("arrow", "res/entities/arrow.png");

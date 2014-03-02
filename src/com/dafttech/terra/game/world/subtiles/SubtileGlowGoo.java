@@ -1,0 +1,54 @@
+package com.dafttech.terra.game.world.subtiles;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.lighting.PointLight;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
+import com.dafttech.terra.game.world.tiles.Tile;
+import com.dafttech.terra.resources.Resources;
+
+public class SubtileGlowGoo extends SubtileFluid {
+    float img = 0;
+    PointLight light;
+
+    public SubtileGlowGoo(Tile t) {
+        super(t);
+    }
+
+    @Override
+    public SubtileFluid getNewFluid(Tile tile) {
+        return new SubtileGlowGoo(tile);
+    }
+
+    @Override
+    public float getViscosity() {
+        return 100;
+    }
+
+    @Override
+    public void onTick(World world, float delta) {
+        super.onTick(world, delta);
+        img += delta;
+        if ((int) img > 3) img = 0;
+
+        if (light == null) light = new PointLight(tile.getPosition().toEntityPos(), 95);
+
+        light.setPosition(tile.getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+
+        for (int i = 0; i < (int) pressure; i++) {
+            if (TerraInfinita.rnd.nextDouble() < delta * 0.5f) {
+                new ParticleSpark(tile.getPosition().toEntityPos().addX(BLOCK_SIZE / 2), world).addVelocity(new Vector2(0, -1));
+            }
+        }
+    }
+
+    @Override
+    public TextureRegion getImage() {
+        return Resources.TILES.getImage("glowgoo", (int) img);
+    }
+
+}

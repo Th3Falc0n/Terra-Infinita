@@ -20,7 +20,7 @@ import com.dafttech.terra.game.world.tiles.TileAir;
 public class Chunk implements IDrawableInWorld {
     public World world;
     public Vector2i pos;
-    public Tile[][] map;
+    public volatile Tile[][] map;
     private List<Entity> localEntities = new ArrayList<Entity>();
     public boolean stayLoaded = false;
     private boolean regenerate = false;
