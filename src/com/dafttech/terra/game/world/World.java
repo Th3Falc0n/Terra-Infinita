@@ -33,7 +33,7 @@ public class World implements IDrawableInWorld {
     public Player localPlayer = new Player(new Vector2(), this);
 
     public Weather weather = new WeatherRainy();
-    
+
     private SunMap sunmap = new SunMap();
 
     public World(Vector2 size) {
@@ -112,11 +112,11 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
-            
-            if(tile != null) {
+
+            if (tile != null) {
                 sunmap.postTilePlace(this, tile);
             }
-            
+
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
