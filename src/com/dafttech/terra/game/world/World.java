@@ -41,7 +41,7 @@ public class World implements IDrawableInWorld {
         gen = new WorldGenerator(this);
         localPlayer.setPosition(new Vector2(0, -100));
     }
-    
+
     public Chunk getChunk(Vector2i blockInWorldPos) {
         Vector2i chunkPos = blockInWorldPos.getChunkPos(this);
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);

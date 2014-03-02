@@ -50,6 +50,6 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public int getMaxReach() {
-        return 10;
+        return InputHandler.$.isKeyDown("WAVESLEFT") || InputHandler.$.isKeyDown("WAVESRIGHT") ? 1 : 10;
     }
 }
