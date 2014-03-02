@@ -36,14 +36,14 @@ public class Player extends EntityLiving {
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
 
-        hudBottom.slots[0].assignItem(new TileDirt(), inventory);
-        hudBottom.slots[1].assignItem(new TileSand(), inventory);
-        hudBottom.slots[2].assignItem(new ItemFlamingArrow(), inventory);
-        hudBottom.slots[3].assignItem(new ItemGlowstick(), inventory);
-        hudBottom.slots[4].assignItem(new ItemDynamite(), inventory);
-        hudBottom.slots[5].assignItem(new ItemRainbowGun(), inventory);
-        hudBottom.slots[6].assignItem(new ItemWaterBucket(), inventory);
-        hudBottom.slots[7].assignItem(new ItemDigStaff(), inventory);
+        hudBottom.slots[0].assignPair(new TileDirt(), inventory);
+        hudBottom.slots[1].assignPair(new TileSand(), inventory);
+        hudBottom.slots[2].assignPair(new ItemFlamingArrow(), inventory);
+        hudBottom.slots[3].assignPair(new ItemGlowstick(), inventory);
+        hudBottom.slots[4].assignPair(new ItemDynamite(), inventory);
+        hudBottom.slots[5].assignPair(new ItemRainbowGun(), inventory);
+        hudBottom.slots[6].assignPair(new ItemWaterBucket(), inventory);
+        hudBottom.slots[7].assignPair(new ItemDigStaff(), inventory);
 
         inventory.add(new ItemFlamingArrow(), 100);
         inventory.add(new ItemGlowstick(), 100);

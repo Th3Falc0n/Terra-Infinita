@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.engine.gui.Tooltip;
 import com.dafttech.terra.engine.gui.anchors.AnchorRight;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;
@@ -51,6 +52,7 @@ public class ScreenIngame extends AbstractScreen {
         guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
+        guiContainerScreen.addObject(MouseSlot.getRenderSlot());
 
         guiContainerScreen.applyAllAssignedAnchorSets();
     }

@@ -1,8 +1,11 @@
 package com.dafttech.terra.engine.gui.elements;
 
+import org.lwjgl.input.Mouse;
+
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
@@ -34,16 +37,34 @@ public class ElementSlot extends GUIElement {
                 }
             }
         }
+        
         return false;
     }
 
-    public void assignItem(Item item, Inventory inventory) {
-        assignedType = item.toPrototype();
+    public void assignInventory(Inventory inventory) {
         assignedInventory = inventory;
     }
 
     public void setCooldownTime(World world, float cooldownTime) {
         this.cooldownTime = world.time + cooldownTime;
+    }
+    
+    @Override
+    public void onClick(int button) {
+        if(button == 0) {
+            if(MouseSlot.getAssignedType() != null && assignedType == null) {
+                assignedType = MouseSlot.popAssignedType();
+            }
+            else if(MouseSlot.canAssignType() && assignedType != null) {
+                MouseSlot.assignType(assignedType);
+                assignedType = null;
+            }
+            else if(MouseSlot.getAssignedType() != null && assignedType != null) {
+                Prototype at = MouseSlot.popAssignedType();
+                MouseSlot.assignType(assignedType);
+                assignedType = at;
+            }
+        }
     }
 
     @Override
@@ -58,9 +79,24 @@ public class ElementSlot extends GUIElement {
             ((Item) assignedType.toGameObject()).drawInventory(p, screen);
 
             Resources.GUI_FONT.setColor(active ? Color.YELLOW : Color.WHITE);
-            Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedType), p.x, 6 + p.y);
+            if(assignedInventory != null) {
+                Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedType), p.x, 6 + p.y);
+            }
         }
 
         screen.batch.end();
+    }
+
+    public void assignType(Prototype at) {
+        assignedType = at;
+    }
+    
+    public void assignItem(Item item) {
+        assignedType = item.toPrototype();
+    }
+    
+    public void assignPair(Item item, Inventory inv) {
+        assignItem(item);
+        assignInventory(inv);
     }
 }

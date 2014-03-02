@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.engine.gui.Tooltip;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.Events;
@@ -50,6 +51,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
         Resources.init();
         InputHandler.init();
         Tooltip.init();
+        MouseSlot.init();
 
         world = new World(new Vector2(2000, 1000));
 
