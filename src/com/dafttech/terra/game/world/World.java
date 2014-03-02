@@ -15,11 +15,12 @@ import com.dafttech.terra.game.TimeKeeping;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.environment.Weather;
+import com.dafttech.terra.game.world.environment.WeatherRainy;
+import com.dafttech.terra.game.world.gen.Area;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.game.world.weather.Weather;
-import com.dafttech.terra.game.world.weather.WeatherRainy;
 
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
@@ -32,13 +33,15 @@ public class World implements IDrawableInWorld {
     public Player localPlayer = new Player(new Vector2(), this);
 
     public Weather weather = new WeatherRainy();
+    
+    
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
         localPlayer.setPosition(new Vector2(0, -100));
     }
-
+    
     public Chunk getChunk(Vector2i blockInWorldPos) {
         Vector2i chunkPos = blockInWorldPos.getChunkPos(this);
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);

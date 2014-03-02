@@ -1,4 +1,4 @@
-package com.dafttech.terra.game.world.weather;
+package com.dafttech.terra.game.world.environment;
 
 import com.dafttech.terra.game.world.World;
 
