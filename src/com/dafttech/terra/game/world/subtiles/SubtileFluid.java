@@ -79,8 +79,12 @@ public abstract class SubtileFluid extends Subtile {
                 }
                 if (overflow > 0) {
                     fluid = getFluid(world, Facing.TOP);
-                    if (fluid != null) overflow = fluid.addPressure(overflow);
-                    pressure += overflow;
+                    if (fluid != null) {
+                        overflow = fluid.addPressure(overflow);
+                        fluid.pumpPressure(overflow);
+                    } else {
+                        pressure += overflow;
+                    }
                 }
             } else {
                 frozen -= delta;

@@ -32,15 +32,13 @@ public class World implements IDrawableInWorld {
     public Player localPlayer = new Player(new Vector2(), this);
 
     public Weather weather = new WeatherRainy();
-    
-    
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
         gen = new WorldGenerator(this);
         localPlayer.setPosition(new Vector2(0, -100));
     }
-    
+
     public Chunk getChunk(Vector2i blockInWorldPos) {
         Vector2i chunkPos = blockInWorldPos.getChunkPos(this);
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
