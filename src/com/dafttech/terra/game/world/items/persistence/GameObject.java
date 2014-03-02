@@ -29,8 +29,8 @@ public abstract class GameObject {
     }
 
     public boolean isSamePrototype(Object obj) {
-        if (obj instanceof Prototype) return getHashBase() == ((Prototype) obj).getHashBase();
-        if (obj instanceof GameObject) return getHashBase() == ((GameObject) obj).getHashBase();
+        if (obj instanceof Prototype) return getPrototypeHash() == ((Prototype) obj).hashCode();
+        if (obj instanceof GameObject) return getPrototypeHash() == ((GameObject) obj).getPrototypeHash();
 
         return false;
     }
