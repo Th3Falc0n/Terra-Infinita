@@ -17,7 +17,6 @@ import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.environment.Weather;
 import com.dafttech.terra.game.world.environment.WeatherRainy;
-import com.dafttech.terra.game.world.gen.Area;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
