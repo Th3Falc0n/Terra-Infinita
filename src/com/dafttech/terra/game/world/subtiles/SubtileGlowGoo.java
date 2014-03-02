@@ -51,4 +51,9 @@ public class SubtileGlowGoo extends SubtileFluid {
         return Resources.TILES.getImage("glowgoo", (int) img);
     }
 
+    @Override
+    public int getMaxReach() {
+        return 0;
+    }
+
 }

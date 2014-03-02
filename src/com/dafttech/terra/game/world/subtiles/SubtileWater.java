@@ -47,4 +47,9 @@ public class SubtileWater extends SubtileFluid {
     public float getViscosity() {
         return 0;
     }
+
+    @Override
+    public int getMaxReach() {
+        return 10;
+    }
 }
