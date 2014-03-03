@@ -11,7 +11,6 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public abstract class SubtileFluid extends Subtile {
     public float maxPressure = 10;
     public float pressure = maxPressure;
-    private float frozen = 0;
 
     public SubtileFluid(Tile t) {
         super(t);
@@ -20,7 +19,7 @@ public abstract class SubtileFluid extends Subtile {
     @Override
     public void setTile(Tile t) {
         if (isFluid(t.getWorld(), Facing.NONE)) {
-            getFluid(t.getWorld(), Facing.NONE).pumpPressure(pressure);
+            getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
             setPressure(0);
         }
     }
@@ -31,81 +30,82 @@ public abstract class SubtileFluid extends Subtile {
         if (pressure < maxPressure / 1000) {
             tile.removeSubtile(this);
         } else {
-            if (frozen <= 0) {
-                float viscosity = getViscosity();
-                if (viscosity < 0) viscosity = 0;
-                float amount = maxPressure / (viscosity + 1);
-                float overflow = 0;
-                if (pressure > maxPressure) {
-                    overflow = pressure - maxPressure;
-                    pressure -= overflow;
+            float viscosity = getViscosity();
+            float amount = maxPressure / ((viscosity < 0 ? 0 : viscosity) + 1);
+
+            SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
+            if (fluid != null) {
+                float total = pressure + fluid.pressure;
+                float change = 0;
+                if (total > maxPressure * 2.1) {
+                    float avg = total / 2;
+                    change = avg + 1;
+                } else {
+                    float possAmount = total;
+                    if (possAmount > maxPressure + (total - maxPressure) / maxPressure)
+                        possAmount = maxPressure + (total - maxPressure) / maxPressure;
+                    change = possAmount;
                 }
-                SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
-                if (fluid != null) {
-                    float possAmount = pressure;
+                float possAmount = change - fluid.pressure;
+                if (possAmount > amount) possAmount = amount;
+                addPressure(-possAmount);
+                fluid.addPressure(possAmount);
+            }
+            if (pressure > 0) {
+                if (new Random().nextBoolean()) {
+                    fluid = getFluid(world, Facing.RIGHT);
+                    if (fluid != null) {
+                        int reach = getMaxReach();
+                        while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT)
+                                && fluid.getFluid(world, Facing.RIGHT).pressure > fluid.maxPressure / 1000) {
+                            reach--;
+                            fluid = fluid.getFluid(world, Facing.RIGHT);
+                        }
+                    }
+                } else {
+                    fluid = getFluid(world, Facing.LEFT);
+                    if (fluid != null) {
+                        int reach = getMaxReach();
+                        while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT)
+                                && fluid.getFluid(world, Facing.LEFT).pressure > fluid.maxPressure / 1000) {
+                            reach--;
+                            fluid = fluid.getFluid(world, Facing.LEFT);
+                        }
+                    }
+                }
+                if (fluid != null && fluid.pressure < pressure) {
+                    float avg = (pressure + fluid.pressure) / 2;
+                    float possAmount = avg - fluid.pressure;
                     if (possAmount > amount) possAmount = amount;
                     addPressure(-possAmount);
-                    overflow = fluid.addPressure(possAmount + overflow);
-                    amount += -possAmount + overflow;
-                    overflow = addPressure(overflow);
+                    fluid.addPressure(possAmount);
                 }
-                if (pressure > 0 && amount > 0) {
-                    if (new Random().nextBoolean()) {
-                        fluid = getFluid(world, Facing.RIGHT);
-                        if (fluid != null) {
-                            int reach = getMaxReach();
-                            while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT)
-                                    && fluid.getFluid(world, Facing.RIGHT).pressure > fluid.maxPressure / 1000) {
-                                reach--;
-                                fluid = fluid.getFluid(world, Facing.RIGHT);
-                            }
-                        }
+            }
+
+            fluid = getFluid(world, Facing.TOP);
+            if (fluid != null) {
+                float total = pressure + fluid.pressure;
+                if (pressure > maxPressure + (total - maxPressure) / maxPressure) {
+                    float change = 0;
+                    if (total > maxPressure * 2.1) {
+                        float avg = total / 2;
+                        change = avg + 1;
                     } else {
-                        fluid = getFluid(world, Facing.LEFT);
-                        if (fluid != null) {
-                            int reach = getMaxReach();
-                            while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT)
-                                    && fluid.getFluid(world, Facing.LEFT).pressure > fluid.maxPressure / 1000) {
-                                reach--;
-                                fluid = fluid.getFluid(world, Facing.LEFT);
-                            }
-                        }
+                        float possAmount = total;
+                        if (possAmount > maxPressure + (total - maxPressure) / maxPressure)
+                            possAmount = maxPressure + (total - maxPressure) / maxPressure;
+                        change = possAmount;
                     }
-                    if (fluid != null && fluid.pressure < pressure) {
-                        float avg = (pressure + fluid.pressure) / 2;
-                        float possAmount = avg - fluid.pressure;
-                        if (possAmount > amount) possAmount = amount;
-                        addPressure(-possAmount);
-                        overflow = fluid.addPressure(possAmount + overflow);
-                        overflow = addPressure(overflow);
-                    }
+                    float possAmount = change - pressure;
+                    if (possAmount > amount) possAmount = amount;
+                    fluid.addPressure(-possAmount);
+                    addPressure(possAmount);
                 }
-                if (overflow > 0) {
-                    fluid = getFluid(world, Facing.TOP);
-                    if (fluid != null) {
-                        overflow = fluid.addPressure(overflow);
-                        fluid.pumpPressure(overflow);
-                    } else {
-                        pressure += overflow;
-                    }
-                }
-            } else {
-                frozen -= delta;
             }
         }
     }
 
-    public float addPressure(float pressure) {
-        this.pressure += pressure;
-        float remaining = this.pressure - maxPressure;
-        if (remaining > 0) {
-            this.pressure -= remaining;
-            return remaining;
-        }
-        return 0;
-    }
-
-    public void pumpPressure(float pressure) {
+    public void addPressure(float pressure) {
         this.pressure += pressure;
     }
 

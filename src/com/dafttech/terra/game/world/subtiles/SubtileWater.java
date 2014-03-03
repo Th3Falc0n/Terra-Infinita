@@ -38,8 +38,10 @@ public class SubtileWater extends SubtileFluid {
         if (fluid != null) {
             float amount = 3;
             if (amount > pressure) amount = pressure;
-            pumpPressure(-amount);
-            fluid.pumpPressure(amount);
+            if (fluid.pressure + amount < fluid.maxPressure * 2) {
+                addPressure(-amount);
+                fluid.addPressure(amount);
+            }
         }
     }
 

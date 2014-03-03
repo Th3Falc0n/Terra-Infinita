@@ -19,7 +19,6 @@ import com.dafttech.terra.game.world.entities.particles.ParticleDust;
 import com.dafttech.terra.game.world.items.ItemDigStaff;
 import com.dafttech.terra.game.world.items.ItemDynamite;
 import com.dafttech.terra.game.world.items.ItemFlamingArrow;
-import com.dafttech.terra.game.world.items.ItemGlowGooBucket;
 import com.dafttech.terra.game.world.items.ItemGlowstick;
 import com.dafttech.terra.game.world.items.ItemRainbowGun;
 import com.dafttech.terra.game.world.items.ItemWaterBucket;
@@ -27,6 +26,7 @@ import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileSand;
+import com.dafttech.terra.game.world.tiles.TileTorch;
 import com.dafttech.terra.resources.Resources;
 
 public class Player extends EntityLiving {
@@ -41,7 +41,7 @@ public class Player extends EntityLiving {
         hudBottom.slots[1].assignPair(new TileSand(), inventory);
         hudBottom.slots[2].assignPair(new ItemFlamingArrow(), inventory);
         hudBottom.slots[3].assignPair(new ItemGlowstick(), inventory);
-        hudBottom.slots[4].assignPair(new ItemGlowGooBucket(), inventory);
+        hudBottom.slots[4].assignPair(new TileTorch(), inventory);
         hudBottom.slots[5].assignPair(new ItemRainbowGun(), inventory);
         hudBottom.slots[6].assignPair(new ItemWaterBucket(), inventory);
         hudBottom.slots[7].assignPair(new ItemDigStaff(), inventory);
@@ -52,7 +52,7 @@ public class Player extends EntityLiving {
         inventory.add(new ItemDynamite(), 10);
         inventory.add(new ItemRainbowGun(), 1);
         inventory.add(new ItemWaterBucket(), 1);
-        inventory.add(new ItemGlowGooBucket(), 1);
+        inventory.add(new TileTorch(), 100);
         inventory.add(new ItemDigStaff(), 20);
     }
 

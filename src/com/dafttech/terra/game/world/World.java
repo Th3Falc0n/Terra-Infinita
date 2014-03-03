@@ -34,8 +34,13 @@ public class World implements IDrawableInWorld {
     public Player localPlayer;
 
     public Weather weather = new WeatherRainy();
+<<<<<<< HEAD
     
     public SunMap sunmap = new SunMap();
+=======
+
+    private SunMap sunmap = new SunMap();
+>>>>>>> branch 'master' of git@github.com:Th3Falc0n/Terra-Infinita.git
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
