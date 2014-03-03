@@ -21,7 +21,7 @@ public class ItemWaterBucket extends Item {
     @Override
     public boolean use(Player causer, Vector2 position) {
         Tile tile = causer.worldObj.getTile(position.toWorldPosition());
-        tile.addSubtile(new SubtileWater(tile));
+        tile.addSubtile(new SubtileWater());
         return true;
     }
 

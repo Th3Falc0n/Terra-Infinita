@@ -2,7 +2,9 @@ package com.dafttech.terra.game.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,6 +22,7 @@ import com.dafttech.terra.game.world.environment.SunMap;
 import com.dafttech.terra.game.world.environment.Weather;
 import com.dafttech.terra.game.world.environment.WeatherRainy;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
+import com.dafttech.terra.game.world.subtiles.Subtile;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
@@ -35,14 +38,14 @@ public class World implements IDrawableInWorld {
     public Player localPlayer;
 
     public Weather weather = new WeatherRainy();
-    
+
     public SunMap sunmap = new SunMap();
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
-        
+
         gen = new WorldGenerator(this);
-        
+
         localPlayer = new Player(new Vector2(), this);
         localPlayer.setPosition(new Vector2(0, -100));
     }
@@ -60,7 +63,7 @@ public class World implements IDrawableInWorld {
             chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
             localChunks.put(blockInWorldPos.getChunkPos(this), chunk);
             chunk.fillAir();
-            
+
             gen.generateChunk(chunk);
         }
         return chunk;
@@ -119,19 +122,27 @@ public class World implements IDrawableInWorld {
     public World setTile(Vector2i pos, Tile tile, boolean notify) {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
+            List<Subtile> tileIndependentSubtiles = new ArrayList<Subtile>();
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
             if (tile == null) tile = new TileAir();
 
             tile.setPosition(pos).setWorld(this);
-            
-            if(getTile(pos) != null) {
-                sunmap.postTileRemove(this, getTile(pos));
+
+            Tile oldTile = getTile(pos);
+            if (oldTile != null) {
+                sunmap.postTileRemove(this, oldTile);
+                for (Subtile subtile : oldTile.getSubtiles()) {
+                    if (subtile.isTileIndependent()) tileIndependentSubtiles.add(subtile);
+                }
+                oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles.toArray(new Subtile[0]));
             }
-            
+
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
-            
+
+            tile.addSubtile(tileIndependentSubtiles.toArray(new Subtile[0]));
+
             sunmap.postTilePlace(this, tile);
-            
+
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
                 notifyNeighborTiles(pos.x, pos.y);

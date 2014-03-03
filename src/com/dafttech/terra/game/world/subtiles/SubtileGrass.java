@@ -11,7 +11,7 @@ import com.dafttech.terra.resources.Resources;
 
 public class SubtileGrass extends Subtile {
     public SubtileGrass() {
-        super(null);
+        super();
     }
 
     @Override
