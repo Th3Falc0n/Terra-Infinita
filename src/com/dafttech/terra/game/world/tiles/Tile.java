@@ -158,9 +158,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         getRenderer().draw(pos, world, screen, this, pointOfView);
 
-        Subtile subtile = null;
-        for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext();) {
-            subtile = i.next();
+        for (Subtile subtile : subtiles) {
             subtile.draw(pos, world, screen, pointOfView);
         }
     }
