@@ -81,7 +81,7 @@ public class PassLighting extends RenderingPass {
         RenderingPass.rpGaussian.applyPass(screen, world.localPlayer, world, buffer.getColorBufferTexture(), buffer);
 
         screen.batch.setShader(null);
-        //screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
+        screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
         screen.batch.enableBlending();
 
         screen.batch.begin();
