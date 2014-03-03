@@ -59,6 +59,7 @@ public class World implements IDrawableInWorld {
         if (chunk == null) {
             chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
             localChunks.put(blockInWorldPos.getChunkPos(this), chunk);
+            chunk.fillAir();
             
             gen.generateChunk(chunk);
         }

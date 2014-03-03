@@ -28,16 +28,18 @@ public class Chunk implements IDrawableInWorld {
         this.world = world;
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
-
-        for (int y = 0; y < map[0].length; y++) {
-            for (int x = 0; x < map.length; x++) {
-                map[x][y] = new TileAir().setPosition(new Vector2i(pos.x + x, pos.y + y)).setWorld(world);
-            }
-        }
     }
 
     public Chunk(World world, Vector2 chunkPos) {
         this(world, new Vector2i(chunkPos));
+    }
+    
+    public void fillAir() {
+        for (int y = 0; y < map[0].length; y++) {
+            for (int x = 0; x < map.length; x++) {
+                world.setTile(new Vector2i(x, y).getBlockInWorldPos(this), new TileAir(), false);
+            }
+        }
     }
 
     @Deprecated
