@@ -125,12 +125,12 @@ public class World implements IDrawableInWorld {
             tile.setPosition(pos).setWorld(this);
             
             if(getTile(pos) != null) {
-                sunmap.postTileRemove(this, getTile(pos));
+                //sunmap.postTileRemove(this, getTile(pos));
             }
             
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             
-            sunmap.postTilePlace(this, tile);
+            //sunmap.postTilePlace(this, tile);
             
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
