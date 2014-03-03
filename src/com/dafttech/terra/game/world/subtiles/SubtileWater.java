@@ -52,6 +52,11 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public int getMaxReach() {
-        return InputHandler.$.isKeyDown("WAVESLEFT") || InputHandler.$.isKeyDown("WAVESRIGHT") ? 1 : 10;
+        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 1 : 10;
+    }
+
+    @Override
+    public int getCompSpeed() {
+        return 4;
     }
 }
