@@ -20,15 +20,15 @@ import com.dafttech.terra.game.world.tiles.Tile;
 public class PassLighting extends RenderingPass {
     FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
-    public int sunlevel = 64;
+    public int sunlevel = BLOCK_SIZE;
 
     public Rectangle getSunlightRect(Tile t, Entity pointOfView) {
         Vector2 v = t.getPosition().toScreenPos(pointOfView);
         if (t.sunlightFilter == null) {
-            return new Rectangle(v.x - sunlevel, 0, BLOCK_SIZE + sunlevel, v.y + sunlevel);
+            return new Rectangle(v.x - sunlevel, 0, BLOCK_SIZE + sunlevel * 2, v.y + sunlevel);
         } else {
             Vector2 f = t.sunlightFilter.getPosition().toScreenPos(pointOfView);
-            return new Rectangle(v.x - sunlevel, f.y, BLOCK_SIZE + sunlevel, v.y - f.y + sunlevel);
+            return new Rectangle(v.x - sunlevel, f.y, BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel);
         }
     }
 

@@ -27,9 +27,6 @@ public class BiomeGrassland extends Biome {
         Vector2i chunkPos = new Vector2i(0, 0).getBlockInWorldPos(chunk);
 
         for (int x = chunkPos.x; x < chunkPos.x + chunk.world.chunksize.x; x++) {
-            
-            System.out.println("Gen X=" + x + " for C[CX=" + chunk.pos.x + ":IW=" + chunkPos.x + "]");
-            
             int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);
 
             for (int y = chunkPos.y + chunk.world.chunksize.y - 1; y >= chunkPos.y; y--) {

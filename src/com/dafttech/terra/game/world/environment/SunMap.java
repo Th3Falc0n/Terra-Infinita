@@ -43,15 +43,17 @@ public class SunMap {
     }
 
     public void postTilePlace(World w, Tile t) {
-        if(getHeightForX(t.getPosition().x) > t.getPosition().y) {
-            setHeightForX(t.getPosition().x, t.getPosition().y);
-            unsetSunlightForX(w, t);
-            setSunlightForX(w, t);
-        }
-        else if(getReceivingTile(t.getPosition().x) != null)
-        {
-            unsetSunlightForX(w, getReceivingTile(t.getPosition().x));
-            setSunlightForX(w, getReceivingTile(t.getPosition().x));
+        if(!t.isAir()) {
+            if(getHeightForX(t.getPosition().x) > t.getPosition().y) {
+                setHeightForX(t.getPosition().x, t.getPosition().y);
+                unsetSunlightForX(w, t);
+                setSunlightForX(w, t);
+            }
+            else if(getReceivingTile(t.getPosition().x) != null)
+            {
+                unsetSunlightForX(w, getReceivingTile(t.getPosition().x));
+                setSunlightForX(w, getReceivingTile(t.getPosition().x));
+            }
         }
     }
 
