@@ -28,10 +28,10 @@ public class Chunk implements IDrawableInWorld {
         this.world = world;
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
-        
+
         for (int y = 0; y < map[0].length; y++) {
             for (int x = 0; x < map.length; x++) {
-                map[x][y] = new TileAir();
+                map[x][y] = new TileAir().setPosition(new Vector2i(pos.x + x, pos.y + y)).setWorld(world);
             }
         }
     }
