@@ -193,16 +193,20 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return false;
     }
 
-    public Color getFilteredSunlightColor() {
-        return getSunlightColor();
+    public Color getFilterColor() {
+        return Color.WHITE;
     }
 
     public final Color getSunlightColor() {
         if (sunlightFilter == null) {
             return Color.WHITE;
         } else {
-            return sunlightFilter.getFilteredSunlightColor();
+            return mulCol(sunlightFilter.getSunlightColor(), sunlightFilter.getFilterColor());
         }
+    }
+    
+    private final Color mulCol(Color a, Color b) {
+        return new Color(a.r * b.r, a.g * b.g, a.b * b.b, 1);
     }
 
     public void damage(World world, float damage, Entity causer) {

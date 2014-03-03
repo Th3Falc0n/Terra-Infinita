@@ -1,5 +1,6 @@
 package com.dafttech.terra.game.world.tiles;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
@@ -30,4 +31,15 @@ public class TileLeaf extends TileLog {
     public TextureRegion[] getEdgeImages() {
         return Resources.TILES.getRoundedImageEdges("leaf");
     }
+    
+    @Override
+    public boolean providesSunlightFilter() {
+        return true;
+    }
+    
+    @Override
+    public Color getFilterColor() {
+        return Color.GREEN;
+    }
+    
 }
