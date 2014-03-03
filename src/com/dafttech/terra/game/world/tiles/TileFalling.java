@@ -33,7 +33,7 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
 
     public void fallIfPossible(World world) {
         if (createTime == 0) createTime = world.time;
-        if (createTime + fallDelay < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
+        if (createTime + fallDelay < world.time && world.getTile(getPosition().addYNew(1)).isReplacable()) {
             fall(world, 0, 1);
         }
     }
