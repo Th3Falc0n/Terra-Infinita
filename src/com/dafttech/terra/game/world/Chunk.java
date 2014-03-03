@@ -34,8 +34,6 @@ public class Chunk implements IDrawableInWorld {
                 map[x][y] = new TileAir();
             }
         }
-        
-        world.localChunks.put(chunkPos.clone(), this);
     }
 
     public Chunk(World world, Vector2 chunkPos) {
@@ -76,7 +74,7 @@ public class Chunk implements IDrawableInWorld {
     }
 
     public Biome getBiome() {
-        return new Random().nextBoolean() ? BiomeGrassland.instance : BiomeDesert.instance;
+        return new Random().nextBoolean() || true ? BiomeGrassland.instance : BiomeDesert.instance;
     }
 
     protected Tile getTile(Vector2i blockInChunkPos) {

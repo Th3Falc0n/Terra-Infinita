@@ -24,12 +24,12 @@ public class BiomeGrassland extends Biome {
     public void generateChunk(WorldGenerator gen, Chunk chunk) {
         PerlinNoise noise = gen.getNoise();
 
-        Vector2i chunkPos = new Vector2i().getBlockInWorldPos(chunk);
+        Vector2i chunkPos = new Vector2i(0, 0).getBlockInWorldPos(chunk);
 
-        for (int x = chunkPos.x; x < chunkPos.x + chunk.world.chunksize.x + 1; x++) {
+        for (int x = chunkPos.x; x < chunkPos.x + chunk.world.chunksize.x; x++) {
             int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);
 
-            for (int y = chunkPos.y + chunk.world.chunksize.y; y >= chunkPos.y; y--) {
+            for (int y = chunkPos.y + chunk.world.chunksize.y - 1; y >= chunkPos.y; y--) {
                 if (y <= h) break;
 
                 Tile tile = null;

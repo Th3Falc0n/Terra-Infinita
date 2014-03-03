@@ -47,6 +47,7 @@ public class World implements IDrawableInWorld {
     }
 
     public Chunk getChunk(Vector2i blockInWorldPos) {
+        if (blockInWorldPos == null) return null;
         Vector2i chunkPos = blockInWorldPos.getChunkPos(this);
         if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
         return null;
@@ -56,6 +57,7 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getChunk(blockInWorldPos);
         if (chunk == null) {
             chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+            localChunks.put(blockInWorldPos.getChunkPos(this), chunk);
             
             gen.generateChunk(chunk);
         }
@@ -64,21 +66,12 @@ public class World implements IDrawableInWorld {
 
     public Chunk getChunk(Vector2 blockInWorldPos) {
         if (blockInWorldPos == null) return null;
-        Vector2i chunkPos = new Vector2i(blockInWorldPos.getChunkPos(this));
-        if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos);
-        return null;
+        return getChunk(blockInWorldPos.toVector2i());
     }
 
     public Chunk getOrCreateChunk(Vector2 blockInWorldPos) {
         if (blockInWorldPos == null) return null;
-        Chunk chunk = getChunk(blockInWorldPos);
-        if (chunk == null) {
-            chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
-            System.out.println(localChunks.values().contains(chunk));
-            
-            gen.generateChunk(chunk);
-        }
-        return chunk;
+        return getOrCreateChunk(blockInWorldPos.toVector2i());
     }
 
     public boolean doesChunkExist(int x, int y) {
