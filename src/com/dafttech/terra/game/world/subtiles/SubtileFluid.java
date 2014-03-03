@@ -32,18 +32,19 @@ public abstract class SubtileFluid extends Subtile {
         } else {
             float viscosity = getViscosity();
             float amount = maxPressure / ((viscosity < 0 ? 0 : viscosity) + 1);
+            float compSpeed = getCompSpeed();
 
             SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
             if (fluid != null) {
                 float total = pressure + fluid.pressure;
                 float change = 0;
-                if (total > maxPressure * 2.1) {
+                if (total > maxPressure * (2 + compSpeed / maxPressure)) {
                     float avg = total / 2;
                     change = avg + 1;
                 } else {
                     float possAmount = total;
-                    if (possAmount > maxPressure + (total - maxPressure) / maxPressure)
-                        possAmount = maxPressure + (total - maxPressure) / maxPressure;
+                    if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
+                        possAmount = maxPressure + (total - maxPressure) / maxPressure * compSpeed;
                     change = possAmount;
                 }
                 float possAmount = change - fluid.pressure;
@@ -85,15 +86,15 @@ public abstract class SubtileFluid extends Subtile {
             fluid = getFluid(world, Facing.TOP);
             if (fluid != null) {
                 float total = pressure + fluid.pressure;
-                if (pressure > maxPressure + (total - maxPressure) / maxPressure) {
+                if (pressure > maxPressure + (total - maxPressure) / maxPressure * compSpeed) {
                     float change = 0;
-                    if (total > maxPressure * 2.1) {
+                    if (total > maxPressure * (2 + compSpeed / maxPressure)) {
                         float avg = total / 2;
                         change = avg + 1;
                     } else {
                         float possAmount = total;
-                        if (possAmount > maxPressure + (total - maxPressure) / maxPressure)
-                            possAmount = maxPressure + (total - maxPressure) / maxPressure;
+                        if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
+                            possAmount = maxPressure + (total - maxPressure) / maxPressure * compSpeed;
                         change = possAmount;
                     }
                     float possAmount = change - pressure;
@@ -141,4 +142,6 @@ public abstract class SubtileFluid extends Subtile {
     public abstract float getViscosity();
 
     public abstract int getMaxReach();
+
+    public abstract int getCompSpeed();
 }

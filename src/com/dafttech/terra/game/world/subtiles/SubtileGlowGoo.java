@@ -56,4 +56,9 @@ public class SubtileGlowGoo extends SubtileFluid {
         return 0;
     }
 
+    @Override
+    public int getCompSpeed() {
+        return 0;
+    }
+
 }
