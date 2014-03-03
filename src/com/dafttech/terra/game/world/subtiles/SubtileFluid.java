@@ -122,9 +122,10 @@ public abstract class SubtileFluid extends Subtile {
 
     public SubtileFluid getFluid(World world, Facing direction) {
         Tile tile = world.getTile(this.tile.getPosition().add(direction));
-        if (tile.isWaterproof()) return null;
+        // if (tile.isWaterproof()) return null;
         SubtileFluid fluid = (SubtileFluid) tile.getSubtile(getClass(), false);
         if (fluid == null) {
+            if (tile.isWaterproof()) return null;
             fluid = getNewFluid(tile).setPressure(0);
             tile.addSubtile(fluid);
         }
@@ -133,7 +134,7 @@ public abstract class SubtileFluid extends Subtile {
 
     public boolean isFluid(World world, Facing direction) {
         Tile tile = world.getTile(this.tile.getPosition().add(direction));
-        if (tile.isWaterproof()) return false;
+        // if (tile.isWaterproof()) return false;
         return tile.hasSubtile(getClass(), false);
     }
 
