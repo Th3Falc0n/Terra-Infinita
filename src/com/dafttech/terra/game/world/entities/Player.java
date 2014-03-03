@@ -46,6 +46,7 @@ public class Player extends EntityLiving {
         hudBottom.slots[6].assignPair(new ItemWaterBucket(), inventory);
         hudBottom.slots[7].assignPair(new ItemDigStaff(), inventory);
 
+        inventory.add(new TileDirt(), 1000);
         inventory.add(new ItemFlamingArrow(), 100);
         inventory.add(new ItemGlowstick(), 100);
         inventory.add(new ItemDynamite(), 10);

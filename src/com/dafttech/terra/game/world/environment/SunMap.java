@@ -28,21 +28,32 @@ public class SunMap {
     }
     
     private void setHeightForX(int x, int h) {
+        System.out.println("SLH for X=" + x + " is " + h);
+        
         heights.put(new Integer(x), h);
     }
     
+    private Tile getReceivingTile(int x) {
+        return topTiles.get(new Integer(x));
+    }
+    
     private boolean isReceivingTile(Tile t) {
-        if(topTiles.get(new Integer(t.getPosition().x)) == t) {
+        if(getReceivingTile(t.getPosition().x) == t) {
             return true;
         }
         return false;
     }
     
     public void postTilePlace(World w, Tile t) {
-        if(getHeightForX(t.getPosition().x) < t.getPosition().y) {
+        if(getHeightForX(t.getPosition().x) > t.getPosition().y) {
             setHeightForX(t.getPosition().x, t.getPosition().y);
             unsetSunlightForX(w, t);
             setSunlightForX(w, t);
+        }
+        else if(getReceivingTile(t.getPosition().x) != null)
+        {
+            unsetSunlightForX(w, getReceivingTile(t.getPosition().x));
+            setSunlightForX(w, getReceivingTile(t.getPosition().x));
         }
     }
     
@@ -52,6 +63,11 @@ public class SunMap {
             unsetSunlightForX(w, t);
             setSunlightForX(w, b);
             setHeightForX(b.getPosition().x, b.getPosition().y);
+        }
+        else if(getReceivingTile(t.getPosition().x) != null)
+        {
+            unsetSunlightForX(w, getReceivingTile(t.getPosition().x));
+            setSunlightForX(w, getReceivingTile(t.getPosition().x));
         }
     }
 }

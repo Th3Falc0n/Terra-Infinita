@@ -285,7 +285,7 @@ public class Vector2 {
 
     @Override
     public int hashCode() {
-        return ((Float) x).hashCode() + ((Float) y).hashCode();
+        return toString().hashCode();
     }
 
     private static int getChunkPos(float blockInWorldPos, int chunkSize) {

@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,15 +31,18 @@ public class World implements IDrawableInWorld {
 
     public Map<Vector2i, Chunk> localChunks = new ConcurrentHashMap<Vector2i, Chunk>();
 
-    public Player localPlayer = new Player(new Vector2(), this);
+    public Player localPlayer;
 
     public Weather weather = new WeatherRainy();
     
-    private SunMap sunmap = new SunMap();
+    public SunMap sunmap = new SunMap();
 
     public World(Vector2 size) {
         this.size.set((int) size.x, (int) size.y);
+        
         gen = new WorldGenerator(this);
+        
+        localPlayer = new Player(new Vector2(), this);
         localPlayer.setPosition(new Vector2(0, -100));
     }
 
@@ -50,7 +54,11 @@ public class World implements IDrawableInWorld {
 
     public Chunk getOrCreateChunk(Vector2i blockInWorldPos) {
         Chunk chunk = getChunk(blockInWorldPos);
-        if (chunk == null) chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+        if (chunk == null) {
+            chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+            
+            gen.generateChunk(chunk);
+        }
         return chunk;
     }
 
@@ -64,7 +72,12 @@ public class World implements IDrawableInWorld {
     public Chunk getOrCreateChunk(Vector2 blockInWorldPos) {
         if (blockInWorldPos == null) return null;
         Chunk chunk = getChunk(blockInWorldPos);
-        if (chunk == null) chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+        if (chunk == null) {
+            chunk = new Chunk(this, blockInWorldPos.getChunkPos(this));
+            System.out.println(localChunks.values().contains(chunk));
+            
+            gen.generateChunk(chunk);
+        }
         return chunk;
     }
 
@@ -113,10 +126,6 @@ public class World implements IDrawableInWorld {
         if (chunk != null) {
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
             
-            if(tile != null) {
-                sunmap.postTilePlace(this, tile);
-            }
-            
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
@@ -148,7 +157,6 @@ public class World implements IDrawableInWorld {
         Tile tile = getTile(x, y);
         if (tile.isBreakable()) {
             entity = tile.spawnAsEntity(this);
-            sunmap.postTileRemove(this, tile);
             setTile(x, y, null, true);
 
             if (tile instanceof ITileInworldEvents) {

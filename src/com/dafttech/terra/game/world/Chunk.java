@@ -23,20 +23,19 @@ public class Chunk implements IDrawableInWorld {
     public volatile Tile[][] map;
     private List<Entity> localEntities = new ArrayList<Entity>();
     public boolean stayLoaded = false;
-    private boolean regenerate = false;
 
     public Chunk(World world, Vector2i chunkPos) {
         this.world = world;
         this.pos = chunkPos;
         this.map = new Tile[world.chunksize.x][world.chunksize.y];
-        Vector2i airPos = new Vector2i();
-        for (airPos.y = 0; airPos.y < map[0].length; airPos.y++) {
-            for (airPos.x = 0; airPos.x < map.length; airPos.x++) {
-                setTile(airPos, new TileAir());
+        
+        for (int y = 0; y < map[0].length; y++) {
+            for (int x = 0; x < map.length; x++) {
+                map[x][y] = new TileAir();
             }
         }
-        world.localChunks.put(chunkPos, this);
-        regenerate();
+        
+        world.localChunks.put(chunkPos.clone(), this);
     }
 
     public Chunk(World world, Vector2 chunkPos) {
@@ -80,19 +79,8 @@ public class Chunk implements IDrawableInWorld {
         return new Random().nextBoolean() ? BiomeGrassland.instance : BiomeDesert.instance;
     }
 
-    public void regenerate() {
-        regenerate = true;
-    }
-
-    private void tryRegenerate() {
-        regenerate = false;
-        world.gen.generateChunk(this);
-    }
-
     protected Tile getTile(Vector2i blockInChunkPos) {
-        if (regenerate) tryRegenerate();
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
-            if (map[blockInChunkPos.x][blockInChunkPos.y] == null) setTile(blockInChunkPos, new TileAir());
             return map[blockInChunkPos.x][blockInChunkPos.y];
         }
         return null;
@@ -102,6 +90,7 @@ public class Chunk implements IDrawableInWorld {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
             if (tile == null) tile = new TileAir();
             tile.setPosition(blockInChunkPos.getBlockInWorldPos(this)).setWorld(world);
+                        
             if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
