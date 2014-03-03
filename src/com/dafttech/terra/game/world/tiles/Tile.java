@@ -203,10 +203,6 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         }
     }
 
-    public boolean providesSunlightFilter() {
-        return false;
-    }
-
     public Color getFilterColor() {
         return Color.WHITE;
     }
@@ -215,7 +211,11 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         if (sunlightFilter == null) {
             return Color.WHITE;
         } else {
-            return mulCol(sunlightFilter.getSunlightColor(), sunlightFilter.getFilterColor());
+            Color sunlightColor = mulCol(sunlightFilter.getSunlightColor(), sunlightFilter.getFilterColor());
+            for (Subtile subtile : sunlightFilter.subtiles) {
+                if (subtile.providesSunlightFilter()) sunlightColor = mulCol(sunlightColor, subtile.getFilterColor());
+            }
+            return sunlightColor;
         }
     }
 

@@ -1,5 +1,6 @@
 package com.dafttech.terra.game.world.subtiles;
 
+import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
@@ -64,5 +65,13 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
 
     public boolean isTileIndependent() {
         return false;
+    }
+    
+    public boolean providesSunlightFilter() {
+        return false;
+    }
+
+    public Color getFilterColor() {
+        return Color.WHITE;
     }
 }
