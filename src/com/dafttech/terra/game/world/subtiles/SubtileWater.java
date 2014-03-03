@@ -57,6 +57,6 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public int getCompSpeed() {
-        return 1;
+        return 4;
     }
 }

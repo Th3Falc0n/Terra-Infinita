@@ -40,7 +40,7 @@ public abstract class SubtileFluid extends Subtile {
                 float change = 0;
                 if (total > maxPressure * (2 + compSpeed / maxPressure)) {
                     float avg = total / 2;
-                    change = avg + 1;
+                    change = avg + compSpeed;
                 } else {
                     float possAmount = total;
                     if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
@@ -90,7 +90,7 @@ public abstract class SubtileFluid extends Subtile {
                     float change = 0;
                     if (total > maxPressure * (2 + compSpeed / maxPressure)) {
                         float avg = total / 2;
-                        change = avg + 1;
+                        change = avg + compSpeed;
                     } else {
                         float possAmount = total;
                         if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
