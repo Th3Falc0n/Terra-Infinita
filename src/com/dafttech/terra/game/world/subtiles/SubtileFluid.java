@@ -38,7 +38,7 @@ public abstract class SubtileFluid extends Subtile {
             float compSpeed = getCompSpeed();
 
             SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
-            if (fluid != null) {
+            if (fluid != null && !fluid.tile.isWaterproof()) {
                 float total = pressure + fluid.pressure;
                 float change = 0;
                 if (total > maxPressure * (2 + compSpeed / maxPressure)) {
@@ -81,8 +81,10 @@ public abstract class SubtileFluid extends Subtile {
                     float avg = (pressure + fluid.pressure) / 2;
                     float possAmount = avg - fluid.pressure;
                     if (possAmount > amount) possAmount = amount;
-                    addPressure(-possAmount);
-                    fluid.addPressure(possAmount);
+                    if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())) {
+                        addPressure(-possAmount);
+                        fluid.addPressure(possAmount);
+                    }
                 }
             }
 
