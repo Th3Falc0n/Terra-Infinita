@@ -10,8 +10,8 @@ import com.dafttech.terra.resources.Resources;
 public class SubtileWater extends SubtileFluid {
     float img = 0;
 
-    public SubtileWater(Tile t) {
-        super(t);
+    public SubtileWater() {
+        super();
     }
 
     @Override
@@ -20,8 +20,8 @@ public class SubtileWater extends SubtileFluid {
     }
 
     @Override
-    public SubtileFluid getNewFluid(Tile tile) {
-        return new SubtileWater(tile);
+    public SubtileFluid getNewFluid() {
+        return new SubtileWater();
     }
 
     @Override

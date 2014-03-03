@@ -12,15 +12,18 @@ public abstract class SubtileFluid extends Subtile {
     public float maxPressure = 10;
     public float pressure = maxPressure;
 
-    public SubtileFluid(Tile t) {
-        super(t);
+    public SubtileFluid() {
+        super();
     }
 
     @Override
     public void setTile(Tile t) {
-        if (isFluid(t.getWorld(), Facing.NONE)) {
-            getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
-            setPressure(0);
+        super.setTile(t);
+        if (t != null) {
+            if (isFluid(t.getWorld(), Facing.NONE)) {
+                getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
+                setPressure(0);
+            }
         }
     }
 
@@ -126,7 +129,7 @@ public abstract class SubtileFluid extends Subtile {
         SubtileFluid fluid = (SubtileFluid) tile.getSubtile(getClass(), false);
         if (fluid == null) {
             if (tile.isWaterproof()) return null;
-            fluid = getNewFluid(tile).setPressure(0);
+            fluid = getNewFluid().setPressure(0);
             tile.addSubtile(fluid);
         }
         return fluid;
@@ -138,11 +141,16 @@ public abstract class SubtileFluid extends Subtile {
         return tile.hasSubtile(getClass(), false);
     }
 
-    public abstract SubtileFluid getNewFluid(Tile tile);
+    public abstract SubtileFluid getNewFluid();
 
     public abstract float getViscosity();
 
     public abstract int getMaxReach();
 
     public abstract int getCompSpeed();
+
+    @Override
+    public boolean isTileIndependent() {
+        return true;
+    }
 }

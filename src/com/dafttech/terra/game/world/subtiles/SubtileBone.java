@@ -5,7 +5,7 @@ import com.dafttech.terra.resources.Resources;
 
 public class SubtileBone extends Subtile {
     public SubtileBone() {
-        super(null);
+        super();
     }
 
     @Override

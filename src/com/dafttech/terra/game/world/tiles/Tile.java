@@ -1,5 +1,6 @@
 package com.dafttech.terra.game.world.tiles;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -21,7 +22,7 @@ import com.dafttech.terra.game.world.subtiles.Subtile;
 public abstract class Tile extends Item implements IDrawableInWorld {
     private World world = null;
     private Vector2i position = new Vector2i();
-    private List<Subtile> subtiles = new CopyOnWriteArrayList<Subtile>();
+    private volatile List<Subtile> subtiles = new ArrayList<Subtile>();
 
     private float breakingProgress = 0;
     private float hardness = 1;
@@ -114,6 +115,20 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         return this;
     }
 
+    public Tile removeAndUnlinkSubtile(Subtile... subtile) {
+        for (Subtile s : subtile) {
+            if (s != null) {
+                s.setTile(null);
+                subtiles.remove(s);
+            }
+        }
+        return this;
+    }
+
+    public List<Subtile> getSubtiles() {
+        return new ArrayList<Subtile>(subtiles);
+    }
+
     public boolean hasSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
         return getSubtile(subtileClass, inherited) != null;
     }
@@ -180,7 +195,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     public final void setReceivesSunlight(World world, boolean is) {
         receivesSunlight = is;
-        if(!is) this.sunlightFilter = null;
+        if (!is) this.sunlightFilter = null;
         if (!isOpaque()) {
             Tile b = world.getNextTileBelow(getPosition());
             if (b != null && b != this) {
@@ -205,7 +220,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
             return mulCol(sunlightFilter.getSunlightColor(), sunlightFilter.getFilterColor());
         }
     }
-    
+
     private final Color mulCol(Color a, Color b) {
         return new Color(a.r * b.r, a.g * b.g, a.b * b.b, 1);
     }

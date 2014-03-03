@@ -20,8 +20,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
         return false;
     }
 
-    public Subtile(Tile t) {
-        tile = t;
+    public Subtile() {
     }
 
     public SubtileRenderer getRenderer() {
@@ -61,5 +60,9 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
 
     public void onTick(World world, float delta) {
 
+    }
+
+    public boolean isTileIndependent() {
+        return false;
     }
 }

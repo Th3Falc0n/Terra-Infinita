@@ -15,13 +15,13 @@ public class SubtileGlowGoo extends SubtileFluid {
     float img = 0;
     PointLight light;
 
-    public SubtileGlowGoo(Tile t) {
-        super(t);
+    public SubtileGlowGoo() {
+        super();
     }
 
     @Override
-    public SubtileFluid getNewFluid(Tile tile) {
-        return new SubtileGlowGoo(tile);
+    public SubtileFluid getNewFluid() {
+        return new SubtileGlowGoo();
     }
 
     @Override

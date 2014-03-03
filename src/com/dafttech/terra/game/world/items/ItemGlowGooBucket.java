@@ -21,7 +21,7 @@ public class ItemGlowGooBucket extends Item {
     @Override
     public boolean use(Player causer, Vector2 position) {
         Tile tile = causer.worldObj.getTile(position.toWorldPosition());
-        tile.addSubtile(new SubtileGlowGoo(tile));
+        tile.addSubtile(new SubtileGlowGoo());
         return true;
     }
 
