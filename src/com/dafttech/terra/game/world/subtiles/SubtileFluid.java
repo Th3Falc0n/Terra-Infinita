@@ -18,6 +18,8 @@ public abstract class SubtileFluid extends Subtile {
 
     @Override
     public void setTile(Tile t) {
+        System.out.println(t);
+        System.out.println(t.getWorld());
         if (isFluid(t.getWorld(), Facing.NONE)) {
             getFluid(t.getWorld(), Facing.NONE).addPressure(pressure);
             setPressure(0);
