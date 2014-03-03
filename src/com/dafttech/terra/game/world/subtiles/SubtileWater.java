@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
 
 public class SubtileWater extends SubtileFluid {
@@ -60,12 +59,12 @@ public class SubtileWater extends SubtileFluid {
     public int getCompSpeed() {
         return 4;
     }
-    
+
     @Override
     public boolean providesSunlightFilter() {
         return true;
     }
-    
+
     @Override
     public Color getFilterColor() {
         return Color.BLUE;

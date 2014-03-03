@@ -33,7 +33,7 @@ public class Chunk implements IDrawableInWorld {
     public Chunk(World world, Vector2 chunkPos) {
         this(world, new Vector2i(chunkPos));
     }
-    
+
     public void fillAir() {
         for (int y = 0; y < map[0].length; y++) {
             for (int x = 0; x < map.length; x++) {

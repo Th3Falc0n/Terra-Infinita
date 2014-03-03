@@ -12,7 +12,7 @@ public abstract class Light {
         color = c;
         color.a = 1;
     }
-    
+
     public Color getColor() {
         return color;
     }

@@ -3,7 +3,6 @@ package com.dafttech.terra.game.world;
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

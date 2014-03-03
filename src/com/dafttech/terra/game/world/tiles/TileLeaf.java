@@ -31,10 +31,10 @@ public class TileLeaf extends TileLog {
     public TextureRegion[] getEdgeImages() {
         return Resources.TILES.getRoundedImageEdges("leaf");
     }
-    
+
     @Override
     public Color getFilterColor() {
-        return Color.GREEN;//new Color(0.94f, 0.94f, 0.99f, 1);
+        return Color.GREEN;// new Color(0.94f, 0.94f, 0.99f, 1);
     }
-    
+
 }

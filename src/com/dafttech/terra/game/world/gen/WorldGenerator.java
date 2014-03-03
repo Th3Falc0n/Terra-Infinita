@@ -14,7 +14,7 @@ public class WorldGenerator {
         noise = new PerlinNoise(TerraInfinita.rnd.nextInt(), 9, 0.48f);
     }
 
-    public void generateChunk(Chunk chunk) {        
+    public void generateChunk(Chunk chunk) {
         chunk.getBiome().generateChunk(this, chunk);
         chunk.getBiome().populateChunk(this, chunk);
     }

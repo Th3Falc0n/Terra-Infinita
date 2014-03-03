@@ -3,7 +3,6 @@ package com.dafttech.terra.game.world.tiles;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;

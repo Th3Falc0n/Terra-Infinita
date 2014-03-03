@@ -66,7 +66,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
     public boolean isTileIndependent() {
         return false;
     }
-    
+
     public boolean providesSunlightFilter() {
         return false;
     }
