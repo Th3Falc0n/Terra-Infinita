@@ -38,7 +38,7 @@ public abstract class SubtileFluid extends Subtile {
             float compSpeed = getCompSpeed();
 
             SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
-            if (fluid != null && (!fluid.tile.isWaterproof() || tile.isWaterproof())) {
+            if (fluid != null) {
                 float total = pressure + fluid.pressure;
                 float change = 0;
                 if (total > maxPressure * (2 + compSpeed / maxPressure)) {
@@ -52,10 +52,15 @@ public abstract class SubtileFluid extends Subtile {
                 }
                 float possAmount = change - fluid.pressure;
                 if (possAmount > amount) possAmount = amount;
-                addPressure(-possAmount);
-                fluid.addPressure(possAmount);
+                if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
+                        || fluid.tile.isWaterproof() == tile.isWaterproof()) {
+                    addPressure(-possAmount);
+                    fluid.addPressure(possAmount);
+                    amount -= possAmount;
+                    if (amount < 0) amount = 0;
+                }
             }
-            if (pressure > 0) {
+            if (pressure > 0 && amount > 0) {
                 if (new Random().nextBoolean()) {
                     fluid = getFluid(world, Facing.RIGHT);
                     if (fluid != null) {
@@ -107,8 +112,11 @@ public abstract class SubtileFluid extends Subtile {
                     }
                     float possAmount = change - pressure;
                     if (possAmount > amount) possAmount = amount;
-                    fluid.addPressure(-possAmount);
-                    addPressure(possAmount);
+                    if ((possAmount > 0 && !tile.isWaterproof()) || (possAmount < 0 && !fluid.tile.isWaterproof())
+                            || fluid.tile.isWaterproof() == tile.isWaterproof()) {
+                        fluid.addPressure(-possAmount);
+                        addPressure(possAmount);
+                    }
                 }
             }
         }
