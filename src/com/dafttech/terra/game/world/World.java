@@ -22,6 +22,7 @@ import com.dafttech.terra.game.world.environment.WeatherRainy;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
+import com.dafttech.terra.game.world.tiles.TileAir;
 
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);
@@ -118,8 +119,18 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
+            if (tile == null) tile = new TileAir();
+
+            tile.setPosition(pos).setWorld(this);
+            
+            if(getTile(pos) != null) {
+                sunmap.postTileRemove(this, getTile(pos));
+            }
             
             chunk.setTile(pos.getBlockInChunkPos(this), tile);
+            
+            sunmap.postTilePlace(this, tile);
+            
             if (notify) {
                 if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
                 notifyNeighborTiles(pos.x, pos.y);

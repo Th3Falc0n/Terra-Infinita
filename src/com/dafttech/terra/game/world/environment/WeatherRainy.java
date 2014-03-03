@@ -16,10 +16,10 @@ public class WeatherRainy extends Weather {
 
         // TODO: Following mechanics are a particle emitter. CREATE A CLASS
         // PARTICLEEMITTER!
-        for (int i = 0; i < particles.length; i++) {
+        /*for (int i = 0; i < particles.length; i++) {
             if (particles[i] == null || particles[i].isDead()) {
                 particles[i] = new ParticleSpark(top.add((TerraInfinita.rnd.nextFloat() - 0.5f) * Gdx.graphics.getWidth(), 0), world);
             }
-        }
+        }*/
     }
 }

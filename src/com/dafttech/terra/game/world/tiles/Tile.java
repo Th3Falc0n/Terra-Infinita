@@ -182,7 +182,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         receivesSunlight = is;
         if (!isOpaque()) {
             Tile b = world.getNextTileBelow(getPosition());
-            if (b != null) {
+            if (b != null && b != this) {
                 b.setReceivesSunlight(world, is);
                 b.sunlightFilter = is ? this : null;
             }

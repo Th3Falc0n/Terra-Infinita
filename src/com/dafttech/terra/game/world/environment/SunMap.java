@@ -28,8 +28,6 @@ public class SunMap {
     }
 
     private void setHeightForX(int x, int h) {
-        System.out.println("SLH for X=" + x + " is " + h);
-        
         heights.put(new Integer(x), h);
     }
 
