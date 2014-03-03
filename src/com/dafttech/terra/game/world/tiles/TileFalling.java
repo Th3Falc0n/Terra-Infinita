@@ -26,7 +26,7 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     public void fall(World world, int x, int y) {
-        world.setTile(getPosition().add(x, y), this, true);
+        world.setTile(getPosition().addNew(x, y), this, true);
         renderOffset.x -= x;
         renderOffset.y -= y;
     }
