@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.glutils.FloatFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,7 +19,7 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
 
 public class PassLighting extends RenderingPass {
-    FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+    FrameBuffer buffer = new FloatFrameBuffer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
     public int sunlevel = BLOCK_SIZE;
 
@@ -36,11 +37,11 @@ public class PassLighting extends RenderingPass {
     public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         buffer.begin();
 
-        Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
+        Gdx.graphics.getGL20().glClearColor(0, 0, 0, 0);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
+        
         screen.batch.enableBlending();
-        screen.batch.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+        screen.batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
 
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;

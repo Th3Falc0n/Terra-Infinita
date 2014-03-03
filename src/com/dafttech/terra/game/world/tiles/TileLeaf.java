@@ -39,7 +39,7 @@ public class TileLeaf extends TileLog {
     
     @Override
     public Color getFilterColor() {
-        return Color.GREEN;
+        return new Color(0.94f, 0.94f, 0.99f, 1);
     }
     
 }

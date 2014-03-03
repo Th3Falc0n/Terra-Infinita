@@ -10,8 +10,9 @@ public abstract class Light {
 
     public void setColor(Color c) {
         color = c;
+        color.a = 1;
     }
-
+    
     public Color getColor() {
         return color;
     }
