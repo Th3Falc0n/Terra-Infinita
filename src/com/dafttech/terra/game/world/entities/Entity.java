@@ -43,6 +43,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     float gravityFactor = 1f;
 
     protected boolean inAir = false;
+    protected boolean inWorld = true;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
         worldObj = world;
@@ -94,7 +95,10 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public boolean remove() {
-        if (chunk != null) return chunk.removeEntity(this);
+        if (chunk != null) {
+            inWorld = false;
+            return chunk.removeEntity(this);
+        }
         return false;
     }
 
@@ -293,6 +297,10 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 }
 
                 setPosition(getPosition().add(velocity.mulNew(asl)));
+                
+                if(!inWorld) {
+                    return;
+                }
 
                 checkTerrainCollisions(worldObj.localPlayer.getWorld());
                 checkEntityCollisions();

@@ -73,9 +73,9 @@ public abstract class GameObject {
 
         for (Field f : annotatedFields) {
             try {
-                if (!(f.get(this) instanceof Serializable))
+                /* if (!(f.get(this) instanceof Serializable))
                     System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName()
-                            + " is not Serializable and cannot be saved!");
+                            + " is not Serializable and cannot be saved!"); */
                 proto.values.put(f, f.get(this));
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 // TODO Auto-generated catch block
