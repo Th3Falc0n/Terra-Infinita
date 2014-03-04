@@ -59,7 +59,7 @@ public class PassLighting extends RenderingPass {
                 if (world.getTile(x, y) != null) {
                     if (world.getTile(x, y).receivesSunlight) {
 
-                        // nextClr = world.getTile(x, y).getSunlightColor();
+                        nextClr = world.getTile(x, y).getSunlightColor();
 
                         if (nextClr != activeClr) {
                             activeClr = nextClr;
@@ -67,8 +67,6 @@ public class PassLighting extends RenderingPass {
                             screen.shr.end();
                             screen.shr.setColor(nextClr);
                             screen.shr.begin(ShapeType.FilledRectangle);
-
-                            resetToWhite = true;
                         }
 
                         Rectangle rect = getSunlightRect(world.getTile(x, y), pointOfView);
