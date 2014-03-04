@@ -30,22 +30,25 @@ public class SubtileWater extends SubtileFluid {
         img += delta;
         if ((int) img > 3) img = 0;
 
-        SubtileFluid fluid = null;
+        super.onTick(world, delta);
+        Facing facing = null;
         if (InputHandler.$.isKeyDown("WAVESLEFT")) {
-            fluid = getFluid(world, Facing.LEFT);
+            facing = Facing.LEFT;
         } else if (InputHandler.$.isKeyDown("WAVESRIGHT")) {
-            fluid = getFluid(world, Facing.RIGHT);
+            facing = Facing.RIGHT;
         }
-        if (fluid != null) {
-            float amount = 3;
-            if (amount > pressure) amount = pressure;
-            if (fluid.pressure + amount < fluid.maxPressure * 2) {
-                addPressure(-amount);
-                fluid.addPressure(amount);
-                super.onTick(world, delta);
+        if (facing != null) {
+            SubtileFluid fluid = getFluid(world, facing);
+            float amount = maxPressure / 100;
+            int maxReach = 10;
+            while (maxReach > 0 && fluid != null && pressure > amount) {
+                maxReach--;
+                if (fluid.pressure + amount < fluid.maxPressure * 2) {
+                    addPressure(-amount);
+                    fluid.addPressure(amount);
+                }
+                fluid = fluid.getFluid(world, facing);
             }
-        } else {
-            super.onTick(world, delta);
         }
     }
 
@@ -61,7 +64,7 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public int getPressCap() {
-        return 4;
+        return 2;
     }
 
     @Override

@@ -34,7 +34,7 @@ public abstract class SubtileFluid extends Subtile {
         if (pressure < maxPressure / 1000) {
             tile.removeSubtile(this);
         } else {
-            float amount = maxPressure / ((getViscosity() < 0 ? 0 : getViscosity()) + 1) * delta * 100;
+            float amount = maxPressure / ((getViscosity() < 0 ? 0 : getViscosity()) + 1) * delta * 60;
             float pressCap = getPressCap();
             float amountDown = flowDown(world, amount, pressCap);
             float amountSide = flowSide(world, amountDown, pressCap);

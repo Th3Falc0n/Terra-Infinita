@@ -48,26 +48,26 @@ public class PassLighting extends RenderingPass {
         boolean resetToWhite = false;
         Color nextClr = Color.WHITE;
         Color activeClr = Color.WHITE;
-        
+
         screen.batch.begin();
-        
+
         screen.shr.begin(ShapeType.FilledRectangle);
         screen.shr.setColor(nextClr);
-             
+
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (world.getTile(x, y) != null) {                    
+                if (world.getTile(x, y) != null) {
                     if (world.getTile(x, y).receivesSunlight) {
-                        
-                        //nextClr = world.getTile(x, y).getSunlightColor();
-                        
-                        if(nextClr != activeClr) {
+
+                        // nextClr = world.getTile(x, y).getSunlightColor();
+
+                        if (nextClr != activeClr) {
                             activeClr = nextClr;
-                            
+
                             screen.shr.end();
                             screen.shr.setColor(nextClr);
                             screen.shr.begin(ShapeType.FilledRectangle);
-                            
+
                             resetToWhite = true;
                         }
 
@@ -84,9 +84,9 @@ public class PassLighting extends RenderingPass {
         }
 
         screen.shr.end();
-        
+
         screen.batch.end();
-        
+
         screen.batch.begin();
 
         for (Chunk chunk : world.localChunks.values()) {
@@ -96,7 +96,7 @@ public class PassLighting extends RenderingPass {
                 }
             }
         }
-        
+
         screen.batch.end();
 
         screen.batch.setColor(Color.WHITE);
