@@ -296,8 +296,6 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 if (i + asl > delta) {
                     asl -= (i + asl) - delta;
                 }
-                
-                System.out.println("steps  " + delta/stepLength);
 
                 setPosition(getPosition().add(velocity.mulNew(asl)));
                 
