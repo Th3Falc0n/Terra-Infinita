@@ -49,6 +49,8 @@ public class PassLighting extends RenderingPass {
         Color nextClr = Color.WHITE;
         Color activeClr = Color.WHITE;
         
+        screen.batch.begin();
+        
         screen.shr.begin(ShapeType.FilledRectangle);
         screen.shr.setColor(nextClr);
              
@@ -82,6 +84,8 @@ public class PassLighting extends RenderingPass {
         }
 
         screen.shr.end();
+        
+        screen.batch.end();
         
         screen.batch.begin();
 
