@@ -7,7 +7,6 @@ import org.lwjgl.opengl.Display;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
@@ -76,7 +75,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
 
         super.render();
 
-        fpsLogger.log();
+        fpsLogger.tick();
     }
 
     @Override
