@@ -210,16 +210,12 @@ public abstract class Tile extends Item implements IDrawableInWorld {
         if (sunlightFilter == null) {
             return Color.WHITE;
         } else {
-            Color sunlightColor = mulCol(sunlightFilter.getSunlightColor(), sunlightFilter.getFilterColor());
+            Color sunlightColor = sunlightFilter.getSunlightColor().cpy().mul(sunlightFilter.getFilterColor());
             for (Subtile subtile : sunlightFilter.subtiles) {
-                if (subtile.providesSunlightFilter()) sunlightColor = mulCol(sunlightColor, subtile.getFilterColor());
+                if (subtile.providesSunlightFilter()) sunlightColor = sunlightColor.cpy().mul(subtile.getFilterColor());
             }
             return sunlightColor;
         }
-    }
-
-    private final Color mulCol(Color a, Color b) {
-        return new Color(a.r * b.r, a.g * b.g, a.b * b.b, 1);
     }
 
     public void damage(World world, float damage, Entity causer) {

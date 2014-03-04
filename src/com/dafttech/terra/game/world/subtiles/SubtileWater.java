@@ -77,6 +77,6 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public Color getFilterColor() {
-        return Color.BLUE;
+        return new Color(1 - pressure / maxPressure, 1 - pressure / maxPressure, 1, 1);
     }
 }
