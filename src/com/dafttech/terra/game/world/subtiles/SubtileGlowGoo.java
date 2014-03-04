@@ -56,7 +56,7 @@ public class SubtileGlowGoo extends SubtileFluid {
     }
 
     @Override
-    public int getCompSpeed() {
+    public int getPressCap() {
         return 0;
     }
 

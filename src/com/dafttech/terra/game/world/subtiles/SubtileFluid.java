@@ -27,99 +27,114 @@ public abstract class SubtileFluid extends Subtile {
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
         if (pressure < maxPressure / 1000) {
             tile.removeSubtile(this);
         } else {
-            float viscosity = getViscosity();
-            float amount = maxPressure / ((viscosity < 0 ? 0 : viscosity) + 1);
-            float compSpeed = getCompSpeed();
+            float amount = maxPressure / ((getViscosity() < 0 ? 0 : getViscosity()) + 1) * delta * 100;
+            float pressCap = getPressCap();
+            float amountDown = flowDown(world, amount, pressCap);
+            float amountSide = flowSide(world, amountDown, pressCap);
+            float amountUp = flowUp(world, amount, pressCap);
+        }
+    }
 
-            SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
-            if (fluid != null) {
-                float total = pressure + fluid.pressure;
-                float change = 0;
-                if (total > maxPressure * (2 + compSpeed / maxPressure)) {
-                    float avg = total / 2;
-                    change = avg + compSpeed;
-                } else {
-                    float possAmount = total;
-                    if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
-                        possAmount = maxPressure + (total - maxPressure) / maxPressure * compSpeed;
-                    change = possAmount;
+    public float flowDown(World world, float amount, float pressCap) {
+        SubtileFluid fluid = getFluid(world, Facing.BOTTOM);
+        if (fluid != null) {
+            float total = pressure + fluid.pressure;
+            float change = 0;
+            if (total > maxPressure * (2 + pressCap / maxPressure)) {
+                float avg = total / 2;
+                change = avg + pressCap;
+            } else {
+                float possAmount = total;
+                if (possAmount > maxPressure + (total - maxPressure) / maxPressure * pressCap)
+                    possAmount = maxPressure + (total - maxPressure) / maxPressure * pressCap;
+                change = possAmount;
+            }
+            float possAmount = change - fluid.pressure;
+            if (possAmount > amount) possAmount = amount;
+            if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
+                    || fluid.tile.isWaterproof() == tile.isWaterproof()) {
+                addPressure(-possAmount);
+                fluid.addPressure(possAmount);
+                return amount - possAmount < 0 ? 0 : amount - possAmount;
+            }
+        }
+        return amount;
+    }
+
+    public float flowSide(World world, float amount, float pressCap) {
+        if (amount > 0) {
+            SubtileFluid fluid = null;
+            if (new Random().nextBoolean()) {
+                fluid = getFluid(world, Facing.RIGHT);
+                if (fluid != null) {
+                    int reach = getMaxReach();
+                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT)
+                            && fluid.getFluid(world, Facing.RIGHT).tile.isWaterproof() == fluid.tile.isWaterproof()
+                            && fluid.getFluid(world, Facing.RIGHT).pressure > fluid.maxPressure / 1000) {
+                        reach--;
+                        fluid = fluid.getFluid(world, Facing.RIGHT);
+                    }
                 }
-                float possAmount = change - fluid.pressure;
+            } else {
+                fluid = getFluid(world, Facing.LEFT);
+                if (fluid != null) {
+                    int reach = getMaxReach();
+                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT)
+                            && fluid.getFluid(world, Facing.LEFT).tile.isWaterproof() == fluid.tile.isWaterproof()
+                            && fluid.getFluid(world, Facing.LEFT).pressure > fluid.maxPressure / 1000) {
+                        reach--;
+                        fluid = fluid.getFluid(world, Facing.LEFT);
+                    }
+                }
+            }
+            if (fluid != null && fluid.pressure < pressure) {
+                float avg = (pressure + fluid.pressure) / 2;
+                float possAmount = avg - fluid.pressure;
                 if (possAmount > amount) possAmount = amount;
                 if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
                         || fluid.tile.isWaterproof() == tile.isWaterproof()) {
                     addPressure(-possAmount);
                     fluid.addPressure(possAmount);
-                    amount -= possAmount;
-                    if (amount < 0) amount = 0;
-                }
-            }
-            if (pressure > 0 && amount > 0) {
-                if (new Random().nextBoolean()) {
-                    fluid = getFluid(world, Facing.RIGHT);
-                    if (fluid != null) {
-                        int reach = getMaxReach();
-                        while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT)
-                                && fluid.getFluid(world, Facing.RIGHT).tile.isWaterproof() == fluid.tile.isWaterproof()
-                                && fluid.getFluid(world, Facing.RIGHT).pressure > fluid.maxPressure / 1000) {
-                            reach--;
-                            fluid = fluid.getFluid(world, Facing.RIGHT);
-                        }
-                    }
-                } else {
-                    fluid = getFluid(world, Facing.LEFT);
-                    if (fluid != null) {
-                        int reach = getMaxReach();
-                        while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT)
-                                && fluid.getFluid(world, Facing.LEFT).tile.isWaterproof() == fluid.tile.isWaterproof()
-                                && fluid.getFluid(world, Facing.LEFT).pressure > fluid.maxPressure / 1000) {
-                            reach--;
-                            fluid = fluid.getFluid(world, Facing.LEFT);
-                        }
-                    }
-                }
-                if (fluid != null && fluid.pressure < pressure) {
-                    float avg = (pressure + fluid.pressure) / 2;
-                    float possAmount = avg - fluid.pressure;
-                    if (possAmount > amount) possAmount = amount;
-                    if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
-                            || fluid.tile.isWaterproof() == tile.isWaterproof()) {
-                        addPressure(-possAmount);
-                        fluid.addPressure(possAmount);
-                    }
-                }
-            }
-
-            fluid = getFluid(world, Facing.TOP);
-            if (fluid != null) {
-                float total = pressure + fluid.pressure;
-                if (pressure > maxPressure + (total - maxPressure) / maxPressure * compSpeed) {
-                    float change = 0;
-                    if (total > maxPressure * (2 + compSpeed / maxPressure)) {
-                        float avg = total / 2;
-                        change = avg + compSpeed;
-                    } else {
-                        float possAmount = total;
-                        if (possAmount > maxPressure + (total - maxPressure) / maxPressure * compSpeed)
-                            possAmount = maxPressure + (total - maxPressure) / maxPressure * compSpeed;
-                        change = possAmount;
-                    }
-                    float possAmount = change - pressure;
-                    if (possAmount > amount) possAmount = amount;
-                    if ((possAmount > 0 && !tile.isWaterproof()) || (possAmount < 0 && !fluid.tile.isWaterproof())
-                            || fluid.tile.isWaterproof() == tile.isWaterproof()) {
-                        fluid.addPressure(-possAmount);
-                        addPressure(possAmount);
-                    }
+                    return amount - possAmount < 0 ? 0 : amount - possAmount;
                 }
             }
         }
+        return amount;
+    }
+
+    public float flowUp(World world, float amount, float pressCap) {
+        SubtileFluid fluid = getFluid(world, Facing.TOP);
+        if (fluid != null) {
+            float total = pressure + fluid.pressure;
+            if (pressure > maxPressure + (total - maxPressure) / maxPressure * pressCap) {
+                float change = 0;
+                if (total > maxPressure * (2 + pressCap / maxPressure)) {
+                    float avg = total / 2;
+                    change = avg + pressCap;
+                } else {
+                    float possAmount = total;
+                    if (possAmount > maxPressure + (total - maxPressure) / maxPressure * pressCap)
+                        possAmount = maxPressure + (total - maxPressure) / maxPressure * pressCap;
+                    change = possAmount;
+                }
+                float possAmount = change - pressure;
+                if (possAmount > amount) possAmount = amount;
+                if ((possAmount > 0 && !tile.isWaterproof()) || (possAmount < 0 && !fluid.tile.isWaterproof())
+                        || fluid.tile.isWaterproof() == tile.isWaterproof()) {
+                    fluid.addPressure(-possAmount);
+                    addPressure(possAmount);
+                    return amount - possAmount < 0 ? 0 : amount - possAmount;
+                }
+            }
+        }
+        return amount;
     }
 
     public void addPressure(float pressure) {
@@ -160,7 +175,7 @@ public abstract class SubtileFluid extends Subtile {
 
     public abstract int getMaxReach();
 
-    public abstract int getCompSpeed();
+    public abstract int getPressCap();
 
     @Override
     public boolean isTileIndependent() {

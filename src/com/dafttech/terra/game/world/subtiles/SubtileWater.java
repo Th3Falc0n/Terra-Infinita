@@ -9,6 +9,7 @@ import com.dafttech.terra.resources.Resources;
 
 public class SubtileWater extends SubtileFluid {
     float img = 0;
+    boolean wavephase = false;
 
     public SubtileWater() {
         super();
@@ -26,9 +27,9 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public void onTick(World world, float delta) {
-        super.onTick(world, delta);
         img += delta;
         if ((int) img > 3) img = 0;
+
         SubtileFluid fluid = null;
         if (InputHandler.$.isKeyDown("WAVESLEFT")) {
             fluid = getFluid(world, Facing.LEFT);
@@ -41,22 +42,25 @@ public class SubtileWater extends SubtileFluid {
             if (fluid.pressure + amount < fluid.maxPressure * 2) {
                 addPressure(-amount);
                 fluid.addPressure(amount);
+                super.onTick(world, delta);
             }
+        } else {
+            super.onTick(world, delta);
         }
     }
 
     @Override
     public float getViscosity() {
-        return 0;
+        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 4 : 0;
     }
 
     @Override
     public int getMaxReach() {
-        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 1 : 10;
+        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 4 : 10;
     }
 
     @Override
-    public int getCompSpeed() {
+    public int getPressCap() {
         return 4;
     }
 
