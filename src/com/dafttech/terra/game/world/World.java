@@ -237,6 +237,8 @@ public class World implements IDrawableInWorld {
     @Override
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         RenderingPass.rpObjects.applyPass(screen, pointOfView, this);
+        TimeKeeping.timeKeeping("rpObj");
         RenderingPass.rpLighting.applyPass(screen, pointOfView, this);
+        TimeKeeping.timeKeeping("rpLig");
     }
 }

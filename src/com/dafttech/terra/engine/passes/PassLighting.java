@@ -45,18 +45,33 @@ public class PassLighting extends RenderingPass {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
+        boolean resetToWhite = false;
+        Color nextClr = Color.WHITE;
+        Color activeClr = Color.WHITE;
+        
+        screen.shr.begin(ShapeType.FilledRectangle);
+        screen.shr.setColor(nextClr);
+             
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
             for (int y = (int) pointOfView.getPosition().y / BLOCK_SIZE - sy; y < (int) pointOfView.getPosition().y / BLOCK_SIZE + sy; y++) {
-                if (world.getTile(x, y) != null) {
+                if (world.getTile(x, y) != null) {                    
                     if (world.getTile(x, y).receivesSunlight) {
-                        screen.shr.begin(ShapeType.FilledRectangle);
-                        screen.shr.setColor(world.getTile(x, y).getSunlightColor());
+                        
+                        //nextClr = world.getTile(x, y).getSunlightColor();
+                        
+                        if(nextClr != activeClr) {
+                            activeClr = nextClr;
+                            
+                            screen.shr.end();
+                            screen.shr.setColor(nextClr);
+                            screen.shr.begin(ShapeType.FilledRectangle);
+                            
+                            resetToWhite = true;
+                        }
 
                         Rectangle rect = getSunlightRect(world.getTile(x, y), pointOfView);
 
                         screen.shr.filledRect(rect.x, rect.y, rect.width, rect.height);
-
-                        screen.shr.end();
                     }
 
                     if (world.getTile(x, y).isLightEmitter() && world.getTile(x, y).getEmittedLight() != null) {
@@ -66,6 +81,10 @@ public class PassLighting extends RenderingPass {
             }
         }
 
+        screen.shr.end();
+        
+        screen.batch.begin();
+
         for (Chunk chunk : world.localChunks.values()) {
             for (Entity entity : chunk.getLocalEntities()) {
                 if (entity.isLightEmitter() && entity.getEmittedLight() != null && world.isInRenderRange(entity.getPosition())) {
@@ -73,6 +92,8 @@ public class PassLighting extends RenderingPass {
                 }
             }
         }
+        
+        screen.batch.end();
 
         screen.batch.setColor(Color.WHITE);
 
