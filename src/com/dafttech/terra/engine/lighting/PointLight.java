@@ -32,12 +32,13 @@ public class PointLight extends Light {
     public void drawToLightmap(AbstractScreen screen, Entity pointOfView) {
         Vector2 p = position.toRenderPosition(pointOfView.getPosition());
 
-        screen.batch.begin();
-
-        screen.batch.setColor(color);
+        if(!screen.batch.getColor().equals(color)) {
+            screen.batch.end();
+            screen.batch.setColor(color);
+            screen.batch.begin();
+        }
+        
         screen.batch.draw(Resources.LIGHT.getImage("pointlight"), p.x - size, p.y - size, size * 2, size * 2);
-
-        screen.batch.end();
     }
 
     public Vector2 getRenderPosition() {

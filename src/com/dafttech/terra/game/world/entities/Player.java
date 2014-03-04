@@ -40,20 +40,20 @@ public class Player extends EntityLiving {
         hudBottom.slots[0].assignPair(new TileDirt(), inventory);
         hudBottom.slots[1].assignPair(new TileSand(), inventory);
         hudBottom.slots[2].assignPair(new ItemFlamingArrow(), inventory);
-        hudBottom.slots[3].assignPair(new ItemGlowstick(), inventory);
+        hudBottom.slots[3].assignPair(new ItemDynamite(), inventory);
         hudBottom.slots[4].assignPair(new TileTorch(), inventory);
         hudBottom.slots[5].assignPair(new ItemRainbowGun(), inventory);
         hudBottom.slots[6].assignPair(new ItemWaterBucket(), inventory);
         hudBottom.slots[7].assignPair(new ItemDigStaff(), inventory);
 
         inventory.add(new TileDirt(), 1000);
-        inventory.add(new ItemFlamingArrow(), 100);
+        inventory.add(new ItemFlamingArrow(), 10000);
         inventory.add(new ItemGlowstick(), 100);
-        inventory.add(new ItemDynamite(), 10);
+        inventory.add(new ItemDynamite(), 100);
         inventory.add(new ItemRainbowGun(), 1);
         inventory.add(new ItemWaterBucket(), 1);
-        inventory.add(new TileTorch(), 100);
-        inventory.add(new ItemDigStaff(), 20);
+        inventory.add(new TileTorch(), 10000);
+        inventory.add(new ItemDigStaff(), 1);
     }
 
     long left;
