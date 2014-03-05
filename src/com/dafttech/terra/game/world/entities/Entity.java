@@ -346,7 +346,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public float getInAirFriction() {
         return 1;
     }
-    
+
     public boolean isInRenderRange(Player player) {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;

@@ -17,7 +17,7 @@ public class TileSand extends TileFalling {
 
     @Override
     public float getFallSpeed(World world) {
-        return 10;
+        return 20;
     }
 
     @Override

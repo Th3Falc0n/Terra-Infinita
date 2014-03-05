@@ -30,17 +30,20 @@ public class SubtileWater extends SubtileFluid {
         img += delta;
         if ((int) img > 3) img = 0;
 
-        Facing facing = null;
+        float windSpeed = world.weather.getWindSpeed(world);
+        Facing facing = windSpeed > 0 ? Facing.RIGHT : windSpeed < 0 ? Facing.LEFT : null;
         if (InputHandler.$.isKeyDown("WAVESLEFT")) {
             facing = Facing.LEFT;
+            windSpeed = 5;
         } else if (InputHandler.$.isKeyDown("WAVESRIGHT")) {
             facing = Facing.RIGHT;
+            windSpeed = 5;
         }
         if (facing != null && !wavephase) {
             wavephase = true;
             SubtileFluid fluid = getFluid(world, facing);
-            int maxReach = 3;
-            float amount = maxPressure / 5 / maxReach;
+            int maxReach = 5;
+            float amount = maxPressure * delta * Math.abs(windSpeed);
             while (maxReach > 0 && fluid != null && pressure > amount) {
                 maxReach--;
                 if (fluid.pressure + amount < fluid.maxPressure * 2) {

@@ -8,4 +8,9 @@ public class WeatherSunny extends Weather {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public float getWindSpeed(World world) {
+        return 0;
+    }
 }

@@ -1,20 +1,16 @@
 package com.dafttech.terra.engine.gui.modules;
 
-import com.badlogic.gdx.graphics.Color;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
-import com.dafttech.terra.engine.gui.anchors.AnchorRight;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.containers.ContainerList;
-import com.dafttech.terra.engine.gui.elements.ElementBar;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
-import com.dafttech.terra.engine.gui.elements.ElementSlot;
 import com.dafttech.terra.game.Events;
 
 public class ModuleInventory extends GUIModule {
@@ -22,7 +18,7 @@ public class ModuleInventory extends GUIModule {
 
     @EventListener(value = "SCROLL")
     public void onScroll(Event event) {
-        
+
     }
 
     @Override
@@ -35,8 +31,6 @@ public class ModuleInventory extends GUIModule {
 
         set.addAnchor(new AnchorCenterX());
         set.addAnchor(new AnchorBottom(0.01f));
-        
-        
 
         container.assignAnchorSet(set);
         ElementLabel invLabel;

@@ -50,6 +50,7 @@ public class Resources {
         ENTITIES.loadImage("glowstick", "res/entities/glowstick.png");
         ENTITIES.loadImage("rainbow", "res/entities/rainbow.png");
         ENTITIES.loadImage("beamDig", "res/entities/beamDig.png");
+        ENTITIES.loadImage("rain", "res/entities/rain.png", 3);
 
         ITEMS.loadImage("rainbowgun", "res/items/rainbowgun.png");
         ITEMS.loadImage("digStaff", "res/items/digStaff.png");

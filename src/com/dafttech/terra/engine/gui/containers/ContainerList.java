@@ -1,8 +1,5 @@
 package com.dafttech.terra.engine.gui.containers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.GUIObject;
