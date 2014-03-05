@@ -52,7 +52,7 @@ public class EntityDiggerBeam extends EntityThrown {
     @Override
     public void onTerrainCollision(Tile tile) {
         if (!tile.isAir()) {
-            worldObj.destroyTile(tile.getPosition().x, tile.getPosition().y, this).addVelocity(velocity.mulNew(-5));
+            worldObj.destroyTile(tile.getPosition().x, tile.getPosition().y, this).addVelocity(velocity.mulNew(-1));
             this.remove();
         }
     }

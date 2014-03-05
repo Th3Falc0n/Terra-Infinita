@@ -298,8 +298,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 }
 
                 setPosition(getPosition().add(velocity.mulNew(asl)));
-                
-                if(!inWorld) {   
+
+                if (!inWorld) {
                     return;
                 }
 
