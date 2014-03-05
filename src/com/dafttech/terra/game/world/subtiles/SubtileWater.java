@@ -34,8 +34,10 @@ public class SubtileWater extends SubtileFluid {
         Facing facing = windSpeed > 0 ? Facing.RIGHT : windSpeed < 0 ? Facing.LEFT : null;
         if (InputHandler.$.isKeyDown("WAVESLEFT")) {
             facing = Facing.LEFT;
+            windSpeed = 5;
         } else if (InputHandler.$.isKeyDown("WAVESRIGHT")) {
             facing = Facing.RIGHT;
+            windSpeed = 5;
         }
         if (facing != null && !wavephase) {
             wavephase = true;
