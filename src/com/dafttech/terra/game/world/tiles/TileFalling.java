@@ -25,9 +25,9 @@ public abstract class TileFalling extends Tile implements ITileRenderOffset {
     }
 
     public void fall(World world, int x, int y) {
-        world.setTile(getPosition().add(x, y), this, true);
         renderOffset.x -= x;
         renderOffset.y -= y;
+        world.setTile(getPosition().add(x, y), this, true);
     }
 
     public void fallIfPossible(World world) {
