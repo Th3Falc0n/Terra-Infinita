@@ -14,16 +14,13 @@ public class ContainerList extends GUIContainer {
 
     @Override
     public void draw(AbstractScreen screen) {
-        List<GUIObject> list = new ArrayList<GUIObject>(objects);
 
         float y = size.y;
 
-        for (GUIObject o : list) {
+        for (GUIObject o : objects) {
             y -= o.size.y + 2;
 
-            if (y < 0) {
-                removeObject(o);
-            } else {
+            if (y > 0) {
                 o.position = new Vector2(0, y);
                 o.draw(screen);
             }

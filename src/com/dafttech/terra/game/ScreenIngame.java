@@ -50,6 +50,7 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer());
+        guiContainerScreen.addObject(localWorld.localPlayer.guiInventory.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
         guiContainerScreen.addObject(MouseSlot.getRenderSlot());

@@ -9,6 +9,7 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
+import com.dafttech.terra.engine.gui.modules.ModuleInventory;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.Events;
@@ -36,6 +37,9 @@ public class Player extends EntityLiving {
 
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
+        
+        guiInventory = new ModuleInventory();
+        guiInventory.create();
 
         hudBottom.slots[0].assignPair(new TileDirt(), inventory);
         hudBottom.slots[1].assignPair(new TileSand(), inventory);
@@ -62,6 +66,7 @@ public class Player extends EntityLiving {
     public Inventory inventory = new Inventory();
 
     public ModuleHUDBottom hudBottom;
+    public ModuleInventory guiInventory;
 
     PointLight light;
 
