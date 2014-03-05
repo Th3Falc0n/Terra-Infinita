@@ -121,11 +121,13 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
             List<Subtile> tileIndependentSubtiles = new ArrayList<Subtile>();
+
             Vector2i notifyOldRemoval = null;
             if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) {
                 notifyOldRemoval = tile.getPosition();
                 setTile(notifyOldRemoval, null, false);
             }
+
             if (tile == null) tile = new TileAir();
 
             tile.setPosition(pos).setWorld(this);
