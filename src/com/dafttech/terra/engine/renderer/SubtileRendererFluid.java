@@ -8,6 +8,7 @@ import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 import com.dafttech.terra.game.world.subtiles.SubtileFluid;
+import com.dafttech.terra.game.world.tiles.ITileRenderOffset;
 
 public class SubtileRendererFluid extends SubtileRendererMask {
     public static SubtileRenderer $Instance = new SubtileRendererFluid();
@@ -17,6 +18,15 @@ public class SubtileRendererFluid extends SubtileRendererMask {
         Vector2 screenVec = render.getTile().getPosition().toScreenPos(pointOfView);
 
         float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
+
+        float offX = 0, offY = 0;
+        if (!render.isTileIndependent() && render.getTile() != null && render.getTile() instanceof ITileRenderOffset) {
+            Vector2 offset = ((ITileRenderOffset) render.getTile()).getRenderOffset();
+            if (offset != null) {
+                offX = offset.x * BLOCK_SIZE;
+                offY = offset.y * BLOCK_SIZE;
+            }
+        }
 
         float height = ((SubtileFluid) render).pressure / ((SubtileFluid) render).maxPressure * BLOCK_SIZE;
         if (height < BLOCK_SIZE && ((SubtileFluid) render).isFluid(render.getTile().getWorld(), Facing.TOP)) {
@@ -28,6 +38,7 @@ public class SubtileRendererFluid extends SubtileRendererMask {
             if (below.pressure < below.maxPressure) height = 0;
         }
         if (height > BLOCK_SIZE) height = BLOCK_SIZE;
-        screen.batch.draw(render.getImage(), screenVec.x, screenVec.y + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation);
+        screen.batch
+                .draw(render.getImage(), screenVec.x + offX, screenVec.y + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation);
     }
 }

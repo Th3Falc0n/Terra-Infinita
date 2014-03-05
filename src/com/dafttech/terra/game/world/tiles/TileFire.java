@@ -99,4 +99,14 @@ public class TileFire extends TileFalling {
     public PointLight getEmittedLight() {
         return light;
     }
+
+    @Override
+    public float getFallSpeed(World world) {
+        return 10;
+    }
+
+    @Override
+    public float getFallDelay(World world) {
+        return 0.2f;
+    }
 }

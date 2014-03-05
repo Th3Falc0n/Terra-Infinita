@@ -173,6 +173,22 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     }
 
+    public void onNeighborChange(World world, Tile changed) {
+
+    }
+
+    public void onTileDestroyed(World world, Entity causer) {
+
+    }
+
+    public void onTilePlaced(World world, Entity causer) {
+
+    }
+
+    public void onTileSet(World world) {
+
+    }
+
     @Override
     public void update(World world, float delta) {
         for (int i = 0; i < subtiles.size(); i++) {

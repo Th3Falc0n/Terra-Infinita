@@ -22,7 +22,6 @@ import com.dafttech.terra.game.world.environment.Weather;
 import com.dafttech.terra.game.world.environment.WeatherRainy;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.subtiles.Subtile;
-import com.dafttech.terra.game.world.tiles.ITileInworldEvents;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
 
@@ -122,7 +121,11 @@ public class World implements IDrawableInWorld {
         Chunk chunk = getOrCreateChunk(pos);
         if (chunk != null) {
             List<Subtile> tileIndependentSubtiles = new ArrayList<Subtile>();
-            if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) setTile(tile.getPosition(), null, notify);
+            Vector2i notifyOldRemoval = null;
+            if (tile != null && tile.getPosition() != null && getTile(tile.getPosition()) == tile) {
+                notifyOldRemoval = tile.getPosition();
+                setTile(notifyOldRemoval, null, false);
+            }
             if (tile == null) tile = new TileAir();
 
             tile.setPosition(pos).setWorld(this);
@@ -143,7 +146,8 @@ public class World implements IDrawableInWorld {
             sunmap.postTilePlace(this, tile);
 
             if (notify) {
-                if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onTileSet(this);
+                tile.onTileSet(this);
+                if (notifyOldRemoval != null) notifyNeighborTiles(notifyOldRemoval.x, notifyOldRemoval.y);
                 notifyNeighborTiles(pos.x, pos.y);
             }
         }
@@ -159,9 +163,7 @@ public class World implements IDrawableInWorld {
         if (tile.isAir() || tile.isReplacable()) {
             setTile(x, y, t, true);
 
-            if (tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents) tile).onTilePlaced(this, causer);
-            }
+            tile.onTilePlaced(this, causer);
             return true;
         }
         return false;
@@ -174,9 +176,7 @@ public class World implements IDrawableInWorld {
             entity = tile.spawnAsEntity(this);
             setTile(x, y, null, true);
 
-            if (tile instanceof ITileInworldEvents) {
-                ((ITileInworldEvents) tile).onTileDestroyed(this, causer);
-            }
+            tile.onTileDestroyed(this, causer);
         }
         return entity;
     }
@@ -184,13 +184,13 @@ public class World implements IDrawableInWorld {
     private void notifyNeighborTiles(int x, int y) {
         Tile tile;
         tile = getTile(x + 1, y);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
+        tile.onNeighborChange(this, tile);
         tile = getTile(x, y + 1);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
+        tile.onNeighborChange(this, tile);
         tile = getTile(x - 1, y);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
+        tile.onNeighborChange(this, tile);
         tile = getTile(x, y - 1);
-        if (tile != null && tile instanceof ITileInworldEvents) ((ITileInworldEvents) tile).onNeighborChange(this, tile);
+        tile.onNeighborChange(this, tile);
     }
 
     public void removeEntity(Entity entity) {

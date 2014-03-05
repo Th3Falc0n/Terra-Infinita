@@ -4,9 +4,8 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
-public abstract class TileFalling extends Tile implements ITileInworldEvents, ITileRenderOffset {
+public abstract class TileFalling extends Tile implements ITileRenderOffset {
     private Vector2 renderOffset = new Vector2();
-    private float fallSpeed = 10f, fallDelay = 0.2f;
     private float createTime = 0;
 
     public TileFalling() {
@@ -15,13 +14,13 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     @Override
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
-        if (renderOffset.x != 0 || renderOffset.y != 0) {
-            if (renderOffset.x > 0) renderOffset.x -= fallSpeed * delta;
-            if (renderOffset.y > 0) renderOffset.y -= fallSpeed * delta;
-            if (renderOffset.x < 0) renderOffset.x += fallSpeed * delta;
-            if (renderOffset.y < 0) renderOffset.y += fallSpeed * delta;
-        } else {
-            fallIfPossible(world);
+        fallIfPossible(world);
+        if (!renderOffset.is()) {
+            float possSpeed = getFallSpeed(world) * delta;
+            if (renderOffset.x > 0) renderOffset.x -= possSpeed > renderOffset.x ? renderOffset.x : possSpeed;
+            if (renderOffset.y > 0) renderOffset.y -= possSpeed > renderOffset.y ? renderOffset.y : possSpeed;
+            if (renderOffset.x < 0) renderOffset.x += possSpeed > -renderOffset.x ? -renderOffset.x : possSpeed;
+            if (renderOffset.y < 0) renderOffset.y += possSpeed > -renderOffset.y ? -renderOffset.y : possSpeed;
         }
     }
 
@@ -32,9 +31,11 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     }
 
     public void fallIfPossible(World world) {
-        if (createTime == 0) createTime = world.time;
-        if (createTime + fallDelay < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
-            fall(world, 0, 1);
+        if (renderOffset.is()) {
+            if (createTime == 0) createTime = world.time;
+            if (createTime + getFallDelay(world) < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
+                fall(world, 0, 1);
+            }
         }
     }
 
@@ -46,7 +47,6 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     @Override
     public void onTileSet(World world) {
         fallIfPossible(world);
-
     }
 
     @Override
@@ -63,4 +63,8 @@ public abstract class TileFalling extends Tile implements ITileInworldEvents, IT
     public void onTilePlaced(World world, Entity causer) {
 
     }
+
+    public abstract float getFallSpeed(World world);
+
+    public abstract float getFallDelay(World world);
 }

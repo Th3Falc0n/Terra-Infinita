@@ -44,4 +44,14 @@ public class TileSapling extends TileFalling {
     public boolean isCollidableWith(Entity entity) {
         return false;
     }
+
+    @Override
+    public float getFallSpeed(World world) {
+        return 10;
+    }
+
+    @Override
+    public float getFallDelay(World world) {
+        return 0.2f;
+    }
 }

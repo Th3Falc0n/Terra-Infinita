@@ -55,6 +55,22 @@ public class Vector2 {
         return new Vector2(Gdx.input.getX(), Gdx.input.getY());
     }
 
+    public boolean is() {
+        return is(0, 0);
+    }
+
+    public boolean is(float val) {
+        return is(val, val);
+    }
+
+    public boolean is(float x, float y) {
+        return x == this.x && y == this.y;
+    }
+
+    public boolean is(Vector2 vec) {
+        return is(vec.x, vec.y);
+    }
+
     public Vector2 sub(Vector2 v) {
         return sub(v.x, v.y);
     }

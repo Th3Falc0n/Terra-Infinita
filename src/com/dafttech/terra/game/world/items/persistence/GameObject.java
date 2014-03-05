@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.Json.Serializable;
-
 public abstract class GameObject {
 
     // ****FOLLOWING PERSISTENCE CODE**** May harm your brain
@@ -73,9 +71,12 @@ public abstract class GameObject {
 
         for (Field f : annotatedFields) {
             try {
-                /* if (!(f.get(this) instanceof Serializable))
-                    System.out.println("WARNING! Field " + f.getName() + " in " + this.getClass().getCanonicalName()
-                            + " is not Serializable and cannot be saved!"); */
+                /*
+                 * if (!(f.get(this) instanceof Serializable))
+                 * System.out.println("WARNING! Field " + f.getName() + " in " +
+                 * this.getClass().getCanonicalName() +
+                 * " is not Serializable and cannot be saved!");
+                 */
                 proto.values.put(f, f.get(this));
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 // TODO Auto-generated catch block
