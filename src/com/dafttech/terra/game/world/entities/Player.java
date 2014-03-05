@@ -37,7 +37,7 @@ public class Player extends EntityLiving {
 
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
-        
+
         guiInventory = new ModuleInventory();
         guiInventory.create();
 
