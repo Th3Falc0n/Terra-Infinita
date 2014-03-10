@@ -205,20 +205,20 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             Facing fVertical = null, fHorizontal = null;
             float distVertical = 0, distHorizontal = 0;
             float posVertical = 0, posHorizontal = 0;
-            
+
             boolean hcv = false, hch = false;
 
             if (oVel.y > 0) {
                 fVertical = Facing.BOTTOM;
                 distVertical = (a.y + a.height) - b.y;
                 posVertical = b.y - 0.01f - a.height;
-                
+
                 hcv = true;
             } else if (oVel.y < 0) {
                 fVertical = Facing.TOP;
                 distVertical = (b.y + b.height) - a.y;
                 posVertical = (b.y + b.height) + 0.01f;
-                
+
                 hcv = true;
             }
 
@@ -226,22 +226,22 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 fHorizontal = Facing.RIGHT;
                 distHorizontal = (a.x + a.width) - b.x;
                 posHorizontal = b.x - 0.01f - a.width;
-                
+
                 hch = true;
-            } else if(oVel.x < 0) {
+            } else if (oVel.x < 0) {
                 fHorizontal = Facing.LEFT;
                 distHorizontal = (b.x + b.width) - a.x;
                 posHorizontal = (b.x + b.width) + 0.01f;
-                
+
                 hch = true;
             }
-            
-            if((hcv && !hch) || ((hcv && hch) && distVertical < distHorizontal)) {
+
+            if ((hcv && !hch) || ((hcv && hch) && distVertical < distHorizontal)) {
                 collisionResponse(fVertical, posVertical);
                 return true;
             }
-            
-            if((hch && !hcv) || ((hcv && hch) && !(distVertical < distHorizontal))) {
+
+            if ((hch && !hcv) || ((hcv && hch) && !(distVertical < distHorizontal))) {
                 collisionResponse(fHorizontal, posHorizontal);
                 return true;
             }
