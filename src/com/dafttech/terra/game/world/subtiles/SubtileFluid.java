@@ -1,5 +1,7 @@
 package com.dafttech.terra.game.world.subtiles;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import com.dafttech.terra.engine.renderer.SubtileRenderer;
@@ -78,22 +80,27 @@ public abstract class SubtileFluid extends Subtile {
             SubtileFluid fluid = getFluid(world, facing);
             if (fluid != null) {
                 int reach = getMaxReach();
+                float totalAmount = pressure;
+                List<SubtileFluid> fluids = new LinkedList<SubtileFluid>();
                 while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, facing)
                         && fluid.getFluid(world, facing).tile.isWaterproof() == fluid.tile.isWaterproof()
                         && fluid.getFluid(world, facing).pressure > fluid.maxPressure / 20) {
                     reach--;
+                    totalAmount += fluid.pressure;
                     fluid = fluid.getFluid(world, facing);
+                    fluids.add(fluid);
                 }
-            }
-            if (fluid != null && fluid.pressure < pressure) {
-                float avg = (pressure + fluid.pressure) / 2;
-                float possAmount = avg - fluid.pressure;
-                if (possAmount > amount) possAmount = amount;
-                if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
-                        || fluid.tile.isWaterproof() == tile.isWaterproof()) {
-                    addPressure(-possAmount);
-                    fluid.addPressure(possAmount);
-                    return amount - possAmount < 0 ? 0 : amount - possAmount;
+                if (fluid.pressure < pressure) {
+                    float avg = totalAmount / fluids.size() + 1;
+                    // (pressure + fluid.pressure) / 2;
+                    float possAmount = avg - fluid.pressure;
+                    if (possAmount > amount) possAmount = amount;
+                    if ((possAmount > 0 && !fluid.tile.isWaterproof()) || (possAmount < 0 && !tile.isWaterproof())
+                            || fluid.tile.isWaterproof() == tile.isWaterproof()) {
+                        addPressure(-possAmount);
+                        fluid.addPressure(possAmount);
+                        return amount - possAmount < 0 ? 0 : amount - possAmount;
+                    }
                 }
             }
         }
