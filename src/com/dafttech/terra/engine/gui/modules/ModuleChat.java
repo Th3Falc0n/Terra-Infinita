@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine.gui.modules;
 
-import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventFilter;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
@@ -43,14 +42,12 @@ public class ModuleChat extends GUIModule implements IStringInputHandler {
     }
 
     @EventListener(value = "KEYDOWN", filter = "filterOnChatKeyUsed")
-    public void onChatKeyUsed(Event event) {
+    public void onChatKeyUsed() {
         inputLabel.beginStringInput();
     }
 
     @EventFilter("filterOnChatKeyUsed")
-    public String filter1() {
-        return "CHAT";
-    }
+    public static String chatKey = "CHAT";
 
     @Override
     public void handleInput(String str) {

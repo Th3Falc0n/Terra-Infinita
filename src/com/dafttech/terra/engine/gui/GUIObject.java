@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine.gui;
 
-import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
@@ -60,7 +59,7 @@ public abstract class GUIObject {
     }
 
     @EventListener("WINRESIZE")
-    public void onWinResize(Event e) {
+    public void onWinResize() {
         applyAssignedAnchorSet();
     }
 
