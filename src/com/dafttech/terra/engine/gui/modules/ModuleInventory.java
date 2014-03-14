@@ -16,7 +16,7 @@ import com.dafttech.terra.game.Events;
 public class ModuleInventory extends GUIModule {
     ContainerList invList;
 
-    @EventListener(value = "SCROLL")
+    @EventListener("SCROLL")
     public void onScroll(Event event) {
 
     }
