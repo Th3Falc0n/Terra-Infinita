@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventManager;
 import com.dafttech.eventmanager.EventType;
+import com.dafttech.eventmanager.ListenerContainer;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -26,13 +27,13 @@ public class Events {
 
     public static final EventType EVENT_KEYDOWN = new EventType("KEYDOWN", EVENTMANAGER) {
         @Override
-        protected boolean applyFilter(Event event, Object[] filter, Object eventListener) {
+        protected boolean applyFilter(Event event, Object[] filter, ListenerContainer eventListener) {
             return ((String) filter[0]).equals(event.getInput(0, String.class));
         }
     };
     public static final EventType EVENT_KEYUP = new EventType("KEYUP", EVENTMANAGER) {
         @Override
-        protected boolean applyFilter(Event event, Object[] filter, Object eventListener) {
+        protected boolean applyFilter(Event event, Object[] filter, ListenerContainer eventListener) {
             return ((String) filter[0]).equals(event.getInput(0, String.class));
         }
     };
