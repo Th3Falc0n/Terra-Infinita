@@ -66,8 +66,8 @@ public abstract class GUIContainer extends GUIObject {
         for (GUIObject e : objects) {
             if (!(e instanceof GUIElement)) continue;
 
-            int x = (int) event.getInput()[1];
-            int y = (int) event.getInput()[2];
+            int x = event.getInput(1, Integer.class);
+            int y = event.getInput(2, Integer.class);
 
             Vector2 p = e.getScreenPosition();
 
@@ -90,9 +90,9 @@ public abstract class GUIContainer extends GUIObject {
         for (GUIObject e : objects) {
             if (!(e instanceof GUIElement)) continue;
 
-            int button = (int) event.getInput()[0];
-            int x = (int) event.getInput()[1];
-            int y = (int) event.getInput()[2];
+            int button = event.getInput(0, Integer.class);
+            int x = event.getInput(1, Integer.class);
+            int y = event.getInput(2, Integer.class);
 
             Vector2 p = e.getScreenPosition();
 

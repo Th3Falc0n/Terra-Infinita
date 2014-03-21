@@ -18,8 +18,8 @@ public class MouseSlot {
 
         @EventListener("MOUSEMOVE")
         public void onEventMouseMove(Event event) {
-            int x = (int) event.getInput()[1];
-            int y = (int) event.getInput()[2];
+            int x = event.getInput(1, Integer.class);
+            int y = event.getInput(2, Integer.class);
 
             position.x = x;
             position.y = y;
