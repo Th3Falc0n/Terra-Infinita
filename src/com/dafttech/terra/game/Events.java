@@ -27,13 +27,13 @@ public class Events {
 
     public static final EventType EVENT_KEYDOWN = new EventType("KEYDOWN", EVENTMANAGER) {
         @Override
-        protected boolean applyFilter(Event event, Object[] filter, ListenerContainer eventListener) {
+        protected boolean isFiltered(Event event, Object[] filter, ListenerContainer eventListener) {
             return ((String) filter[0]).equals(event.getInput(0, String.class));
         }
     };
     public static final EventType EVENT_KEYUP = new EventType("KEYUP", EVENTMANAGER) {
         @Override
-        protected boolean applyFilter(Event event, Object[] filter, ListenerContainer eventListener) {
+        protected boolean isFiltered(Event event, Object[] filter, ListenerContainer eventListener) {
             return ((String) filter[0]).equals(event.getInput(0, String.class));
         }
     };
