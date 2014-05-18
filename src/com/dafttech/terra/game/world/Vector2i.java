@@ -267,7 +267,7 @@ public class Vector2i {
 
     @Override
     public int hashCode() {
-        return ((Integer)x).hashCode() * 5573 + ((Integer)y).hashCode();
+        return ((Integer) x).hashCode() * 5573 + ((Integer) y).hashCode();
     }
 
     public boolean isInRect(int x, int y, int sizeX, int sizeY) {

@@ -323,8 +323,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         velocity.y *= 1 - 0.025f * delta;
         velocity.x *= 1 - getCurrentFriction() * delta;
-        
-        if(isDynamicEntity && !isInRenderRange(world.localPlayer)) {
+
+        if (isDynamicEntity && !isInRenderRange(world.localPlayer)) {
             world.removeEntity(this);
         }
     }
