@@ -19,6 +19,8 @@ public class EntityDiggerBeam extends EntityThrown {
     public EntityDiggerBeam(Vector2 pos, World world) {
         super(pos, world, new Vector2(4f, 2f));
         setGravityFactor(0);
+        
+        isDynamicEntity = true;
     }
 
     @Override

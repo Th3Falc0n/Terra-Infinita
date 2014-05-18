@@ -19,6 +19,8 @@ public class EntityRainbow extends EntityThrown {
         super(pos, world, new Vector2(1.5f, 1.5f));
 
         setGravityFactor(0.125f);
+        
+        isDynamicEntity = true;
     }
 
     @Override

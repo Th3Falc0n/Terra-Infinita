@@ -44,6 +44,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     protected boolean inAir = false;
     protected boolean inWorld = true;
+    protected boolean isDynamicEntity = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {
         worldObj = world;
@@ -289,6 +290,10 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     @Override
     public void update(World world, float delta) {
+        if(isDynamicEntity && !isInRenderRange(world.localPlayer)) {
+            world.removeEntity(this);
+        }
+        
         delta *= BLOCK_SIZE;
 
         if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor));

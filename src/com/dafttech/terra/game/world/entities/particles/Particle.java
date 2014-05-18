@@ -16,6 +16,8 @@ public abstract class Particle extends Entity {
 
         lifetimeMax = life;
         lifetime = lifetimeMax;
+        
+        isDynamicEntity = true;
     }
 
     public void setFadeOut(boolean fo) {
