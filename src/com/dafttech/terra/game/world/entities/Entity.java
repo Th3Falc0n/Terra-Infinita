@@ -356,8 +356,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
-        if (position.x >= player.getPosition().x / BLOCK_SIZE - sx && position.x <= player.getPosition().x / BLOCK_SIZE + sx
-                && position.y >= player.getPosition().y / BLOCK_SIZE - sy && position.y <= player.getPosition().y / BLOCK_SIZE + sy) return true;
+        if (position.x >= player.getPosition().x - sx * BLOCK_SIZE && position.x <= player.getPosition().x + sx * BLOCK_SIZE
+                && position.y >= player.getPosition().y - sy * BLOCK_SIZE && position.y <= player.getPosition().y + sy * BLOCK_SIZE) return true;
         return false;
     }
 
