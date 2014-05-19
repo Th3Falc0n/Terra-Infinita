@@ -69,11 +69,6 @@ public class ScreenIngame extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        if (delta > 0.5f) {
-            TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
-            return;
-        }
-
         super.render(delta);
 
         localWorld.update(null, delta);
