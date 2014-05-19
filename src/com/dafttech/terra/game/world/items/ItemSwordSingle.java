@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.entities.EntityDiggerBeam;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.resources.Resources;
 
-public class ItemDigStaff extends ItemEntitySpawner {
+public class ItemSwordSingle extends ItemEntitySpawner {
     @Override
     public boolean spawnEntity(Player causer, Vector2 position) {
         EntityDiggerBeam a = new EntityDiggerBeam(causer.getPosition(), causer.worldObj);

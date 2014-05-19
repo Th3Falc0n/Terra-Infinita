@@ -54,6 +54,8 @@ public class Resources {
 
         ITEMS.loadImage("rainbowgun", "res/items/rainbowgun.png");
         ITEMS.loadImage("digStaff", "res/items/digStaff.png");
+        
+        ITEMS.loadImage("sword_single", "res/items/sword_single.png");
 
         GUI.loadImage("slot", "res/ui/slot.png");
         GUI.loadImage("bar", "res/ui/bar.png");

@@ -41,7 +41,7 @@ public abstract class Item extends GameObject implements IDrawableInventory {
 
     @Override
     public void drawInventory(Vector2 pos, AbstractScreen screen) {
-        screen.batch.draw(getImage(), pos.x + 8, pos.y + 8, 16, 16);
+        screen.batch.draw(getImage(), pos.x + 4, pos.y + 4 + 12 * (1 - (getImage().getRegionHeight() / (float)getImage().getRegionWidth())), 24, 24 * (getImage().getRegionHeight() / (float)getImage().getRegionWidth()));
     }
 
     public boolean canBeStackedWith(Item item) {

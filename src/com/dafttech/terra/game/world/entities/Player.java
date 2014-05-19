@@ -17,6 +17,7 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.particles.ParticleDust;
+import com.dafttech.terra.game.world.interaction.Skill;
 import com.dafttech.terra.game.world.items.ItemDigStaff;
 import com.dafttech.terra.game.world.items.ItemDynamite;
 import com.dafttech.terra.game.world.items.ItemFlamingArrow;
@@ -128,5 +129,9 @@ public class Player extends EntityLiving {
         screen.batch.draw(this.getImage(), screenVec.x, screenVec.y, BLOCK_SIZE * size.x, BLOCK_SIZE * size.y);
         screen.batch.flush();
         // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
+    }
+
+    public Skill getSkillForID(int skillID) {
+        return null;
     }
 }
