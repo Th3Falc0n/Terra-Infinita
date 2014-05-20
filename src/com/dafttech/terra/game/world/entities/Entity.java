@@ -324,9 +324,21 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         velocity.y *= 1 - 0.025f * delta;
         velocity.x *= 1 - getCurrentFriction() * delta;
 
+        if (alignToVelocity() && velocity.len2() > 0.1f) {
+            setRotation(velocity.angle() + getVelocityOffsetAngle());
+        }
+
         if (isDynamicEntity && !isInRenderRange(world.localPlayer)) {
             world.removeEntity(this);
         }
+    }
+    
+    public boolean alignToVelocity() {
+        return false;
+    }
+    
+    public float getVelocityOffsetAngle() {
+        return 0;
     }
 
     public Tile getUndergroundTile() {

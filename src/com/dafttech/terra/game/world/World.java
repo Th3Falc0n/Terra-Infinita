@@ -19,6 +19,7 @@ import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.environment.SunMap;
 import com.dafttech.terra.game.world.environment.Weather;
+import com.dafttech.terra.game.world.environment.WeatherRainy;
 import com.dafttech.terra.game.world.environment.WeatherSunny;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.subtiles.Subtile;
@@ -35,7 +36,7 @@ public class World implements IDrawableInWorld {
 
     public Player localPlayer;
 
-    public Weather weather = new WeatherSunny();
+    public Weather weather = new WeatherRainy();
 
     public SunMap sunmap = new SunMap();
 

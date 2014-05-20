@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.entities.models.EntityThrown;
 
 public abstract class Particle extends Entity {
     float lifetimeMax = 25;

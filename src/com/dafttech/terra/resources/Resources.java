@@ -11,6 +11,7 @@ public class Resources {
     public static ImageLibrary TILES = new ImageLibrary();
     public static ImageLibrary ENTITIES = new ImageLibrary();
     public static ImageLibrary ITEMS = new ImageLibrary();
+    public static ImageLibrary SKILLS = new ImageLibrary();
     public static ImageLibrary GUI = new ImageLibrary();
     public static ImageLibrary LIGHT = new ImageLibrary();
 
@@ -51,11 +52,19 @@ public class Resources {
         ENTITIES.loadImage("rainbow", "res/entities/rainbow.png");
         ENTITIES.loadImage("beamDig", "res/entities/beamDig.png");
         ENTITIES.loadImage("rain", "res/entities/rain.png", 3);
+        
+        ENTITIES.loadImage("raindrop", "res/entities/raindrop.png");
+        ENTITIES.loadImage("splash", "res/entities/splash.png");        
 
         ITEMS.loadImage("rainbowgun", "res/items/rainbowgun.png");
         ITEMS.loadImage("digStaff", "res/items/digStaff.png");
         
         ITEMS.loadImage("sword_single", "res/items/sword_single.png");
+        
+        SKILLS.loadImage("aa_single", "res/skills/aa_single.png");
+        SKILLS.loadImage("healing_strike", "res/skills/healing_strike.png");
+        SKILLS.loadImage("smashing_strike", "res/skills/smashing_strike.png");
+        SKILLS.loadImage("stab", "res/skills/stab.png");
 
         GUI.loadImage("slot", "res/ui/slot.png");
         GUI.loadImage("bar", "res/ui/bar.png");

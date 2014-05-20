@@ -28,14 +28,6 @@ public class ElementSkill extends GUIElement {
         skillID = sid;
     }
 
-    public void assignInventory(Inventory inventory) {
-        assignedInventory = inventory;
-    }
-
-    public void setCooldownTime(World world, float cooldownTime) {
-        this.cooldownTime = world.time + cooldownTime;
-    }
-
     @Override
     public void onClick(int button) {
         
@@ -58,18 +50,5 @@ public class ElementSkill extends GUIElement {
         }
 
         screen.batch.end();
-    }
-
-    public void assignType(Prototype at) {
-        assignedType = at;
-    }
-
-    public void assignItem(Item item) {
-        assignedType = item.toPrototype();
-    }
-
-    public void assignPair(Item item, Inventory inv) {
-        assignItem(item);
-        assignInventory(inv);
     }
 }
