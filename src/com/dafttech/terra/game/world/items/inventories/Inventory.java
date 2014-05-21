@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world.items.inventories;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.dafttech.terra.game.world.items.Item;
@@ -33,6 +34,16 @@ public class Inventory {
             stacks.put(proto, new ArrayList<Stack>());
             stacks.get(proto).add(stack);
         }
+    }
+    
+    public List<Stack> getList() {
+        LinkedList<Stack> lst = new LinkedList<Stack>();
+        
+        for(Prototype p : stacks.keySet()) {
+            lst.addAll(stacks.get(p));
+        }
+        
+        return lst;
     }
 
     public boolean remove(Stack stack) {

@@ -40,7 +40,7 @@ public class Player extends EntityLiving {
         hudBottom = new ModuleHUDBottom();
         hudBottom.create();
 
-        guiInventory = new ModuleInventory();
+        guiInventory = new ModuleInventory(inventory);
         guiInventory.create();
 
         hudBottom.slots[0].assignStack(new Stack(new TileDirt(), 1000));
@@ -103,6 +103,8 @@ public class Player extends EntityLiving {
         }
 
         hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
+        
+        guiInventory.update(delta);
     }
 
     @Override

@@ -23,6 +23,10 @@ public abstract class GUIContainer extends GUIObject {
             o.draw(screen);
         }
     }
+    
+    public void clearObjects() {
+        objects.clear();
+    }
 
     public void addObject(GUIObject object) {
         addObject(object, 0);
