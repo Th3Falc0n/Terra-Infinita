@@ -3,7 +3,6 @@ package com.dafttech.terra.game.world.items;
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.EntitySaplingArrow;
-import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 
 public class ItemSaplingArrow extends ItemArrow {

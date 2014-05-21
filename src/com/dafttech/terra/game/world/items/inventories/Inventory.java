@@ -3,7 +3,6 @@ package com.dafttech.terra.game.world.items.inventories;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
@@ -16,20 +15,18 @@ public class Inventory {
         Prototype proto = stack.type;
 
         if (stacks.containsKey(proto)) {
-            for(Stack s : stacks.get(proto)) {
-                int am =((Item)proto.toGameObject()).maxStackSize() - s.amount;
-                if(am <= stack.amount) {
+            for (Stack s : stacks.get(proto)) {
+                int am = ((Item) proto.toGameObject()).maxStackSize() - s.amount;
+                if (am <= stack.amount) {
                     stack.amount -= am;
                     s.amount += am;
-                }
-                else
-                {
+                } else {
                     am = stack.amount;
                     stack.amount -= am;
                     s.amount += am;
                 }
             }
-            if(stack.amount > 0) {
+            if (stack.amount > 0) {
                 stacks.get(proto).add(stack);
             }
         } else {
@@ -39,7 +36,7 @@ public class Inventory {
     }
 
     public boolean remove(Stack stack) {
-        if(!(stacks.containsKey(stack.type) && stacks.get(stack.type).contains(stack))) return false;
+        if (!(stacks.containsKey(stack.type) && stacks.get(stack.type).contains(stack))) return false;
         stacks.get(stack.type).remove(stack);
         return true;
     }
@@ -58,8 +55,8 @@ public class Inventory {
 
     public int getAmount(Prototype type) {
         int a = 0;
-        if(stacks.containsKey(type)) {
-            for(Stack s : stacks.get(type)) {
+        if (stacks.containsKey(type)) {
+            for (Stack s : stacks.get(type)) {
                 a += s.amount;
             }
         }

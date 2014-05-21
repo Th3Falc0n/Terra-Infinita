@@ -1,7 +1,6 @@
 package com.dafttech.terra.game;
 
 import com.badlogic.gdx.Gdx;
-import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;

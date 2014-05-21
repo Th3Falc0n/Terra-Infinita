@@ -52,15 +52,15 @@ public class Resources {
         ENTITIES.loadImage("rainbow", "res/entities/rainbow.png");
         ENTITIES.loadImage("beamDig", "res/entities/beamDig.png");
         ENTITIES.loadImage("rain", "res/entities/rain.png", 3);
-        
+
         ENTITIES.loadImage("raindrop", "res/entities/raindrop.png");
-        ENTITIES.loadImage("splash", "res/entities/splash.png");        
+        ENTITIES.loadImage("splash", "res/entities/splash.png");
 
         ITEMS.loadImage("rainbowgun", "res/items/rainbowgun.png");
         ITEMS.loadImage("digStaff", "res/items/digStaff.png");
-        
+
         ITEMS.loadImage("sword_single", "res/items/sword_single.png");
-        
+
         SKILLS.loadImage("aa_single", "res/skills/aa_single.png");
         SKILLS.loadImage("healing_strike", "res/skills/healing_strike.png");
         SKILLS.loadImage("smashing_strike", "res/skills/smashing_strike.png");

@@ -16,7 +16,7 @@ public class ParticleRain extends Particle {
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
-        
+
         if (!inAir) {
             world.removeEntity(this);
         }
@@ -31,7 +31,7 @@ public class ParticleRain extends Particle {
     public float getVelocityOffsetAngle() {
         return 90;
     }
-    
+
     @Override
     public TextureRegion getImage() {
         return Resources.ENTITIES.getImage("raindrop");

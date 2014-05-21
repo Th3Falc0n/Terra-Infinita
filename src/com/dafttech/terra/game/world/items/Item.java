@@ -7,7 +7,6 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.EntityItem;
-import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 
@@ -38,7 +37,8 @@ public abstract class Item extends GameObject implements IDrawableInventory {
 
     @Override
     public void drawInventory(Vector2 pos, AbstractScreen screen) {
-        screen.batch.draw(getImage(), pos.x + 4, pos.y + 4 + 12 * (1 - (getImage().getRegionHeight() / (float)getImage().getRegionWidth())), 24, 24 * (getImage().getRegionHeight() / (float)getImage().getRegionWidth()));
+        screen.batch.draw(getImage(), pos.x + 4, pos.y + 4 + 12 * (1 - (getImage().getRegionHeight() / (float) getImage().getRegionWidth())), 24,
+                24 * (getImage().getRegionHeight() / (float) getImage().getRegionWidth()));
     }
 
     public int maxStackSize() {

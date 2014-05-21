@@ -14,7 +14,6 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
-import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;

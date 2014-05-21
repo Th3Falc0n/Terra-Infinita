@@ -1,8 +1,8 @@
-package com.dafttech.terra.game.world.entities.ai;
+package com.dafttech.terra.game.world.entities.living.ai;
 
 import com.dafttech.terra.game.world.entities.models.EntityLivingAI;
 
-public class ArtificalIntelligence {
+public class ArtificialIntelligence {
     EntityLivingAI assignedEntity;
 
     public void setEntity(EntityLivingAI entityLivingAI) {

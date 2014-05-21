@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.Json.Serializable;
-
 public abstract class GameObject {
 
     // ****FOLLOWING PERSISTENCE CODE**** May harm your brain

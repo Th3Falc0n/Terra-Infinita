@@ -1,7 +1,6 @@
 package com.dafttech.terra.game.world.items;
 
 import com.dafttech.terra.engine.Vector2;
-import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 
 public abstract class ItemEntitySpawner extends Item {

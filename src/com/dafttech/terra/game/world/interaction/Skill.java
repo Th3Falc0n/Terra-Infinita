@@ -7,21 +7,18 @@ import com.dafttech.terra.engine.Vector2;
 
 public abstract class Skill implements IDrawableInventory {
     public abstract TextureRegion getImage();
-    
+
     public static enum ActivationMode {
-        Execute,
-        Toggle,
-        Hold,
-        Passive
+        Execute, Toggle, Hold, Passive
     }
 
     @Override
     public void drawInventory(Vector2 pos, AbstractScreen screen) {
         screen.batch.draw(getImage(), pos.x + 4, pos.y + 4, 24, 24);
     }
-    
+
     @Override
     public void update(float delta) {
-        //NOPE!
+        // NOPE!
     }
 }

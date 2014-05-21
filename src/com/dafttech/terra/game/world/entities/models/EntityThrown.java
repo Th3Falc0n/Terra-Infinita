@@ -13,7 +13,8 @@ public abstract class EntityThrown extends Entity {
     public void update(World world, float delta) {
         super.update(world, delta);
     }
-    
+
+    @Override
     public boolean alignToVelocity() {
         return true;
     }

@@ -1,4 +1,4 @@
-package com.dafttech.terra.game.world.entities;
+package com.dafttech.terra.game.world.entities.living;
 
 import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
@@ -15,6 +15,7 @@ import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.particles.ParticleDust;
 import com.dafttech.terra.game.world.interaction.Skill;
@@ -28,7 +29,6 @@ import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileSand;
 import com.dafttech.terra.game.world.tiles.TileTorch;
 import com.dafttech.terra.resources.Resources;
 

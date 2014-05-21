@@ -5,11 +5,9 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.Item;
-import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.items.inventories.Stack;
-import com.dafttech.terra.game.world.items.persistence.Prototype;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
@@ -27,7 +25,7 @@ public class ElementSlot extends GUIElement {
     public boolean useAssignedItem(Player causer, Vector2 pos, boolean leftClick) {
         if (assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
             if ((!leftClick && assignedStack.use(causer, pos))) {
-                setCooldownTime(causer.worldObj, ((Item)assignedStack.type.toGameObject()).getNextUseDelay(causer, pos, leftClick));
+                setCooldownTime(causer.worldObj, ((Item) assignedStack.type.toGameObject()).getNextUseDelay(causer, pos, leftClick));
                 return true;
             }
         }
@@ -72,7 +70,7 @@ public class ElementSlot extends GUIElement {
 
         screen.batch.end();
     }
-    
+
     public void assignStack(Stack stack) {
         assignedStack = stack;
     }

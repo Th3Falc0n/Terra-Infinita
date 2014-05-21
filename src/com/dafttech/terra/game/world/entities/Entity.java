@@ -16,6 +16,7 @@ import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
@@ -44,7 +45,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     protected boolean inAir = false;
     protected boolean inWorld = true;
-    
+
     @Persistent
     protected boolean isDynamicEntity = false;
 
@@ -334,11 +335,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             world.removeEntity(this);
         }
     }
-    
+
     public boolean alignToVelocity() {
         return false;
     }
-    
+
     public float getVelocityOffsetAngle() {
         return 0;
     }
