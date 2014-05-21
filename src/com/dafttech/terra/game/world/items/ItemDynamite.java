@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.EntityDynamite;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.resources.Resources;
 
 public class ItemDynamite extends ItemEntitySpawner {
 
     @Override
-    public boolean spawnEntity(Player causer, Vector2 position) {
+    public boolean spawnEntity(EntityLiving causer, Vector2 position) {
         new EntityDynamite(causer.getPosition(), causer.worldObj, 3, 4);
         return true;
     }
@@ -20,7 +21,7 @@ public class ItemDynamite extends ItemEntitySpawner {
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
+    public float getNextUseDelay(EntityLiving causer, Vector2 position, boolean leftClick) {
         return 1;
     }
 }

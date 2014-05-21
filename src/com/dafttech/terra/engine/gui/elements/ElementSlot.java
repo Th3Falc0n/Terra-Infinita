@@ -8,13 +8,13 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Player;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
+import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.items.persistence.Prototype;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlot extends GUIElement {
-    private Prototype assignedType = null;
     private float cooldownTime = 0;
-    public Inventory assignedInventory = null;
+    public Stack assignedStack = null;
 
     public boolean active = false;
 
@@ -25,22 +25,14 @@ public class ElementSlot extends GUIElement {
     }
 
     public boolean useAssignedItem(Player causer, Vector2 pos, boolean leftClick) {
-        if (assignedInventory.getAmount(assignedType) > 0 && causer.worldObj.time > cooldownTime) {
-            Item item = (Item) assignedType.toGameObject();
-            if (!leftClick) {
-                if ((!leftClick && item.use(causer, pos)) || (leftClick && item.leftClick(causer, pos))) {
-                    assignedInventory.remove(assignedType, item.getUsedItemNum(causer, pos, leftClick));
-                    setCooldownTime(causer.worldObj, item.getNextUseDelay(causer, pos, leftClick));
-                    return true;
-                }
+        if (assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
+            if ((!leftClick && assignedStack.use(causer, pos))) {
+                setCooldownTime(causer.worldObj, ((Item)assignedStack.type.toGameObject()).getNextUseDelay(causer, pos, leftClick));
+                return true;
             }
         }
 
         return false;
-    }
-
-    public void assignInventory(Inventory inventory) {
-        assignedInventory = inventory;
     }
 
     public void setCooldownTime(World world, float cooldownTime) {
@@ -50,15 +42,15 @@ public class ElementSlot extends GUIElement {
     @Override
     public void onClick(int button) {
         if (button == 0) {
-            if (MouseSlot.getAssignedType() != null && assignedType == null) {
-                assignedType = MouseSlot.popAssignedType();
-            } else if (MouseSlot.canAssignType() && assignedType != null) {
-                MouseSlot.assignType(assignedType);
-                assignedType = null;
-            } else if (MouseSlot.getAssignedType() != null && assignedType != null) {
-                Prototype at = MouseSlot.popAssignedType();
-                MouseSlot.assignType(assignedType);
-                assignedType = at;
+            if (MouseSlot.getAssignedStack() != null && assignedStack == null) {
+                assignedStack = MouseSlot.popAssignedStack();
+            } else if (MouseSlot.canAssignStack() && assignedStack != null) {
+                MouseSlot.assignStack(assignedStack);
+                assignedStack = null;
+            } else if (MouseSlot.getAssignedStack() != null && assignedStack != null) {
+                Stack at = MouseSlot.popAssignedStack();
+                MouseSlot.assignStack(assignedStack);
+                assignedStack = at;
             }
         }
     }
@@ -71,28 +63,17 @@ public class ElementSlot extends GUIElement {
 
         screen.batch.begin();
 
-        if (assignedType != null) {
-            ((Item) assignedType.toGameObject()).drawInventory(p, screen);
+        if (assignedStack != null) {
+            ((Item) assignedStack.type.toGameObject()).drawInventory(p, screen);
 
             Resources.GUI_FONT.setColor(active ? Color.YELLOW : Color.WHITE);
-            if (assignedInventory != null) {
-                Resources.GUI_FONT.draw(screen.batch, "" + assignedInventory.getAmount(assignedType), p.x, 6 + p.y);
-            }
+            Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.amount, p.x, 6 + p.y);
         }
 
         screen.batch.end();
     }
-
-    public void assignType(Prototype at) {
-        assignedType = at;
-    }
-
-    public void assignItem(Item item) {
-        assignedType = item.toPrototype();
-    }
-
-    public void assignPair(Item item, Inventory inv) {
-        assignItem(item);
-        assignInventory(inv);
+    
+    public void assignStack(Stack stack) {
+        assignedStack = stack;
     }
 }

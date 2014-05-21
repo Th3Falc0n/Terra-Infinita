@@ -15,6 +15,7 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 
@@ -30,7 +31,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public Tile sunlightFilter = null;
 
     @Override
-    public boolean use(Player causer, Vector2 position) {
+    public boolean use(EntityLiving causer, Vector2 position) {
         if (causer.getPosition().clone().sub(position).len() < 100) {
             Vector2i pos = position.toWorldPosition();
             return causer.getWorld().placeTile(pos.x, pos.y, this, causer);

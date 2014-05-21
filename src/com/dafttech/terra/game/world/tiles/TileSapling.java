@@ -5,6 +5,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.resources.Resources;
 
 public class TileSapling extends TileFalling {
@@ -26,7 +27,7 @@ public class TileSapling extends TileFalling {
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
+    public float getNextUseDelay(EntityLiving causer, Vector2 position, boolean leftClick) {
         return 0.2f;
     }
 

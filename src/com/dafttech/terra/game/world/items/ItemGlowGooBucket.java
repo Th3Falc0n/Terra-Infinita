@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world.items;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.subtiles.SubtileGlowGoo;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
@@ -19,19 +20,19 @@ public class ItemGlowGooBucket extends Item {
     }
 
     @Override
-    public boolean use(Player causer, Vector2 position) {
+    public boolean use(EntityLiving causer, Vector2 position) {
         Tile tile = causer.worldObj.getTile(position.toWorldPosition());
         tile.addSubtile(new SubtileGlowGoo());
         return true;
     }
 
     @Override
-    public int getUsedItemNum(Player causer, Vector2 position, boolean leftClick) {
+    public int getUsedItemNum(EntityLiving causer, Vector2 position) {
         return 0;
     }
 
     @Override
-    public float getNextUseDelay(Player causer, Vector2 position, boolean leftClick) {
+    public float getNextUseDelay(EntityLiving causer, Vector2 position, boolean leftClick) {
         return 0.08f;
     }
 

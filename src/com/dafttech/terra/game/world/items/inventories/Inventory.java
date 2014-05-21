@@ -1,6 +1,8 @@
 package com.dafttech.terra.game.world.items.inventories;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import com.dafttech.terra.game.world.items.Item;
@@ -8,34 +10,38 @@ import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.items.persistence.Prototype;
 
 public class Inventory {
-    HashMap<Prototype, Integer> amounts = new HashMap<Prototype, Integer>();
+    HashMap<Prototype, List<Stack>> stacks = new HashMap<Prototype, List<Stack>>();
 
-    public void add(GameObject obj, int amount) {
-        Prototype proto = obj.toPrototype();
+    public void add(Stack stack) {
+        Prototype proto = stack.type;
 
-        if (amounts.containsKey(proto)) {
-            amounts.put(proto, amounts.get(proto) + amount);
+        if (stacks.containsKey(proto)) {
+            for(Stack s : stacks.get(proto)) {
+                int am =((Item)proto.toGameObject()).maxStackSize() - s.amount;
+                if(am <= stack.amount) {
+                    stack.amount -= am;
+                    s.amount += am;
+                }
+                else
+                {
+                    am = stack.amount;
+                    stack.amount -= am;
+                    s.amount += am;
+                }
+            }
+            if(stack.amount > 0) {
+                stacks.get(proto).add(stack);
+            }
         } else {
-            amounts.put(proto, amount);
+            stacks.put(proto, new ArrayList<Stack>());
+            stacks.get(proto).add(stack);
         }
     }
 
-    public Set<Prototype> getPrototypeSet() {
-        return amounts.keySet();
-    }
-
-    public boolean remove(Item assignedItem, int i) {
-        Prototype proto = assignedItem.toPrototype();
-        return remove(proto, i);
-    }
-
-    public boolean remove(Prototype proto, int i) {
-        if (getAmount(proto) >= i) {
-
-            amounts.put(proto, amounts.get(proto) - i);
-            return true;
-        }
-        return false;
+    public boolean remove(Stack stack) {
+        if(!(stacks.containsKey(stack.type) && stacks.get(stack.type).contains(stack))) return false;
+        stacks.get(stack.type).remove(stack);
+        return true;
     }
 
     public boolean contains(GameObject obj) {
@@ -51,9 +57,12 @@ public class Inventory {
     }
 
     public int getAmount(Prototype type) {
-        if (amounts.containsKey(type)) {
-            return amounts.get(type);
+        int a = 0;
+        if(stacks.containsKey(type)) {
+            for(Stack s : stacks.get(type)) {
+                a += s.amount;
+            }
         }
-        return 0;
+        return a;
     }
 }

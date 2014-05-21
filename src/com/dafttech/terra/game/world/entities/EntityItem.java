@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.items.persistence.Prototype;
 import com.dafttech.terra.resources.Options;
 
@@ -39,7 +40,7 @@ public class EntityItem extends Entity {
         vp.sub(getPosition());
 
         if (vp.len() < 20) {
-            getWorld().localPlayer.inventory.add(wrapped, 1);
+            getWorld().localPlayer.inventory.add(new Stack(wrapped, 1));
 
             getWorld().removeEntity(this);
         }

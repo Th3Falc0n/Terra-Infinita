@@ -9,6 +9,7 @@ import com.dafttech.terra.engine.renderer.SubtileRendererMask;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.Player;
+import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -16,7 +17,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
     Tile tile;
 
     @Override
-    public boolean use(Player causer, Vector2 position) {
+    public boolean use(EntityLiving causer, Vector2 position) {
         // TODO Auto-generated method stub
         return false;
     }

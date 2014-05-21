@@ -44,6 +44,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     protected boolean inAir = false;
     protected boolean inWorld = true;
+    
+    @Persistent
     protected boolean isDynamicEntity = false;
 
     public Entity(Vector2 pos, World world, Vector2 s) {

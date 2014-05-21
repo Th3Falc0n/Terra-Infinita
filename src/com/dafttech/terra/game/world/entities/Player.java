@@ -25,6 +25,7 @@ import com.dafttech.terra.game.world.items.ItemGlowstick;
 import com.dafttech.terra.game.world.items.ItemRainbowGun;
 import com.dafttech.terra.game.world.items.ItemWaterBucket;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
+import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.game.world.tiles.TileSand;
@@ -42,29 +43,21 @@ public class Player extends EntityLiving {
         guiInventory = new ModuleInventory();
         guiInventory.create();
 
-        hudBottom.slots[0].assignPair(new TileDirt(), inventory);
-        hudBottom.slots[1].assignPair(new TileSand(), inventory);
-        hudBottom.slots[2].assignPair(new ItemFlamingArrow(), inventory);
-        hudBottom.slots[3].assignPair(new ItemDynamite(), inventory);
-        hudBottom.slots[4].assignPair(new TileTorch(), inventory);
-        hudBottom.slots[5].assignPair(new ItemRainbowGun(), inventory);
-        hudBottom.slots[6].assignPair(new ItemWaterBucket(), inventory);
-        hudBottom.slots[7].assignPair(new ItemDigStaff(), inventory);
-
-        inventory.add(new TileDirt(), 1000);
-        inventory.add(new ItemFlamingArrow(), 10000);
-        inventory.add(new ItemGlowstick(), 100);
-        inventory.add(new ItemDynamite(), 100);
-        inventory.add(new ItemRainbowGun(), 1);
-        inventory.add(new ItemWaterBucket(), 1);
-        inventory.add(new TileTorch(), 10000);
-        inventory.add(new ItemDigStaff(), 1);
+        hudBottom.slots[0].assignStack(new Stack(new TileDirt(), 1000));
+        hudBottom.slots[1].assignStack(new Stack(new ItemFlamingArrow(), 10000));
+        hudBottom.slots[2].assignStack(new Stack(new ItemGlowstick(), 100));
+        hudBottom.slots[3].assignStack(new Stack(new ItemDynamite(), 100));
+        hudBottom.slots[4].assignStack(new Stack(new ItemRainbowGun(), 1));
+        hudBottom.slots[5].assignStack(new Stack(new ItemWaterBucket(), 1));
+        hudBottom.slots[6].assignStack(new Stack(new TileTorch(), 10000));
+        hudBottom.slots[7].assignStack(new Stack(new ItemDigStaff(), 1));
     }
 
     long left;
     boolean right;
 
     public Inventory inventory = new Inventory();
+    public Inventory equip = new Inventory();
 
     public ModuleHUDBottom hudBottom;
     public ModuleInventory guiInventory;

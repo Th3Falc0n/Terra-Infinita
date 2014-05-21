@@ -7,6 +7,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.elements.ElementSlot;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.items.persistence.Prototype;
 
 public class MouseSlot {
@@ -31,15 +32,15 @@ public class MouseSlot {
 
             screen.batch.begin();
 
-            if (assignedType != null) {
-                ((Item) assignedType.toGameObject()).drawInventory(p, screen);
+            if (assignedStack != null) {
+                ((Item) assignedStack.type.toGameObject()).drawInventory(p, screen);
             }
 
             screen.batch.end();
         }
     }
 
-    static private Prototype assignedType = null;
+    static private Stack assignedStack = null;
     static private MouseRenderSlot renderSlot = new MouseRenderSlot(new Vector2(0, 0));
 
     public static void init() {
@@ -49,25 +50,25 @@ public class MouseSlot {
         return renderSlot;
     }
 
-    public static boolean canAssignType() {
-        return assignedType == null;
+    public static boolean canAssignStack() {
+        return assignedStack == null;
     }
 
-    public static Prototype getAssignedType() {
-        return assignedType;
+    public static Stack getAssignedStack() {
+        return assignedStack;
     }
 
-    public static Prototype popAssignedType() {
-        Prototype at = assignedType;
-        assignedType = null;
-        renderSlot.assignType(null);
+    public static Stack popAssignedStack() {
+        Stack at = assignedStack;
+        assignedStack = null;
+        renderSlot.assignStack(null);
         return at;
     }
 
-    public static boolean assignType(Prototype type) {
-        if (assignedType == null) {
-            assignedType = type;
-            renderSlot.assignType(assignedType);
+    public static boolean assignStack(Stack stack) {
+        if (assignedStack == null) {
+            assignedStack = stack;
+            renderSlot.assignStack(assignedStack);
             return true;
         }
         return false;
