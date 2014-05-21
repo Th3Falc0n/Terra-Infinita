@@ -23,7 +23,7 @@ public class ElementSlot extends GUIElement {
     }
 
     public boolean useAssignedItem(Player causer, Vector2 pos, boolean leftClick) {
-        if (assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
+        if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
             if ((!leftClick && assignedStack.use(causer, pos))) {
                 setCooldownTime(causer.worldObj, ((Item) assignedStack.type.toGameObject()).getNextUseDelay(causer, pos, leftClick));
                 return true;
