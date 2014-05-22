@@ -63,6 +63,10 @@ public abstract class GameObject {
         // TODO Auto-generated method stub
         return super.clone();
     }
+    
+    public String getName() {
+        return this.getClass().getCanonicalName();
+    }
 
     public Prototype toPrototype() {
         Prototype proto = new Prototype();

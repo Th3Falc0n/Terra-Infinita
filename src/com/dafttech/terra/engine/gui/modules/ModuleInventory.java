@@ -12,6 +12,7 @@ import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.containers.ContainerList;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.gui.elements.ElementSlot;
+import com.dafttech.terra.engine.gui.elements.ElementSlotInventory;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 
@@ -30,7 +31,11 @@ public class ModuleInventory extends GUIModule {
         if(invList.mouseHover) {
             int i = event.getInput(0, Integer.class);
             
-            index += (i == 0) ? -1 : 1;
+            index += i;
+
+            if(index > inv.getList().size() - 5) {
+                index = inv.getList().size() - 5;
+            }
             
             if(index < 0) {
                 index = 0;
@@ -44,11 +49,9 @@ public class ModuleInventory extends GUIModule {
         
         invList.clearObjects();
         
-        System.out.println("INVTEST: " + inv.getList().size());
-        
         for(int n = 0; n < 5; n++) {
             if(index + n < inv.getList().size()) {
-                ElementSlot slot = new ElementSlot(new Vector2());
+                ElementSlotInventory slot = new ElementSlotInventory(new Vector2());
     
                 slot.assignStack(inv.getList().get(index + n));
                 invList.addObject(slot);

@@ -68,7 +68,7 @@ public abstract class GUIContainer extends GUIObject {
     @EventListener("MOUSEMOVE")
     public void onEventMouseMove(Event event) {
         for (GUIObject e : objects) {
-            if (!(e instanceof GUIElement)) continue;
+            //if (!(e instanceof GUIElement)) continue;
 
             int x = event.getInput(1, Integer.class);
             int y = event.getInput(2, Integer.class);
@@ -79,7 +79,7 @@ public abstract class GUIContainer extends GUIObject {
                 if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
                     e.onMouseIn();
                     e.mouseHover = true;
-                } else if (!(x > p.x && x < e.position.x + p.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
+                } else if (!(x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
                     e.onMouseOut();
                     e.mouseHover = false;
                 }
