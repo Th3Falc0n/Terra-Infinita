@@ -31,8 +31,8 @@ public class Resources {
         TILES.loadImage("fence_cracks", "res/tiles/fence_cracks.png");
         TILES.loadImage("fence_lianas", "res/tiles/fence_lianas.png");
         TILES.loadImage("fence_lianas_flowers", "res/tiles/fence_lianas_flowers.png");
-        TILES.loadRoundedImage("log", "res/tiles/log.png");
-        TILES.loadRoundedImage("leaf", "res/tiles/leaf.png");
+        TILES.loadImage("log", "res/tiles/log.png");
+        TILES.loadImage("leaf", "res/tiles/leaf.png");
         TILES.loadImage("sapling", "res/tiles/sapling_1.png");
 
         TILES.loadImage("mask_grass", "res/tiles/grass_mask.png");

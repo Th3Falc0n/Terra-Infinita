@@ -91,8 +91,4 @@ public class TileLog extends Tile {
     public boolean isFlatTo(World world, Vector2i pos) {
         return world.getTile(pos) instanceof TileLog || world.getTile(pos).isOpaque();
     }
-
-    public TextureRegion[] getEdgeImages() {
-        return Resources.TILES.getRoundedImageEdges("log");
-    }
 }
