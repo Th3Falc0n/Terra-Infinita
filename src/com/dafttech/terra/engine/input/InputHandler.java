@@ -21,7 +21,7 @@ public class InputHandler implements InputProcessor {
 
     public void initialize() {
         Gdx.input.setInputProcessor(this);
-        
+
         registerKey(Keys.ESCAPE, "PAUSE");
 
         registerKey(Keys.W, "UP");

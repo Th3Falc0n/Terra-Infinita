@@ -1,11 +1,6 @@
 package com.dafttech.terra.game.world.entities.living.ai;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
-import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.input.InputHandler;
-import com.dafttech.terra.game.world.Vector2i;
-import com.dafttech.terra.game.world.tiles.Tile;
 
 public class AIControlled extends ArtificialIntelligence {
     @Override

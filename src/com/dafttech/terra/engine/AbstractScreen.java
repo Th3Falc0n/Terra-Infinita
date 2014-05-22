@@ -13,7 +13,7 @@ public abstract class AbstractScreen implements Screen {
     public Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
 
     protected ContainerOnscreen guiContainerScreen;
-    
+
     @Override
     public void dispose() {
     }
@@ -30,7 +30,7 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
         batch.setProjectionMatrix(projection);
         shr.setProjectionMatrix(projection);
-        
+
         guiContainerScreen.setActive(true);
     }
 
