@@ -3,6 +3,7 @@ package com.dafttech.terra.engine.gui.modules;
 import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
@@ -51,7 +52,7 @@ public class ModuleInventory extends GUIModule {
         
         for(int n = 0; n < 5; n++) {
             if(index + n < inv.getList().size()) {
-                ElementSlotInventory slot = new ElementSlotInventory(new Vector2());
+                ElementSlotInventory slot = new ElementSlotInventory(new Vector2(), inv);
     
                 slot.assignStack(inv.getList().get(index + n));
                 invList.addObject(slot);
@@ -81,7 +82,16 @@ public class ModuleInventory extends GUIModule {
 
         container.addObject(invLabel);
         
-        invList = new ContainerList(new Vector2(), new Vector2(500,200));
+        invList = new ContainerList(new Vector2(), new Vector2(500,200)) {
+            @Override
+            public void onClick(int button) {
+                super.onClick(button);
+                
+                if(MouseSlot.getAssignedStack() != null) {
+                    inv.add(MouseSlot.popAssignedStack());
+                }
+            }
+        };
         invList.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)));
         
         container.addObject(invList);

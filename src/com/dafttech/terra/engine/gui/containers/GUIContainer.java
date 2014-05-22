@@ -68,8 +68,6 @@ public abstract class GUIContainer extends GUIObject {
     @EventListener("MOUSEMOVE")
     public void onEventMouseMove(Event event) {
         for (GUIObject e : objects) {
-            //if (!(e instanceof GUIElement)) continue;
-
             int x = event.getInput(1, Integer.class);
             int y = event.getInput(2, Integer.class);
 
@@ -92,8 +90,6 @@ public abstract class GUIContainer extends GUIObject {
     @EventListener("MOUSEDOWN")
     public void onEventMouseDown(Event event) {
         for (GUIObject e : objects) {
-            if (!(e instanceof GUIElement)) continue;
-
             int button = event.getInput(0, Integer.class);
             int x = event.getInput(1, Integer.class);
             int y = event.getInput(2, Integer.class);

@@ -8,18 +8,21 @@ import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.resources.Resources;
 
 public class ElementSlotInventory extends GUIElement {
     private float cooldownTime = 0;
     public Stack assignedStack = null;
+    public Inventory assignedInventory = null;
 
     public boolean active = false;
 
-    public ElementSlotInventory(Vector2 p) {
+    public ElementSlotInventory(Vector2 p, Inventory i) {
         super(p, new Vector2(32, 32));
 
+        assignedInventory = i;
         image = Resources.GUI.getImage("slot");
     }
 
@@ -41,15 +44,12 @@ public class ElementSlotInventory extends GUIElement {
     @Override
     public void onClick(int button) {
         if (button == 0) {
-            if (MouseSlot.getAssignedStack() != null && assignedStack == null) {
-                assignedStack = MouseSlot.popAssignedStack();
+            if (MouseSlot.getAssignedStack() != null) {
+                //TODO: combine stacks
+                //assignedInventory.add(MouseSlot.popAssignedStack());
             } else if (MouseSlot.canAssignStack() && assignedStack != null) {
                 MouseSlot.assignStack(assignedStack);
-                assignedStack = null;
-            } else if (MouseSlot.getAssignedStack() != null && assignedStack != null) {
-                Stack at = MouseSlot.popAssignedStack();
-                MouseSlot.assignStack(assignedStack);
-                assignedStack = at;
+                assignedInventory.remove(assignedStack);
             }
         }
     }
