@@ -20,6 +20,6 @@ public class WeatherRainy extends Weather {
 
     @Override
     public float getWindSpeed(World world) {
-        return 10;
+        return 0;
     }
 }

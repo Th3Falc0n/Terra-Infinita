@@ -7,16 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
 
 public abstract class AbstractScreen implements Screen {
     public Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
 
+    protected ContainerOnscreen guiContainerScreen;
+    
     @Override
     public void dispose() {
-    }
-
-    @Override
-    public void hide() {
     }
 
     @Override
@@ -29,9 +28,15 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-
         batch.setProjectionMatrix(projection);
         shr.setProjectionMatrix(projection);
+        
+        guiContainerScreen.setActive(true);
+    }
+
+    @Override
+    public void hide() {
+        guiContainerScreen.setActive(false);
     }
 
     @Override

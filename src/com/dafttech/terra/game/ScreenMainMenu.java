@@ -12,8 +12,6 @@ import com.dafttech.terra.engine.gui.elements.ElementButton;
 import com.dafttech.terra.engine.passes.RenderingPass;
 
 public class ScreenMainMenu extends AbstractScreen {
-    ContainerOnscreen guiContainerScreen;
-
     ElementButton exitButton;
 
     public ScreenMainMenu() {
@@ -38,11 +36,6 @@ public class ScreenMainMenu extends AbstractScreen {
         guiContainerScreen.addObject(Tooltip.getLabel());
 
         guiContainerScreen.applyAllAssignedAnchorSets();
-    }
-
-    @Override
-    public void show() {
-        super.show();
     }
 
     @Override

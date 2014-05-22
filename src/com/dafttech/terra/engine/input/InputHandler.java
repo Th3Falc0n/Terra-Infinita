@@ -21,6 +21,8 @@ public class InputHandler implements InputProcessor {
 
     public void initialize() {
         Gdx.input.setInputProcessor(this);
+        
+        registerKey(Keys.ESCAPE, "PAUSE");
 
         registerKey(Keys.W, "UP");
         registerKey(Keys.A, "LEFT");
@@ -28,6 +30,7 @@ public class InputHandler implements InputProcessor {
         registerKey(Keys.D, "RIGHT");
         registerKey(Keys.N, "WAVESLEFT");
         registerKey(Keys.M, "WAVESRIGHT");
+        registerKey(Keys.E, "INVENTORY");
 
         registerKey(Keys.SPACE, "JUMP");
         registerKey(Keys.ENTER, "CHAT");

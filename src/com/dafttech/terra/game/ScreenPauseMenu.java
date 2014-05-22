@@ -17,8 +17,6 @@ import com.dafttech.terra.game.world.World;
 public class ScreenPauseMenu extends AbstractScreen {
     World localWorld;
 
-    ContainerOnscreen guiContainerScreen;
-
     ElementButton exitButton;
     ElementButton resumeButton;
 
@@ -61,11 +59,6 @@ public class ScreenPauseMenu extends AbstractScreen {
         guiContainerScreen.addObject(Tooltip.getLabel());
 
         guiContainerScreen.applyAllAssignedAnchorSets();
-    }
-
-    @Override
-    public void show() {
-        super.show();
     }
 
     @Override
