@@ -1,6 +1,7 @@
 package com.dafttech.terra.engine.gui.anchors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.dafttech.terra.engine.gui.GUIObject;
@@ -8,6 +9,10 @@ import com.dafttech.terra.engine.gui.containers.GUIContainer;
 
 public class GUIAnchorSet {
     List<GUIAnchor> anchors = new ArrayList<GUIAnchor>();
+    
+    public GUIAnchorSet(GUIAnchor... a) {
+        anchors.addAll(Arrays.asList(a));
+    }
 
     public void applyAnchorSet(GUIObject object, GUIContainer container) {
         for (GUIAnchor a : anchors) {

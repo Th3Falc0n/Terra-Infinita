@@ -37,4 +37,11 @@ public abstract class ElementButton extends GUIElement {
 
         screen.batch.setColor(Color.WHITE);
     }
+
+    @Override
+    public final void onClick(int button) {
+        actionPerformed(button);
+    }
+    
+    public abstract void actionPerformed(int button);
 }

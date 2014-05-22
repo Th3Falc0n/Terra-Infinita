@@ -27,7 +27,7 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         exitButton = new ElementButton(new Vector2(), "Exit") {
             @Override
-            public void onClick(int button) {
+            public void actionPerformed(int button) {
                 Gdx.app.exit();
             }
         };
@@ -42,7 +42,7 @@ public class ScreenPauseMenu extends AbstractScreen {
 
         resumeButton = new ElementButton(new Vector2(), "Resume") {
             @Override
-            public void onClick(int button) {
+            public void actionPerformed(int button) {
                 TerraInfinita.$.setScreen(TerraInfinita.$.screenIngame);
             }
         };
