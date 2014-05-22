@@ -7,6 +7,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import com.dafttech.terra.game.world.tiles.ITileRenderBigger;
 import com.dafttech.terra.game.world.tiles.ITileRenderOffset;
 import com.dafttech.terra.game.world.tiles.ITileRenderRounded;
 import com.dafttech.terra.game.world.tiles.Tile;
@@ -26,8 +27,15 @@ public class TileRendererBlock extends TileRenderer {
                 offY = offset.y;
             }
         }
-        screen.batch.draw(tile.getImage(), screenVec.x + offX * BLOCK_SIZE, screenVec.y + offY * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-        if (tile instanceof ITileRenderRounded) {
+        if (tile instanceof ITileRenderBigger) {
+            int cols = ((ITileRenderBigger) tile).getRenderSizeMultiplier().x, rows = ((ITileRenderBigger) tile).getRenderSizeMultiplier().y;
+            TextureRegion tex = new TextureRegion(tile.getImage());
+            int width = tex.getRegionWidth() / cols, height = tex.getRegionHeight() / rows;
+            int x = width * ((int) Math.abs(pos.x) % cols), y = height * ((int) Math.abs(pos.y) % rows);
+            tex.setRegion(x, y, width, height);
+            tex.flip(tile.getImage().isFlipX(), tile.getImage().isFlipY());
+            screen.batch.draw(tex, screenVec.x + offX * BLOCK_SIZE, screenVec.y + offY * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        } else if (tile instanceof ITileRenderRounded) {
             ITileRenderRounded rTile = (ITileRenderRounded) tile;
             TextureRegion[] edgeTextures = rTile.getEdgeImages();
             if (edgeTextures.length == 4) {
@@ -44,6 +52,8 @@ public class TileRendererBlock extends TileRenderer {
                 if (b || r)
                     screen.batch.draw(edgeTextures[3], screenVec.x + offX * BLOCK_SIZE, screenVec.y + offY * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
             }
+        } else {
+            screen.batch.draw(tile.getImage(), screenVec.x + offX * BLOCK_SIZE, screenVec.y + offY * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         }
     }
 }
