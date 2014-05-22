@@ -26,7 +26,7 @@ public abstract class GUIContainer extends GUIObject {
     public void clearObjects() {
         objects.clear();
     }
-    
+
     public boolean containsObject(GUIObject object) {
         return objects.contains(object);
     }
@@ -38,7 +38,7 @@ public abstract class GUIContainer extends GUIObject {
     public void addObject(GUIObject object, int index) {
         objects.add(index, object);
         object.setContainer(this);
-        
+
         object.applyAssignedAnchorSet();
     }
 
@@ -72,13 +72,13 @@ public abstract class GUIContainer extends GUIObject {
 
     @EventListener("MOUSEMOVE")
     public void onEventMouseMove(Event event) {
-        if(isInActiveHierarchy() || this.providesActiveHierarchy()) {
+        if (isInActiveHierarchy() || this.providesActiveHierarchy()) {
             for (GUIObject e : objects) {
                 int x = event.getInput(1, Integer.class);
                 int y = event.getInput(2, Integer.class);
-    
+
                 Vector2 p = e.getScreenPosition();
-    
+
                 if (e.size != null) {
                     if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
                         e.onMouseIn();
@@ -96,14 +96,14 @@ public abstract class GUIContainer extends GUIObject {
 
     @EventListener("MOUSEDOWN")
     public void onEventMouseDown(Event event) {
-        if(isInActiveHierarchy() || this.providesActiveHierarchy()) {
+        if (isInActiveHierarchy() || this.providesActiveHierarchy()) {
             for (GUIObject e : objects) {
                 int button = event.getInput(0, Integer.class);
                 int x = event.getInput(1, Integer.class);
                 int y = event.getInput(2, Integer.class);
-    
+
                 Vector2 p = e.getScreenPosition();
-    
+
                 if (e.size != null) {
                     if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
                         e.onClick(button);

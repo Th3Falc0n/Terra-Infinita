@@ -34,24 +34,24 @@ public abstract class GUIObject {
         }
         return position;
     }
-    
+
     public boolean providesActiveHierarchy() {
         return false;
     }
-    
+
     public boolean isInActiveHierarchy() {
-        if(providesActiveHierarchy()) return true;
-        
+        if (providesActiveHierarchy()) return true;
+
         GUIContainer check = container;
-        
-        if(check == null) return false;
-        if(check.providesActiveHierarchy()) return true;
-        
-        while(check.container != null) {
-            if(check.container.providesActiveHierarchy()) return true;
+
+        if (check == null) return false;
+        if (check.providesActiveHierarchy()) return true;
+
+        while (check.container != null) {
+            if (check.container.providesActiveHierarchy()) return true;
             check = check.container;
         }
-        
+
         return false;
     }
 

@@ -27,7 +27,7 @@ public class ScreenIngame extends AbstractScreen {
 
     public ScreenIngame(World w) {
         Events.EVENTMANAGER.registerEventListener(this);
-        
+
         localWorld = w;
 
         guiContainerScreen = new ContainerOnscreen();
@@ -58,20 +58,18 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen.applyAllAssignedAnchorSets();
     }
-    
-    @EventListener(value = "KEYDOWN") 
+
+    @EventListener(value = "KEYDOWN")
     public void onKeyDown(Event e) {
-        if(e.getInput(0, String.class) == "INVENTORY") {
-            if(guiContainerScreen.containsObject(localWorld.localPlayer.guiInventory.getContainer())) {
+        if (e.getInput(0, String.class) == "INVENTORY") {
+            if (guiContainerScreen.containsObject(localWorld.localPlayer.guiInventory.getContainer())) {
                 guiContainerScreen.removeObject(localWorld.localPlayer.guiInventory.getContainer());
-            }
-            else
-            {
+            } else {
                 guiContainerScreen.addObject(localWorld.localPlayer.guiInventory.getContainer());
             }
         }
-        
-        if(e.getInput(0, String.class) == "PAUSE") {
+
+        if (e.getInput(0, String.class) == "PAUSE") {
             TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
         }
     }
@@ -80,7 +78,7 @@ public class ScreenIngame extends AbstractScreen {
     public void show() {
         super.show();
     }
-    
+
     @Override
     public void hide() {
         super.hide();
