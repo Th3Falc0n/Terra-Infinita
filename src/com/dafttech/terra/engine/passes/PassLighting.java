@@ -32,6 +32,7 @@ public class PassLighting extends RenderingPass {
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World world, Object... arguments) {
         buffer.begin();

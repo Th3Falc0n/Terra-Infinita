@@ -75,6 +75,7 @@ public class Chunk implements IDrawableInWorld {
         }
     }
 
+    @SuppressWarnings("unused")
     public Biome getBiome() {
         return new Random().nextBoolean() || true ? BiomeGrassland.instance : BiomeDesert.instance;
     }
