@@ -59,7 +59,7 @@ public class ModuleInventory extends GUIModule {
             }
         }
 
-        invList.addObject(new ElementLabel(new Vector2(), index + "/" + inv.getList().size()));
+        invList.addObject(new ElementLabel(new Vector2(), index + "-" + (index + 5) + " / " + inv.getList().size()));
     }
 
     @Override
