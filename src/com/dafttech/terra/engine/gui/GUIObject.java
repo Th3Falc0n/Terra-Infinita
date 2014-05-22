@@ -13,9 +13,9 @@ public abstract class GUIObject {
 
     public boolean mouseHover = false;
 
-    boolean registeredEvents = false;
-    GUIAnchorSet assignedAnchors = null;
-    GUIContainer container;
+    protected boolean registeredEvents = false;
+    protected GUIAnchorSet assignedAnchors = null;
+    public GUIContainer container;
 
     String tooltipText = "";
 
@@ -34,6 +34,26 @@ public abstract class GUIObject {
         }
         return position;
     }
+    
+    public boolean providesActiveHierarchy() {
+        return false;
+    }
+    
+    public boolean isInActiveHierarchy() {
+        if(providesActiveHierarchy()) return true;
+        
+        GUIContainer check = container;
+        
+        if(check == null) return false;
+        if(check.providesActiveHierarchy()) return true;
+        
+        while(check.container != null) {
+            if(check.container.providesActiveHierarchy()) return true;
+            check = check.container;
+        }
+        
+        return false;
+    }
 
     public void setTooltip(String txt) {
         tooltipText = txt;
@@ -44,8 +64,9 @@ public abstract class GUIObject {
     }
 
     public void applyAnchorSet(GUIAnchorSet set) {
-        if (container == null && set.isContainerDependent()) throw new IllegalStateException("AnchorSet needs container");
-        set.applyAnchorSet(this, container);
+        if (container != null || !set.isContainerDependent()) {
+            set.applyAnchorSet(this, container);
+        }
     }
 
     public void applyAssignedAnchorSet() {

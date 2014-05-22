@@ -26,6 +26,10 @@ public abstract class GUIContainer extends GUIObject {
     public void clearObjects() {
         objects.clear();
     }
+    
+    public boolean containsObject(GUIObject object) {
+        return objects.contains(object);
+    }
 
     public void addObject(GUIObject object) {
         addObject(object, 0);
@@ -34,6 +38,8 @@ public abstract class GUIContainer extends GUIObject {
     public void addObject(GUIObject object, int index) {
         objects.add(index, object);
         object.setContainer(this);
+        
+        object.applyAssignedAnchorSet();
     }
 
     public void removeObject(int index) {
@@ -66,41 +72,45 @@ public abstract class GUIContainer extends GUIObject {
 
     @EventListener("MOUSEMOVE")
     public void onEventMouseMove(Event event) {
-        for (GUIObject e : objects) {
-            int x = event.getInput(1, Integer.class);
-            int y = event.getInput(2, Integer.class);
-
-            Vector2 p = e.getScreenPosition();
-
-            if (e.size != null) {
-                if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
-                    e.onMouseIn();
-                    e.mouseHover = true;
-                } else if (!(x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
-                    e.onMouseOut();
-                    e.mouseHover = false;
+        if(isInActiveHierarchy() || this.providesActiveHierarchy()) {
+            for (GUIObject e : objects) {
+                int x = event.getInput(1, Integer.class);
+                int y = event.getInput(2, Integer.class);
+    
+                Vector2 p = e.getScreenPosition();
+    
+                if (e.size != null) {
+                    if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
+                        e.onMouseIn();
+                        e.mouseHover = true;
+                    } else if (!(x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) && e.mouseHover) {
+                        e.onMouseOut();
+                        e.mouseHover = false;
+                    }
+                } else {
+                    System.out.println("Size null in " + e);
                 }
-            } else {
-                System.out.println("Size null in " + e);
             }
         }
     }
 
     @EventListener("MOUSEDOWN")
     public void onEventMouseDown(Event event) {
-        for (GUIObject e : objects) {
-            int button = event.getInput(0, Integer.class);
-            int x = event.getInput(1, Integer.class);
-            int y = event.getInput(2, Integer.class);
-
-            Vector2 p = e.getScreenPosition();
-
-            if (e.size != null) {
-                if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
-                    e.onClick(button);
+        if(isInActiveHierarchy() || this.providesActiveHierarchy()) {
+            for (GUIObject e : objects) {
+                int button = event.getInput(0, Integer.class);
+                int x = event.getInput(1, Integer.class);
+                int y = event.getInput(2, Integer.class);
+    
+                Vector2 p = e.getScreenPosition();
+    
+                if (e.size != null) {
+                    if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
+                        e.onClick(button);
+                    }
+                } else {
+                    System.out.println("Size null in " + e);
                 }
-            } else {
-                System.out.println("Size null in " + e);
             }
         }
     }

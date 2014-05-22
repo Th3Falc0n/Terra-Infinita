@@ -5,6 +5,8 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;

@@ -1,6 +1,9 @@
 package com.dafttech.terra.game;
 
 import com.badlogic.gdx.Gdx;
+import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventListener;
+import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
@@ -19,12 +22,12 @@ public class ScreenIngame extends AbstractScreen {
     World localWorld;
     InputHandler inputHandler;
 
-    ContainerOnscreen guiContainerScreen;
-
     ElementButton exitButton;
     ModuleChat chat;
 
     public ScreenIngame(World w) {
+        Events.EVENTMANAGER.registerEventListener(this);
+        
         localWorld = w;
 
         guiContainerScreen = new ContainerOnscreen();
@@ -49,17 +52,38 @@ public class ScreenIngame extends AbstractScreen {
 
         guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer());
-        guiContainerScreen.addObject(localWorld.localPlayer.guiInventory.getContainer());
         guiContainerScreen.addObject(exitButton);
         guiContainerScreen.addObject(Tooltip.getLabel());
         guiContainerScreen.addObject(MouseSlot.getRenderSlot());
 
         guiContainerScreen.applyAllAssignedAnchorSets();
     }
+    
+    @EventListener(value = "KEYDOWN") 
+    public void onKeyDown(Event e) {
+        if(e.getInput(0, String.class) == "INVENTORY") {
+            if(guiContainerScreen.containsObject(localWorld.localPlayer.guiInventory.getContainer())) {
+                guiContainerScreen.removeObject(localWorld.localPlayer.guiInventory.getContainer());
+            }
+            else
+            {
+                guiContainerScreen.addObject(localWorld.localPlayer.guiInventory.getContainer());
+            }
+        }
+        
+        if(e.getInput(0, String.class) == "PAUSE") {
+            TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
+        }
+    }
 
     @Override
     public void show() {
         super.show();
+    }
+    
+    @Override
+    public void hide() {
+        super.hide();
     }
 
     public World getWorld() {
