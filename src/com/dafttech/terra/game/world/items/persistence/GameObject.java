@@ -81,7 +81,7 @@ public abstract class GameObject {
                  * this.getClass().getCanonicalName() +
                  * " is not Serializable and cannot be saved!");
                  */
-                proto.values.put(f, f.get(this));
+                if(f.isAnnotationPresent(Persistent.class)) proto.values.put(f, f.get(this));
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

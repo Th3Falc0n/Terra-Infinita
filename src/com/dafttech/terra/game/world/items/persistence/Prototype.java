@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world.items.persistence;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Prototype {
     public String className = "";
@@ -41,10 +42,10 @@ public class Prototype {
 
             object = cl.newInstance();
 
-            Field[] fields = cl.getFields();
-
+            Set<Field> fields = values.keySet();
+                    
             for (Field f : fields) {
-                if (f.isAnnotationPresent(Persistent.class)) f.set(object, f);
+                f.set(object, values.get(f));
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             // TODO Auto-generated catch block
