@@ -8,7 +8,6 @@ import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.GUIObject;
-import com.dafttech.terra.engine.gui.elements.GUIElement;
 
 public abstract class GUIContainer extends GUIObject {
     public GUIContainer(Vector2 p, Vector2 s) {
@@ -23,7 +22,7 @@ public abstract class GUIContainer extends GUIObject {
             o.draw(screen);
         }
     }
-    
+
     public void clearObjects() {
         objects.clear();
     }

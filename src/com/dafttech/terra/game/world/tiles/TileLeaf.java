@@ -26,7 +26,7 @@ public class TileLeaf extends TileLog {
     public boolean isFlatTo(World world, Vector2i pos) {
         return world.getTile(pos) instanceof TileLog;
     }
-    
+
     @Override
     public Color getFilterColor() {
         return new Color(0.94f, 0.99f, 0.91f, 1);

@@ -103,7 +103,7 @@ public class Player extends EntityLiving {
         }
 
         hudBottom.healthBar.setValue(getHealth() / getMaxHealth() * 100);
-        
+
         guiInventory.update(delta);
     }
 

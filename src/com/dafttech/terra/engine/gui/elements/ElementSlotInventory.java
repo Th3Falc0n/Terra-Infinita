@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
-import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.Item;
@@ -45,8 +44,8 @@ public class ElementSlotInventory extends GUIElement {
     public void onClick(int button) {
         if (button == 0) {
             if (MouseSlot.getAssignedStack() != null) {
-                //TODO: combine stacks
-                //assignedInventory.add(MouseSlot.popAssignedStack());
+                // TODO: combine stacks
+                // assignedInventory.add(MouseSlot.popAssignedStack());
             } else if (MouseSlot.canAssignStack() && assignedStack != null) {
                 MouseSlot.assignStack(assignedStack);
                 assignedInventory.remove(assignedStack);

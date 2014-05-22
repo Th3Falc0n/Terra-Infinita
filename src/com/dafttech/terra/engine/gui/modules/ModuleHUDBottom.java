@@ -20,7 +20,7 @@ public class ModuleHUDBottom extends GUIModule {
     private int activeSlot = 0;
     public ElementBar healthBar, apBar;
 
-    @EventListener("SCROLL")
+    @EventListener(value = "SCROLL", priority = -1)
     public void onScroll(Event event) {
         int prev = activeSlot;
         int dir = event.getInput(0, Integer.class);

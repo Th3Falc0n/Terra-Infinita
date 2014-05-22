@@ -35,14 +35,14 @@ public class Inventory {
             stacks.get(proto).add(stack);
         }
     }
-    
+
     public List<Stack> getList() {
         LinkedList<Stack> lst = new LinkedList<Stack>();
-        
-        for(Prototype p : stacks.keySet()) {
+
+        for (Prototype p : stacks.keySet()) {
             lst.addAll(stacks.get(p));
         }
-        
+
         return lst;
     }
 

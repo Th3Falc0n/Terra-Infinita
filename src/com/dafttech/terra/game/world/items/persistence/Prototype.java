@@ -43,7 +43,7 @@ public class Prototype {
             object = cl.newInstance();
 
             Set<Field> fields = values.keySet();
-                    
+
             for (Field f : fields) {
                 f.set(object, values.get(f));
             }
