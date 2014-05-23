@@ -18,7 +18,7 @@ public class PassGaussian extends RenderingPass {
     FrameBuffer bfPass2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
     Texture pass;
-    
+
     @EventListener(value = "WINRESIZE")
     public void onResize(Event e) {
         bfPass1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);

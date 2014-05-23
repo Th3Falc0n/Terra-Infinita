@@ -4,7 +4,6 @@ import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
-import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;

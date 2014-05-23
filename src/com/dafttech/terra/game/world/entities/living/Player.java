@@ -43,7 +43,7 @@ public class Player extends EntityLiving {
 
         guiInventory = new ModuleInventory(inventory);
         guiInventory.create();
-        
+
         guiCrafting = new ModuleCrafting(this);
         guiCrafting.create();
 
@@ -65,7 +65,7 @@ public class Player extends EntityLiving {
 
     public ModuleHUDBottom hudBottom;
     public ModuleInventory guiInventory;
-    public ModuleCrafting  guiCrafting;
+    public ModuleCrafting guiCrafting;
 
     PointLight light;
 

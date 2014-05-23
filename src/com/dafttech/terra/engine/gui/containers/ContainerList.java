@@ -6,11 +6,11 @@ import com.dafttech.terra.engine.gui.GUIObject;
 
 public class ContainerList extends GUIContainer {
     float distance = 2;
-    
+
     public ContainerList(Vector2 p, Vector2 s) {
         super(p, s);
     }
-    
+
     public ContainerList(Vector2 p, Vector2 s, float d) {
         super(p, s);
         distance = d;

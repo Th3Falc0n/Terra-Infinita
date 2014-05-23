@@ -42,6 +42,6 @@ public abstract class ElementButton extends GUIElement {
     public final void onClick(int button) {
         actionPerformed(button);
     }
-    
+
     public abstract void actionPerformed(int button);
 }

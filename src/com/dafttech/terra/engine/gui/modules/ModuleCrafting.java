@@ -15,9 +15,9 @@ import com.dafttech.terra.game.world.entities.living.Player;
 public class ModuleCrafting extends GUIModule {
     ContainerBlock recipeList, researchList;
     ContainerBlock shown;
-    
+
     Player player;
-    
+
     public ModuleCrafting(Player p) {
         player = p;
     }
@@ -33,9 +33,9 @@ public class ModuleCrafting extends GUIModule {
         set.addAnchor(new AnchorCenterX());
 
         container.assignAnchorSet(set);
-        
+
         ElementButton btnRecipe, btnResearch;
-        
+
         btnRecipe = new ElementButton(new Vector2(), "Recipes") {
             @Override
             public void actionPerformed(int button) {
@@ -43,7 +43,7 @@ public class ModuleCrafting extends GUIModule {
                 shown.addObject(recipeList);
             }
         };
-        
+
         btnResearch = new ElementButton(new Vector2(), "Research") {
             @Override
             public void actionPerformed(int button) {
@@ -51,22 +51,22 @@ public class ModuleCrafting extends GUIModule {
                 shown.addObject(researchList);
             }
         };
-        
+
         btnRecipe.assignAnchorSet(new GUIAnchorSet(new AnchorLeft(0), new AnchorTop(0)));
         btnResearch.assignAnchorSet(new GUIAnchorSet(new AnchorRightNextTo(btnRecipe, 10)));
-        
+
         container.addObject(btnRecipe);
         container.addObject(btnResearch);
-        
+
         shown = new ContainerBlock(new Vector2(0, 20), new Vector2(312, 150));
         recipeList = new ContainerBlock(new Vector2(0, 0), new Vector2(312, 150));
         researchList = new ContainerBlock(new Vector2(0, 0), new Vector2(312, 150));
-        
+
         shown.addObject(researchList);
         container.addObject(shown);
-        
-        recipeList.addObject(new ElementLabel(new Vector2(0,0), "Learned Recipes:"));
-        researchList.addObject(new ElementLabel(new Vector2(0,0), "Research new Recipes:"));
+
+        recipeList.addObject(new ElementLabel(new Vector2(0, 0), "Learned Recipes:"));
+        researchList.addObject(new ElementLabel(new Vector2(0, 0), "Research new Recipes:"));
     }
 
 }

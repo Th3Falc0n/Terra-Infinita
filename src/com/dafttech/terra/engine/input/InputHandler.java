@@ -30,7 +30,7 @@ public class InputHandler implements InputProcessor {
         registerKey(Keys.D, "RIGHT");
         registerKey(Keys.N, "WAVESLEFT");
         registerKey(Keys.M, "WAVESRIGHT");
-        
+
         registerKey(Keys.E, "INVENTORY");
         registerKey(Keys.C, "CRAFTING");
 

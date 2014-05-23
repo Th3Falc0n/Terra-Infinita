@@ -13,10 +13,8 @@ import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
 import com.dafttech.terra.engine.gui.anchors.AnchorRight;
 import com.dafttech.terra.engine.gui.anchors.AnchorTop;
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
-import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.containers.ContainerList;
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
-import com.dafttech.terra.engine.gui.containers.GUIContainer;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
 import com.dafttech.terra.engine.gui.modules.ModuleChat;
 import com.dafttech.terra.engine.input.InputHandler;
@@ -29,7 +27,7 @@ public class ScreenIngame extends AbstractScreen {
 
     ElementButton exitButton;
     ModuleChat chat;
-    
+
     ContainerList midContainer;
 
     public ScreenIngame(World w) {
@@ -59,7 +57,7 @@ public class ScreenIngame extends AbstractScreen {
 
         midContainer = new ContainerList(new Vector2(), new Vector2(320, 800), 45);
         midContainer.assignAnchorSet(new GUIAnchorSet(new AnchorBottom(0.15f), new AnchorCenterX()));
-        
+
         guiContainerScreen.addObject(chat.getContainer());
         guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer());
         guiContainerScreen.addObject(exitButton);
@@ -79,7 +77,7 @@ public class ScreenIngame extends AbstractScreen {
                 midContainer.addObject(localWorld.localPlayer.guiInventory.getContainer());
             }
         }
-        
+
         if (e.getInput(0, String.class) == "CRAFTING") {
             if (midContainer.containsObject(localWorld.localPlayer.guiCrafting.getContainer())) {
                 midContainer.removeObject(localWorld.localPlayer.guiCrafting.getContainer());

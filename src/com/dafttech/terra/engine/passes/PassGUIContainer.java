@@ -2,9 +2,6 @@ package com.dafttech.terra.engine.passes;
 
 import org.lwjgl.opengl.GL11;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.gui.containers.GUIContainer;
 import com.dafttech.terra.game.world.World;

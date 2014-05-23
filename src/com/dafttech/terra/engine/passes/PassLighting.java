@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.FloatFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -34,12 +33,11 @@ public class PassLighting extends RenderingPass {
             return new Rectangle(v.x - sunlevel, f.y, BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel);
         }
     }
-    
+
     @EventListener(value = "WINRESIZE")
     public void onResize(Event e) {
         buffer = new FloatFrameBuffer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
     }
-
 
     @SuppressWarnings("unused")
     @Override

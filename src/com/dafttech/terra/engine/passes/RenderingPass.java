@@ -12,7 +12,7 @@ public abstract class RenderingPass {
     public static PassGUIContainer rpGUIContainer = new PassGUIContainer();
 
     public abstract void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments);
-    
+
     public RenderingPass() {
         Events.EVENTMANAGER.registerEventListener(this);
     }

@@ -9,7 +9,7 @@ import com.dafttech.terra.engine.gui.containers.GUIContainer;
 
 public class GUIAnchorSet {
     List<GUIAnchor> anchors = new ArrayList<GUIAnchor>();
-    
+
     public GUIAnchorSet(GUIAnchor... a) {
         anchors.addAll(Arrays.asList(a));
     }
