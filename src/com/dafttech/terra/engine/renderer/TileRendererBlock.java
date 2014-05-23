@@ -29,9 +29,12 @@ public class TileRendererBlock extends TileRenderer {
         }
         if (tile instanceof ITileRenderBigger) {
             int cols = ((ITileRenderBigger) tile).getRenderSizeMultiplier().x, rows = ((ITileRenderBigger) tile).getRenderSizeMultiplier().y;
+            int col = ((int) Math.abs(pos.x) % cols), row = ((int) Math.abs(pos.y) % rows);
+            if (pos.x < 0) col = (cols - 1) - col;
+            if (pos.y < 0) row = (rows - 1) - row;
             TextureRegion tex = new TextureRegion(tile.getImage());
             int width = tex.getRegionWidth() / cols, height = tex.getRegionHeight() / rows;
-            int x = width * ((int) Math.abs(pos.x) % cols), y = height * ((int) Math.abs(pos.y) % rows);
+            int x = width * col, y = height * row;
             tex.setRegion(x, y, width, height);
             tex.flip(tile.getImage().isFlipX(), tile.getImage().isFlipY());
             screen.batch.draw(tex, screenVec.x + offX * BLOCK_SIZE, screenVec.y + offY * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);

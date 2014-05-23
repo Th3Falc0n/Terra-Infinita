@@ -6,7 +6,7 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
 
-public class TileLeaf extends TileLog {
+public class TileLeaf extends TileLog implements ITileRenderBigger {
     @Override
     public TileLog getLog() {
         return new TileLeaf();
@@ -32,4 +32,8 @@ public class TileLeaf extends TileLog {
         return new Color(0.94f, 0.99f, 0.91f, 1);
     }
 
+    @Override
+    public Vector2i getRenderSizeMultiplier() {
+        return new Vector2i(3, 3);
+    }
 }
