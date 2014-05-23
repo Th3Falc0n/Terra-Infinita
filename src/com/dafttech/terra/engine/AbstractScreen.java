@@ -20,6 +20,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int arg0, int arg1) {
+        new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
     }
 
     @Override
@@ -28,6 +29,8 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
+        projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
+        
         batch.setProjectionMatrix(projection);
         shr.setProjectionMatrix(projection);
 

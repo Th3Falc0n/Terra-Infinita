@@ -71,7 +71,6 @@ public class ModuleInventory extends GUIModule {
         GUIAnchorSet set = new GUIAnchorSet();
 
         set.addAnchor(new AnchorCenterX());
-        set.addAnchor(new AnchorBottom(0.12f));
 
         container.assignAnchorSet(set);
         ElementLabel invLabel;

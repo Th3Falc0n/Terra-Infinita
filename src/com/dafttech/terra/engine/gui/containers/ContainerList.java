@@ -5,8 +5,15 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.GUIObject;
 
 public class ContainerList extends GUIContainer {
+    float distance = 2;
+    
     public ContainerList(Vector2 p, Vector2 s) {
         super(p, s);
+    }
+    
+    public ContainerList(Vector2 p, Vector2 s, float d) {
+        super(p, s);
+        distance = d;
     }
 
     @Override
@@ -15,7 +22,7 @@ public class ContainerList extends GUIContainer {
         float y = size.y;
 
         for (GUIObject o : objects) {
-            y -= o.size.y + 2;
+            y -= o.size.y + distance;
 
             if (y > 0) {
                 o.position = new Vector2(0, y);

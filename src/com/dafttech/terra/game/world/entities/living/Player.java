@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.modules.ModuleCrafting;
 import com.dafttech.terra.engine.gui.modules.ModuleHUDBottom;
 import com.dafttech.terra.engine.gui.modules.ModuleInventory;
 import com.dafttech.terra.engine.input.InputHandler;
@@ -42,6 +43,9 @@ public class Player extends EntityLiving {
 
         guiInventory = new ModuleInventory(inventory);
         guiInventory.create();
+        
+        guiCrafting = new ModuleCrafting(this);
+        guiCrafting.create();
 
         hudBottom.slots[0].assignStack(new Stack(new TileDirt(), 1000));
         hudBottom.slots[1].assignStack(new Stack(new ItemFlamingArrow(), 10000));
@@ -61,6 +65,7 @@ public class Player extends EntityLiving {
 
     public ModuleHUDBottom hudBottom;
     public ModuleInventory guiInventory;
+    public ModuleCrafting  guiCrafting;
 
     PointLight light;
 
