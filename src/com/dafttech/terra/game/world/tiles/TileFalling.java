@@ -1,10 +1,12 @@
 package com.dafttech.terra.game.world.tiles;
 
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.renderer.TileRenderer;
+import com.dafttech.terra.engine.renderer.TileRendererBlock;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
-public abstract class TileFalling extends Tile implements ITileRenderOffset {
+public abstract class TileFalling extends Tile {
     private Vector2 renderOffset = new Vector2();
     private float createTime = 0;
 
@@ -39,9 +41,15 @@ public abstract class TileFalling extends Tile implements ITileRenderOffset {
         }
     }
 
-    @Override
     public Vector2 getRenderOffset() {
         return renderOffset;
+    }
+
+    @Override
+    public TileRenderer getRenderer() {
+        TileRendererBlock tileRenderer = new TileRendererBlock();
+        tileRenderer.setOffset(getRenderOffset());
+        return tileRenderer;
     }
 
     @Override

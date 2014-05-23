@@ -6,7 +6,6 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.subtiles.Subtile;
-import com.dafttech.terra.game.world.tiles.ITileRenderOffset;
 
 public class SubtileRendererMask extends SubtileRenderer {
     public static SubtileRenderer $Instance = new SubtileRendererMask();
@@ -18,8 +17,8 @@ public class SubtileRendererMask extends SubtileRenderer {
         float rotation = rendererArguments.length > 0 ? (float) rendererArguments[0] : 0;
 
         float offX = 0, offY = 0;
-        if (!render.isTileIndependent() && render.getTile() != null && render.getTile() instanceof ITileRenderOffset) {
-            Vector2 offset = ((ITileRenderOffset) render.getTile()).getRenderOffset();
+        if (!render.isTileIndependent() && render.getTile() != null) {
+            Vector2 offset = render.getTile().getRenderer().getOffset();
             if (offset != null) {
                 offX = offset.x * BLOCK_SIZE;
                 offY = offset.y * BLOCK_SIZE;
