@@ -20,7 +20,8 @@ public class Resources {
     public static void init() {
         TILES.loadImage("error", "res/error.png");
         TILES.loadImage("air", "res/tiles/air.png");
-        TILES.loadImage("dirt", "res/tiles/dirt.png");
+        TILES.loadImage("dirt", "res/tiles/stone.png");// ,
+                                                       // "res/tiles/dirt.png");
         TILES.loadImage("stone", "res/tiles/stone.png");
         TILES.loadImage("grass", "res/tiles/grass.png", 4);
         TILES.loadImage("torch", "res/tiles/torch.png");

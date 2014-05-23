@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.engine.renderer.TileRenderer;
+import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
@@ -90,5 +92,10 @@ public class TileLog extends Tile {
 
     public boolean isFlatTo(World world, Vector2i pos) {
         return world.getTile(pos) instanceof TileLog || world.getTile(pos).isOpaque();
+    }
+
+    @Override
+    public TileRenderer getRenderer() {
+        return new TileRendererMultiblock(new Vector2i(4, 4));
     }
 }

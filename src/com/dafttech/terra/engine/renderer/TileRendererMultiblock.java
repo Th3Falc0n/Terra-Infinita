@@ -23,13 +23,19 @@ public class TileRendererMultiblock extends TileRendererBlock {
         TextureRegion texture = tile.getImage();
         int cols = multiblockSize.x, rows = multiblockSize.y;
         int col = ((int) Math.abs(pos.x) % cols), row = ((int) Math.abs(pos.y) % rows);
-        if (pos.x < 0) col = (cols - 1) - col;
-        if (pos.y < 0) row = (rows - 1) - row;
+        if (pos.x < 0) col = ((cols - 1) - col + (cols - 1)) % cols;
+        if (pos.y < 0) row = ((rows - 1) - row + (rows - 1)) % rows;
         TextureRegion newTexture = new TextureRegion(texture);
-        int width = newTexture.getRegionWidth() / cols, height = newTexture.getRegionHeight() / rows;
-        int x = width * col, y = height * row;
-        newTexture.setRegion(x, y, width, height);
+        double width = newTexture.getRegionWidth() / (double) cols, height = newTexture.getRegionHeight() / (double) rows;
+        double x = width * col, y = height * row;
+        setRegion(newTexture, (float) x, (float) y, (float) width, (float) height);
         newTexture.flip(texture.isFlipX(), texture.isFlipY());
         screen.batch.draw(newTexture, screenVec.x + offset.x * BLOCK_SIZE, screenVec.y + offset.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    }
+
+    public static void setRegion(TextureRegion texture, float x, float y, float width, float height) {
+        float invTexWidth = 1.0F / texture.getTexture().getWidth();
+        float invTexHeight = 1.0F / texture.getTexture().getHeight();
+        texture.setRegion(x * invTexWidth, y * invTexHeight, (x + width) * invTexWidth, (y + height) * invTexHeight);
     }
 }
