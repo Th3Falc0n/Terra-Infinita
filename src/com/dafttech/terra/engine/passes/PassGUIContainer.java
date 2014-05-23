@@ -11,8 +11,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
 public class PassGUIContainer extends RenderingPass {
-    FrameBuffer buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {
         screen.batch.setShader(null);

@@ -20,7 +20,13 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int arg0, int arg1) {
-        new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
+        projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 1);
+        
+        batch.setProjectionMatrix(projection);
+        shr.setProjectionMatrix(projection);
+        
+        guiContainerScreen.size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        guiContainerScreen.applyAllAssignedAnchorSets();
     }
 
     @Override
@@ -33,6 +39,9 @@ public abstract class AbstractScreen implements Screen {
         
         batch.setProjectionMatrix(projection);
         shr.setProjectionMatrix(projection);
+
+        guiContainerScreen.size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        guiContainerScreen.applyAllAssignedAnchorSets();
 
         guiContainerScreen.setActive(true);
     }

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.dafttech.eventmanager.Event;
+import com.dafttech.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.shaders.ShaderLibrary;
 import com.dafttech.terra.game.world.World;
@@ -16,6 +18,12 @@ public class PassGaussian extends RenderingPass {
     FrameBuffer bfPass2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 
     Texture pass;
+    
+    @EventListener(value = "WINRESIZE")
+    public void onResize(Event e) {
+        bfPass1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        bfPass2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+    }
 
     @Override
     public void applyPass(AbstractScreen screen, Entity pointOfView, World w, Object... arguments) {

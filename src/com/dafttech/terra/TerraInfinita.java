@@ -82,6 +82,7 @@ public class TerraInfinita extends Game implements ApplicationListener {
     public void resize(int arg0, int arg1) {
         super.resize(arg0, arg1);
         Gdx.graphics.setDisplayMode(arg0, arg1, false);
+        this.getScreen().resize(arg0, arg1);
         Events.EVENTMANAGER.callSync(Events.EVENT_WINRESIZE, this);
     }
 
