@@ -39,13 +39,13 @@ public class EntityItem extends Entity {
         Vector2 vp = new Vector2(p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
         vp.sub(getPosition());
 
-        if (vp.len() < 20) {
+        if (vp.len2() < 400) {
             getWorld().localPlayer.inventory.add(new Stack(wrapped, 1));
 
             getWorld().removeEntity(this);
         }
 
-        if (vp.len() < 100) {
+        if (vp.len2() < 10000) {
             addForce(vp.nor().mul(14f / vp.len2()));
         }
 
