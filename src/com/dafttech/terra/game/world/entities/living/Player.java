@@ -30,6 +30,9 @@ import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
+import com.dafttech.terra.game.world.tiles.TileFence;
+import com.dafttech.terra.game.world.tiles.TileFire;
+import com.dafttech.terra.game.world.tiles.TileSapling;
 import com.dafttech.terra.game.world.tiles.TileTorch;
 import com.dafttech.terra.resources.Resources;
 
@@ -55,6 +58,9 @@ public class Player extends EntityLiving {
         hudBottom.slots[5].assignStack(new Stack(new ItemWaterBucket(), 1));
         hudBottom.slots[6].assignStack(new Stack(new TileTorch(), 10000));
         hudBottom.slots[7].assignStack(new Stack(new ItemDigStaff(), 1));
+        inventory.add(new Stack(new TileSapling(), 1000));
+        inventory.add(new Stack(new TileFence(), 1000));
+        inventory.add(new Stack(new TileFire(), 1000));
     }
 
     long left;
