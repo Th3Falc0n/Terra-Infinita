@@ -155,16 +155,16 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public boolean collidesWith(Entity e) {
         return true;
     }
-    
+
     public boolean hasEntityCollision() {
         return false;
     }
 
-    public void checkEntityCollisions() {        
+    public void checkEntityCollisions() {
         Rectangle playerRect, otherRect;
 
         Vector2 oVel = velocity.clone();
-        
+
         for (Entity entity : chunk.getLocalEntities()) {
             if (entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
                 continue;
@@ -324,7 +324,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                 }
 
                 checkTerrainCollisions(worldObj.localPlayer.getWorld());
-                if(this.hasEntityCollision()) {
+                if (this.hasEntityCollision()) {
                     checkEntityCollisions();
                 }
             }
