@@ -7,6 +7,7 @@ import com.dafttech.eventmanager.Event;
 import com.dafttech.eventmanager.EventManager;
 import com.dafttech.eventmanager.EventType;
 import com.dafttech.eventmanager.ListenerContainer;
+import com.dafttech.storage.tuple.Tuple;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 
@@ -27,14 +28,14 @@ public class Events {
 
     public static final EventType EVENT_KEYDOWN = new EventType("KEYDOWN", EVENTMANAGER) {
         @Override
-        protected boolean isFiltered(Event event, Object[] filter, ListenerContainer eventListener) {
-            return ((String) filter[0]).equals(event.getInput(0, String.class));
+        protected boolean isFiltered(Event event, Tuple filter, ListenerContainer eventListener) {
+            return filter.get(0, String.class).equals(event.in.get(0, String.class));
         }
     };
     public static final EventType EVENT_KEYUP = new EventType("KEYUP", EVENTMANAGER) {
         @Override
-        protected boolean isFiltered(Event event, Object[] filter, ListenerContainer eventListener) {
-            return ((String) filter[0]).equals(event.getInput(0, String.class));
+        protected boolean isFiltered(Event event, Tuple filter, ListenerContainer eventListener) {
+            return filter.get(0, String.class).equals(event.in.get(0, String.class));
         }
     };
 
@@ -46,22 +47,22 @@ public class Events {
     public static final EventType EVENT_BLOCKUPDATE = new EventType("BLOCKUPDATE", EVENTMANAGER) {
         @Override
         protected void onEvent(Event event) {
-            Tile tile = event.getInput(0, World.class).getTile(event.getInput(1, Integer.class), event.getInput(2, Integer.class));
-            if (tile != null) tile.update(event.getInput(0, World.class), 0);
+            Tile tile = event.in.get(0, World.class).getTile(event.in.get(1, Integer.class), event.in.get(2, Integer.class));
+            if (tile != null) tile.update(event.in.get(0, World.class), 0);
         }
     };
 
     public static final EventType EVENT_WORLDTICK = new EventType("GAMETICK", EVENTMANAGER) {
         @Override
         protected void onEvent(Event event) {
-            World world = event.getInput(0, World.class);
+            World world = event.in.get(0, World.class);
             int sx = 25 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
             int sy = 25 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
             Tile tile;
             for (int x = (int) world.localPlayer.getPosition().x / BLOCK_SIZE - sx; x < (int) world.localPlayer.getPosition().x / BLOCK_SIZE + sx; x++) {
                 for (int y = (int) world.localPlayer.getPosition().y / BLOCK_SIZE - sy; y < (int) world.localPlayer.getPosition().y / BLOCK_SIZE + sy; y++) {
                     tile = world.getTile(x, y);
-                    if (tile != null) tile.tick(world, event.getInput(1, Float.class));
+                    if (tile != null) tile.tick(world, event.in.get(1, Float.class));
                 }
             }
         }

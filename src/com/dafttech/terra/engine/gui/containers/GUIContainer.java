@@ -74,8 +74,8 @@ public abstract class GUIContainer extends GUIObject {
     public void onEventMouseMove(Event event) {
         if (isInActiveHierarchy() || this.providesActiveHierarchy()) {
             for (GUIObject e : objects) {
-                int x = event.getInput(1, Integer.class);
-                int y = event.getInput(2, Integer.class);
+                int x = event.in.get(1, Integer.class);
+                int y = event.in.get(2, Integer.class);
 
                 Vector2 p = e.getScreenPosition();
 
@@ -98,9 +98,9 @@ public abstract class GUIContainer extends GUIObject {
     public void onEventMouseDown(Event event) {
         if (isInActiveHierarchy() || this.providesActiveHierarchy()) {
             for (GUIObject e : objects) {
-                int button = event.getInput(0, Integer.class);
-                int x = event.getInput(1, Integer.class);
-                int y = event.getInput(2, Integer.class);
+                int button = event.in.get(0, Integer.class);
+                int x = event.in.get(1, Integer.class);
+                int y = event.in.get(2, Integer.class);
 
                 Vector2 p = e.getScreenPosition();
 

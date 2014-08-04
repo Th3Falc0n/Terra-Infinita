@@ -28,7 +28,7 @@ public class ModuleInventory extends GUIModule {
     @EventListener("SCROLL")
     public void onScroll(Event event) {
         if (invList.mouseHover && invList.isInActiveHierarchy()) {
-            int i = event.getInput(0, Integer.class);
+            int i = event.in.get(0, Integer.class);
 
             index += i;
 

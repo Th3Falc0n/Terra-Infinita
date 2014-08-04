@@ -23,7 +23,7 @@ public class ModuleHUDBottom extends GUIModule {
     @EventListener(value = "SCROLL", priority = -1)
     public void onScroll(Event event) {
         int prev = activeSlot;
-        int dir = event.getInput(0, Integer.class);
+        int dir = event.in.get(0, Integer.class);
 
         activeSlot += dir;
         if (activeSlot < 0) activeSlot = 7;

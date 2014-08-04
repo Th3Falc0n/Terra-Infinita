@@ -70,7 +70,7 @@ public class ScreenIngame extends AbstractScreen {
 
     @EventListener(value = "KEYDOWN")
     public void onKeyDown(Event e) {
-        if (e.getInput(0, String.class) == "INVENTORY") {
+        if (e.in.get(0, String.class) == "INVENTORY") {
             if (midContainer.containsObject(localWorld.localPlayer.guiInventory.getContainer())) {
                 midContainer.removeObject(localWorld.localPlayer.guiInventory.getContainer());
             } else {
@@ -78,7 +78,7 @@ public class ScreenIngame extends AbstractScreen {
             }
         }
 
-        if (e.getInput(0, String.class) == "CRAFTING") {
+        if (e.in.get(0, String.class) == "CRAFTING") {
             if (midContainer.containsObject(localWorld.localPlayer.guiCrafting.getContainer())) {
                 midContainer.removeObject(localWorld.localPlayer.guiCrafting.getContainer());
             } else {
@@ -86,7 +86,7 @@ public class ScreenIngame extends AbstractScreen {
             }
         }
 
-        if (e.getInput(0, String.class) == "PAUSE") {
+        if (e.in.get(0, String.class) == "PAUSE") {
             TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
         }
     }
