@@ -1,7 +1,7 @@
 package com.dafttech.terra.engine.gui
 
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.elements.ElementSlot
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
@@ -9,14 +9,11 @@ import org.lolhens.eventmanager.{Event, EventListener}
 
 object MouseSlot {
 
-  private class MouseRenderSlot extends ElementSlot {
-    def this(p: Vector2) {
-      this()
-      `super`(p)
-      Events.EVENTMANAGER.registerEventListener(this)
-    }
+  private class MouseRenderSlot(p: Vector2) extends ElementSlot {
+    Events.EVENTMANAGER.registerEventListener(this)
 
-    @EventListener(Array("MOUSEMOVE")) def onEventMouseMove(event: Event) {
+    @EventListener(Array("MOUSEMOVE"))
+    def onEventMouseMove(event: Event) {
       val x: Int = event.in.get(1, classOf[Integer])
       val y: Int = event.in.get(2, classOf[Integer])
       position.x = x
