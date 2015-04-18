@@ -95,7 +95,7 @@ public class Resources {
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(handle);
 
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ίφόδ'*#+~-.,;:_<>|^°";
+        param.characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\'*#+~-.,;:_<>^";
         param.size = 12;
 
         GUI_FONT = gen.generateFont(param);
