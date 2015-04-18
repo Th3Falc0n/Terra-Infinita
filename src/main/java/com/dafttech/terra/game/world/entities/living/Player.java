@@ -104,10 +104,10 @@ public class Player extends EntityLiving {
         }
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 2f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity.len() * 2f) {
                 if (getUndergroundTile() != null && !inAir) {
                     new ParticleDust(getPosition().addNew(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE).addNew(
-                            (TerraInfinita.rnd.nextFloat() - 0.5f) * BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat() - 1f) * 4f), worldObj,
+                            (TerraInfinita.rnd().nextFloat() - 0.5f) * BLOCK_SIZE * 2, (TerraInfinita.rnd().nextFloat() - 1f) * 4f), worldObj,
                             getUndergroundTile().getImage());
                 }
             }

@@ -16,16 +16,16 @@ public class ParticleSpark extends Particle {
     float size;
 
     public ParticleSpark(Vector2 pos, World world) {
-        super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat()), new Vector2(0.5f, 0.5f));
+        super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd().nextFloat()), new Vector2(0.5f, 0.5f));
 
-        size = TerraInfinita.rnd.nextFloat() * 0.2f + 0.1f;
+        size = TerraInfinita.rnd().nextFloat() * 0.2f + 0.1f;
 
         getSize().x = size;
         getSize().y = getSize().x;
 
         setHasGravity(true);
         setGravityFactor(0.05f);
-        setVelocity(new Vector2(4f * (0.5f - TerraInfinita.rnd.nextFloat()), 4f * (0.5f - TerraInfinita.rnd.nextFloat())));
+        setVelocity(new Vector2(4f * (0.5f - TerraInfinita.rnd().nextFloat()), 4f * (0.5f - TerraInfinita.rnd().nextFloat())));
     }
 
     @Override

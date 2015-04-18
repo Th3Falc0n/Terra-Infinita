@@ -17,8 +17,8 @@ public class TileLog extends Tile {
 
     public TileLog() {
         super();
-        maxHeight = TerraInfinita.rnd.nextInt(40) + 5;
-        maxWidth = TerraInfinita.rnd.nextInt(20) + 5;
+        maxHeight = TerraInfinita.rnd().nextInt(40) + 5;
+        maxWidth = TerraInfinita.rnd().nextInt(20) + 5;
     }
 
     @Override

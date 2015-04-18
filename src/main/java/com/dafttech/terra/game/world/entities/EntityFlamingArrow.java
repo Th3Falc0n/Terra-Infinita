@@ -40,7 +40,7 @@ public class EntityFlamingArrow extends EntityArrow {
         light.setSize(90 + new Random().nextInt(10));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity.len() * 0.5f) {
                 new ParticleSpark(getPosition(), worldObj);
             }
         }

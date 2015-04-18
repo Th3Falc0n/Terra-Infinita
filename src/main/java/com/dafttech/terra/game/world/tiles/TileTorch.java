@@ -32,7 +32,7 @@ public class TileTorch extends TileFalling {
         light.setPosition(getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * 0.5f) {
                 new ParticleSpark(getPosition().toEntityPos().addX(BLOCK_SIZE / 2), world).addVelocity(new Vector2(0, -1));
             }
         }

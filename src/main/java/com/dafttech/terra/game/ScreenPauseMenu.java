@@ -43,7 +43,7 @@ public class ScreenPauseMenu extends AbstractScreen {
         resumeButton = new ElementButton(new Vector2(), "Resume") {
             @Override
             public void actionPerformed(int button) {
-                TerraInfinita.$.setScreen(TerraInfinita.$.screenIngame);
+                TerraInfinita.setScreen(TerraInfinita.screenIngame());
             }
         };
 

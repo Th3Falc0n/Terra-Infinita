@@ -39,7 +39,7 @@ public class SubtileGlowGoo extends SubtileFluid {
         light.setPosition(tile.getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
 
         for (int i = 0; i < (int) pressure; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * 0.5f) {
                 new ParticleSpark(tile.getPosition().toEntityPos().addX(BLOCK_SIZE / 2), world).addVelocity(new Vector2(0, -1));
             }
         }

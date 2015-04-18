@@ -87,7 +87,7 @@ public class ScreenIngame extends AbstractScreen {
         }
 
         if (e.in.get(0, String.class) == "PAUSE") {
-            TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
+            TerraInfinita.setScreen(TerraInfinita.screenPause());
         }
     }
 

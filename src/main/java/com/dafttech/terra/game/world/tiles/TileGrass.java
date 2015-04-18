@@ -17,7 +17,7 @@ public class TileGrass extends Tile {
 
     public TileGrass() {
         super();
-        grassIndex = TerraInfinita.rnd.nextInt(5);
+        grassIndex = TerraInfinita.rnd().nextInt(5);
     }
 
     @Override

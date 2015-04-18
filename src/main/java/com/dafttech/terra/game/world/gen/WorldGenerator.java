@@ -11,7 +11,7 @@ public class WorldGenerator {
 
     public WorldGenerator(World world) {
         this.world = world;
-        noise = new PerlinNoise(TerraInfinita.rnd.nextInt(), 9, 0.48f);
+        noise = new PerlinNoise(TerraInfinita.rnd().nextInt(), 9, 0.48f);
     }
 
     public void generateChunk(Chunk chunk) {

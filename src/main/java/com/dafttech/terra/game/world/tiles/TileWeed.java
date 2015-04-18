@@ -30,8 +30,8 @@ public class TileWeed extends Tile {
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
-        if (TerraInfinita.rnd.nextInt(20) == 0) {
-            tryGrow(world, getPosition().addNew(TerraInfinita.rnd.nextInt(3) - 1, TerraInfinita.rnd.nextInt(3) - 1));
+        if (TerraInfinita.rnd().nextInt(20) == 0) {
+            tryGrow(world, getPosition().addNew(TerraInfinita.rnd().nextInt(3) - 1, TerraInfinita.rnd().nextInt(3) - 1));
         }
     }
 
