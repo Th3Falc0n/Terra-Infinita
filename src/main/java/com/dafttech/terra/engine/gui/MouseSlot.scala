@@ -9,7 +9,7 @@ import org.lolhens.eventmanager.{Event, EventListener}
 
 object MouseSlot {
 
-  private class MouseRenderSlot(p: Vector2) extends ElementSlot {
+  private class MouseRenderSlot(p: Vector2) extends ElementSlot(p) {
     Events.EVENTMANAGER.registerEventListener(this)
 
     @EventListener(Array("MOUSEMOVE"))
