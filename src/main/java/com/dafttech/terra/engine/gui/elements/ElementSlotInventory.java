@@ -1,0 +1,76 @@
+package com.dafttech.terra.engine.gui.elements;
+
+import com.badlogic.gdx.graphics.Color;
+import com.dafttech.terra.engine.AbstractScreen;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.gui.MouseSlot;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.entities.living.Player;
+import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.inventories.Inventory;
+import com.dafttech.terra.game.world.items.inventories.Stack;
+import com.dafttech.terra.resources.Resources;
+
+public class ElementSlotInventory extends GUIElement {
+    private float cooldownTime = 0;
+    public Stack assignedStack = null;
+    public Inventory assignedInventory = null;
+
+    public boolean active = false;
+
+    public ElementSlotInventory(Vector2 p, Inventory i) {
+        super(p, new Vector2(32, 32));
+
+        assignedInventory = i;
+        image = Resources.GUI.getImage("slot");
+    }
+
+    public boolean useAssignedItem(Player causer, Vector2 pos, boolean leftClick) {
+        if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
+            if ((!leftClick && assignedStack.use(causer, pos))) {
+                setCooldownTime(causer.worldObj, ((Item) assignedStack.type.toGameObject()).getNextUseDelay(causer, pos, leftClick));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void setCooldownTime(World world, float cooldownTime) {
+        this.cooldownTime = world.time + cooldownTime;
+    }
+
+    @Override
+    public void onClick(int button) {
+        if (button == 0) {
+            if (MouseSlot.getAssignedStack() != null) {
+                // TODO: combine stacks
+                // assignedInventory.add(MouseSlot.popAssignedStack());
+            } else if (MouseSlot.canAssignStack() && assignedStack != null) {
+                MouseSlot.assignStack(assignedStack);
+                assignedInventory.remove(assignedStack);
+            }
+        }
+    }
+
+    @Override
+    public void draw(AbstractScreen screen) {
+        screen.batch.setColor(active ? Color.YELLOW : Color.WHITE);
+        super.draw(screen);
+        Vector2 p = getScreenPosition();
+
+        screen.batch.begin();
+
+        if (assignedStack != null) {
+            ((Item) assignedStack.type.toGameObject()).drawInventory(p, screen);
+
+            Resources.GUI_FONT.draw(screen.batch, assignedStack.amount + "x " + assignedStack.type.toGameObject().getName(), 40 + p.x, 12 + p.y);
+        }
+
+        screen.batch.end();
+    }
+
+    public void assignStack(Stack stack) {
+        assignedStack = stack;
+    }
+}

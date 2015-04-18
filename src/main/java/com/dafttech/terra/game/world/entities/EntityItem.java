@@ -1,0 +1,54 @@
+package com.dafttech.terra.game.world.entities;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.inventories.Stack;
+import com.dafttech.terra.game.world.items.persistence.Prototype;
+import com.dafttech.terra.resources.Options;
+
+public class EntityItem extends Entity {
+    Item wrapped;
+
+    public EntityItem(Vector2 pos, World world, Vector2 size, Item w) {
+        super(pos, world, size);
+        wrapped = w;
+    }
+
+    @Override
+    public TextureRegion getImage() {
+        return wrapped.getImage();
+    }
+
+    @Override
+    public Prototype toPrototype() {
+        return wrapped.toPrototype();
+    }
+
+    @Override
+    public boolean collidesWith(Entity e) {
+        return false;
+    }
+
+    @Override
+    public void update(World world, float delta) {
+        Vector2 p = getWorld().localPlayer.getPosition();
+        Vector2 s = getWorld().localPlayer.getSize();
+
+        Vector2 vp = new Vector2(p.addNew(s.x * Options.BLOCK_SIZE / 2, s.y * Options.BLOCK_SIZE / 2));
+        vp.sub(getPosition());
+
+        if (vp.len2() < 400) {
+            getWorld().localPlayer.inventory.add(new Stack(wrapped, 1));
+
+            getWorld().removeEntity(this);
+        }
+
+        if (vp.len2() < 10000) {
+            addForce(vp.nor().mul(14f / vp.len2()));
+        }
+
+        super.update(world, delta);
+    }
+}
