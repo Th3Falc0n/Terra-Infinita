@@ -2,7 +2,10 @@ package com.dafttech.terra.resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -74,7 +77,22 @@ public class Resources {
 
         LIGHT.loadImage("pointlight", "lighting/pointlight.png");
 
-        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(new FileHandle("ui/button_font.ttf"));
+        FileHandle handle = null;
+        try {
+            Constructor<FileHandle> contructor = FileHandle.class.getDeclaredConstructor(String.class, Files.FileType.class);
+            contructor.setAccessible(true);
+            handle = contructor.newInstance("ui/button_font.ttf", Files.FileType.Classpath);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(handle);
 
         GUI_FONT = gen.generateFont(12, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?[]{}\\ßöüä'*#+~-.,;:_<>|^°", true);
 
