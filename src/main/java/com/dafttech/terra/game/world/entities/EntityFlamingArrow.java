@@ -1,9 +1,5 @@
 package com.dafttech.terra.game.world.entities;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
@@ -14,6 +10,10 @@ import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileFire;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class EntityFlamingArrow extends EntityArrow {
     PointLight light;
@@ -40,7 +40,7 @@ public class EntityFlamingArrow extends EntityArrow {
         light.setSize(90 + new Random().nextInt(10));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * velocity.len() * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity.len() * 0.5f) {
                 new ParticleSpark(getPosition(), worldObj);
             }
         }

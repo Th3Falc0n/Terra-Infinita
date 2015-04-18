@@ -1,7 +1,5 @@
 package com.dafttech.terra.game.world.entities;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,6 +18,8 @@ import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     Chunk chunk = null;
@@ -378,7 +378,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
 
         if (position.x >= player.getPosition().x - sx * BLOCK_SIZE && position.x <= player.getPosition().x + sx * BLOCK_SIZE
-                && position.y >= player.getPosition().y - sy * BLOCK_SIZE && position.y <= player.getPosition().y + sy * BLOCK_SIZE) return true;
+                && position.y >= player.getPosition().y - sy * BLOCK_SIZE && position.y <= player.getPosition().y + sy * BLOCK_SIZE)
+            return true;
         return false;
     }
 

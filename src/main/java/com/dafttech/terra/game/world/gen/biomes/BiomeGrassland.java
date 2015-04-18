@@ -7,11 +7,7 @@ import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
 import com.dafttech.terra.game.world.subtiles.SubtileBone;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
-import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileGrass;
-import com.dafttech.terra.game.world.tiles.TileLog;
-import com.dafttech.terra.game.world.tiles.TileStone;
+import com.dafttech.terra.game.world.tiles.*;
 
 public class BiomeGrassland extends Biome {
     public BiomeGrassland(String name) {
@@ -35,7 +31,7 @@ public class BiomeGrassland extends Biome {
                 Tile tile = null;
 
                 if (y - 1 == h) {
-                    tile = TerraInfinita.rnd.nextInt(40) == 0 ? new TileLog().setLiving(true) : new TileGrass();
+                    tile = TerraInfinita.rnd().nextInt(40) == 0 ? new TileLog().setLiving(true) : new TileGrass();
                 }
 
                 if (tile == null) {
@@ -46,7 +42,7 @@ public class BiomeGrassland extends Biome {
                         }
                     } else {
                         tile = new TileStone();
-                        if (TerraInfinita.rnd.nextDouble() < 0.004) {
+                        if (TerraInfinita.rnd().nextDouble() < 0.004) {
                             tile.addSubtile(new SubtileBone());
                         }
                     }

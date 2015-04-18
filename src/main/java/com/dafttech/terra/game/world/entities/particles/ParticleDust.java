@@ -10,11 +10,11 @@ public class ParticleDust extends Particle {
     float size;
 
     public ParticleDust(Vector2 pos, World world, TextureRegion tex) {
-        super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat()), new Vector2(0.0f, 0.0f));
+        super(pos, world, 0.6f + (0.75f * TerraInfinita.rnd().nextFloat()), new Vector2(0.0f, 0.0f));
 
         assignedTexture = tex;
-        size = TerraInfinita.rnd.nextFloat() * 0.2f + 0.25f;
-        setVelocity(new Vector2((TerraInfinita.rnd.nextFloat() - 0.5f) * 5f, (TerraInfinita.rnd.nextFloat() - 1f) * 2f));
+        size = TerraInfinita.rnd().nextFloat() * 0.2f + 0.25f;
+        setVelocity(new Vector2((TerraInfinita.rnd().nextFloat() - 0.5f) * 5f, (TerraInfinita.rnd().nextFloat() - 1f) * 2f));
         setHasGravity(false);
         setMidPos(pos);
     }

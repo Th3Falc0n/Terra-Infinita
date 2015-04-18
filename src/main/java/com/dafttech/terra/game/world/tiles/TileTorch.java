@@ -1,7 +1,5 @@
 package com.dafttech.terra.game.world.tiles;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
@@ -10,6 +8,8 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.resources.Resources;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class TileTorch extends TileFalling {
     PointLight light;
@@ -32,7 +32,7 @@ public class TileTorch extends TileFalling {
         light.setPosition(getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd.nextDouble() < delta * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * 0.5f) {
                 new ParticleSpark(getPosition().toEntityPos().addX(BLOCK_SIZE / 2), world).addVelocity(new Vector2(0, -1));
             }
         }

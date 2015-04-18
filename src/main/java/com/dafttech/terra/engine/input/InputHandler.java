@@ -1,12 +1,12 @@
 package com.dafttech.terra.engine.input;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.dafttech.terra.game.Events;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InputHandler implements InputProcessor {
     Map<String, Integer> keyNames = new HashMap<String, Integer>();

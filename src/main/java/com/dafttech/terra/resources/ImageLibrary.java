@@ -1,10 +1,10 @@
 package com.dafttech.terra.resources;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ImageLibrary {
     public Map<String, TextureRegion> library = new HashMap<String, TextureRegion>();

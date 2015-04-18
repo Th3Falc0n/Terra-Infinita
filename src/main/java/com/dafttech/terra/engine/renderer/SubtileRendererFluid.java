@@ -1,13 +1,13 @@
 package com.dafttech.terra.engine.renderer;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 import com.dafttech.terra.game.world.subtiles.SubtileFluid;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class SubtileRendererFluid extends SubtileRendererMask {
     public static SubtileRenderer $Instance = new SubtileRendererFluid();

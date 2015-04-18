@@ -1,13 +1,13 @@
 package com.dafttech.terra.game.world.items.inventories;
 
+import com.dafttech.terra.game.world.items.Item;
+import com.dafttech.terra.game.world.items.persistence.GameObject;
+import com.dafttech.terra.game.world.items.persistence.Prototype;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.dafttech.terra.game.world.items.Item;
-import com.dafttech.terra.game.world.items.persistence.GameObject;
-import com.dafttech.terra.game.world.items.persistence.Prototype;
 
 public class Inventory {
     HashMap<Prototype, List<Stack>> stacks = new HashMap<Prototype, List<Stack>>();

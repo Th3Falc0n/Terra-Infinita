@@ -1,12 +1,12 @@
 package com.dafttech.terra.engine;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Vector2 {
     public float x, y;

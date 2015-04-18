@@ -19,7 +19,9 @@ public class Prototype {
         if (obj instanceof GameObject) return hashCode() == ((GameObject) obj).hashCode();
 
         return true;
-    };
+    }
+
+    ;
 
     public String getHashBase() {
         StringBuilder hashBuilder = new StringBuilder();

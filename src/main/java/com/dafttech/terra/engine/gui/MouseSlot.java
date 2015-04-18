@@ -1,13 +1,13 @@
 package com.dafttech.terra.engine.gui;
 
-import org.lolhens.eventmanager.Event;
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.elements.ElementSlot;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.items.inventories.Stack;
+import org.lolhens.eventmanager.Event;
+import org.lolhens.eventmanager.EventListener;
 
 public class MouseSlot {
     private static class MouseRenderSlot extends ElementSlot {

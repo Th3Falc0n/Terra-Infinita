@@ -1,7 +1,5 @@
 package com.dafttech.terra.engine.passes;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,14 +7,16 @@ import com.badlogic.gdx.graphics.glutils.FloatFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
-import org.lolhens.eventmanager.Event;
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
+import org.lolhens.eventmanager.Event;
+import org.lolhens.eventmanager.EventListener;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class PassLighting extends RenderingPass {
     FrameBuffer buffer = new FloatFrameBuffer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);

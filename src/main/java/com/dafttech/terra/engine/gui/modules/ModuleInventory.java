@@ -1,7 +1,5 @@
 package com.dafttech.terra.engine.gui.modules;
 
-import org.lolhens.eventmanager.Event;
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
@@ -14,6 +12,8 @@ import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.gui.elements.ElementSlotInventory;
 import com.dafttech.terra.game.Events;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
+import org.lolhens.eventmanager.Event;
+import org.lolhens.eventmanager.EventListener;
 
 public class ModuleInventory extends GUIModule {
     ContainerList invList;

@@ -1,10 +1,10 @@
 package com.dafttech.terra.game.world.gen.biomes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Biome {
     public static List<Biome> biomes = new ArrayList<Biome>();

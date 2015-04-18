@@ -1,18 +1,12 @@
 package com.dafttech.terra.game;
 
 import com.badlogic.gdx.Gdx;
-import org.lolhens.eventmanager.Event;
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.MouseSlot;
 import com.dafttech.terra.engine.gui.Tooltip;
-import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
-import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
-import com.dafttech.terra.engine.gui.anchors.AnchorRight;
-import com.dafttech.terra.engine.gui.anchors.AnchorTop;
-import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.engine.gui.anchors.*;
 import com.dafttech.terra.engine.gui.containers.ContainerList;
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
@@ -20,6 +14,8 @@ import com.dafttech.terra.engine.gui.modules.ModuleChat;
 import com.dafttech.terra.engine.input.InputHandler;
 import com.dafttech.terra.engine.passes.RenderingPass;
 import com.dafttech.terra.game.world.World;
+import org.lolhens.eventmanager.Event;
+import org.lolhens.eventmanager.EventListener;
 
 public class ScreenIngame extends AbstractScreen {
     World localWorld;
@@ -87,7 +83,7 @@ public class ScreenIngame extends AbstractScreen {
         }
 
         if (e.in.get(0, String.class) == "PAUSE") {
-            TerraInfinita.$.setScreen(TerraInfinita.$.screenPause);
+            TerraInfinita.setScreen(TerraInfinita.screenPause());
         }
     }
 

@@ -1,11 +1,7 @@
 package com.dafttech.terra.engine.gui.modules;
 
 import com.dafttech.terra.engine.Vector2;
-import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
-import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
-import com.dafttech.terra.engine.gui.anchors.AnchorRightNextTo;
-import com.dafttech.terra.engine.gui.anchors.AnchorTop;
-import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.engine.gui.anchors.*;
 import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.elements.ElementButton;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;

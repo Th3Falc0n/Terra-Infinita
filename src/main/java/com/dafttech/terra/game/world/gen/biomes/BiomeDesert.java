@@ -38,12 +38,12 @@ public class BiomeDesert extends Biome {
                         if (y - 1 == h) {
                             tile.addSubtile(new SubtileDryGrass());
                         }
-                        if (TerraInfinita.rnd.nextDouble() < 0.002) {
+                        if (TerraInfinita.rnd().nextDouble() < 0.002) {
                             tile.addSubtile(new SubtileBone());
                         }
                     } else {
                         tile = new TileStone();
-                        if (TerraInfinita.rnd.nextDouble() < 0.004) {
+                        if (TerraInfinita.rnd().nextDouble() < 0.004) {
                             tile.addSubtile(new SubtileBone());
                         }
                     }
