@@ -1,15 +1,15 @@
 package com.dafttech.terra.game;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
+import com.dafttech.terra.game.world.World;
+import com.dafttech.terra.game.world.tiles.Tile;
 import org.lolhens.eventmanager.Event;
 import org.lolhens.eventmanager.EventManager;
 import org.lolhens.eventmanager.EventType;
 import org.lolhens.eventmanager.ListenerContainer;
 import org.lolhens.storage.tuple.Tuple;
-import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.game.world.tiles.Tile;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Events {
     public static final EventManager EVENTMANAGER = new EventManager();

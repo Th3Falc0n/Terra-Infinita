@@ -1,15 +1,14 @@
 package com.dafttech.terra.engine.passes;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import org.lwjgl.opengl.GL11;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
+import org.lwjgl.opengl.GL11;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class PassObjects extends RenderingPass {
 

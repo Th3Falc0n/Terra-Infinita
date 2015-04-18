@@ -1,11 +1,5 @@
 package com.dafttech.terra.game.world;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
@@ -16,6 +10,12 @@ import com.dafttech.terra.game.world.gen.biomes.BiomeDesert;
 import com.dafttech.terra.game.world.gen.biomes.BiomeGrassland;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Chunk implements IDrawableInWorld {
     public World world;
@@ -89,7 +89,8 @@ public class Chunk implements IDrawableInWorld {
 
     public Chunk setTile(Vector2i blockInChunkPos, Tile tile) {
         if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
-            if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled()) map[blockInChunkPos.x][blockInChunkPos.y] = tile;
+            if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled())
+                map[blockInChunkPos.x][blockInChunkPos.y] = tile;
         }
         return this;
     }

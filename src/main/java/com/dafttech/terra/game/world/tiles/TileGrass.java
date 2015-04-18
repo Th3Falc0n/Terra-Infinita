@@ -1,7 +1,5 @@
 package com.dafttech.terra.game.world.tiles;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Vector2i;
@@ -10,6 +8,8 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
 
 public class TileGrass extends Tile {
     @Persistent
@@ -37,7 +37,8 @@ public class TileGrass extends Tile {
 
     @Override
     public void onNeighborChange(World world, Tile changed) {
-        if (world.getTile(getPosition().add(0, 1)).isAir()) world.destroyTile(getPosition().getX(), getPosition().getY(), null);
+        if (world.getTile(getPosition().add(0, 1)).isAir())
+            world.destroyTile(getPosition().getX(), getPosition().getY(), null);
     }
 
     @Override

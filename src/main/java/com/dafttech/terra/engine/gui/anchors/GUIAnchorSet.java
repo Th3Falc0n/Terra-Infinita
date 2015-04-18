@@ -1,11 +1,11 @@
 package com.dafttech.terra.engine.gui.anchors;
 
+import com.dafttech.terra.engine.gui.GUIObject;
+import com.dafttech.terra.engine.gui.containers.GUIContainer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.dafttech.terra.engine.gui.GUIObject;
-import com.dafttech.terra.engine.gui.containers.GUIContainer;
 
 public class GUIAnchorSet {
     List<GUIAnchor> anchors = new ArrayList<GUIAnchor>();

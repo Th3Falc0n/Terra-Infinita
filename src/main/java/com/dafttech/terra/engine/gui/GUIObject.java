@@ -1,11 +1,11 @@
 package com.dafttech.terra.engine.gui;
 
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
 import com.dafttech.terra.engine.gui.containers.GUIContainer;
 import com.dafttech.terra.game.Events;
+import org.lolhens.eventmanager.EventListener;
 
 public abstract class GUIObject {
     public Vector2 position;

@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine.gui.modules;
 
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
 import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
@@ -11,6 +10,7 @@ import com.dafttech.terra.engine.gui.elements.ElementInputLabel;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.input.handlers.IStringInputHandler;
 import com.dafttech.terra.game.Events;
+import org.lolhens.eventmanager.EventListener;
 
 public class ModuleChat extends GUIModule implements IStringInputHandler {
     public ContainerList messageList;

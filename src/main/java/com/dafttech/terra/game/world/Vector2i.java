@@ -1,10 +1,10 @@
 package com.dafttech.terra.game.world;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.Entity;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Vector2i {
     public int x, y; // TODO make private

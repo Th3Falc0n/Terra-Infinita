@@ -1,15 +1,15 @@
 package com.dafttech.terra.game.world.entities.particles;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class ParticleExplosion extends Particle {
     PointLight light;

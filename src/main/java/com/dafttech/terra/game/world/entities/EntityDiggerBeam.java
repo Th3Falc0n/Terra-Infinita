@@ -1,9 +1,5 @@
 package com.dafttech.terra.game.world.entities;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
@@ -12,6 +8,10 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.models.EntityThrown;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class EntityDiggerBeam extends EntityThrown {
     PointLight light;

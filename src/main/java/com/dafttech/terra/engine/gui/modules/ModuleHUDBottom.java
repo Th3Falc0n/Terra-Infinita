@@ -1,19 +1,15 @@
 package com.dafttech.terra.engine.gui.modules;
 
 import com.badlogic.gdx.graphics.Color;
-import org.lolhens.eventmanager.Event;
-import org.lolhens.eventmanager.EventListener;
 import com.dafttech.terra.engine.Vector2;
-import com.dafttech.terra.engine.gui.anchors.AnchorBottom;
-import com.dafttech.terra.engine.gui.anchors.AnchorCenterX;
-import com.dafttech.terra.engine.gui.anchors.AnchorLeft;
-import com.dafttech.terra.engine.gui.anchors.AnchorRight;
-import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet;
+import com.dafttech.terra.engine.gui.anchors.*;
 import com.dafttech.terra.engine.gui.containers.ContainerBlock;
 import com.dafttech.terra.engine.gui.elements.ElementBar;
 import com.dafttech.terra.engine.gui.elements.ElementLabel;
 import com.dafttech.terra.engine.gui.elements.ElementSlot;
 import com.dafttech.terra.game.Events;
+import org.lolhens.eventmanager.Event;
+import org.lolhens.eventmanager.EventListener;
 
 public class ModuleHUDBottom extends GUIModule {
     public ElementSlot[] slots = new ElementSlot[8];

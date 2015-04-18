@@ -1,7 +1,5 @@
 package com.dafttech.terra.engine.renderer;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.Vector2;
@@ -9,6 +7,8 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.tiles.Tile;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class TileRendererMultiblock extends TileRendererBlock {
     protected Vector2i multiblockSize;

@@ -1,7 +1,5 @@
 package com.dafttech.terra.game.world.tiles;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.renderer.TileRenderer;
@@ -9,6 +7,8 @@ import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
 
 public class TileLog extends Tile {
     private boolean living = false;

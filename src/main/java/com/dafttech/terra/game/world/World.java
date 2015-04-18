@@ -1,12 +1,5 @@
 package com.dafttech.terra.game.world;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
@@ -24,6 +17,13 @@ import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.subtiles.Subtile;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class World implements IDrawableInWorld {
     public Vector2i size = new Vector2i(0, 0);

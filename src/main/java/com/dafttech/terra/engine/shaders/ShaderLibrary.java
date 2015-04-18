@@ -1,13 +1,13 @@
 package com.dafttech.terra.engine.shaders;
 
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.CharBuffer;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class ShaderLibrary {
     public static Map<String, ShaderProgram> library = new HashMap<String, ShaderProgram>();

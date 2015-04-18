@@ -6,8 +6,8 @@ import com.badlogic.gdx.{ApplicationListener, Game, Gdx}
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.input.InputHandler
-import com.dafttech.terra.game.{Events, ScreenIngame, ScreenPauseMenu}
 import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.{Events, ScreenIngame, ScreenPauseMenu}
 import com.dafttech.terra.resources.Resources
 import org.lwjgl.opengl.Display
 

@@ -7,18 +7,18 @@ public class WeaponType {
 
     public Skill getSkillForWeaponSkillSlotID(int id) {
         switch (id) {
-        case 0:
-            return repeatable;
-        case 1:
-            return main1;
-        case 2:
-            return main2;
-        case 3:
-            return sub1;
-        case 4:
-            return sub2;
-        default:
-            return null;
+            case 0:
+                return repeatable;
+            case 1:
+                return main1;
+            case 2:
+                return main2;
+            case 3:
+                return sub1;
+            case 4:
+                return sub2;
+            default:
+                return null;
         }
     }
 }

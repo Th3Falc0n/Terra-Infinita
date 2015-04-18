@@ -1,9 +1,5 @@
 package com.dafttech.terra.game.world.tiles;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
@@ -17,6 +13,10 @@ import com.dafttech.terra.game.world.entities.EntityItem;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.items.Item;
 import com.dafttech.terra.game.world.subtiles.Subtile;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
     private World world = null;
@@ -77,7 +77,9 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public EntityItem spawnAsEntity(World world) {
         Item dropped = getDroppedItem();
         return dropped == null ? null : new EntityItem(getPosition().toEntityPos().add(0.5f, 0.5f), world, new Vector2(0.5f, 0.5f), dropped);
-    };
+    }
+
+    ;
 
     public TileRenderer getRenderer() {
         return TileRendererBlock.$Instance;
@@ -134,7 +136,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     public Subtile getSubtile(Class<? extends Subtile> subtileClass, boolean inherited) {
         Subtile subtile = null;
-        for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext();) {
+        for (Iterator<Subtile> i = subtiles.iterator(); i.hasNext(); ) {
             subtile = i.next();
             if ((inherited && subtileClass.isAssignableFrom(subtile.getClass())) || (!inherited && subtile.getClass() == subtileClass)) {
                 return subtile;

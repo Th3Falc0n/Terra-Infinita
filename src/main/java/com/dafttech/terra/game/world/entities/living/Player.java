@@ -1,7 +1,5 @@
 package com.dafttech.terra.game.world.entities.living;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,21 +18,13 @@ import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.particles.ParticleDust;
 import com.dafttech.terra.game.world.interaction.Skill;
-import com.dafttech.terra.game.world.items.ItemDigStaff;
-import com.dafttech.terra.game.world.items.ItemDynamite;
-import com.dafttech.terra.game.world.items.ItemFlamingArrow;
-import com.dafttech.terra.game.world.items.ItemGlowstick;
-import com.dafttech.terra.game.world.items.ItemRainbowGun;
-import com.dafttech.terra.game.world.items.ItemWaterBucket;
+import com.dafttech.terra.game.world.items.*;
 import com.dafttech.terra.game.world.items.inventories.Inventory;
 import com.dafttech.terra.game.world.items.inventories.Stack;
-import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileFence;
-import com.dafttech.terra.game.world.tiles.TileFire;
-import com.dafttech.terra.game.world.tiles.TileSapling;
-import com.dafttech.terra.game.world.tiles.TileTorch;
+import com.dafttech.terra.game.world.tiles.*;
 import com.dafttech.terra.resources.Resources;
+
+import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 public class Player extends EntityLiving {
     public Player(Vector2 pos, World world) {

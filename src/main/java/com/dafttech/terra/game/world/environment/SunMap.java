@@ -1,9 +1,9 @@
 package com.dafttech.terra.game.world.environment;
 
-import java.util.HashMap;
-
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
+
+import java.util.HashMap;
 
 public class SunMap {
     private HashMap<Integer, Integer> heights = new HashMap<Integer, Integer>();

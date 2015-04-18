@@ -7,11 +7,7 @@ import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
 import com.dafttech.terra.game.world.subtiles.SubtileBone;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
-import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.game.world.tiles.TileDirt;
-import com.dafttech.terra.game.world.tiles.TileGrass;
-import com.dafttech.terra.game.world.tiles.TileLog;
-import com.dafttech.terra.game.world.tiles.TileStone;
+import com.dafttech.terra.game.world.tiles.*;
 
 public class BiomeGrassland extends Biome {
     public BiomeGrassland(String name) {

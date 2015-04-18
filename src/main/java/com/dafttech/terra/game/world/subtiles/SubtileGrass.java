@@ -1,13 +1,13 @@
 package com.dafttech.terra.game.world.subtiles;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileDirt;
 import com.dafttech.terra.resources.Resources;
+
+import java.util.Random;
 
 public class SubtileGrass extends Subtile {
     public SubtileGrass() {

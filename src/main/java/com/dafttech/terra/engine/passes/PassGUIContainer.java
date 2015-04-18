@@ -1,11 +1,10 @@
 package com.dafttech.terra.engine.passes;
 
-import org.lwjgl.opengl.GL11;
-
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.gui.containers.GUIContainer;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class PassGUIContainer extends RenderingPass {
     @Override
