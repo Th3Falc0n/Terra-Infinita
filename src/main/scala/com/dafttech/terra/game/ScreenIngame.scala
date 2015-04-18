@@ -2,20 +2,16 @@ package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.AbstractScreen
-import com.dafttech.terra.engine.Vector2
-import com.dafttech.terra.engine.gui.MouseSlot
-import com.dafttech.terra.engine.gui.Tooltip
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.gui.anchors._
-import com.dafttech.terra.engine.gui.containers.ContainerList
-import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
+import com.dafttech.terra.engine.gui.containers.{ContainerList, ContainerOnscreen}
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.gui.modules.ModuleChat
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.game.world.World
-import org.lolhens.eventmanager.Event
-import org.lolhens.eventmanager.EventListener
+import org.lolhens.eventmanager.{Event, EventListener}
 
 class ScreenIngame extends AbstractScreen {
   private[game] var localWorld: World = null

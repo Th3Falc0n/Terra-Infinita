@@ -1,12 +1,9 @@
 package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.AbstractScreen
-import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.Tooltip
-import com.dafttech.terra.engine.gui.anchors.AnchorRight
-import com.dafttech.terra.engine.gui.anchors.AnchorTop
-import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet
+import com.dafttech.terra.engine.gui.anchors.{AnchorRight, AnchorTop, GUIAnchorSet}
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.passes.RenderingPass
