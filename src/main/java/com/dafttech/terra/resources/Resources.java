@@ -95,7 +95,7 @@ public class Resources {
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(handle);
 
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"ง$%&/()=?[]{}\\'*#+~-.,;:_<>^";
+        param.characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"ยง$%&/()=?[]{}\\'*#+~-.,;:_<>^";
         param.size = 12;
         param.flip = true;
 
