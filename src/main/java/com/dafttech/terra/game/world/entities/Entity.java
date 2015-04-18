@@ -138,14 +138,14 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     @SuppressWarnings("unused")
     private void drawRect(Rectangle rect, ShapeRenderer rend, Color color) {
-        rend.begin(ShapeType.FilledRectangle);
+        rend.begin(ShapeType.Filled);
 
         rend.setColor(color.r, color.g, color.b, 1);
 
         Vector2 v2 = new Vector2(rect.x, rect.y);
         v2 = v2.toRenderPosition(getPosition());
 
-        rend.filledRect(v2.x, v2.y, rect.width, rect.height);
+        rend.rect(v2.x, v2.y, rect.width, rect.height);
 
         rend.flush();
 

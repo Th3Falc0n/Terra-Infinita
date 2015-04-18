@@ -4,7 +4,6 @@ import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.FloatFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -48,7 +47,7 @@ public class PassLighting extends RenderingPass {
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         screen.batch.enableBlending();
-        screen.batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
+        screen.batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
 
         int sx = 2 + Gdx.graphics.getWidth() / BLOCK_SIZE / 2;
         int sy = 2 + Gdx.graphics.getHeight() / BLOCK_SIZE / 2;
@@ -59,7 +58,7 @@ public class PassLighting extends RenderingPass {
 
         screen.batch.begin();
 
-        screen.shr.begin(ShapeType.FilledRectangle);
+        screen.shr.begin(ShapeType.Filled);
         screen.shr.setColor(nextClr);
 
         for (int x = (int) pointOfView.getPosition().x / BLOCK_SIZE - sx; x < (int) pointOfView.getPosition().x / BLOCK_SIZE + sx; x++) {
@@ -74,12 +73,12 @@ public class PassLighting extends RenderingPass {
 
                             screen.shr.end();
                             screen.shr.setColor(nextClr);
-                            screen.shr.begin(ShapeType.FilledRectangle);
+                            screen.shr.begin(ShapeType.Filled);
                         }
 
                         Rectangle rect = getSunlightRect(world.getTile(x, y), pointOfView);
 
-                        screen.shr.filledRect(rect.x, rect.y, rect.width, rect.height);
+                        screen.shr.rect(rect.x, rect.y, rect.width, rect.height);
                     }
 
                     if (world.getTile(x, y).isLightEmitter() && world.getTile(x, y).getEmittedLight() != null) {
@@ -112,7 +111,7 @@ public class PassLighting extends RenderingPass {
         RenderingPass.rpGaussian.applyPass(screen, world.localPlayer, world, buffer.getColorBufferTexture(), buffer);
 
         screen.batch.setShader(null);
-        screen.batch.setBlendFunction(GL10.GL_DST_COLOR, GL10.GL_ZERO);
+        screen.batch.setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_ZERO);
         screen.batch.enableBlending();
 
         screen.batch.begin();

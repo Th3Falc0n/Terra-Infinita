@@ -60,9 +60,9 @@ public class ElementBar extends GUIElement {
         screen.batch.end();
 
         screen.shr.setColor(0, 0, 0, 0);
-        screen.shr.begin(ShapeType.FilledRectangle);
+        screen.shr.begin(ShapeType.Filled);
         float w = 124f - (124f * (value / maxValue));
-        screen.shr.filledRect(126 - w, 0, w, 16);
+        screen.shr.rect(126 - w, 0, w, 16);
         screen.shr.end();
 
         ciBuffer.end();
