@@ -23,12 +23,7 @@ class FPSLogger {
     frameTime += tDifF
     frameFrames += 1
     if (frameTime > 0.5f) {
-      if (outputActive) System.out.println(String.format(
-        "FPSCounter: t=%.3f F=%d F/t=%.1f avgF/t=%.1f",
-        frameTime.asInstanceOf[AnyRef],
-        frameFrames.toInt.asInstanceOf[AnyRef],
-        (frameFrames / frameTime).asInstanceOf[AnyRef],
-        (avgFrames / avgTime).asInstanceOf[AnyRef]))
+      if (outputActive) println(f"FPSCounter: t=$frameTime%.3f F=${frameFrames.toInt}%d F/t=${frameFrames / frameTime}%.1f avgF/t=${avgFrames / avgTime}%.1f")
       frameTime = 0
       frameFrames = 0
     }
