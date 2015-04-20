@@ -7,8 +7,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.particles.ParticleExplosion;
 import com.dafttech.terra.resources.Resources;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public class EntityDynamite extends Entity {
     float explodeTimer;
     int radius;

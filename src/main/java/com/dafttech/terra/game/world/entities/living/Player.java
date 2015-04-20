@@ -24,8 +24,6 @@ import com.dafttech.terra.game.world.items.inventories.Stack;
 import com.dafttech.terra.game.world.tiles.*;
 import com.dafttech.terra.resources.Resources;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public class Player extends EntityLiving {
     public Player(Vector2 pos, World world) {
         super(pos, world, new Vector2(1.9f, 3.8f));

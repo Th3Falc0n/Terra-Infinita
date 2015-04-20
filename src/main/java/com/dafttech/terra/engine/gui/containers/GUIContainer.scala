@@ -1,13 +1,13 @@
 package com.dafttech.terra.engine.gui.containers
 
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.GUIObject
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import org.lolhens.eventmanager.{Event, EventListener}
 
 import scala.collection.mutable
 
 abstract class GUIContainer(p: Vector2, s: Vector2) extends GUIObject(p, s) {
-  private var objects: mutable.ArrayBuffer[GUIObject] = new mutable.ArrayBuffer[GUIObject]
+  val objects: mutable.ArrayBuffer[GUIObject] = new mutable.ArrayBuffer[GUIObject]
 
   def draw(screen: AbstractScreen) {
     for (o <- objects) {

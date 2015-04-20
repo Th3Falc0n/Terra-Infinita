@@ -2,23 +2,17 @@ package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
-import com.dafttech.terra.engine.input.{FocusManager, IFocusableTyping}
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.dafttech.terra.engine.input.handlers.IStringInputHandler
+import com.dafttech.terra.engine.input.{FocusManager, IFocusableTyping}
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
 
-class ElementInputLabel extends GUIElement with IFocusableTyping {
+class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GUIElement(p, new Vector2) with IFocusableTyping {
   private var text: String = ""
   private var renderText: String = ""
   var clr: Color = Color.WHITE
-  private[elements] var handler: IStringInputHandler = null
   private var time: Float = 0
-
-  def this(p: Vector2, h: IStringInputHandler) {
-    this()
-    `super`(p, new Vector2)
-    handler = h
-  }
 
   def setColor(c: Color) {
     clr = c

@@ -1,11 +1,11 @@
 package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.graphics.Pixmap.Format
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.FrameBuffer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Matrix4
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
@@ -14,23 +14,14 @@ object ElementBar {
   private var ciBuffer: FrameBuffer = new FrameBuffer(Format.RGBA8888, 128, 16, false)
 }
 
-class ElementBar extends GUIElement {
+class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement(p, new Vector2(128, 16)) {
   private[elements] var bufferMatrix: Matrix4 = new Matrix4().setToOrtho(0, 128, 16, 0, 0, 1)
   var imageMask: TextureRegion = null
-  var value: Float = .0
-  var maxValue: Float = .0
-  private var clr: Color = null
+  var value: Float = .0f
 
-  def this(p: Vector2, c: Color, mv: Float) {
-    this()
-    `super`(p, new Vector2(128, 16))
-    clr = c
-    clr.a = 1
-    maxValue = mv
-    value = 50
-    image = Resources.GUI.getImage("bar")
-    imageMask = Resources.GUI.getImage("bar_mask")
-  }
+  clr.a = 1
+  image = Resources.GUI.getImage("bar")
+  imageMask = Resources.GUI.getImage("bar_mask")
 
   def setValue(v: Float) {
     value = v

@@ -26,13 +26,13 @@ class ModuleCrafting extends GUIModule {
     container.assignAnchorSet(set)
     var btnRecipe: ElementButton = null
     var btnResearch: ElementButton = null
-    btnRecipe = new ElementButton((new Vector2, "Recipes")) {
+    btnRecipe = new ElementButton(new Vector2, "Recipes") {
       def actionPerformed(button: Int) {
         shown.clearObjects
         shown.addObject(recipeList)
       }
     }
-    btnResearch = new ElementButton((new Vector2, "Research")) {
+    btnResearch = new ElementButton(new Vector2, "Research") {
       def actionPerformed(button: Int) {
         shown.clearObjects
         shown.addObject(researchList)

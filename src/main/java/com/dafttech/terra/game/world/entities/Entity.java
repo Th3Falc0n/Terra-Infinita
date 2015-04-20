@@ -19,8 +19,6 @@ import com.dafttech.terra.game.world.items.persistence.GameObject;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.tiles.Tile;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     Chunk chunk = null;
     @Persistent

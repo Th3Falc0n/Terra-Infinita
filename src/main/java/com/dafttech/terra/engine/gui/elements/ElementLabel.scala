@@ -1,20 +1,13 @@
 package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
 
-class ElementLabel extends GUIElement {
-  private var text: String = "Button"
+class ElementLabel(p: Vector2, var text: String) extends GUIElement(p, null) {
   var clr: Color = Color.WHITE
-
-  def this(p: Vector2, txt: String) {
-    this()
-    `super`(p, null)
-    text = txt
-    val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
-    size = new Vector2(bnds.width, bnds.height)
-  }
+  setText(text)
 
   def setText(txt: String) {
     text = txt

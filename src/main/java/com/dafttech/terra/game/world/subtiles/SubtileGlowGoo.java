@@ -8,8 +8,6 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.resources.Resources;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public class SubtileGlowGoo extends SubtileFluid {
     float img = 0;
     PointLight light;

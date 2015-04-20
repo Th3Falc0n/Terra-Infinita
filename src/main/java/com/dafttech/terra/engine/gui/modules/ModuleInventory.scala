@@ -36,21 +36,17 @@ class ModuleInventory extends GUIModule {
   override def update(delta: Float) {
     super.update(delta)
     invList.clearObjects
-    {
-      var n: Int = 0
-      while (n < 5) {
-        {
-          if (index + n < inv.getList.size) {
-            val slot: ElementSlotInventory = new ElementSlotInventory(new Vector2, inv)
-            slot.assignStack(inv.getList.get(index + n))
-            invList.addObject(slot)
-          }
-        }
-        ({
-          n += 1; n - 1
-        })
+
+    var n = 0
+    while (n < 5) {
+      if (index + n < inv.getList.size) {
+        val slot: ElementSlotInventory = new ElementSlotInventory(new Vector2, inv)
+        slot.assignStack(inv.getList.get(index + n))
+        invList.addObject(slot)
       }
+      n += 1
     }
+
     invList.addObject(new ElementLabel(new Vector2, index + "-" + (index + 5) + " / " + inv.getList.size))
   }
 
@@ -64,7 +60,7 @@ class ModuleInventory extends GUIModule {
     invLabel = new ElementLabel(new Vector2, "Inventory:")
     invLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)))
     container.addObject(invLabel)
-    invList = new ContainerList((new Vector2, new Vector2(500, 200))) {
+    invList = new ContainerList(new Vector2, new Vector2(500, 200)) {
       override def onClick(button: Int) {
         super.onClick(button)
         if (MouseSlot.getAssignedStack != null) {

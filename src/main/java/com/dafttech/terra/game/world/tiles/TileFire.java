@@ -10,8 +10,6 @@ import com.dafttech.terra.resources.Resources;
 
 import java.util.Random;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public class TileFire extends TileFalling {
     PointLight light;
     float spreadCounter = 0.2f;

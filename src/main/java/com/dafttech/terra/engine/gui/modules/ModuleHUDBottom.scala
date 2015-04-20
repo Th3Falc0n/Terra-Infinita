@@ -35,19 +35,16 @@ class ModuleHUDBottom extends GUIModule {
     set.addAnchor(new AnchorCenterX)
     set.addAnchor(new AnchorBottom(0.01f))
     container.assignAnchorSet(set)
-    {
-      var i: Int = 0
-      while (i < 8) {
-        {
-          slots(i) = new ElementSlot(new Vector2(i * 40, 0))
-          slots(i).assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorBottom(0.01f)))
-          container.addObject(slots(i))
-        }
-        ({
-          i += 1; i - 1
-        })
-      }
+
+    var i = 0
+    while (i < 8) {
+      slots(i) = new ElementSlot(new Vector2(i * 40, 0))
+      slots(i).assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorBottom(0.01f)))
+      container.addObject(slots(i))
+
+      i += 1
     }
+
     slots(0).active = true
     healthBar = new ElementBar(new Vector2(0, 16), Color.RED, 100)
     apBar = new ElementBar(new Vector2(0, 16), Color.BLUE, 100)

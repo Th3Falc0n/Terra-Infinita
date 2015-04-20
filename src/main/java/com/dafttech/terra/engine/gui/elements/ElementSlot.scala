@@ -1,24 +1,20 @@
 package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.graphics.Color
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.MouseSlot
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.resources.Resources
 
-class ElementSlot extends GUIElement {
+class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false
 
-  def this(p: Vector2) {
-    this()
-    `super`(p, new Vector2(32, 32))
-    image = Resources.GUI.getImage("slot")
-  }
+  image = Resources.GUI.getImage("slot")
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
     if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {

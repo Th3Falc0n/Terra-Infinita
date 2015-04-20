@@ -5,20 +5,10 @@ import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.resources.Resources
 
-class ElementSkill extends GUIElement {
-  private var label: String = ""
-  private var player: Player = null
-  private var skillID: Int = 0
+class ElementSkill(p: Vector2, val player: Player, val label: String, val skillID: Int) extends GUIElement(p, new Vector2(32, 32)) {
   var active: Boolean = false
 
-  def this(p: Vector2, pl: Player, l: String, sid: Int) {
-    this()
-    `super`(p, new Vector2(32, 32))
-    image = Resources.GUI.getImage("slot")
-    label = l
-    player = pl
-    skillID = sid
-  }
+  image = Resources.GUI.getImage("slot")
 
   override def onClick(button: Int) {
   }

@@ -10,8 +10,6 @@ import com.dafttech.terra.resources.Resources;
 
 import java.util.Random;
 
-import static com.dafttech.terra.resources.Options.BLOCK_SIZE;
-
 public class EntityRainbow extends EntityThrown {
     PointLight light;
 
