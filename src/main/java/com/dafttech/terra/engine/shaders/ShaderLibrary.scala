@@ -12,8 +12,8 @@ object ShaderLibrary {
   @throws(classOf[IOException])
   def loadShader(name: String, vertex: String, fragment: String) {
     ShaderProgram.pedantic = false
-    val vertIS: InputStream = classOf[ShaderLibrary].getResourceAsStream("/com/dafttech/terra/engine/shaders/" + vertex + ".vert")
-    val fragIS: InputStream = classOf[ShaderLibrary].getResourceAsStream("/com/dafttech/terra/engine/shaders/" + fragment + ".frag")
+    val vertIS: InputStream = getClass.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + vertex + ".vert")
+    val fragIS: InputStream = getClass.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + fragment + ".frag")
     val vertBF: CharBuffer = CharBuffer.allocate(vertIS.available)
     val fragBF: CharBuffer = CharBuffer.allocate(fragIS.available)
     new InputStreamReader(vertIS).read(vertBF)

@@ -1,6 +1,8 @@
 package com.dafttech.terra.engine
 
 import com.badlogic.gdx.Gdx
+import com.dafttech.terra.game.world.{Chunk, Facing, Vector2i, World}
+import com.dafttech.terra.resources.Options
 
 object Vector2 {
   def getMouse: Vector2 = {
@@ -24,25 +26,18 @@ class Vector2 {
   var x: Float = .0f
   var y: Float = .0f
 
-  def this() {
+  def this(cx: Float, cy: Float) {
     this()
-    x = 0
-    y = 0
-  }
-
-  def this(x: Float, y: Float) {
-    this.x = x
-    this.y = y
+    x = cx
+    y = cy
   }
 
   def this(vec: Vector2) {
-    x = vec.x
-    y = vec.y
+    this(vec.x, vec.y)
   }
 
   def this(vec: Vector2i) {
-    x = vec.x
-    y = vec.y
+    this(vec.x, vec.y)
   }
 
   def setNull: Vector2 = {
@@ -52,8 +47,8 @@ class Vector2 {
   }
 
   def toWorldPosition: Vector2i = {
-    val ox: Int = if (x.toInt >= 0) x.toInt / BLOCK_SIZE else (x.toInt + 1) / BLOCK_SIZE - 1
-    val oy: Int = if (y.toInt >= 0) y.toInt / BLOCK_SIZE else (y.toInt + 1) / BLOCK_SIZE - 1
+    val ox: Int = if (x.toInt >= 0) x.toInt / Options.BLOCK_SIZE else (x.toInt + 1) / Options.BLOCK_SIZE - 1
+    val oy: Int = if (y.toInt >= 0) y.toInt / Options.BLOCK_SIZE else (y.toInt + 1) / Options.BLOCK_SIZE - 1
     return new Vector2i(ox, oy)
   }
 
@@ -303,8 +298,8 @@ class Vector2 {
     return new Vector2(this)
   }
 
-  override def equals(obj: AnyRef): Boolean = {
-    return (obj.isInstanceOf[Vector2i] && (obj.asInstanceOf[Vector2i]).x eq x && (obj.asInstanceOf[Vector2i]).y eq y)
+  override def equals(obj: Any): Boolean = {
+    return (obj.isInstanceOf[Vector2i] && ((obj.asInstanceOf[Vector2i]).x == x) && ((obj.asInstanceOf[Vector2i]).y == y))
   }
 
   override def hashCode: Int = {

@@ -6,7 +6,7 @@ import com.dafttech.terra.resources.Resources
 
 class PointLight extends Light {
   private[lighting] var position: Vector2 = new Vector2
-  private[lighting] var size: Float = .0
+  private[lighting] var size: Float = .0f
 
   def this(p: Vector2, s: Float) {
     this()

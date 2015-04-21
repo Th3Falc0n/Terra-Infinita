@@ -11,7 +11,7 @@ object InputHandler extends InputProcessor {
   private[input] var keyIds: Map[Integer, String] = new HashMap[Integer, String]
   private[input] var keyDown: Map[Integer, Boolean] = new HashMap[Integer, Boolean]
 
-  def initialize {
+  def init {
     Gdx.input.setInputProcessor(this)
     registerKey(Keys.ESCAPE, "PAUSE")
     registerKey(Keys.W, "UP")
@@ -84,17 +84,17 @@ object InputHandler extends InputProcessor {
   }
 
   def mouseMoved(x: Int, y: Int): Boolean = {
-    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEMOVE, -1, x, y)
+    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEMOVE, -1.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
     return true
   }
 
   def scrolled(arg0: Int): Boolean = {
-    Events.EVENTMANAGER.callSync(Events.EVENT_SCROLL, arg0)
+    Events.EVENTMANAGER.callSync(Events.EVENT_SCROLL, arg0.asInstanceOf[AnyRef])
     return false
   }
 
   def touchDown(x: Int, y: Int, p: Int, b: Int): Boolean = {
-    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEDOWN, b, x, y)
+    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEDOWN, b.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
     return true
   }
 
@@ -103,7 +103,7 @@ object InputHandler extends InputProcessor {
   }
 
   def touchUp(x: Int, y: Int, p: Int, b: Int): Boolean = {
-    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEUP, b, x, y)
+    Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEUP, b.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
     return true
   }
 }
