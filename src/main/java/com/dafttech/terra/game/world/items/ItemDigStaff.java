@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.EntityDiggerBeam;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class ItemDigStaff extends ItemEntitySpawner {
     @Override
@@ -22,6 +22,6 @@ public class ItemDigStaff extends ItemEntitySpawner {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ITEMS.getImage("digStaff");
+        return Resources$.MODULE$.ITEMS().getImage("digStaff");
     }
 }

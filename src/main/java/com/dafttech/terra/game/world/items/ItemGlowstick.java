@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.EntityGlowstick;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class ItemGlowstick extends ItemEntitySpawner {
 
@@ -23,7 +23,7 @@ public class ItemGlowstick extends ItemEntitySpawner {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("glowstick");
+        return Resources$.MODULE$.ENTITIES().getImage("glowstick");
     }
 
 }

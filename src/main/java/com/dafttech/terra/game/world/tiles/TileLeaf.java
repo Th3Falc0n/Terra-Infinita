@@ -6,7 +6,7 @@ import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class TileLeaf extends TileLog {
     @Override
@@ -16,7 +16,7 @@ public class TileLeaf extends TileLog {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("leaf");
+        return Resources$.MODULE$.TILES().getImage("leaf");
     }
 
     @Override

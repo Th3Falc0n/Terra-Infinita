@@ -22,7 +22,8 @@ class ImageLibrary {
           library.get(name + i).flip(false, true)
         }
         ({
-          i += 1; i - 1
+          i += 1;
+          i - 1
         })
       }
     }

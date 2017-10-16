@@ -14,7 +14,7 @@ public abstract class Skill implements IDrawableInventory {
 
     @Override
     public void drawInventory(Vector2 pos, AbstractScreen screen) {
-        screen.batch.draw(getImage(), pos.x + 4, pos.y + 4, 24, 24);
+        screen.batch().draw(getImage(), pos.x() + 4, pos.y() + 4, 24, 24);
     }
 
     @Override

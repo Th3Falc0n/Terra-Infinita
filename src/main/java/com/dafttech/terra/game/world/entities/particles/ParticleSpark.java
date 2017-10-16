@@ -6,7 +6,8 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 public class ParticleSpark extends Particle {
     PointLight light;
@@ -18,8 +19,8 @@ public class ParticleSpark extends Particle {
 
         size = TerraInfinita.rnd().nextFloat() * 0.2f + 0.1f;
 
-        getSize().x = size;
-        getSize().y = getSize().x;
+        getSize().x_$eq(size);
+        getSize().y_$eq(getSize().x());
 
         setHasGravity(true);
         setGravityFactor(0.05f);
@@ -28,19 +29,19 @@ public class ParticleSpark extends Particle {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("flame");
+        return Resources$.MODULE$.ENTITIES().getImage("flame");
     }
 
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        getSize().x = size * (lifetime / lifetimeMax);
-        getSize().y = getSize().x;
+        getSize().x_$eq(size * (lifetime / lifetimeMax));
+        getSize().y_$eq(getSize().x());
 
         if (light != null) {
             light.setSize(55 * 2 * (lifetime / lifetimeMax));
-            light.setPosition(getPosition().add(getSize().x * BLOCK_SIZE / 2, getSize().y * BLOCK_SIZE / 2));
+            light.setPosition(getPosition().add(getSize().x() * Options.BLOCK_SIZE() / 2, getSize().y() * Options.BLOCK_SIZE() / 2));
         }
     }
 

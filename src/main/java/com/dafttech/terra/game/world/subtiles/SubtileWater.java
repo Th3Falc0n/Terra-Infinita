@@ -2,10 +2,10 @@ package com.dafttech.terra.game.world.subtiles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.dafttech.terra.engine.input.InputHandler;
+import com.dafttech.terra.engine.input.InputHandler$;
 import com.dafttech.terra.game.world.Facing;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class SubtileWater extends SubtileFluid {
     float img = 0;
@@ -17,7 +17,7 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("wateranim", (int) img);
+        return Resources$.MODULE$.TILES().getImage("wateranim", (int) img);
     }
 
     @Override
@@ -30,13 +30,13 @@ public class SubtileWater extends SubtileFluid {
         img += delta;
         if ((int) img > 3) img = 0;
 
-        float windSpeed = world.weather.getWindSpeed(world);
-        Facing facing = windSpeed > 0 ? Facing.RIGHT : windSpeed < 0 ? Facing.LEFT : null;
-        if (InputHandler.$.isKeyDown("WAVESLEFT")) {
-            facing = Facing.LEFT;
+        float windSpeed = world.weather().getWindSpeed(world);
+        Facing facing = windSpeed > 0 ? Facing.RIGHT$.MODULE$ : windSpeed < 0 ? Facing.LEFT$.MODULE$ : null;
+        if (InputHandler$.MODULE$.isKeyDown("WAVESLEFT")) {
+            facing = Facing.LEFT$.MODULE$;
             windSpeed = 5;
-        } else if (InputHandler.$.isKeyDown("WAVESRIGHT")) {
-            facing = Facing.RIGHT;
+        } else if (InputHandler$.MODULE$.isKeyDown("WAVESRIGHT")) {
+            facing = Facing.RIGHT$.MODULE$;
             windSpeed = 5;
         }
         if (facing != null && !wavephase) {
@@ -60,12 +60,12 @@ public class SubtileWater extends SubtileFluid {
 
     @Override
     public float getViscosity() {
-        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 4 : 0;
+        return (InputHandler$.MODULE$.isKeyDown("WAVESRIGHT") || InputHandler$.MODULE$.isKeyDown("WAVESLEFT")) ? 4 : 0;
     }
 
     @Override
     public int getMaxReach() {
-        return (InputHandler.$.isKeyDown("WAVESRIGHT") || InputHandler.$.isKeyDown("WAVESLEFT")) ? 4 : 10;
+        return (InputHandler$.MODULE$.isKeyDown("WAVESRIGHT") || InputHandler$.MODULE$.isKeyDown("WAVESLEFT")) ? 4 : 10;
     }
 
     @Override

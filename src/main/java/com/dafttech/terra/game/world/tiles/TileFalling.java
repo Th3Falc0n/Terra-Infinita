@@ -19,23 +19,23 @@ public abstract class TileFalling extends Tile {
         fallIfPossible(world);
         if (!renderOffset.is()) {
             float possSpeed = getFallSpeed(world) * delta;
-            if (renderOffset.x > 0) renderOffset.x -= possSpeed > renderOffset.x ? renderOffset.x : possSpeed;
-            if (renderOffset.y > 0) renderOffset.y -= possSpeed > renderOffset.y ? renderOffset.y : possSpeed;
-            if (renderOffset.x < 0) renderOffset.x += possSpeed > -renderOffset.x ? -renderOffset.x : possSpeed;
-            if (renderOffset.y < 0) renderOffset.y += possSpeed > -renderOffset.y ? -renderOffset.y : possSpeed;
+            if (renderOffset.x() > 0) renderOffset.subX(possSpeed > renderOffset.x() ? renderOffset.x() : possSpeed);
+            if (renderOffset.y() > 0) renderOffset.subY(possSpeed > renderOffset.y() ? renderOffset.y() : possSpeed);
+            if (renderOffset.x() < 0) renderOffset.addX(possSpeed > -renderOffset.x() ? -renderOffset.x() : possSpeed);
+            if (renderOffset.y() < 0) renderOffset.addY(possSpeed > -renderOffset.y() ? -renderOffset.y() : possSpeed);
         }
     }
 
     public void fall(World world, int x, int y) {
-        renderOffset.x -= x;
-        renderOffset.y -= y;
+        renderOffset.subX(x);
+        renderOffset.subY(y);
         world.setTile(getPosition().add(x, y), this, true);
     }
 
     public void fallIfPossible(World world) {
         if (renderOffset.is()) {
-            if (createTime == 0) createTime = world.time;
-            if (createTime + getFallDelay(world) < world.time && world.getTile(getPosition().addY(1)).isReplacable()) {
+            if (createTime == 0) createTime = world.time();
+            if (createTime + getFallDelay(world) < world.time() && world.getTile(getPosition().addY(1)).isReplacable()) {
                 fall(world, 0, 1);
             }
         }

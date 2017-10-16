@@ -6,7 +6,8 @@ import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class TileFire extends TileFalling {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("fire");
+        return Resources$.MODULE$.TILES().getImage("fire");
     }
 
     @Override
@@ -47,7 +48,7 @@ public class TileFire extends TileFalling {
 
         if (light == null) light = new PointLight(getPosition().toEntityPos(), 95);
 
-        light.setPosition(getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+        light.setPosition(getPosition().toEntityPos().add(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2));
     }
 
     public static boolean createFire(World world, int x, int y) {

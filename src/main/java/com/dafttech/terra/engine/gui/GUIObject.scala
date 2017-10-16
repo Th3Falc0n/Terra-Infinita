@@ -1,8 +1,8 @@
 package com.dafttech.terra.engine.gui
 
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet
 import com.dafttech.terra.engine.gui.containers.GUIContainer
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.Events
 import org.lolhens.eventmanager.EventListener
 

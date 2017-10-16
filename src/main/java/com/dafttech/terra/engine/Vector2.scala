@@ -86,6 +86,16 @@ class Vector2 {
     return this
   }
 
+  def subX(x: Float): Vector2 = {
+    this.x -= x
+    return this
+  }
+
+  def subY(y: Float): Vector2 = {
+    this.y -= y
+    return this
+  }
+
   def len: Float = {
     return Math.sqrt(len2).toFloat
   }

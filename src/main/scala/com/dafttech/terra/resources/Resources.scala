@@ -95,7 +95,7 @@ object Resources {
     try {
       ShaderLibrary.loadShader("GaussH", "GaussH", "Gauss")
       ShaderLibrary.loadShader("GaussV", "GaussV", "Gauss")
-      ShaderLibrary.loadShader("ShadowDistance", "Simple", "ShadowDistance")
+      //ShaderLibrary.loadShader("ShadowDistance", "Simple", "ShadowDistance") TODO
     }
     catch {
       case e: IOException => {

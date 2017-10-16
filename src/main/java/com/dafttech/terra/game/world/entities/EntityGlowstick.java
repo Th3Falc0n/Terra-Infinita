@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class EntityGlowstick extends Entity {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("glowstick");
+        return Resources$.MODULE$.ENTITIES().getImage("glowstick");
     }
 
     @Override
@@ -34,7 +35,7 @@ public class EntityGlowstick extends Entity {
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        gsRotation += velocity.x * delta * 50;
+        gsRotation += velocity.x() * delta * 50;
 
         if (light == null) {
             light = new PointLight(getPosition(), 95);
@@ -43,7 +44,7 @@ public class EntityGlowstick extends Entity {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
         setRotation((float) (velocity.angle() + Math.PI / 2 + gsRotation));
     }

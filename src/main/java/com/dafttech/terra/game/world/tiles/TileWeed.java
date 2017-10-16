@@ -5,7 +5,7 @@ import com.dafttech.terra.TerraInfinita;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class TileWeed extends Tile {
     public TileWeed() {
@@ -14,7 +14,7 @@ public class TileWeed extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("weed");
+        return Resources$.MODULE$.TILES().getImage("weed");
     }
 
     @Override

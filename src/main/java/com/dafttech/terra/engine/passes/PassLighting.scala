@@ -1,9 +1,9 @@
 package com.dafttech.terra.engine.passes
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.{Color, GL20}
-import com.badlogic.gdx.graphics.glutils.{FloatFrameBuffer, FrameBuffer}
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.graphics.glutils.{FloatFrameBuffer, FrameBuffer}
+import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Rectangle
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World

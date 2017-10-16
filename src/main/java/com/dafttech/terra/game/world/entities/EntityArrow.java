@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.entities.models.EntityThrown;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileAir;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class EntityArrow extends EntityThrown {
     Tile stuckIn = new TileAir();
@@ -21,7 +21,7 @@ public class EntityArrow extends EntityThrown {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("arrow");
+        return Resources$.MODULE$.ENTITIES().getImage("arrow");
     }
 
     @Override

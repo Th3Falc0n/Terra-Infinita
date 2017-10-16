@@ -18,6 +18,7 @@ object Vector2i {
     return chunkSize * chunkPos + blockInChunkPos
   }
 }
+
 class Vector2i {
   var x: Int = 0
   var y: Int = 0

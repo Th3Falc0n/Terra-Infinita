@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.renderer.SubtileRenderer;
-import com.dafttech.terra.engine.renderer.SubtileRendererMask;
+import com.dafttech.terra.engine.renderer.SubtileRendererMask$;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
@@ -25,7 +25,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
     }
 
     public SubtileRenderer getRenderer() {
-        return SubtileRendererMask.$Instance;
+        return SubtileRendererMask$.MODULE$.$Instance();
     }
 
     public Tile getTile() {
@@ -42,7 +42,7 @@ public abstract class Subtile extends Item implements IDrawableInWorld {
 
     @Override
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
-        getRenderer().draw(screen, this, pointOfView);
+        getRenderer().draw2(screen, this, pointOfView);
     }
 
     @Override

@@ -22,10 +22,10 @@ public class BiomeGrassland extends Biome {
 
         Vector2i chunkPos = new Vector2i(0, 0).getBlockInWorldPos(chunk);
 
-        for (int x = chunkPos.x; x < chunkPos.x + chunk.world.chunksize.x; x++) {
+        for (int x = chunkPos.x(); x < chunkPos.x() + chunk.world().chunksize().x(); x++) {
             int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);
 
-            for (int y = chunkPos.y + chunk.world.chunksize.y - 1; y >= chunkPos.y; y--) {
+            for (int y = chunkPos.y() + chunk.world().chunksize().y() - 1; y >= chunkPos.y(); y--) {
                 if (y <= h) break;
 
                 Tile tile = null;
@@ -35,7 +35,7 @@ public class BiomeGrassland extends Biome {
                 }
 
                 if (tile == null) {
-                    if (y < (gen.world.size.y - h) / 5 + h) {
+                    if (y < (gen.world.size().y() - h) / 5 + h) {
                         tile = new TileDirt();
                         if (y - 2 == h) {
                             tile.addSubtile(new SubtileGrass());

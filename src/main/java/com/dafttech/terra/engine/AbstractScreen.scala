@@ -1,10 +1,10 @@
 package com.dafttech.terra.engine
 
-import com.badlogic.gdx.{Gdx, Screen}
-import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.Matrix4
+import com.badlogic.gdx.{Gdx, Screen}
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 
 abstract class AbstractScreen extends Screen {

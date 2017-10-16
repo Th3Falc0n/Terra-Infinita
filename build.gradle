@@ -22,7 +22,9 @@ dependencies {
             [group: 'com.badlogicgames.gdx', name: 'gdx-backend-lwjgl', version: version_libgdx],
             [group: 'com.badlogicgames.gdx', name: 'gdx-platform', version: version_libgdx, classifier: 'natives-desktop'],
             [group: 'com.badlogicgames.gdx', name: 'gdx-freetype-platform', version: version_libgdx, classifier: 'natives-desktop'],
-            [group: 'org.lolhens', name: 'LibEventManager', version: version_eventManager])
+            //[group: 'org.lolhens', name: 'LibEventManager', version: version_eventManager]
+            files('libs/LibEventManager-13.1.0.jar')
+    )
 }
 
 jar {

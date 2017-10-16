@@ -6,7 +6,8 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 public class SubtileGlowGoo extends SubtileFluid {
     float img = 0;
@@ -34,18 +35,18 @@ public class SubtileGlowGoo extends SubtileFluid {
 
         if (light == null) light = new PointLight(tile.getPosition().toEntityPos(), 95);
 
-        light.setPosition(tile.getPosition().toEntityPos().add(BLOCK_SIZE / 2, BLOCK_SIZE / 2));
+        light.setPosition(tile.getPosition().toEntityPos().add(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2));
 
         for (int i = 0; i < (int) pressure; i++) {
             if (TerraInfinita.rnd().nextDouble() < delta * 0.5f) {
-                new ParticleSpark(tile.getPosition().toEntityPos().addX(BLOCK_SIZE / 2), world).addVelocity(new Vector2(0, -1));
+                new ParticleSpark(tile.getPosition().toEntityPos().addX(Options.BLOCK_SIZE() / 2), world).addVelocity(new Vector2(0, -1));
             }
         }
     }
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("glowgoo", (int) img);
+        return Resources$.MODULE$.TILES().getImage("glowgoo", (int) img);
     }
 
     @Override

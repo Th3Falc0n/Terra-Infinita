@@ -2,12 +2,12 @@ package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.engine.gui.Tooltip
 import com.dafttech.terra.engine.gui.anchors.{AnchorCenterX, AnchorRight, AnchorTop, GUIAnchorSet}
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.passes.RenderingPass
+import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
 
 class ScreenPauseMenu extends AbstractScreen {

@@ -2,9 +2,9 @@ package com.dafttech.terra.engine.renderer
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
-import com.dafttech.terra.game.world.{Vector2i, World}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.game.world.{Vector2i, World}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 object TileRendererMultiblock {

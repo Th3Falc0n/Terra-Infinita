@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
 import com.dafttech.terra.game.world.subtiles.SubtileGrass;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -22,7 +22,7 @@ public class TileGrass extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("grass", grassIndex);
+        return Resources$.MODULE$.TILES().getImage("grass", grassIndex);
     }
 
     @Override

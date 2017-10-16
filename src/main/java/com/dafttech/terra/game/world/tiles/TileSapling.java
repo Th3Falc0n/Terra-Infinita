@@ -5,14 +5,14 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class TileSapling extends TileFalling {
     float grothDelay = 4;
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("sapling");
+        return Resources$.MODULE$.TILES().getImage("sapling");
     }
 
     @Override

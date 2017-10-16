@@ -6,7 +6,7 @@ import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -23,7 +23,7 @@ public class TileLog extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("log");
+        return Resources$.MODULE$.TILES().getImage("log");
     }
 
     @Override

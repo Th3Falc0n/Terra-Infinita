@@ -11,7 +11,10 @@ abstract class GUIElement(p: Vector2, s: Vector2) extends GUIObject(p, s) {
   def draw(screen: AbstractScreen) {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
-    screen.batch.draw(image, p.x, p.y)
+    if (image != null)
+      screen.batch.draw(image, p.x, p.y)
+    else
+      println(s"img null in $getClass base GUIElement")
     screen.batch.end
     screen.batch.setColor(Color.WHITE)
   }

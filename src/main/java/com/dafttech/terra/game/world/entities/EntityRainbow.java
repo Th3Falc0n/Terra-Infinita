@@ -6,7 +6,8 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.models.EntityThrown;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public class EntityRainbow extends EntityThrown {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("rainbow");
+        return Resources$.MODULE$.ENTITIES().getImage("rainbow");
     }
 
     @Override
@@ -42,9 +43,9 @@ public class EntityRainbow extends EntityThrown {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
-        if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1) {
+        if (Math.abs(velocity.x()) <= 0.1 && Math.abs(velocity.y()) <= 0.1) {
             worldObj.removeEntity(this);
         }
     }

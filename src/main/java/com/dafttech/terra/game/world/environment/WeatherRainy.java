@@ -10,7 +10,7 @@ public class WeatherRainy extends Weather {
 
     @Override
     public void update(World world, float delta) {
-        Vector2 top = world.localPlayer.getPosition().sub(0, 0 + (Gdx.graphics.getHeight() / 2));
+        Vector2 top = world.localPlayer().getPosition().sub(0, 0 + (Gdx.graphics.getHeight() / 2));
 
         if ((delta * 60f) * TerraInfinita.rnd().nextFloat() > 0.5f) {
             new ParticleRain(top.add((TerraInfinita.rnd().nextFloat() - 0.5f) * Gdx.graphics.getWidth(), 0), world).setVelocity(new Vector2(

@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -24,14 +25,14 @@ public class ParticleExplosion extends Particle {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("explosion");
+        return Resources$.MODULE$.ENTITIES().getImage("explosion");
     }
 
     @Override
     public void update(World world, float delta) {
         super.update(world, delta);
         Random rnd = new Random();
-        int blockSRad = radius * BLOCK_SIZE * 3;
+        int blockSRad = radius * Options.BLOCK_SIZE() * 3;
         new ParticleSpark(midpos.clone().add(-blockSRad, -blockSRad).add(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj);
         getSize().add(delta * 30, delta * 30);
         setMidPos(midpos);
@@ -48,7 +49,7 @@ public class ParticleExplosion extends Particle {
             light = new PointLight(getPosition(), 60);
             light.setColor(new Color(1, 0.9f, 0.9f, 0.4f));
         }
-        light.setSize((getSize().x + getSize().y) * 6 + BLOCK_SIZE);
+        light.setSize((getSize().x() + getSize().y()) * 6 + Options.BLOCK_SIZE());
         return light;
     }
 }

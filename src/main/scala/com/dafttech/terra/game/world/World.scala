@@ -1,18 +1,18 @@
 package com.dafttech.terra.game.world
 
-import java.util.{ArrayList, List, Map}
 import java.util.concurrent.ConcurrentHashMap
+import java.util.{ArrayList, List, Map}
 
 import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.engine.passes.RenderingPass
-import com.dafttech.terra.game.{Events, TimeKeeping}
-import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.game.world.entities.living.Player
+import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
+import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 class World extends IDrawableInWorld {
@@ -129,10 +129,10 @@ class World extends IDrawableInWorld {
         for (subtile <- oldTile.getSubtiles) {
           if (subtile.isTileIndependent) tileIndependentSubtiles.add(subtile)
         }
-        oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()):_*)
+        oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()): _*)
       }
       chunk.setTile(pos.getBlockInChunkPos(this), tile)
-      tile.addSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()):_*)
+      tile.addSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()): _*)
       sunmap.postTilePlace(this, tile)
       if (notify) {
         tile.onTileSet(this)
@@ -190,26 +190,28 @@ class World extends IDrawableInWorld {
     val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
     val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
     var tile: Tile = null
-      var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
-      while (x < localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx) {
+    var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
+    while (x < localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx) {
+      {
         {
-          {
-            var y: Int = localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy
-            while (y < localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy) {
-              {
-                tile = getTile(x, y)
-                if (tile != null) tile.update(this, delta)
-              }
-              ({
-                y += 1; y - 1
-              })
+          var y: Int = localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy
+          while (y < localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy) {
+            {
+              tile = getTile(x, y)
+              if (tile != null) tile.update(this, delta)
             }
+            ({
+              y += 1;
+              y - 1
+            })
           }
         }
-        ({
-          x += 1; x - 1
-        })
       }
+      ({
+        x += 1;
+        x - 1
+      })
+    }
     TimeKeeping.timeKeeping("Tile update")
     import scala.collection.JavaConversions._
     for (chunk <- localChunks.values) {
@@ -230,7 +232,7 @@ class World extends IDrawableInWorld {
   def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
     RenderingPass.rpObjects.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpObj")
-    RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
+    //RenderingPass.rpLighting.applyPass(screen, pointOfView, this) TODO
     TimeKeeping.timeKeeping("rpLig")
   }
 }

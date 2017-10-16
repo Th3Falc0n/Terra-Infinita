@@ -16,6 +16,7 @@ abstract class GUIContainer(p: Vector2, s: Vector2) extends GUIObject(p, s) {
   }
 
   def clearObjects = objects.clear
+
   def containsObject(`object`: GUIObject): Boolean = objects.contains(`object`)
 
   def addObject(gObj: GUIObject) {

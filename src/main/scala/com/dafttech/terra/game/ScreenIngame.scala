@@ -33,11 +33,11 @@ class ScreenIngame extends AbstractScreen {
     exitButtonSet.addAnchor(new AnchorTop(0.01f))
     exitButton.assignAnchorSet(exitButtonSet)
     exitButton.setTooltip("Close the game")
-    chat = new ModuleChat
-    chat.create
+    //chat = new ModuleChat
+    //chat.create
     midContainer = new ContainerList(new Vector2, new Vector2(320, 800), 45)
     midContainer.assignAnchorSet(new GUIAnchorSet(new AnchorBottom(0.15f), new AnchorCenterX))
-    guiContainerScreen.addObject(chat.getContainer)
+    //guiContainerScreen.addObject(chat.getContainer) TODO
     guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer)
     guiContainerScreen.addObject(exitButton)
     guiContainerScreen.addObject(Tooltip.getLabel)

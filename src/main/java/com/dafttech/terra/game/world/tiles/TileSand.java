@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class TileSand extends TileFalling {
 
@@ -12,7 +12,7 @@ public class TileSand extends TileFalling {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("sand");
+        return Resources$.MODULE$.TILES().getImage("sand");
     }
 
     @Override

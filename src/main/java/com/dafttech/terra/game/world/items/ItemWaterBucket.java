@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
 import com.dafttech.terra.game.world.subtiles.SubtileWater;
 import com.dafttech.terra.game.world.tiles.Tile;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class ItemWaterBucket extends Item {
 
@@ -15,7 +15,7 @@ public class ItemWaterBucket extends Item {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("water");
+        return Resources$.MODULE$.TILES().getImage("water");
     }
 
     @Override

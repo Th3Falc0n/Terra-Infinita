@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.entities.EntityDynamite;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class ItemDynamite extends ItemEntitySpawner {
 
@@ -16,7 +16,7 @@ public class ItemDynamite extends ItemEntitySpawner {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("dynamite");
+        return Resources$.MODULE$.ENTITIES().getImage("dynamite");
     }
 
     @Override

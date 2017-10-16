@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.renderer.TileRenderer;
-import com.dafttech.terra.engine.renderer.TileRendererBlock;
+import com.dafttech.terra.engine.renderer.TileRendererBlock$;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
@@ -33,7 +33,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public boolean use(EntityLiving causer, Vector2 position) {
         if (causer.getPosition().clone().sub(position).len() < 100) {
             Vector2i pos = position.toWorldPosition();
-            return causer.getWorld().placeTile(pos.x, pos.y, this, causer);
+            return causer.getWorld().placeTile(pos.x(), pos.y(), this, causer);
         }
         return false;
     }
@@ -82,7 +82,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     ;
 
     public TileRenderer getRenderer() {
-        return TileRendererBlock.$Instance;
+        return TileRendererBlock$.MODULE$.$Instance();
     }
 
     public float getWalkFriction() {
@@ -157,7 +157,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     @Override
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
-        getRenderer().draw(pos, world, screen, this, pointOfView);
+        getRenderer().draw2(pos, world, screen, this, pointOfView);
 
         for (Subtile subtile : subtiles) {
             subtile.draw(pos, world, screen, pointOfView);
@@ -239,7 +239,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     public void damage(World world, float damage, Entity causer) {
         breakingProgress += damage;
         if (breakingProgress > hardness) {
-            world.destroyTile(getPosition().x, getPosition().y, causer);
+            world.destroyTile(getPosition().x(), getPosition().y(), causer);
         }
     }
 

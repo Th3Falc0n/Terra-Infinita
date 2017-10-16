@@ -17,5 +17,6 @@ class AnchorMouse extends GUIAnchor {
   }
 
   override def needsApplyOnFrame: Boolean = true
+
   override def isContainerDependent: Boolean = false
 }

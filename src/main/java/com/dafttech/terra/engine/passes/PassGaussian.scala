@@ -2,9 +2,9 @@ package com.dafttech.terra.engine.passes
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Pixmap.Format
-import com.badlogic.gdx.graphics.{GL20, Texture}
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.FrameBuffer
+import com.badlogic.gdx.graphics.{GL20, Texture}
 import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.shaders.ShaderLibrary
 import com.dafttech.terra.game.world.World

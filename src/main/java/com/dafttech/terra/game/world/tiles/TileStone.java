@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
 import com.dafttech.terra.game.world.Vector2i;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class TileStone extends Tile {
     public TileStone() {
@@ -13,7 +13,7 @@ public class TileStone extends Tile {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.TILES.getImage("stone");
+        return Resources$.MODULE$.TILES().getImage("stone");
     }
 
     @Override

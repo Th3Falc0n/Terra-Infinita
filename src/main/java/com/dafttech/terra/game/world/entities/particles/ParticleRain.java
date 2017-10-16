@@ -3,7 +3,7 @@ package com.dafttech.terra.game.world.entities.particles;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.game.world.World;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Resources$;
 
 public class ParticleRain extends Particle {
 
@@ -34,6 +34,6 @@ public class ParticleRain extends Particle {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("raindrop");
+        return Resources$.MODULE$.ENTITIES().getImage("raindrop");
     }
 }

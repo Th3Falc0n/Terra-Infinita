@@ -33,7 +33,7 @@ object Events {
   val EVENT_SCROLL: EventType = new EventType("SCROLL", EVENTMANAGER)
   val EVENT_BLOCKUPDATE: EventType = new EventType("BLOCKUPDATE", EVENTMANAGER) {
     protected override def onEvent(event: Event) {
-      val tile: Tile = event.in.get(0, classOf[World]).getTile(event.in.get(1, classOf[Integer]), event.in.get(2, classOf[Integer]))
+      val tile: Tile = event.in.get(0, classOf[World]).getTile(event.in.get[Integer](1, classOf[Integer]), event.in.get[Integer](2, classOf[Integer]))
       if (tile != null) tile.update(event.in.get(0, classOf[World]), 0)
     }
   }
@@ -42,28 +42,13 @@ object Events {
       val world: World = event.in.get(0, classOf[World])
       val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
       val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
-      var tile: Tile = null
-      var x: Int = world.localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
-      while (x < world.localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx) {
-        {
-          {
-            var y: Int = world.localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy
-            while (y < world.localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy) {
-              {
-                tile = world.getTile(x, y)
-                if (tile != null) tile.tick(world, event.in.get(1, classOf[Float]))
-              }
-              ({
-                y += 1;
-                y - 1
-              })
-            }
-          }
+
+
+      for (x <- (world.localPlayer.getPosition.x / BLOCK_SIZE - sx).toInt until (world.localPlayer.getPosition.x / BLOCK_SIZE + sx).toInt) {
+        for (y <- (world.localPlayer.getPosition.y / BLOCK_SIZE - sy).toInt until (world.localPlayer.getPosition.y / BLOCK_SIZE + sy).toInt) {
+          val tile = world.getTile(x, y)
+          if (tile != null) tile.tick(world, event.in.get(1, classOf[Float]))
         }
-        ({
-          x += 1;
-          x - 1
-        })
       }
     }
   }

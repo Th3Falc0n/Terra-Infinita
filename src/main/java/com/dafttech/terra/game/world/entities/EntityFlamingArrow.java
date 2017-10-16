@@ -9,7 +9,8 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark;
 import com.dafttech.terra.game.world.tiles.Tile;
 import com.dafttech.terra.game.world.tiles.TileFire;
-import com.dafttech.terra.resources.Resources;
+import com.dafttech.terra.resources.Options;
+import com.dafttech.terra.resources.Resources$;
 
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class EntityFlamingArrow extends EntityArrow {
 
     @Override
     public TextureRegion getImage() {
-        return Resources.ENTITIES.getImage("arrow");
+        return Resources$.MODULE$.ENTITIES().getImage("arrow");
     }
 
     @Override
@@ -33,7 +34,7 @@ public class EntityFlamingArrow extends EntityArrow {
             light = new PointLight(getPosition(), 95);
             light.setColor(new Color(255, 200, 40, 255));
         }
-        light.setPosition(getPosition().add(size.x * BLOCK_SIZE / 2, size.y * BLOCK_SIZE / 2));
+        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
         light.setSize(90 + new Random().nextInt(10));
 
@@ -48,7 +49,7 @@ public class EntityFlamingArrow extends EntityArrow {
     public void onTerrainCollision(Tile tile) {
         super.onTerrainCollision(tile);
 
-        placeBlockOnHit(tile.getPosition().x, tile.getPosition().y);
+        placeBlockOnHit(tile.getPosition().x(), tile.getPosition().y());
     }
 
     public void placeBlockOnHit(int x, int y) {
