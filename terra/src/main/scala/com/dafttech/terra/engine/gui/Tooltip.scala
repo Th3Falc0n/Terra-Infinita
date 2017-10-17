@@ -8,7 +8,7 @@ object Tooltip {
   var label: ElementLabel = null
 
   def init {
-    label = new ElementLabel(new Vector2, "")
+    label = new ElementLabel(Vector2.Null, "")
     val labelSet: GUIAnchorSet = new GUIAnchorSet
     labelSet.addAnchor(new AnchorMouse)
     label.assignAnchorSet(labelSet)

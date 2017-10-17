@@ -23,7 +23,7 @@ class ElementLabel(p: Vector2, var text: String) extends GUIElement(p, null) {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     Resources.GUI_FONT.setColor(clr)
-    Resources.GUI_FONT.draw(screen.batch, text, p.x, 6 + p.y)
+    Resources.GUI_FONT.draw(screen.batch, text, p.x.toFloat, 6 + p.y.toFloat)
     screen.batch.end
   }
 }

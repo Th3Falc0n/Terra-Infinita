@@ -11,10 +11,10 @@ class ContainerList(p: Vector2, s: Vector2) extends GUIContainer(p, s) {
   }
 
   override def draw(screen: AbstractScreen) {
-    var y: Float = size.y
+    var y: Float = size.y.toFloat
 
     for (o <- objects) {
-      y -= o.size.y + distance
+      y -= o.size.y.toFloat + distance
       if (y > 0) {
         o.position = new Vector2(0, y)
         o.draw(screen)

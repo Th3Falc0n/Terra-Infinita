@@ -8,7 +8,7 @@ import com.dafttech.terra.engine.input.{FocusManager, IFocusableTyping}
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
 
-class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GUIElement(p, new Vector2) with IFocusableTyping {
+class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GUIElement(p, Vector2.Null) with IFocusableTyping {
   private var text: String = ""
   private var renderText: String = ""
   var clr: Color = Color.WHITE
@@ -30,7 +30,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     Resources.GUI_FONT.setColor(clr)
-    Resources.GUI_FONT.draw(screen.batch, renderText, p.x, 6 + p.y)
+    Resources.GUI_FONT.draw(screen.batch, renderText, p.x.toFloat, 6 + p.y.toFloat)
     screen.batch.end
   }
 

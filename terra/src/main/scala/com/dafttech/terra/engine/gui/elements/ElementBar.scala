@@ -52,8 +52,8 @@ class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement
     screen.batch.setColor(Color.WHITE)
     screen.batch.enableBlending
     screen.batch.begin
-    screen.batch.draw(tr, p.x, p.y)
-    screen.batch.draw(image, p.x, p.y)
+    screen.batch.draw(tr, p.x.toFloat, p.y.toFloat)
+    screen.batch.draw(image, p.x.toFloat, p.y.toFloat)
     screen.batch.end
   }
 }

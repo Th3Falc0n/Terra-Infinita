@@ -14,10 +14,9 @@ object MouseSlot {
 
     @EventListener(Array("MOUSEMOVE"))
     def onEventMouseMove(event: Event) {
-      val x: Int = event.in.get(1, classOf[Integer])
-      val y: Int = event.in.get(2, classOf[Integer])
-      position.x = x
-      position.y = y
+      val x: Int = event.in.get[Integer](1, classOf[Integer])
+      val y: Int = event.in.get[Integer](2, classOf[Integer])
+      position = Vector2(x, y)
     }
 
     override def draw(screen: AbstractScreen) {
