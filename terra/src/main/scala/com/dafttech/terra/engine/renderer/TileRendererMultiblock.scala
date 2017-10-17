@@ -1,10 +1,10 @@
 package com.dafttech.terra.engine.renderer
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.{AbstractScreen, Vector2, Vector2i}
+import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{Vector2i, World}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 object TileRendererMultiblock {
@@ -28,8 +28,8 @@ class TileRendererMultiblock extends TileRendererBlock {
     val texture: TextureRegion = tile.getImage
     val cols: Int = multiblockSize.x
     val rows: Int = multiblockSize.y
-    var col: Int = (Math.abs(pos.x).toInt % cols)
-    var row: Int = (Math.abs(pos.y).toInt % rows)
+    var col: Int = Math.abs(pos.x).toInt % cols
+    var row: Int = Math.abs(pos.y).toInt % rows
     if (pos.x < 0) col = ((cols - 1) - col + (cols - 1)) % cols
     if (pos.y < 0) row = ((rows - 1) - row + (rows - 1)) % rows
     val newTexture: TextureRegion = new TextureRegion(texture)

@@ -22,8 +22,8 @@ public abstract class SubtileFluid extends Subtile {
     public void setTile(Tile t) {
         super.setTile(t);
         if (t != null) {
-            if (isFluid(t.getWorld(), Facing.NONE$.MODULE$)) {
-                getFluid(t.getWorld(), Facing.NONE$.MODULE$).addPressure(pressure);
+            if (isFluid(t.getWorld(), Facing.None$.MODULE$)) {
+                getFluid(t.getWorld(), Facing.None$.MODULE$).addPressure(pressure);
                 setPressure(0);
             }
         }
@@ -49,7 +49,7 @@ public abstract class SubtileFluid extends Subtile {
     }
 
     public float flowDown(World world, float amount, float pressCap) {
-        SubtileFluid fluid = getFluid(world, Facing.BOTTOM$.MODULE$);
+        SubtileFluid fluid = getFluid(world, Facing.Bottom$.MODULE$);
         if (fluid != null) {
             float total = pressure + fluid.pressure;
             float change = 0;
@@ -78,25 +78,25 @@ public abstract class SubtileFluid extends Subtile {
         if (amount > 0) {
             SubtileFluid fluid = null;
             if (new Random().nextBoolean()) {
-                fluid = getFluid(world, Facing.RIGHT$.MODULE$);
+                fluid = getFluid(world, Facing.Right$.MODULE$);
                 if (fluid != null) {
                     int reach = getMaxReach();
-                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.RIGHT$.MODULE$)
-                            && fluid.getFluid(world, Facing.RIGHT$.MODULE$).tile.isWaterproof() == fluid.tile.isWaterproof()
-                            && fluid.getFluid(world, Facing.RIGHT$.MODULE$).pressure > fluid.maxPressure / 20) {
+                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.Right$.MODULE$)
+                            && fluid.getFluid(world, Facing.Right$.MODULE$).tile.isWaterproof() == fluid.tile.isWaterproof()
+                            && fluid.getFluid(world, Facing.Right$.MODULE$).pressure > fluid.maxPressure / 20) {
                         reach--;
-                        fluid = fluid.getFluid(world, Facing.RIGHT$.MODULE$);
+                        fluid = fluid.getFluid(world, Facing.Right$.MODULE$);
                     }
                 }
             } else {
-                fluid = getFluid(world, Facing.LEFT$.MODULE$);
+                fluid = getFluid(world, Facing.Left$.MODULE$);
                 if (fluid != null) {
                     int reach = getMaxReach();
-                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.LEFT$.MODULE$)
-                            && fluid.getFluid(world, Facing.LEFT$.MODULE$).tile.isWaterproof() == fluid.tile.isWaterproof()
-                            && fluid.getFluid(world, Facing.LEFT$.MODULE$).pressure > fluid.maxPressure / 20) {
+                    while (reach > 0 && new Random().nextInt(5) > 0 && fluid.isFluid(world, Facing.Left$.MODULE$)
+                            && fluid.getFluid(world, Facing.Left$.MODULE$).tile.isWaterproof() == fluid.tile.isWaterproof()
+                            && fluid.getFluid(world, Facing.Left$.MODULE$).pressure > fluid.maxPressure / 20) {
                         reach--;
-                        fluid = fluid.getFluid(world, Facing.LEFT$.MODULE$);
+                        fluid = fluid.getFluid(world, Facing.Left$.MODULE$);
                     }
                 }
             }
@@ -117,7 +117,7 @@ public abstract class SubtileFluid extends Subtile {
 
     public float flowSide_wip(World world, float amount, float pressCap) {
         if (amount > 0) {
-            Facing facing = new Random().nextBoolean() ? Facing.RIGHT$.MODULE$ : Facing.LEFT$.MODULE$;
+            Facing facing = new Random().nextBoolean() ? Facing.Right$.MODULE$ : Facing.Left$.MODULE$;
             SubtileFluid fluid = getFluid(world, facing);
             if (fluid != null) {
                 int reach = getMaxReach();
@@ -149,7 +149,7 @@ public abstract class SubtileFluid extends Subtile {
     }
 
     public float flowUp(World world, float amount, float pressCap) {
-        SubtileFluid fluid = getFluid(world, Facing.TOP$.MODULE$);
+        SubtileFluid fluid = getFluid(world, Facing.Top$.MODULE$);
         if (fluid != null) {
             float total = pressure + fluid.pressure;
             if (pressure > maxPressure + (total - maxPressure) / maxPressure * pressCap) {
@@ -191,7 +191,7 @@ public abstract class SubtileFluid extends Subtile {
     }
 
     public SubtileFluid getFluid(World world, Facing direction) {
-        Tile tile = world.getTile(this.tile.getPosition().add(direction));
+        Tile tile = world.getTile(this.tile.getPosition().$plus(direction.intVector()));
         // if (tile.isWaterproof()) return null;
         SubtileFluid fluid = (SubtileFluid) tile.getSubtile(getClass(), false);
         if (fluid == null) {
@@ -203,7 +203,7 @@ public abstract class SubtileFluid extends Subtile {
     }
 
     public boolean isFluid(World world, Facing direction) {
-        Tile tile = world.getTile(this.tile.getPosition().add(direction));
+        Tile tile = world.getTile(this.tile.getPosition().$plus(direction.intVector()));
         // if (tile.isWaterproof()) return false;
         return tile.hasSubtile(getClass(), false);
     }

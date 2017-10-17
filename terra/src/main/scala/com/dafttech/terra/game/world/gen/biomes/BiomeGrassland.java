@@ -1,8 +1,8 @@
 package com.dafttech.terra.game.world.gen.biomes;
 
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.game.world.Chunk;
-import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.gen.WorldGenerator;
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise;
 import com.dafttech.terra.game.world.subtiles.SubtileBone;
@@ -20,7 +20,7 @@ public class BiomeGrassland extends Biome {
     public void generateChunk(WorldGenerator gen, Chunk chunk) {
         PerlinNoise noise = gen.getNoise();
 
-        Vector2i chunkPos = new Vector2i(0, 0).getBlockInWorldPos(chunk);
+        Vector2i chunkPos = Vector2i.Null().getBlockInWorldPos(chunk);
 
         for (int x = chunkPos.x(); x < chunkPos.x() + chunk.world().chunksize().x(); x++) {
             int h = (int) ((1f + noise.perlinNoise(x / 150f)) * 75);

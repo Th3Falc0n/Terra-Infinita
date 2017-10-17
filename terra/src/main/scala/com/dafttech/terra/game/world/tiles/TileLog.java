@@ -2,9 +2,9 @@ package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererMultiblock;
-import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.resources.Resources$;
 
@@ -39,20 +39,20 @@ public class TileLog extends Tile {
     public void growTree(World world) {
         Random rnd = new Random();
         if (living) {
-            if (height <= maxHeight && (width == 0 || rnd.nextInt(5) == 0) && world.getTile(getPosition().addY(-1)).isReplacable())
+            if (height <= maxHeight && (width == 0 || rnd.nextInt(5) == 0) && world.getTile(getPosition().$minus(0, 1)).isReplacable())
                 world.setTile(
-                        getPosition().addY(-1),
+                        getPosition().$minus(0, 1),
                         (height > maxHeight - getSmallLayerSize() ? getLeaf() : getLog()).setLiving(living).setSize(height + 1, width, maxHeight,
                                 maxWidth), true);
             if (height > maxHeight / 2.5f) {
                 if (rnd.nextInt((int) ((float) Math.abs(width) * (rnd.nextBoolean() ? 1 : height) / maxWidth) + 1) == 0
-                        && world.getTile(getPosition().addX(1)).isReplacable())
-                    world.setTile(getPosition().addX(1),
+                        && world.getTile(getPosition().$plus(1, 0)).isReplacable())
+                    world.setTile(getPosition().$plus(1, 0),
                             (rnd.nextBoolean() ? getLog() : getLeaf()).setLiving(living).setSize(height + 1, width + 1, maxHeight, maxWidth), true);
                 if (rnd.nextInt((int) ((float) Math.abs(width) * (rnd.nextBoolean() ? 1 : height) / maxWidth) + 1) == 0
-                        && world.getTile(getPosition().addX(-1)).isReplacable()) {
-                    if (world.getTile(getPosition().addX(-1)).isReplacable())
-                        world.setTile(getPosition().addX(-1), (height > maxHeight / 2 && rnd.nextBoolean() ? getLog() : getLeaf()).setLiving(living)
+                        && world.getTile(getPosition().$minus(1, 0)).isReplacable()) {
+                    if (world.getTile(getPosition().$minus(1, 0)).isReplacable())
+                        world.setTile(getPosition().$minus(1, 0), (height > maxHeight / 2 && rnd.nextBoolean() ? getLog() : getLeaf()).setLiving(living)
                                 .setSize(height + 1, width - 1, maxHeight, maxWidth), true);
                 }
             }

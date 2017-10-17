@@ -31,12 +31,12 @@ public class SubtileWater extends SubtileFluid {
         if ((int) img > 3) img = 0;
 
         float windSpeed = world.weather().getWindSpeed(world);
-        Facing facing = windSpeed > 0 ? Facing.RIGHT$.MODULE$ : windSpeed < 0 ? Facing.LEFT$.MODULE$ : null;
+        Facing facing = windSpeed > 0 ? Facing.Right$.MODULE$ : windSpeed < 0 ? Facing.Left$.MODULE$ : null;
         if (InputHandler$.MODULE$.isKeyDown("WAVESLEFT")) {
-            facing = Facing.LEFT$.MODULE$;
+            facing = Facing.Left$.MODULE$;
             windSpeed = 5;
         } else if (InputHandler$.MODULE$.isKeyDown("WAVESRIGHT")) {
-            facing = Facing.RIGHT$.MODULE$;
+            facing = Facing.Right$.MODULE$;
             windSpeed = 5;
         }
         if (facing != null && !wavephase) {

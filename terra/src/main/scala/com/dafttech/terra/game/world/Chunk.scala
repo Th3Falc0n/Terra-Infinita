@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world
 
 import java.util.{ArrayList, List, Random}
 
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.gen.biomes.{Biome, BiomeDesert, BiomeGrassland}
@@ -25,50 +25,24 @@ class Chunk extends IDrawableInWorld {
   }
 
   def this(world: World, chunkPos: Vector2) {
-    this(world, new Vector2i(chunkPos))
+    this(world, chunkPos.toWorldPosition)
   }
 
-  def fillAir {
-    {
-      var y: Int = 0
-      while (y < map(0).length) {
-        {
-          {
-            var x: Int = 0
-            while (x < map.length) {
-              {
-                world.setTile(new Vector2i(x, y).getBlockInWorldPos(this), new TileAir, false)
-              }
-              ({
-                x += 1;
-                x - 1
-              })
-            }
-          }
-        }
-        ({
-          y += 1;
-          y - 1
-        })
-      }
-    }
-  }
+  def fillAir(): Unit =
+    for {
+      y <- map(0).indices
+      x <- map.indices
+    } world.setTile(new Vector2i(x, y).getBlockInWorldPos(this), new TileAir(), notify = false)
 
   @deprecated def update(world: World, delta: Float) {
     var tile: Tile = null
-    val pos: Vector2i = new Vector2i
-    pos.y = 0
-    while (pos.y < world.chunksize.y) {
-      pos.x = 0
-      while (pos.x < world.chunksize.x) {
-        tile = getTile(pos)
-        if (tile != null) tile.update(world, delta)
 
-        pos.x += 1
-        pos.x - 1
-      }
-      pos.y += 1
-      pos.y - 1
+    for {
+      y <- 0 until world.chunksize.y
+      x <- 0 until world.chunksize.x
+    } {
+      tile = getTile(Vector2i(x, y))
+      if (tile != null) tile.update(world, delta)
     }
 
     import scala.collection.JavaConversions._
@@ -82,60 +56,37 @@ class Chunk extends IDrawableInWorld {
 
   def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
     var tile: Tile = null
-    val tilePos: Vector2i = new Vector2i {
-      y = 0
 
-      while (y < world.chunksize.y) {
-        {
-          {
-            x = 0
-            while (x < world.chunksize.x) {
-              {
-                tile = getTile(this)
-                if (tile != null) tile.draw(pos, world, screen, pointOfView)
-              }
-              ({
-                x += 1;
-                x - 1
-              })
-            }
-          }
-        }
-        ({
-          y += 1;
-          y - 1
-        })
-      }
+    for {
+      y <- 0 until world.chunksize.y
+      x <- 0 until world.chunksize.x
+    } {
+      tile = getTile(Vector2i(x, y))
+      if (tile != null) tile.draw(pos, world, screen, pointOfView)
     }
   }
 
   @SuppressWarnings(Array("unused")) def getBiome: Biome = {
-    return if (new Random().nextBoolean || true) BiomeGrassland.instance else BiomeDesert.instance
+    if (new Random().nextBoolean) BiomeGrassland.instance else BiomeDesert.instance
   }
 
   def getTile(blockInChunkPos: Vector2i): Tile = {
     if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
       return map(blockInChunkPos.x)(blockInChunkPos.y)
     }
-    return null
+    null
   }
 
   def setTile(blockInChunkPos: Vector2i, tile: Tile): Chunk = {
     if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
       if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled) map(blockInChunkPos.x)(blockInChunkPos.y) = tile
     }
-    return this
+    this
   }
 
-  def removeEntity(entity: Entity): Boolean = {
-    return localEntities.remove(entity)
-  }
+  def removeEntity(entity: Entity): Boolean = localEntities.remove(entity)
 
-  def addEntity(entity: Entity): Boolean = {
-    return localEntities.add(entity)
-  }
+  def addEntity(entity: Entity): Boolean = localEntities.add(entity)
 
-  def getLocalEntities: Array[Entity] = {
-    return localEntities.toArray(new Array[Entity](localEntities.size))
-  }
+  def getLocalEntities: Array[Entity] = localEntities.toArray(new Array[Entity](localEntities.size))
 }

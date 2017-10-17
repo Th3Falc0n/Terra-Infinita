@@ -24,12 +24,12 @@ class SubtileRendererFluid extends SubtileRendererMask {
       }
     }
     var height: Float = (render.asInstanceOf[SubtileFluid]).pressure / (render.asInstanceOf[SubtileFluid]).maxPressure * BLOCK_SIZE
-    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.TOP)) {
-      val above: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.TOP)
+    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.Top)) {
+      val above: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.Top)
       height += above.pressure / above.maxPressure * BLOCK_SIZE
     }
-    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.BOTTOM)) {
-      val below: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.BOTTOM)
+    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.Bottom)) {
+      val below: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.Bottom)
       if (below.pressure < below.maxPressure) height = 0
     }
     if (height > BLOCK_SIZE) height = BLOCK_SIZE

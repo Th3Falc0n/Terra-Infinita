@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.Chunk;
 import com.dafttech.terra.game.world.Facing;
-import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.living.Player;
 import com.dafttech.terra.game.world.items.persistence.GameObject;
@@ -189,8 +189,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         Vector2 oVel = velocity;
 
-        for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x(); x++) {
-            for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y(); y++) {
+        for (int x = mid.x() - 1; x <= mid.x() + 2 + size.x(); x++) {
+            for (int y = mid.y() - 1; y <= mid.y() + 2 + size.y(); y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                     tileRect = new Rectangle(x * Options.BLOCK_SIZE(), y * Options.BLOCK_SIZE(), Options.BLOCK_SIZE(), Options.BLOCK_SIZE());
                     playerRect = new Vector2(getPosition().x(), getPosition().y()).rectangleTo(new Vector2(Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y()));
@@ -220,13 +220,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             boolean hcv = false, hch = false;
 
             if (oVel.y() > 0) {
-                fVertical = Facing.BOTTOM$.MODULE$;
+                fVertical = Facing.Bottom$.MODULE$;
                 distVertical = (a.y + a.height) - b.y;
                 posVertical = b.y - 0.01f - a.height;
 
                 hcv = true;
             } else if (oVel.y() < 0) {
-                fVertical = Facing.TOP$.MODULE$;
+                fVertical = Facing.Top$.MODULE$;
                 distVertical = (b.y + b.height) - a.y;
                 posVertical = (b.y + b.height) + 0.01f;
 
@@ -234,13 +234,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             }
 
             if (oVel.x() > 0) {
-                fHorizontal = Facing.RIGHT$.MODULE$;
+                fHorizontal = Facing.Right$.MODULE$;
                 distHorizontal = (a.x + a.width) - b.x;
                 posHorizontal = b.x - 0.01f - a.width;
 
                 hch = true;
             } else if (oVel.x() < 0) {
-                fHorizontal = Facing.LEFT$.MODULE$;
+                fHorizontal = Facing.Left$.MODULE$;
                 distHorizontal = (b.x + b.width) - a.x;
                 posHorizontal = (b.x + b.width) + 0.01f;
 
@@ -269,7 +269,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             velocity = velocity.withX(0);
             setPosition(getPosition().withX(val));
         }
-        if (facing == Facing.BOTTOM$.MODULE$) inAir = false;
+        if (facing == Facing.Bottom$.MODULE$) inAir = false;
     }
 
     @Override

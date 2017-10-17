@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.TerraInfinita;
-import com.dafttech.terra.game.world.Vector2i;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.items.persistence.Persistent;
@@ -37,8 +37,8 @@ public class TileGrass extends Tile {
 
     @Override
     public void onNeighborChange(World world, Tile changed) {
-        if (world.getTile(getPosition().add(0, 1)).isAir())
-            world.destroyTile(getPosition().getX(), getPosition().getY(), null);
+        if (world.getTile(getPosition().$plus(0, 1)).isAir())
+            world.destroyTile(getPosition().x(), getPosition().y(), null);
     }
 
     @Override
@@ -73,10 +73,10 @@ public class TileGrass extends Tile {
 
     @Override
     public void onTick(World world, float delta) {
-        Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
+        Vector2i spreadPosition = getPosition().$plus(new Random().nextInt(spreadDistance * 2) - spreadDistance,
                 new Random().nextInt(spreadDistance * 2) - spreadDistance);
         Tile spreadTile = world.getTile(spreadPosition);
-        spreadPosition.addY(-1);
+        spreadPosition.$minus(0, 1);
         if (spreadTile != null && world.getTile(spreadPosition).isAir() && spreadTile.hasSubtile(SubtileGrass.class, false)) {
             world.setTile(spreadPosition, new TileGrass(), true);
         }

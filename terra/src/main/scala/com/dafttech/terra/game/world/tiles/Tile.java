@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.dafttech.terra.engine.AbstractScreen;
 import com.dafttech.terra.engine.IDrawableInWorld;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.engine.renderer.TileRenderer;
 import com.dafttech.terra.engine.renderer.TileRendererBlock$;
-import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.EntityItem;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public abstract class Tile extends Item implements IDrawableInWorld {
     private World world = null;
-    private Vector2i position = new Vector2i();
+    private Vector2i position = Vector2i.Null();
     private volatile List<Subtile> subtiles = new ArrayList<Subtile>();
 
     private float breakingProgress = 0;
@@ -151,7 +151,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public Tile setPosition(Vector2i position) {
-        this.position.set(position);
+        this.position = position;
         return this;
     }
 
@@ -244,7 +244,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
     }
 
     public Vector2i getPosition() {
-        return position.clone();
+        return position;
     }
 
 }

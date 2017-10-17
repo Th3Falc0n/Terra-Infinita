@@ -32,13 +32,13 @@ public abstract class TileFalling extends Tile {
 
     public void fall(World world, int x, int y) {
         renderOffset = renderOffset.$minus(x, y);
-        world.setTile(getPosition().add(x, y), this, true);
+        world.setTile(getPosition().$plus(x, y), this, true);
     }
 
     public void fallIfPossible(World world) {
         if (renderOffset.isNull()) {
             if (createTime == 0) createTime = world.time();
-            if (createTime + getFallDelay(world) < world.time() && world.getTile(getPosition().addY(1)).isReplacable()) {
+            if (createTime + getFallDelay(world) < world.time() && world.getTile(getPosition().$plus(0, 1)).isReplacable()) {
                 fall(world, 0, 1);
             }
         }

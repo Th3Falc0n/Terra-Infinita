@@ -2,8 +2,8 @@ package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dafttech.terra.engine.Vector2;
+import com.dafttech.terra.engine.Vector2i;
 import com.dafttech.terra.engine.lighting.PointLight;
-import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 import com.dafttech.terra.game.world.entities.models.EntityLiving;
@@ -35,7 +35,7 @@ public class TileFire extends TileFalling {
         lifetime -= speedMod;
 
         if (spread && spreadCounter <= 0) {
-            Vector2i spreadPosition = getPosition().add(new Random().nextInt(spreadDistance * 2) - spreadDistance,
+            Vector2i spreadPosition = getPosition().$plus(new Random().nextInt(spreadDistance * 2) - spreadDistance,
                     new Random().nextInt(spreadDistance * 2) - spreadDistance);
             Tile spreadTile = world.getTile(spreadPosition);
             if (spreadTile.isFlammable()) {

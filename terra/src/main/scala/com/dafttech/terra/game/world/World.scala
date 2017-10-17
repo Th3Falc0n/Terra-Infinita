@@ -5,7 +5,7 @@ import java.util.{ArrayList, List, Map}
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.passes.RenderingPass
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
@@ -29,7 +29,7 @@ class World extends IDrawableInWorld {
 
   def this(size: Vector2) {
     this()
-    this.size.set(size.x.toInt, size.y.toInt)
+    this.size = Vector2i(size.x.toInt, size.y.toInt)
     gen = new WorldGenerator(this)
     println(Vector2.Null)
     localPlayer = new Player(Vector2.Null, this)

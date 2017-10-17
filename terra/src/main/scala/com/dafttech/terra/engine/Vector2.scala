@@ -2,7 +2,6 @@ package com.dafttech.terra.engine
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Rectangle
-import com.dafttech.terra.game.world.Vector2i
 import com.dafttech.terra.resources.Options
 
 case class Vector2(x: Double, y: Double) {
