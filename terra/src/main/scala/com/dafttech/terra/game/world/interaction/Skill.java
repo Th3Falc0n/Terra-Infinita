@@ -8,7 +8,7 @@ import com.dafttech.terra.engine.Vector2;
 public abstract class Skill implements IDrawableInventory {
     public abstract TextureRegion getImage();
 
-    public static enum ActivationMode {
+    public enum ActivationMode {
         Execute, Toggle, Hold, Passive
     }
 

@@ -21,8 +21,6 @@ public class Prototype {
         return true;
     }
 
-    ;
-
     public String getHashBase() {
         StringBuilder hashBuilder = new StringBuilder();
 
