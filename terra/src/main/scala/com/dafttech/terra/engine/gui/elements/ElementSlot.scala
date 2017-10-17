@@ -55,7 +55,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
     if (assignedStack != null) {
       (assignedStack.`type`.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
-      Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.amount, p.x, 6 + p.y)
+      Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.amount, p.x.toFloat, 6 + p.y.toFloat)
     }
     screen.batch.end
   }

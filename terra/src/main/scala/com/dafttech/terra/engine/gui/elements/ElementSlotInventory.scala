@@ -46,7 +46,7 @@ class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends
     screen.batch.begin
     if (assignedStack != null) {
       (assignedStack.`type`.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
-      Resources.GUI_FONT.draw(screen.batch, assignedStack.amount + "x " + assignedStack.`type`.toGameObject.getName, 40 + p.x, 12 + p.y)
+      Resources.GUI_FONT.draw(screen.batch, assignedStack.amount + "x " + assignedStack.`type`.toGameObject.getName, 40 + p.x.toFloat, 12 + p.y.toFloat)
     }
     screen.batch.end
   }

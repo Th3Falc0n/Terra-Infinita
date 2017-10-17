@@ -31,7 +31,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     @Override
     public boolean use(EntityLiving causer, Vector2 position) {
-        if (causer.getPosition().clone().sub(position).len() < 100) {
+        if (causer.getPosition().$minus(position).length() < 100) {
             Vector2i pos = position.toWorldPosition();
             return causer.getWorld().placeTile(pos.x(), pos.y(), this, causer);
         }
@@ -76,7 +76,7 @@ public abstract class Tile extends Item implements IDrawableInWorld {
 
     public EntityItem spawnAsEntity(World world) {
         Item dropped = getDroppedItem();
-        return dropped == null ? null : new EntityItem(getPosition().toEntityPos().add(0.5f, 0.5f), world, new Vector2(0.5f, 0.5f), dropped);
+        return dropped == null ? null : new EntityItem(getPosition().toEntityPos().$plus(new Vector2(0.5f, 0.5f)), world, new Vector2(0.5f, 0.5f), dropped);
     }
 
     ;

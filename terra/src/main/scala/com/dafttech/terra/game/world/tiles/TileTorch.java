@@ -28,11 +28,11 @@ public class TileTorch extends TileFalling {
 
         if (light == null) light = new PointLight(getPosition().toEntityPos(), 95);
 
-        light.setPosition(getPosition().toEntityPos().add(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().toEntityPos().$plus(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2));
 
         for (int i = 0; i < 5; i++) {
             if (TerraInfinita.rnd().nextDouble() < delta * 0.5f) {
-                new ParticleSpark(getPosition().toEntityPos().addX(Options.BLOCK_SIZE() / 2), world).addVelocity(new Vector2(0, -1));
+                new ParticleSpark(getPosition().toEntityPos().$plus(Options.BLOCK_SIZE() / 2, 0), world).addVelocity(new Vector2(0, -1));
             }
         }
     }

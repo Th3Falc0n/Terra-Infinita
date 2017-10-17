@@ -34,12 +34,12 @@ public class EntityFlamingArrow extends EntityArrow {
             light = new PointLight(getPosition(), 95);
             light.setColor(new Color(255, 200, 40, 255));
         }
-        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
         light.setSize(90 + new Random().nextInt(10));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd().nextDouble() < delta * velocity.len() * 0.5f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity.length() * 0.5f) {
                 new ParticleSpark(getPosition(), worldObj);
             }
         }

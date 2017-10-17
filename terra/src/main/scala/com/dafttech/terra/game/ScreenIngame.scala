@@ -23,7 +23,7 @@ class ScreenIngame extends AbstractScreen {
     Events.EVENTMANAGER.registerEventListener(this)
     localWorld = w
     guiContainerScreen = new ContainerOnscreen
-    exitButton = new ElementButton(new Vector2, "Exit") {
+    exitButton = new ElementButton(Vector2.Null, "Exit") {
       def actionPerformed(button: Int) {
         Gdx.app.exit
       }
@@ -35,7 +35,7 @@ class ScreenIngame extends AbstractScreen {
     exitButton.setTooltip("Close the game")
     //chat = new ModuleChat
     //chat.create
-    midContainer = new ContainerList(new Vector2, new Vector2(320, 800), 45)
+    midContainer = new ContainerList(Vector2.Null, new Vector2(320, 800), 45)
     midContainer.assignAnchorSet(new GUIAnchorSet(new AnchorBottom(0.15f), new AnchorCenterX))
     //guiContainerScreen.addObject(chat.getContainer) TODO
     guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer)

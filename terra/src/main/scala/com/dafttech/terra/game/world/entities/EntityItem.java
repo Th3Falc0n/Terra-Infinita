@@ -36,17 +36,17 @@ public class EntityItem extends Entity {
         Vector2 p = getWorld().localPlayer().getPosition();
         Vector2 s = getWorld().localPlayer().getSize();
 
-        Vector2 vp = new Vector2(p.addNew(s.x() * Options.BLOCK_SIZE() / 2, s.y() * Options.BLOCK_SIZE() / 2));
-        vp.sub(getPosition());
+        Vector2 vp = p.$plus(s.x() * Options.BLOCK_SIZE() / 2, s.y() * Options.BLOCK_SIZE() / 2);
+        vp.$minus(getPosition());
 
-        if (vp.len2() < 400) {
+        if (vp.length$u00B2() < 400) {
             getWorld().localPlayer().inventory.add(new Stack(wrapped, 1));
 
             getWorld().removeEntity(this);
         }
 
-        if (vp.len2() < 10000) {
-            addForce(vp.nor().mul(14f / vp.len2()));
+        if (vp.length$u00B2() < 10000) {
+            addForce(vp.normalized().$times(14f / vp.length$u00B2()));
         }
 
         super.update(world, delta);

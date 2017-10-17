@@ -22,7 +22,7 @@ public class ItemArrow extends ItemEntitySpawner {
     @Override
     public boolean spawnEntity(EntityLiving causer, Vector2 position) {
         EntityArrow a = new EntityArrow(causer.getPosition(), causer.worldObj);
-        a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.2f));
+        a.setVelocity(Vector2.mousePos().$minus(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2).$times(0.2f));
         return true;
     }
 }

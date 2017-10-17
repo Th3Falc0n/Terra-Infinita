@@ -19,7 +19,7 @@ abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p,
     }
     super.draw(screen)
     screen.batch.begin
-    Resources.GUI_FONT.draw(screen.batch, text, p.x + size.x / 2 - Resources.GUI_FONT.getBounds(text).width / 2, 6 + p.y)
+    Resources.GUI_FONT.draw(screen.batch, text, p.x.toFloat + size.x.toFloat / 2 - Resources.GUI_FONT.getBounds(text).width / 2, 6 + p.y.toFloat)
     screen.batch.end
     screen.batch.setColor(Color.WHITE)
   }

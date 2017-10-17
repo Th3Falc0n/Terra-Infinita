@@ -7,7 +7,7 @@ import com.dafttech.terra.game.Events
 import org.lolhens.eventmanager.EventListener
 
 abstract class GUIObject {
-  var position: Vector2 = null
+  var position: Vector2 = Vector2.Null
   var size: Vector2 = null
   var mouseHover: Boolean = false
   protected var registeredEvents: Boolean = false
@@ -24,16 +24,9 @@ abstract class GUIObject {
 
   def draw(screen: AbstractScreen)
 
-  def getScreenPosition: Vector2 = {
-    if (container != null) {
-      return container.getScreenPosition.addNew(position)
-    }
-    return position
-  }
+  def getScreenPosition: Vector2 = position + Option(container).map(_.getScreenPosition).getOrElse(Vector2.Null)
 
-  def providesActiveHierarchy: Boolean = {
-    return false
-  }
+  def providesActiveHierarchy: Boolean = false
 
   def isInActiveHierarchy: Boolean = {
     if (providesActiveHierarchy) return true

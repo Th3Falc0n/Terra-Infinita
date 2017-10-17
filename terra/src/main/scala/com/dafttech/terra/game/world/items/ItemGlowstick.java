@@ -12,7 +12,7 @@ public class ItemGlowstick extends ItemEntitySpawner {
     @Override
     public boolean spawnEntity(EntityLiving causer, Vector2 position) {
         EntityGlowstick a = new EntityGlowstick(causer.getPosition(), causer.worldObj);
-        a.setVelocity(Vector2.getMouse().sub(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).mul(0.08f));
+        a.setVelocity(Vector2.mousePos().$minus(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)).$times(0.08f));
         return true;
     }
 

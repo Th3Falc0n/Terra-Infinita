@@ -18,7 +18,7 @@ class ModuleChat extends GUIModule with IStringInputHandler {
 
   def create {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(new Vector2, new Vector2(400, 280))
+    container = new ContainerBlock(Vector2.Null, new Vector2(400, 280))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorLeft(0.01f))
     set.addAnchor(new AnchorBottom(0.01f))
@@ -30,7 +30,7 @@ class ModuleChat extends GUIModule with IStringInputHandler {
   }
 
   def addMessage(msg: String) {
-    messageList.addObject(new ElementLabel(new Vector2, msg))
+    messageList.addObject(new ElementLabel(Vector2.Null, msg))
   }
 
   @EventListener(value = Array("KEYDOWN"), filter = Array("filterOnChatKeyUsed")) def onChatKeyUsed {

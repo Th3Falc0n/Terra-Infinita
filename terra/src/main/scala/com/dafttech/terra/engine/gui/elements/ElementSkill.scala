@@ -21,7 +21,7 @@ class ElementSkill(p: Vector2, val player: Player, val label: String, val skillI
     if (player.getSkillForID(skillID) != null) {
       player.getSkillForID(skillID).drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
-      Resources.GUI_FONT.draw(screen.batch, label, p.x, 6 + p.y)
+      Resources.GUI_FONT.draw(screen.batch, label, p.x.toFloat, 6 + p.y.toFloat)
     }
     screen.batch.end
   }

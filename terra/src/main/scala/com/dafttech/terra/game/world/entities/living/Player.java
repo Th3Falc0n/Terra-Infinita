@@ -73,10 +73,10 @@ public class Player extends EntityLiving {
         if (InputHandler$.MODULE$.isKeyDown("JUMP") && !this.isInAir()) jump();
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-            Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+            Vector2 mouseInWorldPos = Vector2.mousePos().$plus(getPosition()).$minus(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
             if (!hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos, true) && System.currentTimeMillis() - left > 10) {
                 left = System.currentTimeMillis();
-                Vector2i destroy = (Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
+                Vector2i destroy = (Vector2.mousePos().$plus(getPosition()).$minus(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2))
                         .toWorldPosition();
                 Tile damagedTile = getWorld().getTile(destroy.x(), destroy.y());
                 if (damagedTile != null) damagedTile.damage(world, 0.2f, this);
@@ -84,7 +84,7 @@ public class Player extends EntityLiving {
         }
 
         if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
-            Vector2 mouseInWorldPos = Vector2.getMouse().add(getPosition()).sub(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+            Vector2 mouseInWorldPos = Vector2.mousePos().$plus(getPosition()).$minus(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
             hudBottom.getActiveSlot().useAssignedItem(this, mouseInWorldPos, false);
         }
 
@@ -93,9 +93,9 @@ public class Player extends EntityLiving {
         }
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd().nextDouble() < delta * velocity.len() * 2f) {
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity.length() * 2f) {
                 if (getUndergroundTile() != null && !inAir) {
-                    new ParticleDust(getPosition().addNew(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE()).addNew(
+                    new ParticleDust(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE()).$plus(
                             (TerraInfinita.rnd().nextFloat() - 0.5f) * Options.BLOCK_SIZE() * 2, (TerraInfinita.rnd().nextFloat() - 1f) * 4f), worldObj,
                             getUndergroundTile().getImage());
                 }
@@ -121,7 +121,7 @@ public class Player extends EntityLiving {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch().setColor(color);
-        screen.batch().draw(this.getImage(), screenVec.x(), screenVec.y(), Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y());
+        screen.batch().draw(this.getImage(), screenVec.xFloat(), screenVec.yFloat(), Options.BLOCK_SIZE() * size.xFloat(), Options.BLOCK_SIZE() * size.yFloat());
         screen.batch().flush();
         // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
     }
