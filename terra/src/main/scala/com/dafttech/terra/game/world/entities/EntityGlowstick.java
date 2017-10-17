@@ -44,9 +44,9 @@ public class EntityGlowstick extends Entity {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
-        setRotation((float) (velocity.angle() + Math.PI / 2 + gsRotation));
+        setRotation((float) (velocity.rotation() + Math.PI / 2 + gsRotation));
     }
 
     @Override

@@ -38,7 +38,7 @@ public class EntityDiggerBeam extends EntityThrown {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().add(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
 
         if (Math.abs(velocity.x()) <= 0.1 && Math.abs(velocity.y()) <= 0.1) {
             worldObj.removeEntity(this);
@@ -53,7 +53,7 @@ public class EntityDiggerBeam extends EntityThrown {
     @Override
     public void onTerrainCollision(Tile tile) {
         if (!tile.isAir()) {
-            worldObj.destroyTile(tile.getPosition().x(), tile.getPosition().y(), this).addVelocity(velocity.mulNew(-1));
+            worldObj.destroyTile(tile.getPosition().x(), tile.getPosition().y(), this).addVelocity(velocity.$times(-1));
             this.remove();
         }
     }

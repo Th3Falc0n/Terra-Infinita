@@ -23,15 +23,15 @@ import com.dafttech.terra.resources.Options;
 public abstract class Entity extends GameObject implements IDrawableInWorld {
     Chunk chunk = null;
     @Persistent
-    protected Vector2 position = new Vector2();
+    protected Vector2 position = Vector2.Null();
 
     @Persistent
-    protected Vector2 velocity = new Vector2();
+    protected Vector2 velocity = Vector2.Null();
 
-    protected Vector2 accelleration = new Vector2();
+    protected Vector2 accelleration = Vector2.Null();
 
     @Persistent
-    protected Vector2 size = new Vector2();
+    protected Vector2 size = Vector2.Null();
 
     @Persistent
     protected float rotation;
@@ -60,11 +60,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public void setMidPos(Vector2 pos) {
-        setPosition(pos.addNew(-size.x() * Options.BLOCK_SIZE() / 2f, -size.y() * Options.BLOCK_SIZE() / 2f));
+        setPosition(pos.$plus(-size.x() * Options.BLOCK_SIZE() / 2f, -size.y() * Options.BLOCK_SIZE() / 2f));
     }
 
     public Vector2 getMidPos() {
-        return getPosition().add(size.x() * Options.BLOCK_SIZE() / 2f, size.y() * Options.BLOCK_SIZE() / 2f);
+        return getPosition().$plus(new Vector2(size.x() * Options.BLOCK_SIZE() / 2f, size.y() * Options.BLOCK_SIZE() / 2f));
     }
 
     public void setColor(Color clr) {
@@ -80,7 +80,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Vector2 getPosition() {
-        return position.clone();
+        return position;
     }
 
     public Entity setPosition(Vector2 pos) {
@@ -89,7 +89,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             addToWorld(newChunk, pos);
             onRechunk(newChunk, pos);
         }
-        position.set(pos);
+        position = pos;
         return this;
     }
 
@@ -131,8 +131,12 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         gravityFactor = f;
     }
 
+    public void setSize(Vector2 size) {
+        this.size = size;
+    }
+
     public void setSize(float x, float y) {
-        size = new Vector2(x, y);
+        setSize(new Vector2(x, y));
     }
 
     @SuppressWarnings("unused")
@@ -144,7 +148,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         Vector2 v2 = new Vector2(rect.x, rect.y);
         v2 = v2.toRenderPosition(getPosition());
 
-        rend.rect(v2.x(), v2.y(), rect.width, rect.height);
+        rend.rect((float) v2.x(), (float) v2.y(), rect.width, rect.height);
 
         rend.flush();
 
@@ -162,15 +166,15 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     public void checkEntityCollisions() {
         Rectangle playerRect, otherRect;
 
-        Vector2 oVel = velocity.clone();
+        Vector2 oVel = velocity;
 
         for (Entity entity : chunk.getLocalEntities()) {
-            if (entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.len2() < entity.velocity.len2()) {
+            if (entity == this || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.length$u00B2() < entity.velocity.length$u00B2()) {
                 continue;
             }
-            otherRect = new Rectangle(entity.getPosition().x(), entity.getPosition().y(), entity.getSize().x() * Options.BLOCK_SIZE(), entity.getSize().y()
-                    * Options.BLOCK_SIZE());
-            playerRect = new Rectangle(getPosition().x(), getPosition().y(), Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y());
+            otherRect = new Vector2(entity.getPosition().x(), entity.getPosition().y()).rectangleTo(new Vector2(entity.getSize().x() * Options.BLOCK_SIZE(), entity.getSize().y()
+                    * Options.BLOCK_SIZE()));
+            playerRect = new Vector2(getPosition().x(), getPosition().y()).rectangleTo(new Vector2(Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y()));
 
             if (collisionDetect(oVel, playerRect, otherRect)) {
                 onEntityCollision(entity);
@@ -183,13 +187,13 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         Rectangle playerRect, tileRect;
 
-        Vector2 oVel = velocity.clone();
+        Vector2 oVel = velocity;
 
         for (int x = mid.getX() - 1; x <= mid.getX() + 2 + size.x(); x++) {
             for (int y = mid.getY() - 1; y <= mid.getY() + 2 + size.y(); y++) {
                 if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
                     tileRect = new Rectangle(x * Options.BLOCK_SIZE(), y * Options.BLOCK_SIZE(), Options.BLOCK_SIZE(), Options.BLOCK_SIZE());
-                    playerRect = new Rectangle(getPosition().x(), getPosition().y(), Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y());
+                    playerRect = new Vector2(getPosition().x(), getPosition().y()).rectangleTo(new Vector2(Options.BLOCK_SIZE() * size.x(), Options.BLOCK_SIZE() * size.y()));
 
                     if (collisionDetect(oVel, playerRect, tileRect)) {
                         onTerrainCollision(world.getTile(x, y));
@@ -259,11 +263,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
     public void collisionResponse(Facing facing, float val) {
         if (facing.isVertical()) {
-            velocity.y_$eq(0);
-            setPosition(getPosition().setY(val));
+            velocity = velocity.withY(0);
+            setPosition(getPosition().withY(val));
         } else {
-            velocity.x_$eq(0);
-            setPosition(getPosition().setX(val));
+            velocity = velocity.withX(0);
+            setPosition(getPosition().withX(val));
         }
         if (facing == Facing.BOTTOM$.MODULE$) inAir = false;
     }
@@ -273,8 +277,8 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
         screen.batch().setColor(color);
-        screen.batch().draw(this.getImage(), screenVec.x(), screenVec.y(), Options.BLOCK_SIZE() * size.x() / 2, Options.BLOCK_SIZE() * size.y() / 2, Options.BLOCK_SIZE() * size.x(),
-                Options.BLOCK_SIZE() * size.y(), 1, 1, rotation);
+        screen.batch().draw(this.getImage(), (float) screenVec.x(), (float) screenVec.y(), (float) (Options.BLOCK_SIZE() * size.x() / 2), (float) (Options.BLOCK_SIZE() * size.y() / 2), (float) (Options.BLOCK_SIZE() * size.x()),
+                (float) (Options.BLOCK_SIZE() * size.y()), 1, 1, rotation);
     }
 
     public abstract TextureRegion getImage();
@@ -285,12 +289,12 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Entity addForce(Vector2 f) {
-        this.accelleration.add(f);
+        accelleration = accelleration.$plus(f);
         return this;
     }
 
     public Entity addVelocity(Vector2 v) {
-        this.velocity.add(v);
+        velocity = velocity.$plus(v);
         return this;
     }
 
@@ -300,13 +304,12 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
 
         if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor));
 
-        velocity.addX(accelleration.x() * delta);
-        velocity.addY(accelleration.y() * delta);
+        velocity = velocity.$plus(accelleration.x() * delta, accelleration.y() * delta);
 
-        accelleration.setNull();
+        accelleration = Vector2.Null();
 
-        if (velocity.len2() > 0) {
-            float stepLength = 10f / velocity.len();
+        if (velocity.length$u00B2() > 0) {
+            float stepLength = 10f / (float) velocity.length();
 
             inAir = true;
 
@@ -316,7 +319,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
                     asl -= (i + asl) - delta;
                 }
 
-                setPosition(getPosition().add(velocity.mulNew(asl)));
+                setPosition(getPosition().$plus(velocity.$times(asl)));
 
                 if (!inWorld) {
                     return;
@@ -329,11 +332,11 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
             }
         }
 
-        velocity.mulY(1 - 0.025f * delta);
-        velocity.mulX(1 - getCurrentFriction() * delta);
+        velocity = velocity.withY(velocity.y() * (1 - 0.025f * delta));
+        velocity = velocity.withX(velocity.x() * (1 - getCurrentFriction() * delta));
 
-        if (alignToVelocity() && velocity.len2() > 0.1f) {
-            setRotation(velocity.angle() + getVelocityOffsetAngle());
+        if (alignToVelocity() && velocity.length$u00B2() > 0.1f) {
+            setRotation((float) velocity.rotation() + getVelocityOffsetAngle());
         }
 
         if (isDynamicEntity && !isInRenderRange(world.localPlayer())) {
@@ -350,7 +353,7 @@ public abstract class Entity extends GameObject implements IDrawableInWorld {
     }
 
     public Tile getUndergroundTile() {
-        Vector2i pos = position.addNew(size.x() * Options.BLOCK_SIZE(), size.y() * Options.BLOCK_SIZE()).toWorldPosition();
+        Vector2i pos = position.$plus(size.x() * Options.BLOCK_SIZE(), size.y() * Options.BLOCK_SIZE()).toWorldPosition();
         return worldObj.getTile(pos.x(), pos.y() + 1);
     }
 

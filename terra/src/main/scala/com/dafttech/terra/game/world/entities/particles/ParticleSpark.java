@@ -19,8 +19,7 @@ public class ParticleSpark extends Particle {
 
         size = TerraInfinita.rnd().nextFloat() * 0.2f + 0.1f;
 
-        getSize().x_$eq(size);
-        getSize().y_$eq(getSize().x());
+        setSize(new Vector2(size, getSize().x()));
 
         setHasGravity(true);
         setGravityFactor(0.05f);
@@ -36,12 +35,11 @@ public class ParticleSpark extends Particle {
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        getSize().x_$eq(size * (lifetime / lifetimeMax));
-        getSize().y_$eq(getSize().x());
+        setSize(new Vector2(size * (lifetime / lifetimeMax), getSize().x()));
 
         if (light != null) {
             light.setSize(55 * 2 * (lifetime / lifetimeMax));
-            light.setPosition(getPosition().add(getSize().x() * Options.BLOCK_SIZE() / 2, getSize().y() * Options.BLOCK_SIZE() / 2));
+            light.setPosition(getPosition().$plus(getSize().x() * Options.BLOCK_SIZE() / 2, getSize().y() * Options.BLOCK_SIZE() / 2));
         }
     }
 

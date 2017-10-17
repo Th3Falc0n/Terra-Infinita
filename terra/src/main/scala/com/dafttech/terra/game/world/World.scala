@@ -31,7 +31,8 @@ class World extends IDrawableInWorld {
     this()
     this.size.set(size.x.toInt, size.y.toInt)
     gen = new WorldGenerator(this)
-    localPlayer = new Player(new Vector2, this)
+    println(Vector2.Null)
+    localPlayer = new Player(Vector2.Null, this)
     localPlayer.setPosition(new Vector2(0, -100))
   }
 

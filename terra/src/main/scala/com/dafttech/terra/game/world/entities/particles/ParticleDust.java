@@ -28,8 +28,7 @@ public class ParticleDust extends Particle {
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        getSize().x_$eq(size * (1 - (lifetime / lifetimeMax)));
-        getSize().y_$eq(getSize().x());
+        setSize(new Vector2(size * (1 - (lifetime / lifetimeMax)), getSize().x()));
     }
 
     @Override

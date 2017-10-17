@@ -19,7 +19,7 @@ class ScreenPauseMenu extends AbstractScreen {
     this()
     localWorld = w
     guiContainerScreen = new ContainerOnscreen
-    exitButton = new ElementButton(new Vector2, "Exit") {
+    exitButton = new ElementButton(Vector2.Null, "Exit") {
       def actionPerformed(button: Int) {
         Gdx.app.exit
       }
@@ -29,7 +29,7 @@ class ScreenPauseMenu extends AbstractScreen {
     exitButtonSet.addAnchor(new AnchorTop(0.01f))
     exitButton.assignAnchorSet(exitButtonSet)
     exitButton.setTooltip("Close the game")
-    resumeButton = new ElementButton(new Vector2, "Resume") {
+    resumeButton = new ElementButton(Vector2.Null, "Resume") {
       def actionPerformed(button: Int) {
         TerraInfinita.setScreen(TerraInfinita.screenIngame)
       }

@@ -20,19 +20,19 @@ class ModuleCrafting extends GUIModule {
 
   def create {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(new Vector2, new Vector2(312, 200))
+    container = new ContainerBlock(Vector2.Null, new Vector2(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     container.assignAnchorSet(set)
     var btnRecipe: ElementButton = null
     var btnResearch: ElementButton = null
-    btnRecipe = new ElementButton(new Vector2, "Recipes") {
+    btnRecipe = new ElementButton(Vector2.Null, "Recipes") {
       def actionPerformed(button: Int) {
         shown.clearObjects
         shown.addObject(recipeList)
       }
     }
-    btnResearch = new ElementButton(new Vector2, "Research") {
+    btnResearch = new ElementButton(Vector2.Null, "Research") {
       def actionPerformed(button: Int) {
         shown.clearObjects
         shown.addObject(researchList)

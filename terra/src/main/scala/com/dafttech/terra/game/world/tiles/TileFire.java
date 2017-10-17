@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.tiles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dafttech.terra.engine.Vector2;
 import com.dafttech.terra.engine.lighting.PointLight;
 import com.dafttech.terra.game.world.Vector2i;
 import com.dafttech.terra.game.world.World;
@@ -48,7 +49,7 @@ public class TileFire extends TileFalling {
 
         if (light == null) light = new PointLight(getPosition().toEntityPos(), 95);
 
-        light.setPosition(getPosition().toEntityPos().add(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().toEntityPos().$plus(new Vector2(Options.BLOCK_SIZE() / 2, Options.BLOCK_SIZE() / 2)));
     }
 
     public static boolean createFire(World world, int x, int y) {

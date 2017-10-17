@@ -21,7 +21,7 @@ class ModuleInventory extends GUIModule {
 
   @EventListener(Array("SCROLL")) def onScroll(event: Event) {
     if (invList.mouseHover && invList.isInActiveHierarchy) {
-      val i: Int = event.in.get(0, classOf[Integer])
+      val i: Int = event.in.get[Integer](0, classOf[Integer])
       index += i
       if (index > inv.getList.size - 5) {
         index = inv.getList.size - 5
@@ -40,27 +40,27 @@ class ModuleInventory extends GUIModule {
     var n = 0
     while (n < 5) {
       if (index + n < inv.getList.size) {
-        val slot: ElementSlotInventory = new ElementSlotInventory(new Vector2, inv)
+        val slot: ElementSlotInventory = new ElementSlotInventory(Vector2.Null, inv)
         slot.assignStack(inv.getList.get(index + n))
         invList.addObject(slot)
       }
       n += 1
     }
 
-    invList.addObject(new ElementLabel(new Vector2, index + "-" + (index + 5) + " / " + inv.getList.size))
+    invList.addObject(new ElementLabel(Vector2.Null, index + "-" + (index + 5) + " / " + inv.getList.size))
   }
 
   def create {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(new Vector2, new Vector2(312, 200))
+    container = new ContainerBlock(Vector2.Null, new Vector2(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     container.assignAnchorSet(set)
     var invLabel: ElementLabel = null
-    invLabel = new ElementLabel(new Vector2, "Inventory:")
+    invLabel = new ElementLabel(Vector2.Null, "Inventory:")
     invLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)))
     container.addObject(invLabel)
-    invList = new ContainerList(new Vector2, new Vector2(500, 200)) {
+    invList = new ContainerList(Vector2.Null, new Vector2(500, 200)) {
       override def onClick(button: Int) {
         super.onClick(button)
         if (MouseSlot.getAssignedStack != null) {

@@ -2,32 +2,46 @@ package com.dafttech.terra.engine
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Rectangle
+import com.dafttech.terra.game.world.Vector2i
+import com.dafttech.terra.resources.Options
 
 case class Vector2(x: Double, y: Double) {
   self =>
 
-  object Vector2 extends Vector2Obj {
+  protected object Vector2 extends Vector2Obj {
     override def apply(x: Double, y: Double): Vector2 =
       if (x == self.x && y == self.y) self else super.apply(x, y)
   }
 
-  def +(vec: Vector2): Vector2 = if (isNull) vec else Vector2(x + vec.x, y + vec.y)
+  def +(x: Double, y: Double): Vector2 = Vector2(this.x + x, this.y + y)
 
-  def -(vec: Vector2): Vector2 = Vector2(x - vec.x, y - vec.y)
+  def -(x: Double, y: Double): Vector2 = Vector2(this.x - x, this.y - y)
 
-  def *(vec: Vector2): Vector2 = if (isOne) vec else Vector2(x * vec.x, y * vec.y)
+  def *(x: Double, y: Double): Vector2 = Vector2(this.x * x, this.y * y)
 
-  def /(vec: Vector2): Vector2 = Vector2(x / vec.x, y / vec.y)
+  def /(x: Double, y: Double): Vector2 = Vector2(this.x / x, this.y / y)
 
-  def +(value: Double): Vector2 = Vector2(x + value, y + value)
+  def +(vec: Vector2): Vector2 = if (isNull) vec else self + (vec.x, vec.y)
 
-  def -(value: Double): Vector2 = Vector2(x - value, y - value)
+  def -(vec: Vector2): Vector2 = self - (vec.x, vec.y)
 
-  def *(value: Double): Vector2 = Vector2(x * value, y * value)
+  def *(vec: Vector2): Vector2 = if (isOne) vec else self * (vec.x, vec.y)
 
-  def /(value: Double): Vector2 = Vector2(x / value, y / value)
+  def /(vec: Vector2): Vector2 = self / (vec.x, vec.y)
+
+  def +(value: Double): Vector2 = self + (value, value)
+
+  def -(value: Double): Vector2 = self - (value, value)
+
+  def *(value: Double): Vector2 = self * (value, value)
+
+  def /(value: Double): Vector2 = self / (value, value)
 
   lazy val unary_- : Vector2 = Vector2(-x, -y)
+
+  def xFloat: Float = x.toFloat
+
+  def yFloat: Float = y.toFloat
 
   def withX(x: Double): Vector2 = Vector2(x, y)
 
@@ -59,6 +73,19 @@ case class Vector2(x: Double, y: Double) {
 
 
   def rectangleTo(vec: Vector2): Rectangle = new Rectangle(x.toFloat, y.toFloat, vec.x.toFloat, vec.y.toFloat)
+
+
+  def toWorldPosition: Vector2i = {
+    val ox: Int = if (x.toInt >= 0) x.toInt / Options.BLOCK_SIZE else (x.toInt + 1) / Options.BLOCK_SIZE - 1
+    val oy: Int = if (y.toInt >= 0) y.toInt / Options.BLOCK_SIZE else (y.toInt + 1) / Options.BLOCK_SIZE - 1
+    new Vector2i(ox, oy)
+  }
+
+  def toRenderPosition(relateTo: Vector2): Vector2 =
+    new Vector2(x - relateTo.x + Gdx.graphics.getWidth / 2.0f, y - relateTo.y + Gdx.graphics.getHeight / 2.0f)
+
+  def toVector2i: Vector2i =
+    new Vector2i(if (x.toInt >= 0) x.toInt else x.toInt - 1, if (y.toInt >= 0) y.toInt else y.toInt - 1)
 }
 
 trait Vector2Obj {
@@ -67,14 +94,9 @@ trait Vector2Obj {
     else if (x == 1 && y == 1) One
     else new Vector2(x, y)
 
-  def x(x: Double) = Vector2(x, 0)
+  lazy val Null = new Vector2(0, 0)
 
-  def y(y: Double) = Vector2(0, y)
-
-
-  val Null = Vector2(0, 0)
-
-  val One = Vector2(1, 1)
+  lazy val One = new Vector2(1, 1)
 
 
   @deprecated

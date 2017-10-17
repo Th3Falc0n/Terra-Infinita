@@ -19,8 +19,8 @@ class SubtileRendererFluid extends SubtileRendererMask {
     if (!render.isTileIndependent && render.getTile != null) {
       val offset: Vector2 = render.getTile.getRenderer.getOffset
       if (offset != null) {
-        offX = offset.x * BLOCK_SIZE
-        offY = offset.y * BLOCK_SIZE
+        offX = offset.x.toFloat * BLOCK_SIZE
+        offY = offset.y.toFloat * BLOCK_SIZE
       }
     }
     var height: Float = (render.asInstanceOf[SubtileFluid]).pressure / (render.asInstanceOf[SubtileFluid]).maxPressure * BLOCK_SIZE
@@ -33,6 +33,6 @@ class SubtileRendererFluid extends SubtileRendererMask {
       if (below.pressure < below.maxPressure) height = 0
     }
     if (height > BLOCK_SIZE) height = BLOCK_SIZE
-    screen.batch.draw(render.getImage, screenVec.x + offX, screenVec.y + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation)
+    screen.batch.draw(render.getImage, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation)
   }
 }

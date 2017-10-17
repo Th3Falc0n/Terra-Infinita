@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.World;
 import com.dafttech.terra.game.world.entities.Entity;
 
 public abstract class TileFalling extends Tile {
-    private Vector2 renderOffset = new Vector2();
+    private Vector2 renderOffset = Vector2.Null();
     private float createTime = 0;
 
     public TileFalling() {
@@ -17,23 +17,26 @@ public abstract class TileFalling extends Tile {
     public void onTick(World world, float delta) {
         super.onTick(world, delta);
         fallIfPossible(world);
-        if (!renderOffset.is()) {
+        if (!renderOffset.isNull()) {
             float possSpeed = getFallSpeed(world) * delta;
-            if (renderOffset.x() > 0) renderOffset.subX(possSpeed > renderOffset.x() ? renderOffset.x() : possSpeed);
-            if (renderOffset.y() > 0) renderOffset.subY(possSpeed > renderOffset.y() ? renderOffset.y() : possSpeed);
-            if (renderOffset.x() < 0) renderOffset.addX(possSpeed > -renderOffset.x() ? -renderOffset.x() : possSpeed);
-            if (renderOffset.y() < 0) renderOffset.addY(possSpeed > -renderOffset.y() ? -renderOffset.y() : possSpeed);
+            if (renderOffset.x() > 0)
+                renderOffset = renderOffset.$minus(possSpeed > renderOffset.x() ? renderOffset.x() : possSpeed, 0);
+            if (renderOffset.y() > 0)
+                renderOffset = renderOffset.$minus(0, possSpeed > renderOffset.y() ? renderOffset.y() : possSpeed);
+            if (renderOffset.x() < 0)
+                renderOffset = renderOffset.$plus(possSpeed > -renderOffset.x() ? -renderOffset.x() : possSpeed, 0);
+            if (renderOffset.y() < 0)
+                renderOffset = renderOffset.$plus(0, possSpeed > -renderOffset.y() ? -renderOffset.y() : possSpeed);
         }
     }
 
     public void fall(World world, int x, int y) {
-        renderOffset.subX(x);
-        renderOffset.subY(y);
+        renderOffset = renderOffset.$minus(x, y);
         world.setTile(getPosition().add(x, y), this, true);
     }
 
     public void fallIfPossible(World world) {
-        if (renderOffset.is()) {
+        if (renderOffset.isNull()) {
             if (createTime == 0) createTime = world.time();
             if (createTime + getFallDelay(world) < world.time() && world.getTile(getPosition().addY(1)).isReplacable()) {
                 fall(world, 0, 1);

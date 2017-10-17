@@ -12,7 +12,7 @@ class ScreenMainMenu extends AbstractScreen {
   private[game] var exitButton: ElementButton = null
 
   guiContainerScreen = new ContainerOnscreen
-  exitButton = new ElementButton(new Vector2, "Exit") {
+  exitButton = new ElementButton(Vector2.Null, "Exit") {
     def actionPerformed(button: Int) {
       Gdx.app.exit
     }

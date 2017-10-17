@@ -12,7 +12,7 @@ abstract class GUIElement(p: Vector2, s: Vector2) extends GUIObject(p, s) {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     if (image != null)
-      screen.batch.draw(image, p.x, p.y)
+      screen.batch.draw(image, p.x.toFloat, p.y.toFloat)
     else
       println(s"img null in $getClass base GUIElement")
     screen.batch.end

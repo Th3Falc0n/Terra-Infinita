@@ -39,6 +39,6 @@ class TileRendererMultiblock extends TileRendererBlock {
     val y: Double = height * row
     TileRendererMultiblock.setRegion(newTexture, x.toFloat, y.toFloat, width.toFloat, height.toFloat)
     newTexture.flip(texture.isFlipX, texture.isFlipY)
-    screen.batch.draw(newTexture, screenVec.x + offset.x * BLOCK_SIZE, screenVec.y + offset.y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
+    screen.batch.draw(newTexture, (screenVec.x + offset.x * BLOCK_SIZE).toFloat, (screenVec.y + offset.y * BLOCK_SIZE).toFloat, BLOCK_SIZE, BLOCK_SIZE)
   }
 }

@@ -30,7 +30,7 @@ class ModuleHUDBottom extends GUIModule {
 
   def create {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(new Vector2, new Vector2(312, 80))
+    container = new ContainerBlock(Vector2.Null, new Vector2(312, 80))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     set.addAnchor(new AnchorBottom(0.01f))
@@ -52,8 +52,8 @@ class ModuleHUDBottom extends GUIModule {
     apBar.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorRight(0)))
     var healthLabel: ElementLabel = null
     var apLabel: ElementLabel = null
-    healthLabel = new ElementLabel(new Vector2, "HP")
-    apLabel = new ElementLabel(new Vector2, "AP")
+    healthLabel = new ElementLabel(Vector2.Null, "HP")
+    apLabel = new ElementLabel(Vector2.Null, "AP")
     healthLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)))
     apLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorRight(0)))
     container.addObject(healthLabel)
