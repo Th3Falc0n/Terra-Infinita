@@ -14,14 +14,17 @@ class Inventory {
     val stacks = content.getOrElse(stack.prototype, Nil)
     val maxStackSize = stack.prototype.toGameObject.asInstanceOf[Item].maxStackSize
 
-    def addStackRec(stack: Stack, stacks: List[Stack]): List[Stack] =
-      if (stack.isEmpty) stacks
-      else if (stacks.isEmpty) {
-        stacks :+ stack.take(maxStackSize) :+ addStackRec(stack.drop(maxStackSize), List.empty)
-      } else if (stacks.head.size < maxStackSize)
-        addStackRec(stacks.head.withSize(), stacks.tail)
+    def addStackRec(stack: Stack, out: List[Stack], in: List[Stack]): List[Stack] =
+      if (stack.isEmpty) out ++ in
+      else if (in.isEmpty) {
+        in :+ stack.take(maxStackSize) :+ addStackRec(stack.drop(maxStackSize), List.empty)
+      } else if (in.head.size < maxStackSize)
+        if (in.head.size + stack.size > maxStackSize)
+          addStackRec(stack.drop(maxStackSize - in.head.size), out :+ in.head.withSize(maxStackSize), in.tail)
     else
-        stacks.head ++ addStackRec(stack, stacks.tail)
+        addStackRec(in.head.withSize(), in.tail)
+    else
+        addStackRec(stack, in.take(1), in.drop(1))
 
 
     val proto = stack.prototype
