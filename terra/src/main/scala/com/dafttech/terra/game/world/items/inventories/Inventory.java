@@ -13,21 +13,21 @@ public class Inventory {
     HashMap<Prototype, List<Stack>> stacks = new HashMap<Prototype, List<Stack>>();
 
     public void add(Stack stack) {
-        Prototype proto = stack.type;
+        Prototype proto = stack.prototype();
 
         if (stacks.containsKey(proto)) {
             for (Stack s : stacks.get(proto)) {
-                int am = ((Item) proto.toGameObject()).maxStackSize() - s.amount;
-                if (am <= stack.amount) {
-                    stack.amount -= am;
-                    s.amount += am;
+                int am = ((Item) proto.toGameObject()).maxStackSize() - s.size();
+                if (am <= stack.size()) {
+                    stack.size() -= am;
+                    s.size() += am;
                 } else {
-                    am = stack.amount;
-                    stack.amount -= am;
-                    s.amount += am;
+                    am = stack.size();
+                    stack.size() -= am;
+                    s.size() += am;
                 }
             }
-            if (stack.amount > 0) {
+            if (stack.size() > 0) {
                 stacks.get(proto).add(stack);
             }
         } else {
@@ -47,8 +47,8 @@ public class Inventory {
     }
 
     public boolean remove(Stack stack) {
-        if (!(stacks.containsKey(stack.type) && stacks.get(stack.type).contains(stack))) return false;
-        stacks.get(stack.type).remove(stack);
+        if (!(stacks.containsKey(stack.prototype()) && stacks.get(stack.prototype()).contains(stack))) return false;
+        stacks.get(stack.prototype()).remove(stack);
         return true;
     }
 
@@ -68,7 +68,7 @@ public class Inventory {
         int a = 0;
         if (stacks.containsKey(type)) {
             for (Stack s : stacks.get(type)) {
-                a += s.amount;
+                a += s.size();
             }
         }
         return a;
