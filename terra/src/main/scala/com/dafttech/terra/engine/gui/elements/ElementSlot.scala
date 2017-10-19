@@ -19,7 +19,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
     if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
       if ((!leftClick && assignedStack.use(causer, pos))) {
-        setCooldownTime(causer.worldObj, (assignedStack.`type`.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick))
+        setCooldownTime(causer.worldObj, (assignedStack.`type`.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
         return true
       }
     }

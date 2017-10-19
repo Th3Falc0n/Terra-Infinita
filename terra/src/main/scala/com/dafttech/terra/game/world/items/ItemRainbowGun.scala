@@ -1,0 +1,22 @@
+package com.dafttech.terra.game.world.items
+
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.game.world.entities.EntityRainbow
+import com.dafttech.terra.game.world.entities.models.EntityLiving
+import com.dafttech.terra.resources.Resources
+
+class ItemRainbowGun extends ItemEntitySpawner {
+  override def spawnEntity(causer: EntityLiving, position: Vector2): Boolean = {
+    val a = new EntityRainbow(causer.getPosition, causer.worldObj)
+    a.setVelocity((Vector2.mousePos - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.08)
+    true
+  }
+
+  override def getUsedItemNum(causer: EntityLiving, position: Vector2): Int = 0
+
+  override def getNextUseDelay(causer: EntityLiving, position: Vector2, leftClick: Boolean): Double = 0
+
+  override def getImage: TextureRegion = Resources.ITEMS.getImage("rainbowgun")
+}

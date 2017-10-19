@@ -6,20 +6,16 @@ object FocusManager {
   def acquireTypeFocus(listener: IFocusableTyping): Boolean = {
     if (typeFocus != null) return false
     typeFocus = listener
-    return true
+    true
   }
 
   def releaseTypeFocus(listener: IFocusableTyping): Boolean = {
     if (typeFocus ne listener) return false
     typeFocus = null
-    return true
+    true
   }
 
-  def hasTypeFocus(listener: IFocusableTyping): Boolean = {
-    return typeFocus eq listener
-  }
+  def hasTypeFocus(listener: IFocusableTyping): Boolean = typeFocus eq listener
 
-  def typeFocusAssigned: Boolean = {
-    return typeFocus != null
-  }
+  def typeFocusAssigned: Boolean = typeFocus != null
 }

@@ -1,0 +1,72 @@
+package com.dafttech.terra.game.world.items.persistence
+
+import java.lang.reflect.Field
+
+object GameObject {
+  private def getAllDeclaredFields(targetClass: Class[_]): Set[Field] =
+    targetClass.getDeclaredFields.toSet ++ Option(targetClass.getSuperclass).toSet.flatMap(getAllDeclaredFields)
+}
+
+// ****FOLLOWING PERSISTENCE CODE**** May harm your brain
+abstract class GameObject() {
+  val annotatedFields: List[Field] = {
+    val fields: List[Field] = GameObject.getAllDeclaredFields(this.getClass).toList
+    fields.flatMap { field =>
+      field.setAccessible(true)
+      val p = field.getAnnotation(classOf[Persistent])
+      Option(p).map(_ => field).toList
+    }
+  }
+
+
+  def getPrototypeHash: Int = getHashBase.hashCode
+
+  def isSamePrototype(obj: Any): Boolean = obj match {
+    case prototype: Prototype => getPrototypeHash == prototype.hashCode
+    case gameObject: GameObject => getPrototypeHash == gameObject.getPrototypeHash
+    case _ => false
+  }
+
+  def getHashBase: String = {
+    val hashBuilder = new StringBuilder()
+
+    hashBuilder.append(this.getClass.getCanonicalName)
+
+    for (f <- annotatedFields) {
+      try hashBuilder.append(f.get(this).toString)
+      catch {
+        case e@(_: IllegalArgumentException | _: IllegalAccessException) =>
+          // TODO Auto-generated catch block
+          e.printStackTrace()
+      }
+    }
+    hashBuilder.toString
+  }
+
+  @throws[CloneNotSupportedException]
+  override protected def clone(): AnyRef = super.clone()
+
+  def getName: String = this.getClass.getCanonicalName
+
+  def toPrototype: Prototype = {
+    val proto = new Prototype
+    proto.className = this.getClass.getCanonicalName
+
+    for (f <- annotatedFields) {
+      try {
+        /*
+               * if (!(f.get(this) instanceof Serializable))
+               * System.out.println("WARNING! Field " + f.getName() + " in " +
+               * this.getClass().getCanonicalName() +
+               * " is not Serializable and cannot be saved!");
+               */
+        if (f.isAnnotationPresent(classOf[Persistent])) proto.addValue(f, f.get(this))
+      } catch {
+        case e@(_: IllegalArgumentException | _: IllegalAccessException) =>
+          e.printStackTrace()
+      }
+    }
+
+    proto
+  }
+}

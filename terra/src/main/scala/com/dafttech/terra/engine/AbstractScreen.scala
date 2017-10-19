@@ -11,8 +11,7 @@ abstract class AbstractScreen extends Screen {
   var projection: Matrix4 = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
   protected var guiContainerScreen: ContainerOnscreen = null
 
-  def dispose {
-  }
+  def dispose(): Unit = ()
 
   def resize(arg0: Int, arg1: Int) {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
@@ -22,10 +21,9 @@ abstract class AbstractScreen extends Screen {
     guiContainerScreen.applyAllAssignedAnchorSets
   }
 
-  def resume {
-  }
+  def resume(): Unit = ()
 
-  def show {
+  def show(): Unit = {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
@@ -34,15 +32,12 @@ abstract class AbstractScreen extends Screen {
     guiContainerScreen.setActive(true)
   }
 
-  def hide {
-    guiContainerScreen.setActive(false)
-  }
+  def hide(): Unit = guiContainerScreen.setActive(false)
 
-  def pause {
-  }
+  def pause(): Unit = ()
 
-  var batch: SpriteBatch = new SpriteBatch
-  var shr: ShapeRenderer = new ShapeRenderer
+  val batch: SpriteBatch = new SpriteBatch()
+  val shr: ShapeRenderer = new ShapeRenderer()
   var cam: OrthographicCamera = null
 
   def render(delta: Float) {
