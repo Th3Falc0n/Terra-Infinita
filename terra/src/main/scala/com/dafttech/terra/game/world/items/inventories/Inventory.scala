@@ -4,6 +4,8 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.items.persistence.Prototype
 import java.util
+
+import scala.annotation.tailrec
 import scala.collection.JavaConverters._
 
 /* MUTABLE */
@@ -14,48 +16,38 @@ class Inventory {
     val stacks = content.getOrElse(stack.prototype, Nil)
     val maxStackSize = stack.prototype.toGameObject.asInstanceOf[Item].maxStackSize
 
-    def addStackRec(stack: Stack, out: List[Stack], in: List[Stack]): List[Stack] =
+    @tailrec
+    def rec(stack: Stack, out: List[Stack], in: List[Stack]): List[Stack] =
       if (stack.isEmpty) out ++ in
-      else if (in.isEmpty) {
-        in :+ stack.take(maxStackSize) :+ addStackRec(stack.drop(maxStackSize), List.empty)
-      } else if (in.head.size < maxStackSize)
-        if (in.head.size + stack.size > maxStackSize)
-          addStackRec(stack.drop(maxStackSize - in.head.size), out :+ in.head.withSize(maxStackSize), in.tail)
-    else
-        addStackRec(in.head.withSize(), in.tail)
-    else
-        addStackRec(stack, in.take(1), in.drop(1))
+      else in.headOption match {
+        case Some(head) if head.size < maxStackSize =>
+          val addedCount = Math.min(maxStackSize - head.size, stack.size)
+          rec(stack.drop(addedCount), out :+ head.withSize(head.size + addedCount), in.tail)
 
+        case Some(head) =>
+          rec(stack, out :+ head, in.tail)
 
-    val proto = stack.prototype
-    if (stacks.contains(proto)) {
-      import scala.collection.JavaConversions._
-      for (s <- stacks.get(proto)) {
-        var am = proto.toGameObject.asInstanceOf[Item].maxStackSize - s.size
-        if (am <= stack.size) {
-          stack.size -= am
-          s.size += am
-        }
-        else {
-          am = stack.size
-          stack.size -= am
-          s.size += am
-        }
+        case None =>
+          rec(stack.drop(maxStackSize), out :+ stack.take(maxStackSize), List.empty)
       }
-      if (stack.size > 0) stacks.get(proto).add(stack)
-    }
-    else {
-      stacks.put(proto, new util.ArrayList[Stack])
-      stacks.get(proto).add(stack)
-    }
+
+    val newStacks = rec(stack, List.empty, stacks)
+    content = content + (stack.prototype -> newStacks)
   }
 
   def getList: util.List[Stack] = content.values.flatten.toBuffer.asJava
 
-  def remove(stack: Stack): Boolean = {
-    if (!(stacks.containsKey(stack.prototype) && stacks.get(stack.prototype).contains(stack))) return false
-    stacks.get(stack.prototype).remove(stack)
-    true
+  def remove(stack: Stack): Stack = {
+    val stacks = content.getOrElse(stack.prototype, Nil)
+
+    val (remainingStack: Stack, newStacks: List[Stack]) = stacks.foldLeft((stack, List.empty[Stack])){
+      case ((remainingStack, stacks), stack) =>
+        val removedCount = Math.min(remainingStack.size,stack.size)
+        (remainingStack.drop(removedCount), stacks :+ stack.drop(removedCount))
+    }
+
+    content = content + (stack.prototype -> newStacks)
+    remainingStack
   }
 
   def contains(obj: GameObject): Boolean = contains(obj.toPrototype)

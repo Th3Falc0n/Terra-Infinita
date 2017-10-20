@@ -23,7 +23,7 @@ object MouseSlot {
       val p: Vector2 = getScreenPosition
       screen.batch.begin
       if (assignedStack != null) {
-        (assignedStack.`type`.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
+        (assignedStack.prototype.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
       }
       screen.batch.end
     }

@@ -40,7 +40,7 @@ public class EntityItem extends Entity {
         vp.$minus(getPosition());
 
         if (vp.length$u00B2() < 400) {
-            getWorld().localPlayer().inventory.add(new Stack(wrapped, 1));
+            getWorld().localPlayer().inventory.add(Stack.apply(wrapped, 1));
 
             getWorld().removeEntity(this);
         }

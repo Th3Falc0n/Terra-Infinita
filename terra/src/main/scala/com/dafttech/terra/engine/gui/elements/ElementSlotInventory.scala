@@ -15,9 +15,9 @@ class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends
   var active: Boolean = false
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
-    if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
-      if ((!leftClick && assignedStack.use(causer, pos))) {
-        setCooldownTime(causer.worldObj, (assignedStack.`type`.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
+    if (assignedStack != null && assignedStack.size > 0 && causer.worldObj.time > cooldownTime) {
+      if ((!leftClick && assignedStack.use(causer, pos).size < assignedStack.size)) {
+        setCooldownTime(causer.worldObj, (assignedStack.prototype.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
         return true
       }
     }
@@ -45,8 +45,8 @@ class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     if (assignedStack != null) {
-      (assignedStack.`type`.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
-      Resources.GUI_FONT.draw(screen.batch, assignedStack.amount + "x " + assignedStack.`type`.toGameObject.getName, 40 + p.x.toFloat, 12 + p.y.toFloat)
+      (assignedStack.prototype.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
+      Resources.GUI_FONT.draw(screen.batch, assignedStack.size + "x " + assignedStack.prototype.toGameObject.getName, 40 + p.x.toFloat, 12 + p.y.toFloat)
     }
     screen.batch.end
   }

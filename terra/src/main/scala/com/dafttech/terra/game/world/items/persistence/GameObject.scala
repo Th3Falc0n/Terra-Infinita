@@ -3,13 +3,13 @@ package com.dafttech.terra.game.world.items.persistence
 import java.lang.reflect.Field
 
 object GameObject {
-  private def getAllDeclaredFields(targetClass: Class[_]): Set[Field] =
-    targetClass.getDeclaredFields.toSet ++ Option(targetClass.getSuperclass).toSet.flatMap(getAllDeclaredFields)
+  private def getAllDeclaredFields(targetClass: Class[_]): List[Field] =
+    (targetClass.getDeclaredFields ++ Option(targetClass.getSuperclass).toList.flatMap(getAllDeclaredFields)).distinct.toList
 }
 
 // ****FOLLOWING PERSISTENCE CODE**** May harm your brain
 abstract class GameObject() {
-  val annotatedFields: List[Field] = {
+  lazy val annotatedFields: List[Field] = {
     val fields: List[Field] = GameObject.getAllDeclaredFields(this.getClass).toList
     fields.flatMap { field =>
       field.setAccessible(true)
@@ -17,7 +17,6 @@ abstract class GameObject() {
       Option(p).map(_ => field).toList
     }
   }
-
 
   def getPrototypeHash: Int = getHashBase.hashCode
 

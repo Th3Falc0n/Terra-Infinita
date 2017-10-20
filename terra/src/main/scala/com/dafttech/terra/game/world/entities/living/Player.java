@@ -39,17 +39,17 @@ public class Player extends EntityLiving {
         guiCrafting = new ModuleCrafting(this);
         guiCrafting.create();
 
-        hudBottom.slots()[0].assignStack(new Stack(new TileDirt(), 1000));
-        hudBottom.slots()[1].assignStack(new Stack(new ItemFlamingArrow(), 10000));
-        hudBottom.slots()[2].assignStack(new Stack(new ItemGlowstick(), 100));
-        hudBottom.slots()[3].assignStack(new Stack(new ItemDynamite(), 100));
-        hudBottom.slots()[4].assignStack(new Stack(new ItemRainbowGun(), 1));
-        hudBottom.slots()[5].assignStack(new Stack(new ItemWaterBucket(), 1));
-        hudBottom.slots()[6].assignStack(new Stack(new TileTorch(), 10000));
-        hudBottom.slots()[7].assignStack(new Stack(new ItemDigStaff(), 1));
-        inventory.add(new Stack(new TileSapling(), 1000));
-        inventory.add(new Stack(new TileFence(), 1000));
-        inventory.add(new Stack(new TileFire(), 1000));
+        hudBottom.slots()[0].assignStack(Stack.apply(new TileDirt(), 1000));
+        hudBottom.slots()[1].assignStack(Stack.apply(new ItemFlamingArrow(), 10000));
+        hudBottom.slots()[2].assignStack(Stack.apply(new ItemGlowstick(), 100));
+        hudBottom.slots()[3].assignStack(Stack.apply(new ItemDynamite(), 100));
+        hudBottom.slots()[4].assignStack(Stack.apply(new ItemRainbowGun(), 1));
+        hudBottom.slots()[5].assignStack(Stack.apply(new ItemWaterBucket(), 1));
+        hudBottom.slots()[6].assignStack(Stack.apply(new TileTorch(), 10000));
+        hudBottom.slots()[7].assignStack(Stack.apply(new ItemDigStaff(), 1));
+        inventory.add(Stack.apply(new TileSapling(), 1000));
+        inventory.add(Stack.apply(new TileFence(), 1000));
+        inventory.add(Stack.apply(new TileFire(), 1000));
     }
 
     long left;

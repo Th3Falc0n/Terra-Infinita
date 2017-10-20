@@ -17,9 +17,9 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
   image = Resources.GUI.getImage("slot")
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
-    if (assignedStack != null && assignedStack.amount > 0 && causer.worldObj.time > cooldownTime) {
-      if ((!leftClick && assignedStack.use(causer, pos))) {
-        setCooldownTime(causer.worldObj, (assignedStack.`type`.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
+    if (assignedStack != null && assignedStack.size > 0 && causer.worldObj.time > cooldownTime) {
+      if ((!leftClick && assignedStack.use(causer, pos).size < assignedStack.size)) {
+        setCooldownTime(causer.worldObj, (assignedStack.prototype.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
         return true
       }
     }
@@ -53,9 +53,9 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     if (assignedStack != null) {
-      (assignedStack.`type`.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
+      (assignedStack.prototype.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
-      Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.amount, p.x.toFloat, 6 + p.y.toFloat)
+      Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.size, p.x.toFloat, 6 + p.y.toFloat)
     }
     screen.batch.end
   }
