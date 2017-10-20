@@ -101,7 +101,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     rend.setColor(color.r, color.g, color.b, 1)
     var v2 = new Vector2(rect.x, rect.y)
     v2 = v2.toRenderPosition(getPosition)
-    rend.rect(v2.x.toFloat, v2.y.toFloat, rect.width, rect.height)
+    rend.rect(v2.xFloat, v2.yFloat, rect.width, rect.height)
     rend.flush()
     rend.end()
   }
@@ -221,12 +221,12 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
   }
 
   def addForce(f: Vector2): Entity = {
-    accelleration = accelleration.$plus(f)
+    accelleration = accelleration + f
     this
   }
 
   def addVelocity(v: Vector2): Entity = {
-    velocity = velocity.$plus(v)
+    velocity = velocity + v
     this
   }
 
@@ -238,9 +238,9 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     if (velocity.length$u00B2 > 0) {
       val stepLength = 10f / velocity.length.toFloat
       inAir = true
-      for (i <- 0f until delta by stepLength) {
+      for (i <- 0f until newDelta by stepLength) {
         var asl = stepLength
-        if (i + asl > delta) asl -= (i + asl) - delta
+        if (i + asl > newDelta) asl -= (i + asl) - newDelta
 
         setPosition(getPosition + (velocity * asl))
 
