@@ -6,17 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Rectangle
-import com.dafttech.terra.engine.AbstractScreen
-import com.dafttech.terra.engine.IDrawableInWorld
-import com.dafttech.terra.engine.Vector2
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.game.world.Chunk
-import com.dafttech.terra.game.world.Facing
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.{Chunk, Facing, World}
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.items.persistence.GameObject
-import com.dafttech.terra.game.world.items.persistence.Persistent
+import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options
 
@@ -134,7 +128,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
         val playerRect = new Vector2(getPosition.x, getPosition.y).rectangleTo(new Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
         if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(world.getTile(x, y))
       }
-      }
+    }
   }
 
   def onTerrainCollision(t: Tile): Unit = ()

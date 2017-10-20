@@ -1,9 +1,9 @@
 package com.dafttech.terra.game.world.items.inventories
 
-import com.dafttech.terra.game.world.items.Item
-import com.dafttech.terra.game.world.items.persistence.GameObject
-import com.dafttech.terra.game.world.items.persistence.Prototype
 import java.util
+
+import com.dafttech.terra.game.world.items.Item
+import com.dafttech.terra.game.world.items.persistence.{GameObject, Prototype}
 
 import scala.annotation.tailrec
 import scala.collection.JavaConverters._
@@ -40,9 +40,9 @@ class Inventory {
   def remove(stack: Stack): Stack = {
     val stacks = content.getOrElse(stack.prototype, Nil)
 
-    val (remainingStack: Stack, newStacks: List[Stack]) = stacks.foldLeft((stack, List.empty[Stack])){
+    val (remainingStack: Stack, newStacks: List[Stack]) = stacks.foldLeft((stack, List.empty[Stack])) {
       case ((remainingStack, stacks), stack) =>
-        val removedCount = Math.min(remainingStack.size,stack.size)
+        val removedCount = Math.min(remainingStack.size, stack.size)
         (remainingStack.drop(removedCount), stacks :+ stack.drop(removedCount))
     }
 

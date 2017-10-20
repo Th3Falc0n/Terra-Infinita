@@ -18,7 +18,7 @@ class ModuleCrafting extends GUIModule {
     player = p
   }
 
-  def create {
+  def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
     container = new ContainerBlock(Vector2.Null, new Vector2(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
