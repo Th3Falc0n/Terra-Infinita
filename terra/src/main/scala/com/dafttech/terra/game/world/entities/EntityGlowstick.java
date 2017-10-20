@@ -35,7 +35,7 @@ public class EntityGlowstick extends Entity {
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        gsRotation += velocity.x() * delta * 50;
+        gsRotation += velocity().x() * delta * 50;
 
         if (light == null) {
             light = new PointLight(getPosition(), 95);
@@ -44,14 +44,14 @@ public class EntityGlowstick extends Entity {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size().x() * Options.BLOCK_SIZE() / 2, size().y() * Options.BLOCK_SIZE() / 2));
 
-        setRotation((float) (velocity.rotation() + Math.PI / 2 + gsRotation));
+        setRotation((float) (velocity().rotation() + Math.PI / 2 + gsRotation));
     }
 
     @Override
-    public float getInAirFriction() {
-        return 0.025f;
+    public double getInAirFriction() {
+        return 0.025;
     }
 
     @Override

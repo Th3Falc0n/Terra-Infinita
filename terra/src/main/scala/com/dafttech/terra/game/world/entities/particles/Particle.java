@@ -17,7 +17,7 @@ public abstract class Particle extends Entity {
         lifetimeMax = life;
         lifetime = lifetimeMax;
 
-        isDynamicEntity = true;
+        isDynamicEntity_$eq(true);
     }
 
     public void setFadeOut(boolean fo) {
@@ -54,8 +54,8 @@ public abstract class Particle extends Entity {
     }
 
     @Override
-    public float getInAirFriction() {
-        return 0.025f;
+    public double getInAirFriction() {
+        return 0.025;
     }
 
 }

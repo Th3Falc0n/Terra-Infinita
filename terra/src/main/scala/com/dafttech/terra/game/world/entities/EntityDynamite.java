@@ -29,12 +29,12 @@ public class EntityDynamite extends Entity {
         super.update(world, delta);
         explodeTimer -= delta;
         if (explodeTimer <= 0) {
-            worldObj.removeEntity(this);
-            new ParticleExplosion(getPosition().$plus(Options.BLOCK_SIZE() * 0.75f, Options.BLOCK_SIZE() * 0.75f), worldObj, radius);
+            worldObj().removeEntity(this);
+            new ParticleExplosion(getPosition().$plus(Options.BLOCK_SIZE() * 0.75f, Options.BLOCK_SIZE() * 0.75f), worldObj(), radius);
             Vector2i destroyPos = getPosition().toWorldPosition();
             for (int y = -radius + 1; y <= radius; y++) {
                 for (int x = -radius + 1; x <= radius; x++) {
-                    worldObj.destroyTile(destroyPos.x() + x, destroyPos.y() + y, this);
+                    worldObj().destroyTile(destroyPos.x() + x, destroyPos.y() + y, this);
                 }
             }
 

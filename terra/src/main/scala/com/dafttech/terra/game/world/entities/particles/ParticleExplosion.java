@@ -33,7 +33,7 @@ public class ParticleExplosion extends Particle {
         super.update(world, delta);
         Random rnd = new Random();
         int blockSRad = radius * Options.BLOCK_SIZE() * 3;
-        new ParticleSpark(midpos.$plus(-blockSRad, -blockSRad).$plus(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj);
+        new ParticleSpark(midpos.$plus(-blockSRad, -blockSRad).$plus(rnd.nextFloat() * blockSRad * 2, rnd.nextFloat() * blockSRad * 2), worldObj());
         setSize(getSize().$plus(delta * 30, delta * 30));
         setMidPos(midpos);
     }

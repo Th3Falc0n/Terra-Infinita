@@ -13,9 +13,9 @@ public class EntityTorchArrow extends EntityFlamingArrow {
 
     @Override
     public void placeBlockOnHit(int x, int y) {
-        Tile spreadTile = worldObj.getTile(x, y);
+        Tile spreadTile = worldObj().getTile(x, y);
         if (spreadTile.isReplacable()) {
-            worldObj.setTile(x, y, new TileTorch(), true);
+            worldObj().setTile(x, y, new TileTorch(), true);
         }
     }
 }

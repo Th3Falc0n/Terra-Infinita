@@ -48,7 +48,7 @@ public class EntityArrow extends EntityThrown {
     }
 
     @Override
-    public float getInAirFriction() {
-        return 0.025f;
+    public double getInAirFriction() {
+        return 0.025;
     }
 }

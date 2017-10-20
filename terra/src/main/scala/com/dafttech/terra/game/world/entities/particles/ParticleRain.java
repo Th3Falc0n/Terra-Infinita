@@ -17,7 +17,7 @@ public class ParticleRain extends Particle {
     public void update(World world, float delta) {
         super.update(world, delta);
 
-        if (!inAir) {
+        if (!inAir()) {
             world.removeEntity(this);
         }
     }
@@ -28,7 +28,7 @@ public class ParticleRain extends Particle {
     }
 
     @Override
-    public float getVelocityOffsetAngle() {
+    public double getVelocityOffsetAngle() {
         return 90;
     }
 

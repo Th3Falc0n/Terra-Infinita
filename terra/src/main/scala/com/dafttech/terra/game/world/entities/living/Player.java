@@ -93,10 +93,10 @@ public class Player extends EntityLiving {
         }
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd().nextDouble() < delta * velocity.length() * 2f) {
-                if (getUndergroundTile() != null && !inAir) {
-                    new ParticleDust(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE()).$plus(
-                            (TerraInfinita.rnd().nextFloat() - 0.5f) * Options.BLOCK_SIZE() * 2, (TerraInfinita.rnd().nextFloat() - 1f) * 4f), worldObj,
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity().length() * 2f) {
+                if (getUndergroundTile() != null && !inAir()) {
+                    new ParticleDust(getPosition().$plus(size().x() * Options.BLOCK_SIZE() / 2, size().y() * Options.BLOCK_SIZE()).$plus(
+                            (TerraInfinita.rnd().nextFloat() - 0.5f) * Options.BLOCK_SIZE() * 2, (TerraInfinita.rnd().nextFloat() - 1f) * 4f), worldObj(),
                             getUndergroundTile().getImage());
                 }
             }
@@ -120,8 +120,8 @@ public class Player extends EntityLiving {
     public void draw(Vector2 pos, World world, AbstractScreen screen, Entity pointOfView) {
         Vector2 screenVec = this.getPosition().toRenderPosition(pointOfView.getPosition());
 
-        screen.batch().setColor(color);
-        screen.batch().draw(this.getImage(), screenVec.xFloat(), screenVec.yFloat(), Options.BLOCK_SIZE() * size.xFloat(), Options.BLOCK_SIZE() * size.yFloat());
+        screen.batch().setColor(color());
+        screen.batch().draw(this.getImage(), screenVec.xFloat(), screenVec.yFloat(), Options.BLOCK_SIZE() * size().xFloat(), Options.BLOCK_SIZE() * size().yFloat());
         screen.batch().flush();
         // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
     }

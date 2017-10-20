@@ -26,8 +26,8 @@ public class TileSapling extends TileFalling {
     }
 
     @Override
-    public float getNextUseDelay(EntityLiving causer, Vector2 position, boolean leftClick) {
-        return 0.2f;
+    public double getNextUseDelay(EntityLiving causer, Vector2 position, boolean leftClick) {
+        return 0.2;
     }
 
     @Override

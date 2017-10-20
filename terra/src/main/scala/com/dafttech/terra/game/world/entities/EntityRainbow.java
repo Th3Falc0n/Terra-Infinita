@@ -19,7 +19,7 @@ public class EntityRainbow extends EntityThrown {
 
         setGravityFactor(0.125f);
 
-        isDynamicEntity = true;
+        isDynamicEntity_$eq(true);
     }
 
     @Override
@@ -43,10 +43,10 @@ public class EntityRainbow extends EntityThrown {
 
         light.setSize(90 + new Random().nextInt(10));
 
-        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size().x() * Options.BLOCK_SIZE() / 2, size().y() * Options.BLOCK_SIZE() / 2));
 
-        if (Math.abs(velocity.x()) <= 0.1 && Math.abs(velocity.y()) <= 0.1) {
-            worldObj.removeEntity(this);
+        if (Math.abs(velocity().x()) <= 0.1 && Math.abs(velocity().y()) <= 0.1) {
+            worldObj().removeEntity(this);
         }
     }
 

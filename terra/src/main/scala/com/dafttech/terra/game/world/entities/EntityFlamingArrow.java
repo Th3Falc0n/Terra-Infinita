@@ -34,13 +34,13 @@ public class EntityFlamingArrow extends EntityArrow {
             light = new PointLight(getPosition(), 95);
             light.setColor(new Color(255, 200, 40, 255));
         }
-        light.setPosition(getPosition().$plus(size.x() * Options.BLOCK_SIZE() / 2, size.y() * Options.BLOCK_SIZE() / 2));
+        light.setPosition(getPosition().$plus(size().x() * Options.BLOCK_SIZE() / 2, size().y() * Options.BLOCK_SIZE() / 2));
 
         light.setSize(90 + new Random().nextInt(10));
 
         for (int i = 0; i < 5; i++) {
-            if (TerraInfinita.rnd().nextDouble() < delta * velocity.length() * 0.5f) {
-                new ParticleSpark(getPosition(), worldObj);
+            if (TerraInfinita.rnd().nextDouble() < delta * velocity().length() * 0.5f) {
+                new ParticleSpark(getPosition(), worldObj());
             }
         }
     }
@@ -53,12 +53,12 @@ public class EntityFlamingArrow extends EntityArrow {
     }
 
     public void placeBlockOnHit(int x, int y) {
-        TileFire.createFire(worldObj, x, y);
+        TileFire.createFire(worldObj(), x, y);
     }
 
     @Override
-    public float getInAirFriction() {
-        return 0.025f;
+    public double getInAirFriction() {
+        return 0.025;
     }
 
     @Override
