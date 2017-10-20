@@ -56,24 +56,31 @@ class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, new Ve
     if (InputHandler.isKeyDown("JUMP") && !this.isInAir) jump()
 
     if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-      val mouseInWorldPos = Vector2.mousePos.$plus(getPosition).$minus(Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       if (!hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, true) && System.currentTimeMillis - left > 10) {
         left = System.currentTimeMillis
-        val destroy = Vector2.mousePos.$plus(getPosition).$minus(Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2).toWorldPosition
+        val destroy = (Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
         val damagedTile = getWorld.getTile(destroy.x, destroy.y)
         if (damagedTile != null) damagedTile.damage(world, 0.2f, this)
       }
     }
 
     if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
-      val mouseInWorldPos = Vector2.mousePos.$plus(getPosition).$minus(Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, false)
     }
 
     if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) right = false
 
     for (_ <- 0 until 5)
-      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 2f) if (getUndergroundTile != null && !inAir) new ParticleDust(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE).$plus((TerraInfinita.rnd.nextFloat - 0.5f) * Options.BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f), worldObj, getUndergroundTile.getImage)
+      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 2f)
+        if (getUndergroundTile != null && !inAir)
+          new ParticleDust(
+            getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE) +
+              ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
+            worldObj,
+            getUndergroundTile.getImage
+          )
 
     hudBottom.healthBar.setValue(getHealth / getMaxHealth * 100)
     guiInventory.update(delta)

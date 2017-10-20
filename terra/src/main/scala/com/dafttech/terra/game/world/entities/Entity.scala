@@ -36,9 +36,9 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     size = s
   }
 
-  def setMidPos(pos: Vector2): Unit = setPosition(pos.$plus(-size.x * Options.BLOCK_SIZE / 2f, -size.y * Options.BLOCK_SIZE / 2f))
+  def setMidPos(pos: Vector2): Unit = setPosition(pos + (-size.x * Options.BLOCK_SIZE / 2f, -size.y * Options.BLOCK_SIZE / 2f))
 
-  def getMidPos: Vector2 = getPosition.$plus(new Vector2(size.x * Options.BLOCK_SIZE / 2f, size.y * Options.BLOCK_SIZE / 2f))
+  def getMidPos: Vector2 = getPosition + (size.x * Options.BLOCK_SIZE / 2f, size.y * Options.BLOCK_SIZE / 2f)
 
   def setColor(clr: Color): Unit = color = clr
 
