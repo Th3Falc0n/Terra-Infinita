@@ -13,27 +13,20 @@ import com.dafttech.terra.game.world.tiles.{Tile, TileFire}
 import com.dafttech.terra.resources.{Options, Resources}
 
 class EntityFlamingArrow(pos: Vector2, world: World) extends EntityArrow(pos, world) {
-  private[entities] var light: PointLight = _
+  private val light: PointLight = new PointLight(getPosition, 95)
+  light.setColor(new Color(255, 200, 40, 255))
 
   override def getImage: TextureRegion = Resources.ENTITIES.getImage("arrow")
 
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
-    if (light == null) {
-      light = new PointLight(getPosition, 95)
-      light.setColor(new Color(255, 200, 40, 255))
-    }
+
     light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
     light.setSize(90 + new Random().nextInt(10))
-    var i = 0
-    while ( {
-      i < 5
-    }) {
-      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 0.5f) new ParticleSpark(getPosition, worldObj) {
-        i += 1;
-        i - 1
-      }
-    }
+
+    for (_ <- 0 until 5)
+      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 0.5)
+        new ParticleSpark(getPosition, worldObj)
   }
 
   override def onTerrainCollision(tile: Tile): Unit = {

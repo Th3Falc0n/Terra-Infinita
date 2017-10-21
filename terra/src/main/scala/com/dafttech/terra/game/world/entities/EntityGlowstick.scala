@@ -10,7 +10,9 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
 
 class EntityGlowstick(pos: Vector2, world: World) extends Entity(pos, world, new Vector2(1.5, 1.5)) {
-  private[entities] var light: PointLight = null
+  private val light: PointLight = new PointLight(getPosition, 95)
+  light.setColor(new Color(0.1f, 1, 0.1f, 1))
+
   private[entities] var gsRotation: Double = 0
 
   setGravityFactor(0.125)
@@ -21,13 +23,12 @@ class EntityGlowstick(pos: Vector2, world: World) extends Entity(pos, world, new
 
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
+
     gsRotation += velocity.x * delta * 50
-    if (light == null) {
-      light = new PointLight(getPosition, 95)
-      light.setColor(new Color(0.1f, 1, 0.1f, 1))
-    }
+
     light.setSize(90 + new Random().nextInt(10))
     light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
+
     setRotation((velocity.rotation + Math.PI / 2 + gsRotation).toFloat)
   }
 

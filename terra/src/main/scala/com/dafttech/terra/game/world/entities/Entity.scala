@@ -83,14 +83,6 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
 
   def setHasGravity(v: Boolean): Unit = if (!v) gravityFactor = 0
 
-  //only to prevent java crashes
-  @deprecated
-  def setGravityFactor(f: Int): Unit = setGravityFactor(f.toDouble)
-
-  //only to prevent java crashes
-  @deprecated
-  def setGravityFactor(f: Float): Unit = setGravityFactor(f.toDouble)
-
   def setGravityFactor(f: Double): Unit = gravityFactor = f
 
   def setSize(size: Vector2): Unit = this.size = size

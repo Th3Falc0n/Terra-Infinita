@@ -12,7 +12,8 @@ import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.{Options, Resources}
 
 class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, world, new Vector2(4f, 2f)) {
-  private[entities] var light: PointLight = _
+  private val light: PointLight = new PointLight(getPosition, 95)
+  light.setColor(new Color(0, 1, 0.3f, 1))
 
   setGravityFactor(0)
   isDynamicEntity = true
@@ -21,13 +22,12 @@ class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, wor
 
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
-    if (light == null) {
-      light = new PointLight(getPosition, 95)
-      light.setColor(new Color(0, 1, 0.3f, 1))
-    }
+
     light.setSize(90 + new Random().nextInt(10))
     light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
-    if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1) worldObj.removeEntity(this)
+
+    if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1)
+      worldObj.removeEntity(this)
   }
 
   override def collidesWith(e: Entity): Boolean = false

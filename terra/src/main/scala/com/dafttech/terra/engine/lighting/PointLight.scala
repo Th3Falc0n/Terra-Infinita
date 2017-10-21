@@ -6,7 +6,7 @@ import com.dafttech.terra.resources.Resources
 
 class PointLight extends Light {
   private[lighting] var position: Vector2 = Vector2.Null
-  private[lighting] var size: Float = .0f
+  private[lighting] var size: Double = 0
 
   def this(p: Vector2, s: Float) {
     this()
@@ -14,17 +14,11 @@ class PointLight extends Light {
     size = s
   }
 
-  def setPosition(p: Vector2) {
-    position = p
-  }
+  def setPosition(p: Vector2) : Unit = position = p
 
-  def getSize: Float = {
-    return size
-  }
+  def getSize: Double = size
 
-  def setSize(size: Float) {
-    this.size = size
-  }
+  def setSize(size: Double): Unit = this.size = size
 
   def drawToLightmap(screen: AbstractScreen, pointOfView: Entity) {
     val p: Vector2 = position.toRenderPosition(pointOfView.getPosition)
@@ -33,10 +27,8 @@ class PointLight extends Light {
       screen.batch.setColor(color)
       screen.batch.begin
     }
-    screen.batch.draw(Resources.LIGHT.getImage("pointlight"), p.x.toFloat - size, p.y.toFloat - size, size * 2, size * 2)
+    screen.batch.draw(Resources.LIGHT.getImage("pointlight"), (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
   }
 
-  def getRenderPosition: Vector2 = {
-    return position
-  }
+  def getRenderPosition: Vector2 = position
 }

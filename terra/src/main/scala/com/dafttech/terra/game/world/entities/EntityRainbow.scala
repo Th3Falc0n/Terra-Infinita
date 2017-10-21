@@ -11,7 +11,8 @@ import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.resources.{Options, Resources}
 
 class EntityRainbow(pos: Vector2, world: World) extends EntityThrown(pos, world, new Vector2(1.5, 1.5)) {
-  private[entities] var light: PointLight = _
+  private val light: PointLight = new PointLight(getPosition, 95)
+  light.setColor(new Color(1, 1, 1, 1))
 
   setGravityFactor(0.125)
   isDynamicEntity = true
@@ -22,12 +23,10 @@ class EntityRainbow(pos: Vector2, world: World) extends EntityThrown(pos, world,
 
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
-    if (light == null) {
-      light = new PointLight(getPosition, 95)
-      light.setColor(new Color(1, 1, 1, 1))
-    }
+
     light.setSize(90 + new Random().nextInt(10))
     light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
+
     if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1) worldObj.removeEntity(this)
   }
 
