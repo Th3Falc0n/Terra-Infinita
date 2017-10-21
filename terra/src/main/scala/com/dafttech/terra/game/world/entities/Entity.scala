@@ -6,24 +6,24 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Rectangle
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.game.world.{Chunk, Facing, World}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
 import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.game.world.{Chunk, Facing, World}
 import com.dafttech.terra.resources.Options
 
 abstract class Entity protected() extends GameObject with IDrawableInWorld {
-  private[entities] var chunk: Chunk = null
+  private[entities] var chunk: Chunk = _
   @Persistent protected var position: Vector2 = Vector2.Null
   @Persistent protected var velocity: Vector2 = Vector2.Null
   protected var accelleration: Vector2 = Vector2.Null
   @Persistent protected var size: Vector2 = Vector2.Null
   @Persistent protected var rotation: Double = 0
-  var worldObj: World = null
+  var worldObj: World = _
   protected var color: Color = Color.WHITE
-  private[entities] var gravityFactor = 1f
+  private[entities] var gravityFactor: Double = 1
   protected var inAir = false
   protected var inWorld = true
   @Persistent protected var isDynamicEntity: Boolean = false
@@ -83,7 +83,15 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
 
   def setHasGravity(v: Boolean): Unit = if (!v) gravityFactor = 0
 
-  def setGravityFactor(f: Float): Unit = gravityFactor = f
+  //only to prevent java crashes
+  @deprecated
+  def setGravityFactor(f: Int): Unit = setGravityFactor(f.toDouble)
+
+  //only to prevent java crashes
+  @deprecated
+  def setGravityFactor(f: Float): Unit = setGravityFactor(f.toDouble)
+
+  def setGravityFactor(f: Double): Unit = gravityFactor = f
 
   def setSize(size: Vector2): Unit = this.size = size
 
@@ -107,7 +115,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
   def checkEntityCollisions(): Unit = {
     val oVel = velocity
     for (entity <- chunk.getLocalEntities) {
-      if (!((entity == this) || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.length$u00B2 < entity.velocity.length$u00B2)) {
+      if (!((entity == this) || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.`length²` < entity.velocity.`length²`)) {
         val otherRect = new Vector2(entity.getPosition.x, entity.getPosition.y).rectangleTo(new Vector2(entity.getSize.x * Options.BLOCK_SIZE, entity.getSize.y * Options.BLOCK_SIZE))
         val playerRect = new Vector2(getPosition.x, getPosition.y).rectangleTo(new Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
         if (collisionDetect(oVel, playerRect, otherRect)) onEntityCollision(entity)
@@ -229,7 +237,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor))
     velocity = velocity.$plus(accelleration.x * newDelta, accelleration.y * newDelta)
     accelleration = Vector2.Null
-    if (velocity.length$u00B2 > 0) {
+    if (velocity.`length²` > 0) {
       val stepLength = 10f / velocity.length.toFloat
       inAir = true
       for (i <- 0f until newDelta by stepLength) {
@@ -246,7 +254,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     }
     velocity = velocity.withY(velocity.y * (1 - 0.025f * newDelta))
     velocity = velocity.withX(velocity.x * (1 - getCurrentFriction * newDelta))
-    if (alignToVelocity && velocity.length$u00B2 > 0.1f) setRotation(velocity.rotation + getVelocityOffsetAngle)
+    if (alignToVelocity && velocity.`length²` > 0.1f) setRotation(velocity.rotation + getVelocityOffsetAngle)
     if (isDynamicEntity && !isInRenderRange(world.localPlayer)) world.removeEntity(this)
   }
 

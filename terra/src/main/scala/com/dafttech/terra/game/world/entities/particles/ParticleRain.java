@@ -10,7 +10,7 @@ public class ParticleRain extends Particle {
     public ParticleRain(Vector2 pos, World world) {
         super(pos, world, 4, new Vector2(0.1f, 1f));
         setHasGravity(true);
-        setGravityFactor(0.05f);
+        setGravityFactor(0.05);
     }
 
     @Override
