@@ -1,5 +1,6 @@
 package com.dafttech.terra.game.world.gen.calc;
 
+// TODO: convert to scala
 public class PerlinNoise {
     public int seed;
     public float octaves;
