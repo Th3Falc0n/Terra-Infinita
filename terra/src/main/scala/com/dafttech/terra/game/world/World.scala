@@ -233,7 +233,7 @@ class World extends IDrawableInWorld {
   def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
     RenderingPass.rpObjects.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpObj")
-    //RenderingPass.rpLighting.applyPass(screen, pointOfView, this) TODO
+    RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpLig")
   }
 }

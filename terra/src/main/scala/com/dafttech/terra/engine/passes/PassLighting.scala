@@ -67,8 +67,8 @@ class PassLighting extends RenderingPass {
         }
         y += 1
       }
+      x += 1
     }
-    x += 1
     screen.shr.end
     screen.batch.end
     screen.batch.begin
