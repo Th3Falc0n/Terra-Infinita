@@ -12,6 +12,8 @@ case class Stack(prototype: Prototype, size: Int) {
 
   def drop(n: Int): Stack = Stack(prototype, Math.max(size - n, 0))
 
+  def withPrototype(prototype: Prototype): Stack = copy(prototype = prototype)
+
   def withSize(size: Int): Stack = copy(size = size)
 
   def use(causer: EntityLiving, position: Vector2): Stack = {
