@@ -1,13 +1,12 @@
 logLevel := Level.Warn
 
-externalResolvers := Seq(
-  Resolver.defaultLocal,
-  "artifactory-maven" at "http://lolhens.no-ip.org/artifactory/maven-public/",
-  Resolver.url("artifactory-ivy", url("http://lolhens.no-ip.org/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
+resolvers ++= Seq(
+  "artifactory-maven" at "http://artifactory.lolhens.de/artifactory/maven-public/",
+  Resolver.url("artifactory-ivy", url("http://artifactory.lolhens.de/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
 )
 
-addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.1")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.3")
 
-addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.0")
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.0.1")
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.3")
