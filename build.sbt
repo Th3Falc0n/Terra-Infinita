@@ -7,7 +7,7 @@ inThisBuild(Seq(
 
   scalaVersion := "2.12.3",
 
-  resolvers := Seq(
+  resolvers ++= Seq(
     "artifactory-maven" at "http://artifactory.lolhens.de/artifactory/maven-public/",
     Resolver.url("artifactory-ivy", url("http://artifactory.lolhens.de/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
   ),
