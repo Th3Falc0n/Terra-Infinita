@@ -13,8 +13,8 @@ class ScreenMainMenu extends AbstractScreen {
 
   guiContainerScreen = new ContainerOnscreen
   exitButton = new ElementButton(Vector2.Null, "Exit") {
-    def actionPerformed(button: Int) {
-      Gdx.app.exit
+    def actionPerformed(button: Int): Unit = {
+      Gdx.app.exit()
     }
   }
   val exitButtonSet: GUIAnchorSet = new GUIAnchorSet
@@ -26,7 +26,7 @@ class ScreenMainMenu extends AbstractScreen {
   guiContainerScreen.addObject(Tooltip.getLabel)
   guiContainerScreen.applyAllAssignedAnchorSets
 
-  override def render(delta: Float) {
+  override def render(delta: Float): Unit = {
     super.render(delta)
     guiContainerScreen.update(delta)
     RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen)

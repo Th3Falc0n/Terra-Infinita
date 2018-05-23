@@ -5,7 +5,7 @@ object TimeKeeping {
   private[game] var currentTime: Long = 0L
   private[game] var lastMsg: String = null
 
-  def timeKeeping(msg: String) {
+  def timeKeeping(msg: String): Unit = {
     val temp: Long = currentTime
     currentTime = System.currentTimeMillis
 

@@ -44,7 +44,7 @@ class ScreenPauseMenu extends AbstractScreen {
     guiContainerScreen.applyAllAssignedAnchorSets
   }
 
-  override def render(delta: Float) {
+  override def render(delta: Float): Unit = {
     super.render(delta)
     localWorld.draw(null, null, this, localWorld.localPlayer)
     guiContainerScreen.update(delta)

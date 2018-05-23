@@ -68,19 +68,17 @@ class ScreenIngame extends AbstractScreen {
     }
   }
 
-  override def show {
-    super.show
+  override def show(): Unit = {
+    super.show()
   }
 
-  override def hide {
-    super.hide
+  override def hide(): Unit = {
+    super.hide()
   }
 
-  def getWorld: World = {
-    return localWorld
-  }
+  def getWorld: World = localWorld
 
-  override def render(delta: Float) {
+  override def render(delta: Float): Unit = {
     super.render(delta)
     localWorld.update(null, delta)
     TimeKeeping.timeKeeping("screen after update")
@@ -94,6 +92,6 @@ class ScreenIngame extends AbstractScreen {
     TimeKeeping.timeKeeping("GUI draw")
   }
 
-  def update(delta: Float) {
+  def update(delta: Float): Unit = {
   }
 }

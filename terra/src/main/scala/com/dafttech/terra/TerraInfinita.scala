@@ -14,7 +14,7 @@ import org.lwjgl.opengl.Display
 object TerraInfinita extends Game with ApplicationListener {
   var rnd: Random = new Random()
 
-  private[terra] var fpsLogger: FPSLogger = null
+  private[terra] val fpsLogger: FPSLogger = new FPSLogger()
   var screenIngame: ScreenIngame = null
   var screenPause: ScreenPauseMenu = null
   var world: World = null
@@ -28,7 +28,6 @@ object TerraInfinita extends Game with ApplicationListener {
     Gdx.app.log(Thread.currentThread.getName, "Creating game...")
     Events.init
     Events.EVENTMANAGER.callSync(Events.EVENT_INITPRE, this)
-    fpsLogger = new FPSLogger
     Resources.init
     InputHandler.init
     Tooltip.init
@@ -40,7 +39,7 @@ object TerraInfinita extends Game with ApplicationListener {
     Events.EVENTMANAGER.callSync(Events.EVENT_INITPOST, this)
   }
 
-  override def render {
+  override def render(): Unit = {
     if (!isFocused && wasFocused) {
       setScreen(screenPause)
       wasFocused = false
@@ -48,7 +47,7 @@ object TerraInfinita extends Game with ApplicationListener {
     if (isFocused && !wasFocused) {
       wasFocused = true
     }
-    super.render
+    super.render()
     fpsLogger.tick
   }
 
@@ -59,15 +58,15 @@ object TerraInfinita extends Game with ApplicationListener {
     Events.EVENTMANAGER.callSync(Events.EVENT_WINRESIZE, this)
   }
 
-  override def pause {
+  override def pause(): Unit = {
     Events.EVENTMANAGER.callSync(Events.EVENT_WINPAUSE, this)
   }
 
-  override def resume {
+  override def resume(): Unit = {
     Events.EVENTMANAGER.callSync(Events.EVENT_WINRESUME, this)
   }
 
-  override def dispose {
+  override def dispose(): Unit = {
     Events.EVENTMANAGER.callSync(Events.EVENT_WINDISPOSE, this)
   }
 }

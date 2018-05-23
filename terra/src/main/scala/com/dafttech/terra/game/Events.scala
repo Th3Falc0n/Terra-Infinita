@@ -53,6 +53,6 @@ object Events {
     }
   }
 
-  def init {
+  def init(): Unit = {
   }
 }

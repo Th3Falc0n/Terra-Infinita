@@ -34,7 +34,7 @@ class FPSLogger {
     tDifF
   }
 
-  def disableOutput() {
+  def disableOutput(): Unit = {
     outputActive = false
   }
 }
