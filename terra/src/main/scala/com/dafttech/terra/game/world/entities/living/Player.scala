@@ -26,7 +26,7 @@ class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, new Ve
   val equip = new Inventory()
 
   val hudBottom = new ModuleHUDBottom
-  hudBottom.create()
+  hudBottom.create
   val guiInventory = new ModuleInventory(inventory)
   guiInventory.create()
   val guiCrafting = new ModuleCrafting(this)

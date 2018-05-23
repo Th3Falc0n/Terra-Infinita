@@ -13,24 +13,28 @@ class FPSLogger {
     lastTimeNano = System.nanoTime
     val tDifF: Float = tDif / 1000000000f
     var avgSPF: Float = 0
-    if (avgTime > 0) {
-      avgSPF = (avgTime / avgFrames)
-    }
+
+    if (avgTime > 0) avgSPF = avgTime / avgFrames
+
     avgTime /= 1f + avgSPF
     avgFrames /= 1f + avgSPF
+
     avgTime += tDifF
     avgFrames += 1
+
     frameTime += tDifF
     frameFrames += 1
+
     if (frameTime > 0.5f) {
       if (outputActive) println(f"FPSCounter: t=$frameTime%.3f F=${frameFrames.toInt}%d F/t=${frameFrames / frameTime}%.1f avgF/t=${avgFrames / avgTime}%.1f")
       frameTime = 0
       frameFrames = 0
     }
-    return tDifF
+
+    tDifF
   }
 
-  def disableOutput {
+  def disableOutput() {
     outputActive = false
   }
 }
