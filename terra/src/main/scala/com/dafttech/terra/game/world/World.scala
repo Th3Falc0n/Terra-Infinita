@@ -201,17 +201,17 @@ class World extends IDrawableInWorld {
               tile = getTile(x, y)
               if (tile != null) tile.update(this, delta)
             }
-            ({
+            {
               y += 1;
               y - 1
-            })
+            }
           }
         }
       }
-      ({
+      {
         x += 1;
         x - 1
-      })
+      }
     }
     TimeKeeping.timeKeeping("Tile update")
     import scala.collection.JavaConversions._
@@ -227,7 +227,7 @@ class World extends IDrawableInWorld {
   }
 
   def isInRenderRange(position: Vector2): Boolean = {
-    return true
+    true
   }
 
   def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
