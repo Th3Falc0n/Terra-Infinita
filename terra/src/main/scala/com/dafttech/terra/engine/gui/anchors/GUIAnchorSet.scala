@@ -23,18 +23,18 @@ class GUIAnchorSet {
     for (a <- anchors) {
       if (a.needsApplyOnFrame) return true
     }
-    return false
+    false
   }
 
   def isContainerDependent: Boolean = {
     for (a <- anchors) {
       if (a.isContainerDependent) return true
     }
-    return false
+    false
   }
 
   def addAnchor(anchor: GUIAnchor): GUIAnchorSet = {
     anchors += anchor
-    return this
+    this
   }
 }

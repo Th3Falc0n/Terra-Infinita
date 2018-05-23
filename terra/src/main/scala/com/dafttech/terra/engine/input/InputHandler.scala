@@ -28,25 +28,25 @@ object InputHandler extends InputProcessor {
 
   def isKeyDown(name: String): Boolean = {
     if (!keyDown.containsKey(getKeyID(name))) return false
-    return keyDown.get(getKeyID(name))
+    keyDown.get(getKeyID(name))
   }
 
   def isKeyRegistered(id: Int): Boolean = {
-    return keyIds.containsKey(id)
+    keyIds.containsKey(id)
   }
 
   def isKeyRegistered(name: String): Boolean = {
-    return keyNames.containsKey(name)
+    keyNames.containsKey(name)
   }
 
   def getKeyID(name: String): Int = {
     if (!keyNames.containsKey(name)) throw new IllegalArgumentException("Key not registered: " + name)
-    return keyNames.get(name)
+    keyNames.get(name)
   }
 
   def getKeyName(id: Int): String = {
     if (!keyIds.containsKey(id)) throw new IllegalArgumentException("Key not registered: " + id)
-    return keyIds.get(id)
+    keyIds.get(id)
   }
 
   def registerKey(key: Int, name: String) {
@@ -65,7 +65,7 @@ object InputHandler extends InputProcessor {
     }
     keyDown.put(i, true)
     if (isKeyRegistered(i)) Events.EVENTMANAGER.callSync(Events.EVENT_KEYDOWN, getKeyName(i))
-    return true
+    true
   }
 
   def keyTyped(c: Char): Boolean = {
@@ -73,37 +73,37 @@ object InputHandler extends InputProcessor {
       FocusManager.typeFocus.onKeyTyped(c)
       return true
     }
-    return false
+    false
   }
 
   def keyUp(i: Int): Boolean = {
     if (FocusManager.typeFocusAssigned) return false
     keyDown.put(i, false)
     if (isKeyRegistered(i)) Events.EVENTMANAGER.callSync(Events.EVENT_KEYUP, getKeyName(i))
-    return true
+    true
   }
 
   def mouseMoved(x: Int, y: Int): Boolean = {
     Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEMOVE, -1.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
-    return true
+    true
   }
 
   def scrolled(arg0: Int): Boolean = {
     Events.EVENTMANAGER.callSync(Events.EVENT_SCROLL, arg0.asInstanceOf[AnyRef])
-    return false
+    false
   }
 
   def touchDown(x: Int, y: Int, p: Int, b: Int): Boolean = {
     Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEDOWN, b.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
-    return true
+    true
   }
 
   def touchDragged(x: Int, y: Int, p: Int): Boolean = {
-    return false
+    false
   }
 
   def touchUp(x: Int, y: Int, p: Int, b: Int): Boolean = {
     Events.EVENTMANAGER.callSync(Events.EVENT_MOUSEUP, b.asInstanceOf[AnyRef], x.asInstanceOf[AnyRef], y.asInstanceOf[AnyRef])
-    return true
+    true
   }
 }
