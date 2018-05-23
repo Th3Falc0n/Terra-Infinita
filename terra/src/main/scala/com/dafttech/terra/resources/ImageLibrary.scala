@@ -2,11 +2,34 @@ package com.dafttech.terra.resources
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import monix.eval.{MVar, Task}
 
-class ImageLibrary {
-  private var library: Map[String, TextureRegion] = Map.empty
+class ImageLibrary { // TODO
+  private val libraryTask: Task[MVar[Map[String, TextureRegion]]] = MVar(Map.empty[String, TextureRegion]).memoize
 
-  def loadImage(name: String, path: String) {
+  def load(name: String, path: String): Task[TextureRegion] =
+    for {
+      libraryVar <- libraryTask
+      library <- libraryVar.take
+      texture <- Task(new TextureRegion(new Texture(path)))
+      _ = texture.flip(false, true)
+      _ <- libraryVar.put(library + (name -> texture))
+    } yield
+      texture
+
+  val errorImageTask: Task[TextureRegion] = get("error")
+
+  def get(name: String): Task[TextureRegion] =
+    for {
+      libraryVar <- libraryTask
+      library <- libraryVar.read
+      texture <- library.get(name).map(Task.now).getOrElse(errorImageTask)
+    } yield
+      texture
+
+  private var library = Map.empty[String, TextureRegion]
+
+  def loadImage(name: String, path: String): Unit = {
     val textureRegion = new TextureRegion(new Texture(path))
     textureRegion.flip(false, true)
     library = library + (name -> textureRegion)
