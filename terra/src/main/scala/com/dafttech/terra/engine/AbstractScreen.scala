@@ -9,7 +9,7 @@ import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 
 abstract class AbstractScreen extends Screen {
   var projection: Matrix4 = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
-  protected var guiContainerScreen: ContainerOnscreen = null
+  protected var guiContainerScreen: ContainerOnscreen = _
 
   def dispose(): Unit = ()
 
@@ -38,7 +38,7 @@ abstract class AbstractScreen extends Screen {
 
   val batch: SpriteBatch = new SpriteBatch()
   val shr: ShapeRenderer = new ShapeRenderer()
-  var cam: OrthographicCamera = null
+  var cam: OrthographicCamera = _
 
   def render(delta: Float) {
     Gdx.gl.glClearColor(0f, 0f, 0f, 1f)

@@ -11,8 +11,8 @@ import org.lolhens.eventmanager.{Event, EventListener}
 class ModuleHUDBottom extends GUIModule {
   var slots: Array[ElementSlot] = new Array[ElementSlot](8)
   private var activeSlot: Int = 0
-  var healthBar: ElementBar = null
-  var apBar: ElementBar = null
+  var healthBar: ElementBar = _
+  var apBar: ElementBar = _
 
   @EventListener(value = Array("SCROLL"), priority = -1) def onScroll(event: Event) {
     val prev: Int = activeSlot
@@ -24,11 +24,9 @@ class ModuleHUDBottom extends GUIModule {
     slots(activeSlot).active = true
   }
 
-  def getActiveSlot: ElementSlot = {
-    return slots(activeSlot)
-  }
+  def getActiveSlot: ElementSlot =  slots(activeSlot)
 
-  def create(): Unit = {
+  def create: Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
     container = new ContainerBlock(Vector2.Null, new Vector2(312, 80))
     val set: GUIAnchorSet = new GUIAnchorSet
