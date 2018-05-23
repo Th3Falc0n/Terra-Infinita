@@ -7,6 +7,8 @@ import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMultiblock}
 import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.entities.Entity
+import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
 
 class TileLog() extends Tile {
@@ -16,6 +18,8 @@ class TileLog() extends Tile {
   private var maxHeight: Int = TerraInfinita.rnd.nextInt(40) + 5
   private var maxWidth: Int = TerraInfinita.rnd.nextInt(20) + 5
   private var grothDelay: Float = 0.1f
+
+  override def isCollidableWith(entity: Entity): Boolean = super.isCollidableWith(entity) && !entity.isInstanceOf[EntityLiving]
 
   override def getImage: TextureRegion = Resources.TILES.getImage("log")
 
