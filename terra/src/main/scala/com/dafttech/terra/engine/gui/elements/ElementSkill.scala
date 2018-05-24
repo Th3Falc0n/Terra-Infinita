@@ -10,19 +10,19 @@ class ElementSkill(p: Vector2, val player: Player, val label: String, val skillI
 
   image = Resources.GUI.getImage("slot")
 
-  override def onClick(button: Int) {
+  override def onClick(button: Int): Unit = {
   }
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     screen.batch.setColor(if (active) Color.YELLOW else Color.WHITE)
     super.draw(screen)
     val p: Vector2 = getScreenPosition
-    screen.batch.begin
+    screen.batch.begin()
     if (player.getSkillForID(skillID) != null) {
       player.getSkillForID(skillID).drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
       Resources.GUI_FONT.draw(screen.batch, label, p.x.toFloat, 6 + p.y.toFloat)
     }
-    screen.batch.end
+    screen.batch.end()
   }
 }

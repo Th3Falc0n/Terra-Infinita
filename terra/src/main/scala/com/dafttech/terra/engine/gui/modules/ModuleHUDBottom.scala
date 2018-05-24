@@ -14,9 +14,9 @@ class ModuleHUDBottom extends GUIModule {
   var healthBar: ElementBar = _
   var apBar: ElementBar = _
 
-  @EventListener(value = Array("SCROLL"), priority = -1) def onScroll(event: Event) {
+  @EventListener(value = Array("SCROLL"), priority = -1) def onScroll(event: Event): Unit = {
     val prev: Int = activeSlot
-    val dir: Int = event.in.get(0, classOf[Integer])
+    val dir: Int = event.in.get[Integer](0, classOf[Integer])
     activeSlot += dir
     if (activeSlot < 0) activeSlot = 7
     if (activeSlot > 7) activeSlot = 0
@@ -26,7 +26,7 @@ class ModuleHUDBottom extends GUIModule {
 
   def getActiveSlot: ElementSlot =  slots(activeSlot)
 
-  def create: Unit = {
+  def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
     container = new ContainerBlock(Vector2.Null, new Vector2(312, 80))
     val set: GUIAnchorSet = new GUIAnchorSet

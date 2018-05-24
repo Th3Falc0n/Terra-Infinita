@@ -40,15 +40,15 @@ abstract class GUIObject {
     false
   }
 
-  def setTooltip(txt: String) {
+  def setTooltip(txt: String): Unit = {
     tooltipText = txt
   }
 
-  def assignAnchorSet(set: GUIAnchorSet) {
+  def assignAnchorSet(set: GUIAnchorSet): Unit = {
     assignedAnchors = set
   }
 
-  def applyAnchorSet(set: GUIAnchorSet) {
+  def applyAnchorSet(set: GUIAnchorSet): Unit = {
     if (container != null || !set.isContainerDependent) {
       set.applyAnchorSet(this, container)
     }
@@ -60,7 +60,7 @@ abstract class GUIObject {
     }
   }
 
-  def update(delta: Float) {
+  def update(delta: Float): Unit = {
     if (assignedAnchors != null && assignedAnchors.needsApplyOnFrame) applyAssignedAnchorSet
   }
 

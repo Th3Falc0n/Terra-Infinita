@@ -19,7 +19,7 @@ class ModuleInventory extends GUIModule {
     inv = i
   }
 
-  @EventListener(Array("SCROLL")) def onScroll(event: Event) {
+  @EventListener(Array("SCROLL")) def onScroll(event: Event): Unit = {
     if (invList.mouseHover && invList.isInActiveHierarchy) {
       val i: Int = event.in.get[Integer](0, classOf[Integer])
       index += i
@@ -29,11 +29,11 @@ class ModuleInventory extends GUIModule {
       if (index < 0) {
         index = 0
       }
-      event.cancel
+      event.cancel()
     }
   }
 
-  override def update(delta: Float) {
+  override def update(delta: Float): Unit = {
     super.update(delta)
     invList.clearObjects
 

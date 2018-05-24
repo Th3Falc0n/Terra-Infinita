@@ -8,14 +8,14 @@ import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 abstract class GUIElement(p: Vector2, s: Vector2) extends GUIObject(p, s) {
   var image: TextureRegion = null
 
-  def draw(screen: AbstractScreen) {
+  def draw(screen: AbstractScreen): Unit = {
     val p: Vector2 = getScreenPosition
-    screen.batch.begin
+    screen.batch.begin()
     if (image != null)
       screen.batch.draw(image, p.x.toFloat, p.y.toFloat)
     else
       println(s"img null in $getClass base GUIElement")
-    screen.batch.end
+    screen.batch.end()
     screen.batch.setColor(Color.WHITE)
   }
 }

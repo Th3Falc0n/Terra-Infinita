@@ -18,19 +18,19 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
     if (assignedStack != null && assignedStack.size > 0 && causer.worldObj.time > cooldownTime) {
-      if ((!leftClick && assignedStack.use(causer, pos).size < assignedStack.size)) {
-        setCooldownTime(causer.worldObj, (assignedStack.prototype.toGameObject.asInstanceOf[Item]).getNextUseDelay(causer, pos, leftClick).toFloat)
+      if (!leftClick && assignedStack.use(causer, pos).size < assignedStack.size) {
+        setCooldownTime(causer.worldObj, assignedStack.prototype.toGameObject.asInstanceOf[Item].getNextUseDelay(causer, pos, leftClick).toFloat)
         return true
       }
     }
     return false
   }
 
-  def setCooldownTime(world: World, cooldownTime: Float) {
+  def setCooldownTime(world: World, cooldownTime: Float): Unit = {
     this.cooldownTime = world.time + cooldownTime
   }
 
-  override def onClick(button: Int) {
+  override def onClick(button: Int): Unit = {
     if (button == 0) {
       if (MouseSlot.getAssignedStack != null && assignedStack == null) {
         assignedStack = MouseSlot.popAssignedStack
@@ -47,20 +47,20 @@ class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
     }
   }
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     screen.batch.setColor(if (active) Color.YELLOW else Color.WHITE)
     super.draw(screen)
     val p: Vector2 = getScreenPosition
-    screen.batch.begin
+    screen.batch.begin()
     if (assignedStack != null) {
-      (assignedStack.prototype.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
+      assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
       Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.size, p.x.toFloat, 6 + p.y.toFloat)
     }
-    screen.batch.end
+    screen.batch.end()
   }
 
-  def assignStack(stack: Stack) {
+  def assignStack(stack: Stack): Unit = {
     assignedStack = stack
   }
 }

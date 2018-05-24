@@ -7,7 +7,7 @@ import com.dafttech.terra.resources.Resources
 abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p, new Vector2(100, 20)) {
   image = Resources.GUI.getImage("button")
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     val p: Vector2 = getScreenPosition
     if (mouseHover) {
       screen.batch.setColor(Color.GREEN)
@@ -24,7 +24,7 @@ abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p,
     screen.batch.setColor(Color.WHITE)
   }
 
-  final override def onClick(button: Int) {
+  final override def onClick(button: Int): Unit = {
     actionPerformed(button)
   }
 

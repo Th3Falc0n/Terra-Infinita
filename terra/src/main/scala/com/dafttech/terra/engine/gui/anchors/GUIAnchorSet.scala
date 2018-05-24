@@ -6,14 +6,14 @@ import com.dafttech.terra.engine.gui.containers.GUIContainer
 import scala.collection.mutable;
 
 class GUIAnchorSet {
-  private val anchors: mutable.MutableList[GUIAnchor] = new mutable.MutableList[GUIAnchor];
+  private val anchors: mutable.MutableList[GUIAnchor] = new mutable.MutableList[GUIAnchor]
 
   def this(can: GUIAnchor*) {
     this()
     anchors ++= can
   }
 
-  def applyAnchorSet(gObj: GUIObject, container: GUIContainer) {
+  def applyAnchorSet(gObj: GUIObject, container: GUIContainer): Unit = {
     for (a <- anchors) {
       a.applyAnchor(gObj, container)
     }

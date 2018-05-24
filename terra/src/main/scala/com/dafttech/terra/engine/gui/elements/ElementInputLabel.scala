@@ -18,7 +18,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     clr = c
   }
 
-  override def update(delta: Float) {
+  override def update(delta: Float): Unit = {
     super.update(delta)
     time += delta
     renderText = ">" + text + (if ((time % 1f) < 0.5 && FocusManager.hasTypeFocus(this)) "_" else "")
@@ -26,7 +26,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     size = new Vector2(bnds.width, bnds.height)
   }
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     Resources.GUI_FONT.setColor(clr)
@@ -38,7 +38,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     return FocusManager.acquireTypeFocus(this)
   }
 
-  def onKeyTyped(c: Char) {
+  def onKeyTyped(c: Char): Unit = {
     if (c == '\b' && text.length >= 1) {
       text = text.substring(0, text.length - 1)
     }
@@ -47,7 +47,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     }
   }
 
-  def onKeyDown(i: Int) {
+  def onKeyDown(i: Int): Unit = {
     if (i == Keys.ENTER) {
       handler.handleInput(text)
       text = ""

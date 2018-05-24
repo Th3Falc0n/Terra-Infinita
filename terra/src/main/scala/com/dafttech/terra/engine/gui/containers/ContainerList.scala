@@ -10,7 +10,7 @@ class ContainerList(p: Vector2, s: Vector2) extends GUIContainer(p, s) {
     distance = d
   }
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     var y: Float = size.y.toFloat
 
     for (o <- objects) {

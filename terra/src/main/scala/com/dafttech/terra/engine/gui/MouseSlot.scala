@@ -13,13 +13,13 @@ object MouseSlot {
     Events.EVENTMANAGER.registerEventListener(this)
 
     @EventListener(Array("MOUSEMOVE"))
-    def onEventMouseMove(event: Event) {
+    def onEventMouseMove(event: Event): Unit = {
       val x: Int = event.in.get[Integer](1, classOf[Integer])
       val y: Int = event.in.get[Integer](2, classOf[Integer])
       position = Vector2(x, y)
     }
 
-    override def draw(screen: AbstractScreen) {
+    override def draw(screen: AbstractScreen): Unit = {
       val p: Vector2 = getScreenPosition
       screen.batch.begin()
       if (assignedStack != null) {

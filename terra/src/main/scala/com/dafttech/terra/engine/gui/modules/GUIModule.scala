@@ -5,12 +5,9 @@ import com.dafttech.terra.engine.gui.containers.GUIContainer
 abstract class GUIModule {
   var container: GUIContainer = null
 
-  def getContainer: GUIContainer = {
-    return container
-  }
+  def getContainer: GUIContainer = container
 
-  def create
+  def create(): Unit
 
-  def update(delta: Float) {
-  }
+  def update(delta: Float): Unit = ()
 }

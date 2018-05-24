@@ -9,17 +9,17 @@ class ElementLabel(p: Vector2, var text: String) extends GUIElement(p, null) {
   var clr: Color = Color.WHITE
   setText(text)
 
-  def setText(txt: String) {
+  def setText(txt: String): Unit = {
     text = txt
     val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
     size = new Vector2(bnds.width, bnds.height)
   }
 
-  def setColor(c: Color) {
+  def setColor(c: Color): Unit = {
     clr = c
   }
 
-  override def draw(screen: AbstractScreen) {
+  override def draw(screen: AbstractScreen): Unit = {
     val p: Vector2 = getScreenPosition
     screen.batch.begin
     Resources.GUI_FONT.setColor(clr)
