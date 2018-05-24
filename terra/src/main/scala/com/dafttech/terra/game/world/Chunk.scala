@@ -8,6 +8,7 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.gen.biomes.{Biome, BiomeDesert, BiomeGrassland}
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import scala.collection.JavaConverters._
 
 class Chunk extends IDrawableInWorld {
   var world: World = null
@@ -45,8 +46,7 @@ class Chunk extends IDrawableInWorld {
       if (tile != null) tile.update(world, delta)
     }
 
-    import scala.collection.JavaConversions._
-    for (entity <- localEntities) {
+    for (entity <- localEntities.asScala) {
       entity.update(world, delta)
       if (entity.getPosition.x < -100 || entity.getPosition.x > world.size.x * BLOCK_SIZE + 100 || entity.getPosition.y > world.size.y * BLOCK_SIZE + 100) {
         world.removeEntity(entity)

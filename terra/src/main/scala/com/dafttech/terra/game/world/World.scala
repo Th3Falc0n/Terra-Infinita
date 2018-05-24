@@ -1,5 +1,6 @@
 package com.dafttech.terra.game.world
 
+import java.util
 import java.util.concurrent.ConcurrentHashMap
 import java.util.{ArrayList, List, Map}
 
@@ -15,6 +16,8 @@ import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
+import scala.collection.JavaConverters._
+
 class World extends IDrawableInWorld {
   var size: Vector2i = new Vector2i(0, 0)
   var chunksize: Vector2i = new Vector2i(32, 32)
@@ -22,7 +25,7 @@ class World extends IDrawableInWorld {
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
   var gen: WorldGenerator = null
-  var localChunks: Map[Vector2i, Chunk] = new ConcurrentHashMap[Vector2i, Chunk]
+  var localChunks: util.Map[Vector2i, Chunk] = new ConcurrentHashMap[Vector2i, Chunk]
   var localPlayer: Player = null
   var weather: Weather = new WeatherRainy
   var sunmap: SunMap = new SunMap
@@ -36,19 +39,18 @@ class World extends IDrawableInWorld {
     localPlayer.setPosition(new Vector2(0, -100))
   }
 
-  def getChunk(blockInWorldPos: Vector2i): Chunk = {
-    if (blockInWorldPos == null) return null
-    val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
-    if (localChunks.containsKey(chunkPos)) return localChunks.get(chunkPos)
-    return null
-  }
+  def getChunk(blockInWorldPos: Vector2i): Chunk = // TODO: Option
+    if (blockInWorldPos != null) {
+      val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
+      if (localChunks.containsKey(chunkPos)) localChunks.get(chunkPos) else null
+    } else null
 
   def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk = {
     var chunk: Chunk = getChunk(blockInWorldPos)
     if (chunk == null) {
       chunk = new Chunk(this, blockInWorldPos.getChunkPos(this))
       localChunks.put(blockInWorldPos.getChunkPos(this), chunk)
-      chunk.fillAir
+      chunk.fillAir()
       gen.generateChunk(chunk)
     }
     return chunk
@@ -60,8 +62,7 @@ class World extends IDrawableInWorld {
   }
 
   def getOrCreateChunk(blockInWorldPos: Vector2): Chunk = {
-    if (blockInWorldPos == null) return null
-    return getOrCreateChunk(blockInWorldPos.toVector2i)
+    if (blockInWorldPos != null) getOrCreateChunk(blockInWorldPos.toVector2i) else null
   }
 
   def doesChunkExist(x: Int, y: Int): Boolean = {
@@ -126,7 +127,6 @@ class World extends IDrawableInWorld {
       val oldTile: Tile = getTile(pos)
       if (oldTile != null) {
         sunmap.postTileRemove(this, oldTile)
-        import scala.collection.JavaConversions._
         for (subtile <- oldTile.getSubtiles) {
           if (subtile.isTileIndependent) tileIndependentSubtiles.add(subtile)
         }
@@ -214,8 +214,7 @@ class World extends IDrawableInWorld {
       }
     }
     TimeKeeping.timeKeeping("Tile update")
-    import scala.collection.JavaConversions._
-    for (chunk <- localChunks.values) {
+    for (chunk <- localChunks.values.asScala) {
       for (entity <- chunk.getLocalEntities) {
         entity.update(this, delta)
       }

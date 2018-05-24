@@ -7,15 +7,16 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lwjgl.opengl.GL11
+import scala.collection.JavaConverters._
 
 class PassObjects extends RenderingPass {
   def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*) {
     screen.batch.setShader(null)
-    screen.batch.enableBlending
+    screen.batch.enableBlending()
     screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
     val sx: Int = 2 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
     val sy: Int = 2 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
-    screen.batch.begin
+    screen.batch.begin()
     var tile: Tile = null
 
     var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx
@@ -29,8 +30,7 @@ class PassObjects extends RenderingPass {
       x += 1
     }
 
-    import scala.collection.JavaConversions._
-    for (chunk <- world.localChunks.values) {
+    for (chunk <- world.localChunks.values.asScala) {
       for (entity <- chunk.getLocalEntities) {
         entity.draw(entity.getPosition, world, screen, pointOfView)
       }

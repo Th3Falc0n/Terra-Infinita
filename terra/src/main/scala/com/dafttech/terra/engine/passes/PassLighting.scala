@@ -11,6 +11,7 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventListener}
+import scala.collection.JavaConverters._
 
 class PassLighting extends RenderingPass {
   private[passes] var buffer: FrameBuffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
@@ -18,9 +19,8 @@ class PassLighting extends RenderingPass {
 
   def getSunlightRect(t: Tile, pointOfView: Entity): Rectangle = {
     val v: Vector2 = t.getPosition.toScreenPos(pointOfView)
-    if (t.sunlightFilter == null) {
+    if (t.sunlightFilter == null)
       Vector2(v.x - sunlevel, 0) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y + sunlevel)
-    }
     else {
       val f: Vector2 = t.sunlightFilter.getPosition.toScreenPos(pointOfView)
       Vector2(v.x - sunlevel, f.y) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel)
@@ -32,17 +32,17 @@ class PassLighting extends RenderingPass {
   }
 
   @SuppressWarnings(Array("unused")) def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*) {
-    buffer.begin
+    buffer.begin()
     Gdx.graphics.getGL20.glClearColor(0, 0, 0, 0)
     Gdx.graphics.getGL20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT)
-    screen.batch.enableBlending
+    screen.batch.enableBlending()
     screen.batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE)
     val sx: Int = 2 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
     val sy: Int = 2 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
     val resetToWhite: Boolean = false
     var nextClr: Color = Color.WHITE
     var activeClr: Color = Color.WHITE
-    screen.batch.begin
+    screen.batch.begin()
     screen.shr.begin(ShapeType.Filled)
     screen.shr.setColor(nextClr)
     var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx
@@ -54,7 +54,7 @@ class PassLighting extends RenderingPass {
             nextClr = world.getTile(x, y).getSunlightColor
             if (nextClr ne activeClr) {
               activeClr = nextClr
-              screen.shr.end
+              screen.shr.end()
               screen.shr.setColor(nextClr)
               screen.shr.begin(ShapeType.Filled)
             }
@@ -69,26 +69,26 @@ class PassLighting extends RenderingPass {
       }
       x += 1
     }
-    screen.shr.end
-    screen.batch.end
-    screen.batch.begin
-    import scala.collection.JavaConversions._
-    for (chunk <- world.localChunks.values) {
+    screen.shr.end()
+    screen.batch.end()
+    screen.batch.begin()
+
+    for (chunk <- world.localChunks.values.asScala) {
       for (entity <- chunk.getLocalEntities) {
         if (entity.isLightEmitter && entity.getEmittedLight != null && world.isInRenderRange(entity.getPosition)) {
           entity.getEmittedLight.drawToLightmap(screen, pointOfView)
         }
       }
     }
-    screen.batch.end
+    screen.batch.end()
     screen.batch.setColor(Color.WHITE)
-    buffer.end
+    buffer.end()
     RenderingPass.rpGaussian.applyPass(screen, world.localPlayer, world, buffer.getColorBufferTexture, buffer)
     screen.batch.setShader(null)
     screen.batch.setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_ZERO)
-    screen.batch.enableBlending
-    screen.batch.begin
+    screen.batch.enableBlending()
+    screen.batch.begin()
     screen.batch.draw(buffer.getColorBufferTexture, 0, 0)
-    screen.batch.end
+    screen.batch.end()
   }
 }

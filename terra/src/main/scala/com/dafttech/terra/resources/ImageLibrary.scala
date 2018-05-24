@@ -2,11 +2,11 @@ package com.dafttech.terra.resources
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import monix.eval.{MVar, Task}
-import com.dafttech.terra.utils._
+//import monix.eval.{MVar, Task}
+//import com.dafttech.terra.utils._
 
-class ImageLibrary { // TODO
-  private val libraryVar: MVar[Map[String, TextureRegion]] = MVar(Map.empty[String, TextureRegion]).getSyncUnsafe
+class ImageLibrary {
+  /*private val libraryVar: MVar[Map[String, TextureRegion]] = MVar(Map.empty[String, TextureRegion]).getSyncUnsafe
 
   def load(name: String, path: String): Task[TextureRegion] =
     for {
@@ -24,7 +24,7 @@ class ImageLibrary { // TODO
       library <- libraryVar.read
       texture <- library.get(name).map(Task.now).getOrElse(errorImageTask)
     } yield
-      texture
+      texture*/
 
   private var library = Map.empty[String, TextureRegion]
 
