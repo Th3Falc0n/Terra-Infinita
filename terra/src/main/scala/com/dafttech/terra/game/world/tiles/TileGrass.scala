@@ -20,7 +20,7 @@ class TileGrass() extends Tile {
   override def isOpaque: Boolean = false
 
   override def onNeighborChange(world: World, changed: Tile): Unit =
-    if (world.getTile(getPosition.$plus(0, 1)).isAir)
+    if (world.getTile(getPosition + (0, 1)).isAir)
       world.destroyTile(getPosition.x, getPosition.y, null)
 
   override def onTileDestroyed(world: World, causer: Entity): Unit = ()
@@ -36,7 +36,10 @@ class TileGrass() extends Tile {
   private val spreadDistance: Int = 3
 
   override def onTick(world: World, delta: Float): Unit = {
-    val spreadPosition = getPosition.$plus(new Random().nextInt(spreadDistance * 2) - spreadDistance, new Random().nextInt(spreadDistance * 2) - spreadDistance)
+    val spreadPosition = getPosition + (
+      new Random().nextInt(spreadDistance * 2) - spreadDistance,
+      new Random().nextInt(spreadDistance * 2) - spreadDistance
+    )
 
     val spreadTile = world.getTile(spreadPosition)
 

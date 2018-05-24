@@ -14,6 +14,7 @@ import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import monix.execution.atomic.Atomic
 
 import scala.collection.JavaConverters._
 
@@ -24,7 +25,7 @@ class World extends IDrawableInWorld {
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
   var gen: WorldGenerator = null
-  var localChunks: util.Map[Vector2i, Chunk] = new ConcurrentHashMap[Vector2i, Chunk]
+  private val localChunks: Atomic[Map[Vector2i, Chunk]] = Atomic(Map.empty[Vector2i, Chunk])
   var localPlayer: Player = null
   var weather: Weather = new WeatherRainy
   var sunmap: SunMap = new SunMap
@@ -38,16 +39,19 @@ class World extends IDrawableInWorld {
     localPlayer.setPosition(new Vector2(0, -100))
   }
 
+  def getChunks: Map[Vector2i, Chunk] = localChunks.get
+
   def getChunk(blockInWorldPos: Vector2i): Option[Chunk] = // TODO: Option
   Option(blockInWorldPos).flatMap {blockInWorldPos =>
     val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
-    if (localChunks.containsKey(chunkPos)) Some(localChunks.get(chunkPos)) else None
+    localChunks.get.get(chunkPos)
   }
 
   def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk =
     getChunk(blockInWorldPos).getOrElse {
       val chunk = new Chunk(this, blockInWorldPos.getChunkPos(this))
-      localChunks.put(blockInWorldPos.getChunkPos(this), chunk)
+      val chunkPos = blockInWorldPos.getChunkPos(this)
+      localChunks.transform(_ + (chunkPos -> chunk))
       chunk.fillAir()
       gen.generateChunk(chunk)
       chunk
@@ -62,20 +66,18 @@ class World extends IDrawableInWorld {
 
   def doesChunkExist(x: Int, y: Int): Boolean = getChunk(new Vector2i(x, y)).isDefined
 
-  def getTile(x: Int, y: Int): Tile = {
-    return getTile(new Vector2i(x, y))
-  }
+  def getTile(x: Int, y: Int): Tile = getTile(new Vector2i(x, y))
 
   def getTile(pos: Vector2i): Tile =
     getOrCreateChunk(pos).getTile(pos.getBlockInChunkPos(this))
 
   def getNextTileBelow(_x: Int, _y: Int): Option[Tile] = {
-    var x = _x
     var y = _y
 
     y += 1
-    while (doesChunkExist(x, y)) {
-      if (getTile(x, y) != null && !getTile(x, y).isAir) return Some(getTile(x, y))
+    while (doesChunkExist(_x, y)) {
+      val tile = Option(getTile(_x, y)).filter(!_.isAir)
+      if (tile.isDefined) return tile
       y += 1
     }
     None
@@ -210,7 +212,7 @@ class World extends IDrawableInWorld {
       }
     }*/
     TimeKeeping.timeKeeping("Tile update")
-    for (chunk <- localChunks.values.asScala) {
+    for (chunk <- localChunks.get.values) {
       for (entity <- chunk.getLocalEntities) {
         entity.update(this, delta)
       }

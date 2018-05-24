@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11
 import scala.collection.JavaConverters._
 
 class PassObjects extends RenderingPass {
-  def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*) {
+  def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*): Unit = {
     screen.batch.setShader(null)
     screen.batch.enableBlending()
     screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -30,7 +30,7 @@ class PassObjects extends RenderingPass {
       x += 1
     }
 
-    for (chunk <- world.localChunks.values.asScala) {
+    for (chunk <- world.getChunks.values) {
       for (entity <- chunk.getLocalEntities) {
         entity.draw(entity.getPosition, world, screen, pointOfView)
       }

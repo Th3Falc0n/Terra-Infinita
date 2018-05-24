@@ -19,7 +19,7 @@ class TileTorch() extends TileFalling {
 
     light.setPosition(getPosition.toEntityPos.$plus(Options.BLOCK_SIZE / 2, Options.BLOCK_SIZE / 2))
 
-    for (i <- 0 until 5)
+    for (_ <- 0 until 5)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5)
         new ParticleSpark(getPosition.toEntityPos + (Options.BLOCK_SIZE / 2, 0), world).addVelocity(new Vector2(0, -1))
   }

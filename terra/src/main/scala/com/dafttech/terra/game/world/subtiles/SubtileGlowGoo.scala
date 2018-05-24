@@ -12,7 +12,7 @@ class SubtileGlowGoo() extends SubtileFluid {
   private[subtiles] var img: Float = 0
   private[subtiles] var light = new PointLight(tile.getPosition.toEntityPos, 95)
 
-  override def getNewFluid = new SubtileGlowGoo
+  override def getNewFluid = new SubtileGlowGoo()
 
   override def getViscosity = 100
 

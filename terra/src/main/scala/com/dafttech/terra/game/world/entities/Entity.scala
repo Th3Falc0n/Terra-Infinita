@@ -61,13 +61,12 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
   def onRechunk(newChunk: Chunk, pos: Vector2): Unit = {
   }
 
-  def remove: Boolean = {
+  def remove: Boolean =
     if (chunk != null) {
       inWorld = false
-      return chunk.removeEntity(this)
-    }
-    false
-  }
+      chunk.removeEntity(this)
+    } else
+      false
 
   private def addToWorld(world: World, pos: Vector2): Unit = addToWorld(world.getOrCreateChunk(pos), pos)
 
@@ -227,7 +226,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
   override def update(world: World, delta: Float): Unit = {
     val newDelta = delta * Options.BLOCK_SIZE
     if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor))
-    velocity = velocity.$plus(accelleration.x * newDelta, accelleration.y * newDelta)
+    velocity = velocity + (accelleration.x * newDelta, accelleration.y * newDelta)
     accelleration = Vector2.Null
     if (velocity.`length²` > 0) {
       val stepLength = 10f / velocity.length.toFloat
@@ -255,7 +254,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
   def getVelocityOffsetAngle: Double = 0
 
   def getUndergroundTile: Tile = {
-    val pos = position.$plus(size.x * Options.BLOCK_SIZE, size.y * Options.BLOCK_SIZE).toWorldPosition
+    val pos = (position + (size.x * Options.BLOCK_SIZE, size.y * Options.BLOCK_SIZE)).toWorldPosition
     worldObj.getTile(pos.x, pos.y + 1)
   }
 

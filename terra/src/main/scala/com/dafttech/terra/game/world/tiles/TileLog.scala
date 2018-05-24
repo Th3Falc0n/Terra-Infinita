@@ -36,8 +36,7 @@ class TileLog() extends Tile {
       if (height <= maxHeight && (width == 0 || rnd.nextInt(5) == 0) &&
         world.getTile(getPosition - (0, 1)).isReplacable) world.setTile(
         getPosition - (0, 1),
-        (if (height > maxHeight - getSmallLayerSize) getLeaf
-        else getLog)
+        (if (height > maxHeight - getSmallLayerSize) getLeaf else getLog)
           .setLiving(living)
           .setSize(height + 1, width, maxHeight, maxWidth),
         notify = true
@@ -47,8 +46,7 @@ class TileLog() extends Tile {
         if (rnd.nextInt((Math.abs(width).toFloat * (if (rnd.nextBoolean) 1 else height) / maxWidth).toInt + 1) == 0 &&
           world.getTile(getPosition + (1, 0)).isReplacable) world.setTile(
           getPosition + (1, 0),
-          (if (rnd.nextBoolean) getLog
-          else getLeaf)
+          (if (rnd.nextBoolean) getLog else getLeaf)
             .setLiving(living).setSize(height + 1, width + 1, maxHeight, maxWidth),
           notify = true
         )
@@ -57,8 +55,7 @@ class TileLog() extends Tile {
           world.getTile(getPosition - (1, 0)).isReplacable)
           if (world.getTile(getPosition - (1, 0)).isReplacable) world.setTile(
             getPosition - (1, 0),
-            (if (height > maxHeight / 2 && rnd.nextBoolean) getLog
-            else getLeaf)
+            (if (height > maxHeight / 2 && rnd.nextBoolean) getLog else getLeaf)
               .setLiving(living)
               .setSize(height + 1, width - 1, maxHeight, maxWidth),
             notify = true

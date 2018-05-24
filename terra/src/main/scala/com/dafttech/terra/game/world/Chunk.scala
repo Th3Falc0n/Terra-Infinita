@@ -1,21 +1,20 @@
 package com.dafttech.terra.game.world
 
-import java.util.{ArrayList, List, Random}
-
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.gen.biomes.{Biome, BiomeDesert, BiomeGrassland}
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
-import scala.collection.JavaConverters._
+
+import scala.util.Random
 
 class Chunk extends IDrawableInWorld {
   var world: World = null
   var pos: Vector2i = null
   @volatile
   var map: Array[Array[Tile]] = null
-  private var localEntities: List[Entity] = new ArrayList[Entity]
+  private var localEntities: Seq[Entity] = Seq.empty
   var stayLoaded: Boolean = false
 
   def this(world: World, chunkPos: Vector2i) {
@@ -46,7 +45,7 @@ class Chunk extends IDrawableInWorld {
       if (tile != null) tile.update(world, delta)
     }
 
-    for (entity <- localEntities.asScala) {
+    for (entity <- localEntities) {
       entity.update(world, delta)
       if (entity.getPosition.x < -100 || entity.getPosition.x > world.size.x * BLOCK_SIZE + 100 || entity.getPosition.y > world.size.y * BLOCK_SIZE + 100) {
         world.removeEntity(entity)
@@ -54,7 +53,7 @@ class Chunk extends IDrawableInWorld {
     }
   }
 
-  def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
+  def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
     var tile: Tile = null
 
     for {
@@ -67,7 +66,7 @@ class Chunk extends IDrawableInWorld {
   }
 
   @SuppressWarnings(Array("unused")) def getBiome: Biome = {
-    if (new Random().nextBoolean) BiomeGrassland.instance else BiomeDesert.instance
+    if (Random.nextBoolean) BiomeGrassland.instance else BiomeDesert.instance
   }
 
   def getTile(blockInChunkPos: Vector2i): Tile = {
@@ -84,9 +83,15 @@ class Chunk extends IDrawableInWorld {
     this
   }
 
-  def removeEntity(entity: Entity): Boolean = localEntities.remove(entity)
+  def removeEntity(entity: Entity): Boolean = {
+    localEntities = localEntities.filter(_ != entity)
+    true
+  }
 
-  def addEntity(entity: Entity): Boolean = localEntities.add(entity)
+  def addEntity(entity: Entity): Boolean = {
+    localEntities = localEntities :+ entity
+    true
+  }
 
-  def getLocalEntities: Array[Entity] = localEntities.toArray(new Array[Entity](localEntities.size))
+  def getLocalEntities: Seq[Entity] = localEntities
 }

@@ -72,7 +72,12 @@ class TileFire extends TileFalling {
   override def getTemperature: Int = 100
 
   override def isCollidableWith(entity: Entity): Boolean = {
-    if (entity.isInstanceOf[EntityLiving]) entity.asInstanceOf[EntityLiving].damage(0.01f)
+    entity match {
+      case entityLiving: EntityLiving =>
+        entityLiving.damage(0.01f)
+
+      case _ =>
+    }
     false
   }
 

@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.entities.particles.ParticleRain
 
 class WeatherRainy extends Weather {
   override def update(world: World, delta: Float): Unit = {
-    val top = world.localPlayer.getPosition.$minus(0, Gdx.graphics.getHeight / 2)
+    val top = world.localPlayer.getPosition - (0, Gdx.graphics.getHeight / 2)
 
     if (delta * 60f * TerraInfinita.rnd.nextFloat > 0.5f)
       new ParticleRain(
