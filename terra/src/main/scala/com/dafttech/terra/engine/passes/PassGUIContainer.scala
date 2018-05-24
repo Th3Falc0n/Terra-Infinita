@@ -7,10 +7,10 @@ import com.dafttech.terra.game.world.entities.Entity
 import org.lwjgl.opengl.GL11
 
 class PassGUIContainer extends RenderingPass {
-  def applyPass(screen: AbstractScreen, pointOfView: Entity, w: World, arguments: AnyRef*) {
+  def applyPass(screen: AbstractScreen, pointOfView: Entity, w: World, arguments: AnyRef*): Unit = {
     screen.batch.setShader(null)
-    screen.batch.enableBlending
+    screen.batch.enableBlending()
     screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-    (arguments(0).asInstanceOf[GUIContainer]).draw(screen)
+    arguments(0).asInstanceOf[GUIContainer].draw(screen)
   }
 }

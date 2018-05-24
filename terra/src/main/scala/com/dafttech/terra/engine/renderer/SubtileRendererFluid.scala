@@ -13,7 +13,7 @@ object SubtileRendererFluid {
 class SubtileRendererFluid extends SubtileRendererMask {
   override def draw(screen: AbstractScreen, render: Subtile, pointOfView: Entity, rendererArguments: AnyRef*) {
     val screenVec: Vector2 = render.getTile.getPosition.toScreenPos(pointOfView)
-    val rotation: Float = if (rendererArguments.length > 0) rendererArguments(0).asInstanceOf[Float] else 0
+    val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
     if (!render.isTileIndependent && render.getTile != null) {
@@ -23,13 +23,14 @@ class SubtileRendererFluid extends SubtileRendererMask {
         offY = offset.y.toFloat * BLOCK_SIZE
       }
     }
-    var height: Float = (render.asInstanceOf[SubtileFluid]).pressure / (render.asInstanceOf[SubtileFluid]).maxPressure * BLOCK_SIZE
-    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.Top)) {
-      val above: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.Top)
+    val renderFluid = render.asInstanceOf[SubtileFluid]
+    var height: Float = renderFluid.pressure / renderFluid.maxPressure * BLOCK_SIZE
+    if (height < BLOCK_SIZE && renderFluid.isFluid(render.getTile.getWorld, Facing.Top)) {
+      val above: SubtileFluid = renderFluid.getFluid(render.getTile.getWorld, Facing.Top)
       height += above.pressure / above.maxPressure * BLOCK_SIZE
     }
-    if (height < BLOCK_SIZE && (render.asInstanceOf[SubtileFluid]).isFluid(render.getTile.getWorld, Facing.Bottom)) {
-      val below: SubtileFluid = (render.asInstanceOf[SubtileFluid]).getFluid(render.getTile.getWorld, Facing.Bottom)
+    if (height < BLOCK_SIZE && renderFluid.isFluid(render.getTile.getWorld, Facing.Bottom)) {
+      val below: SubtileFluid = renderFluid.getFluid(render.getTile.getWorld, Facing.Bottom)
       if (below.pressure < below.maxPressure) height = 0
     }
     if (height > BLOCK_SIZE) height = BLOCK_SIZE

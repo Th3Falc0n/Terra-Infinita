@@ -14,7 +14,7 @@ import org.lolhens.eventmanager.{Event, EventListener}
 class PassGaussian extends RenderingPass {
   private[passes] var bfPass1: FrameBuffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
   private[passes] var bfPass2: FrameBuffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
-  private[passes] var pass: Texture = null
+  private[passes] var pass: Texture = _
 
   @EventListener(value = Array("WINRESIZE")) def onResize(e: Event) {
     bfPass1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
@@ -22,7 +22,7 @@ class PassGaussian extends RenderingPass {
   }
 
   def applyPass(screen: AbstractScreen, pointOfView: Entity, w: World, arguments: AnyRef*) {
-    if (!(arguments(0).isInstanceOf[Texture])) throw new IllegalArgumentException("Need a texture to draw")
+    if (!arguments(0).isInstanceOf[Texture]) throw new IllegalArgumentException("Need a texture to draw")
     screen.batch.disableBlending()
     var size: Float = 0.010f
     if (arguments.length > 2 && arguments(2) != null) {
@@ -48,12 +48,12 @@ class PassGaussian extends RenderingPass {
     bfPass2.end()
     pass = bfPass2.getColorBufferTexture
     val reg: TextureRegion = new TextureRegion(pass)
-    if (arguments.length > 1 && arguments(1).isInstanceOf[FrameBuffer]) ((arguments(1)).asInstanceOf[FrameBuffer]).begin
+    if (arguments.length > 1 && arguments(1).isInstanceOf[FrameBuffer]) arguments(1).asInstanceOf[FrameBuffer].begin()
     screen.batch.setShader(null)
     screen.batch.begin()
     screen.batch.draw(reg, 0, 0)
     screen.batch.end()
-    if (arguments.length > 1 && arguments(1).isInstanceOf[FrameBuffer]) ((arguments(1)).asInstanceOf[FrameBuffer]).end
+    if (arguments.length > 1 && arguments(1).isInstanceOf[FrameBuffer]) arguments(1).asInstanceOf[FrameBuffer].end()
     screen.batch.enableBlending()
   }
 }

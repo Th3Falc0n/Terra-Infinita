@@ -18,7 +18,7 @@ object Tooltip {
     return label
   }
 
-  def setText(txt: String) {
+  def setText(txt: String): Unit = {
     label.setText(txt)
   }
 }

@@ -37,7 +37,7 @@ abstract class GUIObject {
       if (check.container.providesActiveHierarchy) return true
       check = check.container
     }
-    return false
+    false
   }
 
   def setTooltip(txt: String) {
@@ -54,7 +54,7 @@ abstract class GUIObject {
     }
   }
 
-  def applyAssignedAnchorSet {
+  def applyAssignedAnchorSet: Unit = {
     if (assignedAnchors != null) {
       applyAnchorSet(assignedAnchors)
     }
@@ -64,26 +64,19 @@ abstract class GUIObject {
     if (assignedAnchors != null && assignedAnchors.needsApplyOnFrame) applyAssignedAnchorSet
   }
 
-  @EventListener(Array("WINRESIZE")) def onWinResize {
-    applyAssignedAnchorSet
+  @EventListener(Array("WINRESIZE"))
+  def onWinResize: Unit = applyAssignedAnchorSet
+
+  def onClick(button: Int): Unit = {
   }
 
-  def onClick(button: Int) {
-  }
+  def onMouseIn: Unit =
+    if (tooltipText ne "") Tooltip.setText(tooltipText)
 
-  def onMouseIn {
-    if (tooltipText ne "") {
-      Tooltip.setText(tooltipText)
-    }
-  }
+  def onMouseOut: Unit =
+    if (tooltipText ne "") Tooltip.setText("")
 
-  def onMouseOut {
-    if (tooltipText ne "") {
-      Tooltip.setText("")
-    }
-  }
-
-  def setContainer(guiContainer: GUIContainer) {
+  def setContainer(guiContainer: GUIContainer): Unit = {
     container = guiContainer
   }
 }

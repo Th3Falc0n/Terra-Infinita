@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 object TileRendererMultiblock {
-  def setRegion(texture: TextureRegion, x: Float, y: Float, width: Float, height: Float) {
+  def setRegion(texture: TextureRegion, x: Float, y: Float, width: Float, height: Float): Unit = {
     val invTexWidth: Float = 1.0F / texture.getTexture.getWidth
     val invTexHeight: Float = 1.0F / texture.getTexture.getHeight
     texture.setRegion(x * invTexWidth, y * invTexHeight, (x + width) * invTexWidth, (y + height) * invTexHeight)
@@ -16,14 +16,14 @@ object TileRendererMultiblock {
 }
 
 class TileRendererMultiblock extends TileRendererBlock {
-  protected var multiblockSize: Vector2i = null
+  protected var multiblockSize: Vector2i = _
 
   def this(multiblockSize: Vector2i) {
     this()
     this.multiblockSize = multiblockSize
   }
 
-  override def draw(pos: Vector2, world: World, screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*) {
+  override def draw(pos: Vector2, world: World, screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*): Unit = {
     val screenVec: Vector2 = tile.getPosition.toScreenPos(pointOfView)
     val texture: TextureRegion = tile.getImage
     val cols: Int = multiblockSize.x

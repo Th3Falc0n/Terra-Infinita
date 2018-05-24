@@ -21,45 +21,38 @@ object MouseSlot {
 
     override def draw(screen: AbstractScreen) {
       val p: Vector2 = getScreenPosition
-      screen.batch.begin
+      screen.batch.begin()
       if (assignedStack != null) {
-        (assignedStack.prototype.toGameObject.asInstanceOf[Item]).drawInventory(p, screen)
+        assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)
       }
-      screen.batch.end
+      screen.batch.end()
     }
   }
 
   private var assignedStack: Stack = null
   private var renderSlot: MouseSlot.MouseRenderSlot = new MouseSlot.MouseRenderSlot(new Vector2(0, 0))
 
-  def init {
+  def init: Unit = {
   }
 
-  def getRenderSlot: ElementSlot = {
-    return renderSlot
-  }
+  def getRenderSlot: ElementSlot = renderSlot
 
-  def canAssignStack: Boolean = {
-    return assignedStack == null
-  }
+  def canAssignStack: Boolean = assignedStack == null
 
-  def getAssignedStack: Stack = {
-    return assignedStack
-  }
+  def getAssignedStack: Stack = assignedStack
 
   def popAssignedStack: Stack = {
     val at: Stack = assignedStack
     assignedStack = null
     renderSlot.assignStack(null)
-    return at
+    at
   }
 
-  def assignStack(stack: Stack): Boolean = {
+  def assignStack(stack: Stack): Boolean =
     if (assignedStack == null) {
       assignedStack = stack
       renderSlot.assignStack(assignedStack)
-      return true
-    }
-    return false
-  }
+      true
+    } else
+      false
 }

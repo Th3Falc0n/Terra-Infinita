@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.tiles.Tile
 abstract class TileRenderer {
   protected var offset: Vector2 = Vector2.Null
 
-  def draw2(pos: Vector2, world: World, screen: AbstractScreen, render: Tile, pointOfView: Entity) =
+  def draw2(pos: Vector2, world: World, screen: AbstractScreen, render: Tile, pointOfView: Entity): Unit =
     draw(pos, world, screen, render, pointOfView)
 
   def draw(pos: Vector2, world: World, screen: AbstractScreen, render: Tile, pointOfView: Entity, rendererArguments: AnyRef*)

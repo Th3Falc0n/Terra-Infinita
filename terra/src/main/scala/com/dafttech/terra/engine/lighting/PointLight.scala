@@ -23,9 +23,9 @@ class PointLight extends Light {
   def drawToLightmap(screen: AbstractScreen, pointOfView: Entity) {
     val p: Vector2 = position.toRenderPosition(pointOfView.getPosition)
     if (!(screen.batch.getColor == color)) {
-      screen.batch.end
+      screen.batch.end()
       screen.batch.setColor(color)
-      screen.batch.begin
+      screen.batch.begin()
     }
     screen.batch.draw(Resources.LIGHT.getImage("pointlight"), (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
   }

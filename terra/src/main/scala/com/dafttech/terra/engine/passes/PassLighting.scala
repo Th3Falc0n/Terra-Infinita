@@ -11,7 +11,6 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventListener}
-import scala.collection.JavaConverters._
 
 class PassLighting extends RenderingPass {
   private[passes] var buffer: FrameBuffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
@@ -27,11 +26,11 @@ class PassLighting extends RenderingPass {
     }
   }
 
-  @EventListener(value = Array("WINRESIZE")) def onResize(e: Event) {
+  @EventListener(value = Array("WINRESIZE")) def onResize(e: Event): Unit = {
     buffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
   }
 
-  @SuppressWarnings(Array("unused")) def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*) {
+  @SuppressWarnings(Array("unused")) def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*): Unit = {
     buffer.begin()
     Gdx.graphics.getGL20.glClearColor(0, 0, 0, 0)
     Gdx.graphics.getGL20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT)

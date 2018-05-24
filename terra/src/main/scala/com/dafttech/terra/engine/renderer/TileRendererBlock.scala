@@ -11,7 +11,7 @@ object TileRendererBlock {
 }
 
 class TileRendererBlock extends TileRenderer {
-  def draw(pos: Vector2, world: World, screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*) {
+  def draw(pos: Vector2, world: World, screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*): Unit = {
     val screenVec: Vector2 = tile.getPosition.toScreenPos(pointOfView)
     screen.batch.draw(tile.getImage, (screenVec.x + offset.x * BLOCK_SIZE).toFloat, (screenVec.y + offset.y * BLOCK_SIZE).toFloat, BLOCK_SIZE, BLOCK_SIZE)
   }

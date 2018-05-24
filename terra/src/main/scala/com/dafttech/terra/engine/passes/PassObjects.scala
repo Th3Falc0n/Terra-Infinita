@@ -7,7 +7,6 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lwjgl.opengl.GL11
-import scala.collection.JavaConverters._
 
 class PassObjects extends RenderingPass {
   def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*): Unit = {
@@ -19,7 +18,15 @@ class PassObjects extends RenderingPass {
     screen.batch.begin()
     var tile: Tile = null
 
-    var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx
+    for {
+      x <- (pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx) until (pointOfView.getPosition.x.toInt / BLOCK_SIZE + sx)
+      y <- (pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy) until (pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy)
+    } {
+      tile = world.getTile(x, y)
+      if (tile != null) tile.draw(tile.getPosition.toVector2, world, screen, pointOfView)
+    }
+
+    /*var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx
     while (x < pointOfView.getPosition.x.toInt / BLOCK_SIZE + sx) {
       var y: Int = pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy
       while (y < pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy) {
@@ -28,13 +35,14 @@ class PassObjects extends RenderingPass {
         y += 1
       }
       x += 1
-    }
+    }*/
 
-    for (chunk <- world.getChunks.values) {
-      for (entity <- chunk.getLocalEntities) {
-        entity.draw(entity.getPosition, world, screen, pointOfView)
-      }
+    for {
+      chunk <- world.getChunks.values
+      entity <- chunk.getLocalEntities
+    } {
+      entity.draw(entity.getPosition, world, screen, pointOfView)
     }
-    screen.batch.end
+    screen.batch.end()
   }
 }

@@ -12,7 +12,7 @@ object SubtileRendererMask {
 class SubtileRendererMask extends SubtileRenderer {
   def draw(screen: AbstractScreen, render: Subtile, pointOfView: Entity, rendererArguments: AnyRef*) {
     val screenVec: Vector2 = render.getTile.getPosition.toScreenPos(pointOfView)
-    val rotation: Float = if (rendererArguments.length > 0) rendererArguments(0).asInstanceOf[Float] else 0
+    val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
     if (!render.isTileIndependent && render.getTile != null) {
