@@ -24,11 +24,11 @@ object TerraInfinita extends Game with ApplicationListener {
     return Display.isActive
   }
 
-  def create {
+  def create: Unit = {
     Gdx.app.log(Thread.currentThread.getName, "Creating game...")
-    Events.init
+    Events.init()
     Events.EVENTMANAGER.callSync(Events.EVENT_INITPRE, this)
-    Resources.init
+    Resources.init()
     InputHandler.init
     Tooltip.init
     MouseSlot.init

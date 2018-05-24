@@ -13,7 +13,7 @@ abstract class AbstractScreen extends Screen {
 
   def dispose(): Unit = ()
 
-  def resize(arg0: Int, arg1: Int) {
+  def resize(arg0: Int, arg1: Int): Unit = {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
