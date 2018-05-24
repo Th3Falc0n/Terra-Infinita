@@ -36,10 +36,11 @@ class SunMap {
 
   def postTileRemove(w: World, t: Tile): Unit =
     if (isReceivingTile(t)) {
-      val b = w.getNextTileBelow(t.getPosition)
       unsetSunlightForX(w, t)
-      setSunlightForX(w, b)
-      setHeightForX(b.getPosition.x, b.getPosition.y)
+      w.getNextTileBelow(t.getPosition).foreach {b =>
+        setSunlightForX(w, b)
+        setHeightForX(b.getPosition.x, b.getPosition.y)
+      }
     } else if (getReceivingTile(t.getPosition.x) != null) {
       unsetSunlightForX(w, getReceivingTile(t.getPosition.x))
       setSunlightForX(w, getReceivingTile(t.getPosition.x))

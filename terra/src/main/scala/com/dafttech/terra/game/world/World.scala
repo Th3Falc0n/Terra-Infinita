@@ -2,7 +2,6 @@ package com.dafttech.terra.game.world
 
 import java.util
 import java.util.concurrent.ConcurrentHashMap
-import java.util.{ArrayList, List, Map}
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.passes.RenderingPass
@@ -39,84 +38,74 @@ class World extends IDrawableInWorld {
     localPlayer.setPosition(new Vector2(0, -100))
   }
 
-  def getChunk(blockInWorldPos: Vector2i): Chunk = // TODO: Option
-    if (blockInWorldPos != null) {
-      val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
-      if (localChunks.containsKey(chunkPos)) localChunks.get(chunkPos) else null
-    } else null
+  def getChunk(blockInWorldPos: Vector2i): Option[Chunk] = // TODO: Option
+  Option(blockInWorldPos).flatMap {blockInWorldPos =>
+    val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
+    if (localChunks.containsKey(chunkPos)) Some(localChunks.get(chunkPos)) else None
+  }
 
-  def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk = {
-    var chunk: Chunk = getChunk(blockInWorldPos)
-    if (chunk == null) {
-      chunk = new Chunk(this, blockInWorldPos.getChunkPos(this))
+  def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk =
+    getChunk(blockInWorldPos).getOrElse {
+      val chunk = new Chunk(this, blockInWorldPos.getChunkPos(this))
       localChunks.put(blockInWorldPos.getChunkPos(this), chunk)
       chunk.fillAir()
       gen.generateChunk(chunk)
+      chunk
     }
-    return chunk
-  }
 
-  def getChunk(blockInWorldPos: Vector2): Chunk = {
-    if (blockInWorldPos == null) return null
-    return getChunk(blockInWorldPos.toVector2i)
-  }
+  def getChunk(blockInWorldPos: Vector2): Option[Chunk] =
+    getChunk(Option(blockInWorldPos).map(_.toVector2i).orNull)
 
   def getOrCreateChunk(blockInWorldPos: Vector2): Chunk = {
     if (blockInWorldPos != null) getOrCreateChunk(blockInWorldPos.toVector2i) else null
   }
 
-  def doesChunkExist(x: Int, y: Int): Boolean = {
-    return getChunk(new Vector2i(x, y)) != null
-  }
+  def doesChunkExist(x: Int, y: Int): Boolean = getChunk(new Vector2i(x, y)).isDefined
 
   def getTile(x: Int, y: Int): Tile = {
     return getTile(new Vector2i(x, y))
   }
 
-  def getTile(pos: Vector2i): Tile = {
-    val chunk: Chunk = getOrCreateChunk(pos)
-    if (chunk != null) return chunk.getTile(pos.getBlockInChunkPos(this))
-    return null
-  }
+  def getTile(pos: Vector2i): Tile =
+    getOrCreateChunk(pos).getTile(pos.getBlockInChunkPos(this))
 
-  def getNextTileBelow(_x: Int, _y: Int): Tile = {
+  def getNextTileBelow(_x: Int, _y: Int): Option[Tile] = {
     var x = _x
     var y = _y
 
     y += 1
     while (doesChunkExist(x, y)) {
-      if (getTile(x, y) != null && !getTile(x, y).isAir) return getTile(x, y)
+      if (getTile(x, y) != null && !getTile(x, y).isAir) return Some(getTile(x, y))
       y += 1
     }
-    return null
+    None
   }
 
-  def getNextTileBelow(t: Vector2i): Tile = {
-    return getNextTileBelow(t.x, t.y)
+  def getNextTileBelow(t: Vector2i): Option[Tile] = {
+    getNextTileBelow(t.x, t.y)
   }
 
-  def getNextTileAbove(_x: Int, _y: Int): Tile = {
+  def getNextTileAbove(_x: Int, _y: Int): Option[Tile] = {
     var x = _x
     var y = _y
 
     y -= 1
     while (doesChunkExist(x, y)) {
-      if (getTile(x, y) != null && !getTile(x, y).isAir) return getTile(x, y)
+      if (getTile(x, y) != null && !getTile(x, y).isAir) return Some(getTile(x, y))
       y -= 1
     }
-    return null
+    None
   }
 
-  def getNextTileAbove(t: Vector2i): Tile = {
-    return getNextTileAbove(t.x, t.y)
-  }
+  def getNextTileAbove(t: Vector2i): Option[Tile] =
+    getNextTileAbove(t.x, t.y)
 
   def setTile(pos: Vector2i, _tile: Tile, notify: Boolean): World = {
     var tile = _tile
 
     val chunk: Chunk = getOrCreateChunk(pos)
     if (chunk != null) {
-      val tileIndependentSubtiles: List[Subtile] = new ArrayList[Subtile]
+      var tileIndependentSubtiles: List[Subtile] = Nil
       var notifyOldRemoval: Vector2i = null
       if (tile != null && tile.getPosition != null && (getTile(tile.getPosition) eq tile)) {
         notifyOldRemoval = tile.getPosition
@@ -127,13 +116,13 @@ class World extends IDrawableInWorld {
       val oldTile: Tile = getTile(pos)
       if (oldTile != null) {
         sunmap.postTileRemove(this, oldTile)
-        for (subtile <- oldTile.getSubtiles) {
-          if (subtile.isTileIndependent) tileIndependentSubtiles.add(subtile)
-        }
-        oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()): _*)
+        for (subtile <- oldTile.getSubtiles)
+          if (subtile.isTileIndependent)
+            tileIndependentSubtiles = tileIndependentSubtiles :+ subtile
+        oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles: _*)
       }
       chunk.setTile(pos.getBlockInChunkPos(this), tile)
-      tile.addSubtile(tileIndependentSubtiles.toArray(Array[Subtile]()): _*)
+      tile.addSubtile(tileIndependentSubtiles: _*)
       sunmap.postTilePlace(this, tile)
       if (notify) {
         tile.onTileSet(this)
@@ -141,35 +130,34 @@ class World extends IDrawableInWorld {
         notifyNeighborTiles(pos.x, pos.y)
       }
     }
-    return this
+    this
   }
 
-  def setTile(x: Int, y: Int, tile: Tile, notify: Boolean): World = {
-    return setTile(new Vector2i(x, y), tile, notify)
-  }
+  def setTile(x: Int, y: Int, tile: Tile, notify: Boolean): World =
+    setTile(new Vector2i(x, y), tile, notify)
 
   def placeTile(x: Int, y: Int, t: Tile, causer: Entity): Boolean = {
     val tile: Tile = getTile(x, y)
     if (tile.isAir || tile.isReplacable) {
-      setTile(x, y, t, true)
+      setTile(x, y, t, notify = true)
       tile.onTilePlaced(this, causer)
-      return true
-    }
-    return false
+      true
+    } else
+      false
   }
 
-  def destroyTile(x: Int, y: Int, causer: Entity): EntityItem = {
-    var entity: EntityItem = null
+  def destroyTile(x: Int, y: Int, causer: Entity): Option[EntityItem] = {
     val tile: Tile = getTile(x, y)
     if (tile.isBreakable) {
-      entity = tile.spawnAsEntity(this)
-      setTile(x, y, null, true)
+      val entity = tile.spawnAsEntity(this)
+      setTile(x, y, null, notify = true)
       tile.onTileDestroyed(this, causer)
-    }
-    return entity
+      Some(entity)
+    } else
+    None
   }
 
-  private def notifyNeighborTiles(x: Int, y: Int) {
+  private def notifyNeighborTiles(x: Int, y: Int): Unit = {
     var tile: Tile = null
     tile = getTile(x + 1, y)
     tile.onNeighborChange(this, tile)
@@ -181,17 +169,25 @@ class World extends IDrawableInWorld {
     tile.onNeighborChange(this, tile)
   }
 
-  def removeEntity(entity: Entity) {
+  def removeEntity(entity: Entity): Unit = {
     entity.remove
   }
 
-  def update(world: World, delta: Float) {
+  def update(world: World, delta: Float): Unit = {
     time += delta
     weather.update(this, delta)
     val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
     val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
     var tile: Tile = null
-    var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
+    for {
+      x <- (localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx) until (localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx)
+      y <- (localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy) until (localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy)
+    } {
+      tile = getTile(x, y)
+      if (tile != null) tile.update(this, delta)
+    }
+
+    /*var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
     while (x < localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx) {
       {
         {
@@ -212,7 +208,7 @@ class World extends IDrawableInWorld {
         x += 1;
         x - 1
       }
-    }
+    }*/
     TimeKeeping.timeKeeping("Tile update")
     for (chunk <- localChunks.values.asScala) {
       for (entity <- chunk.getLocalEntities) {
@@ -225,11 +221,9 @@ class World extends IDrawableInWorld {
     TimeKeeping.timeKeeping("Tick update")
   }
 
-  def isInRenderRange(position: Vector2): Boolean = {
-    true
-  }
+  def isInRenderRange(position: Vector2): Boolean = true
 
-  def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity) {
+  def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
     RenderingPass.rpObjects.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpObj")
     RenderingPass.rpLighting.applyPass(screen, pointOfView, this)

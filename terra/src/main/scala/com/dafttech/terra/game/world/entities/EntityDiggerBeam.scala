@@ -33,7 +33,8 @@ class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, wor
   override def collidesWith(e: Entity): Boolean = false
 
   override def onTerrainCollision(tile: Tile): Unit = if (!tile.isAir) {
-    worldObj.destroyTile(tile.getPosition.x, tile.getPosition.y, this).addVelocity(velocity.$times(-1))
+    worldObj.destroyTile(tile.getPosition.x, tile.getPosition.y, this)
+      .foreach(_.addVelocity(velocity.$times(-1)))
     this.remove
   }
 

@@ -135,14 +135,11 @@ abstract class Tile extends Item with IDrawableInWorld {
   final def setReceivesSunlight(world: World, is: Boolean): Unit = {
     receivesSunlight = is
     if (!is) this.sunlightFilter = null
-    if (!isOpaque) {
-      val b = world.getNextTileBelow(getPosition)
-      if (b != null && (b != this)) {
+    if (!isOpaque)
+      world.getNextTileBelow(getPosition).filter(_ != this).foreach {b =>
         b.setReceivesSunlight(world, is)
-        b.sunlightFilter = if (is) this
-        else null
+        b.sunlightFilter = if (is) this else null
       }
-    }
   }
 
   def getFilterColor: Color = Color.WHITE
