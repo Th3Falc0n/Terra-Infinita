@@ -66,20 +66,26 @@ class Chunk extends IDrawableInWorld {
   }
 
   @SuppressWarnings(Array("unused")) def getBiome: Biome = {
-    if (Random.nextBoolean) BiomeGrassland.instance else BiomeDesert.instance
+    if (Random.nextBoolean) BiomeGrassland.instance
+    else BiomeDesert.instance
   }
 
+  private def checkPosInChunk(blockInChunkPos: Vector2i): Unit =
+    if (!blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y))
+      throw new RuntimeException("Position out of Chunk!")
+
   def getTile(blockInChunkPos: Vector2i): Tile = {
-    if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
-      return map(blockInChunkPos.x)(blockInChunkPos.y)
-    }
-    null
+    checkPosInChunk(blockInChunkPos)
+
+    map(blockInChunkPos.x)(blockInChunkPos.y)
   }
 
   def setTile(blockInChunkPos: Vector2i, tile: Tile): Chunk = {
-    if (blockInChunkPos.isInRect(0, 0, world.chunksize.x, world.chunksize.y)) {
-      if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled) map(blockInChunkPos.x)(blockInChunkPos.y) = tile
-    }
+    checkPosInChunk(blockInChunkPos)
+
+    if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled)
+      map(blockInChunkPos.x)(blockInChunkPos.y) = tile
+
     this
   }
 
