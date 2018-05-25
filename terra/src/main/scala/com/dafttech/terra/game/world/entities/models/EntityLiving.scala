@@ -20,11 +20,11 @@ abstract class EntityLiving(pos: Vector2, world: World, s: Vector2) extends Enti
     this
   }
 
-  def jump(): Unit = addVelocity(new Vector2(0, -30))
+  def jump(): Unit = addVelocity(Vector2(0, -30))
 
-  def walkLeft(): Unit = addForce(new Vector2(-10f * getCurrentAcceleration, 0))
+  def walkLeft(): Unit = addForce(Vector2(-10f * getCurrentAcceleration, 0))
 
-  def walkRight(): Unit = addForce(new Vector2(10f * getCurrentAcceleration, 0))
+  def walkRight(): Unit = addForce(Vector2(10f * getCurrentAcceleration, 0))
 
   protected def setMaxHealth(maxHealth: Float): EntityLiving = {
     this.maxHealth = maxHealth

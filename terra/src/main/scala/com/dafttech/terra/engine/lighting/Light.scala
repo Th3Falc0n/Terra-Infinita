@@ -15,6 +15,4 @@ abstract class Light {
   def getColor: Color = color
 
   def drawToLightmap(screen: AbstractScreen, pointOfView: Entity)
-
-  def setPosition(p: Vector2)
 }

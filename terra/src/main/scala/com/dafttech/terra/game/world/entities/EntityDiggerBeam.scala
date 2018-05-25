@@ -11,8 +11,8 @@ import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.{Options, Resources}
 
-class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, world, new Vector2(4f, 2f)) {
-  private val light: PointLight = new PointLight(getPosition, 95)
+class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, world, Vector2(4f, 2f)) {
+  private val light: PointLight = new PointLight(95)
   light.setColor(new Color(0, 1, 0.3f, 1))
 
   setGravityFactor(0)

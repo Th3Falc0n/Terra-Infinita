@@ -6,7 +6,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleExplosion
 import com.dafttech.terra.resources.{Options, Resources}
 
-class EntityDynamite(pos: Vector2, world: World, var explodeTimer: Float, var radius: Int) extends Entity(pos, world, new Vector2(1.5, 1.5)) {
+class EntityDynamite(pos: Vector2, world: World, var explodeTimer: Float, var radius: Int) extends Entity(pos, world, Vector2(1.5, 1.5)) {
   setGravityFactor(0.125)
 
   override def getImage: TextureRegion = Resources.ENTITIES.getImage("dynamite")

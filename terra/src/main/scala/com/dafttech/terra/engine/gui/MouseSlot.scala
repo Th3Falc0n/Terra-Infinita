@@ -30,7 +30,7 @@ object MouseSlot {
   }
 
   private var assignedStack: Stack = null
-  private var renderSlot: MouseSlot.MouseRenderSlot = new MouseSlot.MouseRenderSlot(new Vector2(0, 0))
+  private var renderSlot: MouseSlot.MouseRenderSlot = new MouseSlot.MouseRenderSlot(Vector2(0, 0))
 
   def init: Unit = {
   }

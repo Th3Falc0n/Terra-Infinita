@@ -17,7 +17,7 @@ abstract class AbstractScreen extends Screen {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
-    guiContainerScreen.size = new Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
+    guiContainerScreen.size = Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
   }
 
@@ -27,7 +27,7 @@ abstract class AbstractScreen extends Screen {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
-    guiContainerScreen.size = new Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
+    guiContainerScreen.size = Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
     guiContainerScreen.setActive(true)
   }

@@ -7,6 +7,4 @@ class TileAir extends Tile {
   override def getImage: TextureRegion = Resources.TILES.getImage("air")
 
   override def isAir: Boolean = true
-
-  override def update(delta: Float): Unit = ()
 }

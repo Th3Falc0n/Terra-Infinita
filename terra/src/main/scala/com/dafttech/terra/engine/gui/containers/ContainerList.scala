@@ -16,7 +16,7 @@ class ContainerList(p: Vector2, s: Vector2) extends GUIContainer(p, s) {
     for (o <- objects) {
       y -= o.size.y.toFloat + distance
       if (y > 0) {
-        o.position = new Vector2(0, y)
+        o.position = Vector2(0, y)
         o.draw(screen)
       }
     }

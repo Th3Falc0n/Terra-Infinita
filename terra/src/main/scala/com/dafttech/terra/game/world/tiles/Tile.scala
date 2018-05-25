@@ -1,17 +1,17 @@
 package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.Color
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererBlock}
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.items.Item
+import com.dafttech.terra.game.world.items.ItemTile
 import com.dafttech.terra.game.world.subtiles.Subtile
 
-abstract class Tile extends Item with IDrawableInWorld {
-  private var world: World = _
-  private var position: Vector2i = Vector2i.Null
+abstract class Tile extends ItemTile with IDrawableInWorld {
   private var subtiles: List[Subtile] = List.empty
 
   private var breakingProgress: Float = 0
@@ -23,7 +23,7 @@ abstract class Tile extends Item with IDrawableInWorld {
   override def use(causer: EntityLiving, position: Vector2): Boolean =
     if (causer.getPosition.$minus(position).length < 100) {
       val pos = position.toWorldPosition
-      causer.getWorld.placeTile(pos.x, pos.y, this, causer)
+      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), this, causer)
     } else
       false
 
@@ -45,10 +45,10 @@ abstract class Tile extends Item with IDrawableInWorld {
 
   def getDroppedItem: Item = this
 
-  def spawnAsEntity(world: World): EntityItem = {
+  def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
     val dropped = getDroppedItem
     if (dropped == null) null
-    else new EntityItem(getPosition.toEntityPos + (0.5, 0.5), world, new Vector2(0.5, 0.5), dropped)
+    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), tilePosition.world, Vector2(0.5, 0.5), dropped)
   }
 
   def getRenderer: TileRenderer = TileRendererBlock.$Instance
@@ -57,10 +57,7 @@ abstract class Tile extends Item with IDrawableInWorld {
 
   def getWalkAcceleration: Float = 1
 
-  def getWorld: World = world
-
   def addSubtile(subtile: Subtile*): Tile = {
-    for (s <- subtile) if (s != null) s.setTile(this)
     subtiles = subtiles ++ subtile.toList
     this
   }
@@ -71,7 +68,6 @@ abstract class Tile extends Item with IDrawableInWorld {
   }
 
   def removeAndUnlinkSubtile(subtile: Subtile*): Tile = {
-    for (s <- subtile) if (s != null) s.setTile(null)
     subtiles = subtiles.diff(subtile)
     this
   }
@@ -87,57 +83,45 @@ abstract class Tile extends Item with IDrawableInWorld {
         (!inherited && subtileClass == subtile.getClass)
     ).orNull
 
-  def setWorld(world: World): Tile = {
-    this.world = world
-    this
+  override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
+    getRenderer.draw(tilePosition.pos, tilePosition.world, screen, this, pointOfView)
+
+    for (subtile <- subtiles) subtile.draw(screen, pointOfView)
   }
 
-  def setPosition(position: Vector2i): Tile = {
-    this.position = position
-    this
+  final def tick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    onTick(delta)
+
+    subtiles.foreach(_.tick(delta))
   }
 
-  override def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
-    getRenderer.draw(pos, world, screen, this, pointOfView)
+  def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = ()
 
-    for (subtile <- subtiles) subtile.draw(pos, world, screen, pointOfView)
-  }
+  def onTileSet(implicit tilePosition: TilePosition): Unit = ()
 
-  final def tick(world: World, delta: Float): Unit = {
-    onTick(world, delta)
+  def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = ()
 
-    subtiles.foreach(_.tick(world, delta))
-  }
+  def onTileDestroyed(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
 
-  def onTick(world: World, delta: Float): Unit = ()
+  def onTilePlaced(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
 
-  def onNeighborChange(world: World, changed: Tile): Unit = ()
-
-  def onTileDestroyed(world: World, causer: Entity): Unit = ()
-
-  def onTilePlaced(world: World, causer: Entity): Unit = ()
-
-  def onTileSet(world: World): Unit = ()
-
-  override def update(world: World, delta: Float): Unit = {
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     subtiles.foreach(_.update(delta)) // TODO Why no world???
 
     if (breakingProgress > 0) breakingProgress -= delta
   }
-
-  override def update(delta: Float): Unit = ()
 
   def setHardness(hardness: Float): Tile = {
     this.hardness = hardness
     this
   }
 
-  final def setReceivesSunlight(world: World, is: Boolean): Unit = {
+  final def setReceivesSunlight(is: Boolean)(implicit tilePosition: TilePosition): Unit = {
     receivesSunlight = is
     if (!is) this.sunlightFilter = null
     if (!isOpaque)
-      world.getNextTileBelow(getPosition).filter(_ != this).foreach {b =>
-        b.setReceivesSunlight(world, is)
+      tilePosition.world.getNextTileBelow(tilePosition.pos).filter(_ != this).foreach {b =>
+        b.setReceivesSunlight(is) //FIXME: Implicit tilePosition is invalid, because it is not the position of the tile below
         b.sunlightFilter = if (is) this else null
       }
   }
@@ -155,10 +139,8 @@ abstract class Tile extends Item with IDrawableInWorld {
       sunlightColor
     }
 
-  def damage(world: World, damage: Float, causer: Entity): Unit = {
+  def damage(damage: Float, causer: Entity)(implicit tilePosition: TilePosition): Unit = {
     breakingProgress += damage
-    if (breakingProgress > hardness) world.destroyTile(getPosition.x, getPosition.y, causer)
+    if (breakingProgress > hardness) tilePosition.world.destroyTile(tilePosition.pos, causer)
   }
-
-  def getPosition: Vector2i = position
 }

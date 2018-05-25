@@ -4,7 +4,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
 trait IDrawableInWorld {
-  def update(world: World, delta: Float)
+  def update(delta: Float)(implicit tilePosition: TilePosition)
 
-  def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity)
+  def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition)
 }

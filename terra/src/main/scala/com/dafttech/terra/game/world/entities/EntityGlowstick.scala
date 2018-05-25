@@ -9,7 +9,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
 
-class EntityGlowstick(pos: Vector2, world: World) extends Entity(pos, world, new Vector2(1.5, 1.5)) {
+class EntityGlowstick(pos: Vector2, world: World) extends Entity(pos, world, Vector2(1.5, 1.5)) {
   private val light: PointLight = new PointLight(getPosition, 95)
   light.setColor(new Color(0.1f, 1, 0.1f, 1))
 

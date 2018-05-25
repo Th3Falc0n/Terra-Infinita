@@ -4,6 +4,7 @@ import java.util.Random
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.items.persistence.Persistent
@@ -19,15 +20,9 @@ class TileGrass() extends Tile {
 
   override def isOpaque: Boolean = false
 
-  override def onNeighborChange(world: World, changed: Tile): Unit =
-    if (world.getTile(getPosition + (0, 1)).isAir)
-      world.destroyTile(getPosition.x, getPosition.y, null)
-
-  override def onTileDestroyed(world: World, causer: Entity): Unit = ()
-
-  override def onTilePlaced(world: World, causer: Entity): Unit = ()
-
-  override def onTileSet(world: World): Unit = ()
+  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit =
+    if (tilePosition.world.getTile(tilePosition.pos + (0, 1)).isAir)
+      tilePosition.world.destroyTile(tilePosition.pos + (0, 1), null)
 
   override def isFlammable: Boolean = true
 
@@ -35,18 +30,18 @@ class TileGrass() extends Tile {
 
   private val spreadDistance: Int = 3
 
-  override def onTick(world: World, delta: Float): Unit = {
-    val spreadPosition = getPosition + (
+  override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    val spreadPosition = tilePosition.pos + (
       new Random().nextInt(spreadDistance * 2) - spreadDistance,
       new Random().nextInt(spreadDistance * 2) - spreadDistance
     )
 
-    val spreadTile = world.getTile(spreadPosition)
+    val spreadTile = tilePosition.world.getTile(spreadPosition)
 
     spreadPosition - (0, 1)
 
     if (spreadTile != null &&
-      world.getTile(spreadPosition).isAir && spreadTile.hasSubtile(classOf[SubtileGrass], inherited = false))
-      world.setTile(spreadPosition, new TileGrass, notify = true)
+      tilePosition.world.getTile(spreadPosition).isAir && spreadTile.hasSubtile(classOf[SubtileGrass], inherited = false))
+      tilePosition.world.setTile(spreadPosition, new TileGrass, notify = true)
   }
 }

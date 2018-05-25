@@ -2,6 +2,7 @@ package com.dafttech.terra.game.world.subtiles
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.game.world.{Facing, World}
 import com.dafttech.terra.resources.Resources
@@ -14,10 +15,10 @@ class SubtileWater() extends SubtileFluid {
 
   override def getNewFluid = new SubtileWater
 
-  override def onTick(world: World, delta: Float): Unit = {
+  override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     img += delta
     if (img.toInt > 3) img = 0
-    var windSpeed = world.weather.getWindSpeed(world)
+    var windSpeed = tilePosition.world.weather.getWindSpeed(tilePosition.world)
     var facing = if (windSpeed > 0) Facing.Right
     else if (windSpeed < 0) Facing.Left
     else null
@@ -31,23 +32,23 @@ class SubtileWater() extends SubtileFluid {
     }
     if (facing != null && !wavephase) {
       wavephase = true
-      var fluid = getFluid(world, facing)
+      var fluid = getFluid(tilePosition, facing)
       var maxReach = 5
       val amount = maxPressure * delta * Math.abs(windSpeed)
       while ( {
         maxReach > 0 && fluid != null && pressure > amount
       }) {
         maxReach -= 1
-        if (fluid.pressure + amount < fluid.maxPressure * 2) {
+        if (fluid._1.pressure + amount < fluid._1.maxPressure * 2) {
           addPressure(-amount)
-          fluid.addPressure(amount)
+          fluid._1.addPressure(amount)
         }
-        fluid = fluid.getFluid(world, facing)
+        fluid = fluid._1.getFluid(tilePosition, facing)
       }
     }
     else {
       wavephase = false
-      super.onTick(world, delta)
+      super.onTick(delta)
     }
   }
 

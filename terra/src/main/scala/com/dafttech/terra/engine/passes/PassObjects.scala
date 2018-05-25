@@ -2,6 +2,8 @@ package com.dafttech.terra.engine.passes
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.AbstractScreen
+import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
@@ -23,7 +25,7 @@ class PassObjects extends RenderingPass {
       y <- (pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy) until (pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy)
     } {
       tile = world.getTile(x, y)
-      if (tile != null) tile.draw(tile.getPosition.toVector2, world, screen, pointOfView)
+      if (tile != null) tile.draw(screen, pointOfView)(new TilePosition(world, Vector2i(x, y)))
     }
 
     /*var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx

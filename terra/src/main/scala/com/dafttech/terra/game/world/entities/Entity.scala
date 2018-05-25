@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Rectangle
+import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
 import com.dafttech.terra.game.world.entities.living.Player
@@ -14,24 +16,23 @@ import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.game.world.{Chunk, Facing, World}
 import com.dafttech.terra.resources.Options
 
-abstract class Entity protected() extends GameObject with IDrawableInWorld {
+abstract class Entity protected(implicit worldObj: World) extends GameObject with IDrawableInWorld {
   private[entities] var chunk: Chunk = _
   @Persistent protected var position: Vector2 = Vector2.Null
   @Persistent protected var velocity: Vector2 = Vector2.Null
   protected var accelleration: Vector2 = Vector2.Null
   @Persistent protected var size: Vector2 = Vector2.Null
   @Persistent protected var rotation: Double = 0
-  var worldObj: World = _
+
   protected var color: Color = Color.WHITE
   private[entities] var gravityFactor: Double = 1
   protected var inAir = false
   protected var inWorld = true
   @Persistent protected var isDynamicEntity: Boolean = false
 
-  def this(pos: Vector2, world: World, s: Vector2) {
+  def this(pos: Vector2, s: Vector2)(implicit worldObj: World) {
     this()
-    worldObj = world
-    addToWorld(world, pos)
+    addToWorld(worldObj, pos)
     setPosition(pos)
     size = s
   }
@@ -86,13 +87,13 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
 
   def setSize(size: Vector2): Unit = this.size = size
 
-  def setSize(x: Float, y: Float): Unit = setSize(new Vector2(x, y))
+  def setSize(x: Float, y: Float): Unit = setSize(Vector2(x, y))
 
   @SuppressWarnings(Array("unused"))
   private def drawRect(rect: Rectangle, rend: ShapeRenderer, color: Color): Unit = {
     rend.begin(ShapeType.Filled)
     rend.setColor(color.r, color.g, color.b, 1)
-    var v2 = new Vector2(rect.x, rect.y)
+    var v2 = Vector2(rect.x, rect.y)
     v2 = v2.toRenderPosition(getPosition)
     rend.rect(v2.xFloat, v2.yFloat, rect.width, rect.height)
     rend.flush()
@@ -107,8 +108,8 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     val oVel = velocity
     for (entity <- chunk.getLocalEntities) {
       if (!((entity == this) || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.`length²` < entity.velocity.`length²`)) {
-        val otherRect = new Vector2(entity.getPosition.x, entity.getPosition.y).rectangleTo(new Vector2(entity.getSize.x * Options.BLOCK_SIZE, entity.getSize.y * Options.BLOCK_SIZE))
-        val playerRect = new Vector2(getPosition.x, getPosition.y).rectangleTo(new Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
+        val otherRect = Vector2(entity.getPosition.x, entity.getPosition.y).rectangleTo(Vector2(entity.getSize.x * Options.BLOCK_SIZE, entity.getSize.y * Options.BLOCK_SIZE))
+        val playerRect = Vector2(getPosition.x, getPosition.y).rectangleTo(Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
         if (collisionDetect(oVel, playerRect, otherRect)) onEntityCollision(entity)
       }
     }
@@ -122,15 +123,15 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
       x <- mid.x - 1 to mid.x + 2 + size.x.toInt
       y <- mid.y - 1 to mid.y + 2 + size.y.toInt
     } {
-      if (world.getTile(x, y) != null && world.getTile(x, y).isCollidableWith(this)) {
+      if (world.getTile(Vector2i(x, y)) != null && world.getTile(Vector2i(x, y)).isCollidableWith(this)) {
         val tileRect = new Rectangle(x * Options.BLOCK_SIZE, y * Options.BLOCK_SIZE, Options.BLOCK_SIZE, Options.BLOCK_SIZE)
-        val playerRect = new Vector2(getPosition.x, getPosition.y).rectangleTo(new Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
-        if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(world.getTile(x, y))
+        val playerRect = Vector2(getPosition.x, getPosition.y).rectangleTo(Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
+        if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(new TilePosition(worldObj, Vector2i(x, y)))
       }
     }
   }
 
-  def onTerrainCollision(t: Tile): Unit = ()
+  def onTerrainCollision(tilePosition: TilePosition): Unit = ()
 
   def onEntityCollision(e: Entity): Unit = ()
 
@@ -192,7 +193,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     if (facing eq Facing.Bottom) inAir = false
   }
 
-  override def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
+  override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
     screen.batch.draw(
@@ -223,9 +224,9 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     this
   }
 
-  override def update(world: World, delta: Float): Unit = {
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     val newDelta = delta * Options.BLOCK_SIZE
-    if (gravityFactor != 0) addForce(new Vector2(0, 9.81f * gravityFactor))
+    if (gravityFactor != 0) addForce(Vector2(0, 9.81f * gravityFactor))
     velocity = velocity + (accelleration.x * newDelta, accelleration.y * newDelta)
     accelleration = Vector2.Null
     if (velocity.`length²` > 0) {
@@ -246,7 +247,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
     velocity = velocity.withY(velocity.y * (1 - 0.025f * newDelta))
     velocity = velocity.withX(velocity.x * (1 - getCurrentFriction * newDelta))
     if (alignToVelocity && velocity.`length²` > 0.1f) setRotation(velocity.rotation + getVelocityOffsetAngle)
-    if (isDynamicEntity && !isInRenderRange(world.localPlayer)) world.removeEntity(this)
+    if (isDynamicEntity && !isInRenderRange(tilePosition.world.localPlayer)) tilePosition.world.removeEntity(this)
   }
 
   def alignToVelocity: Boolean = false
@@ -255,7 +256,7 @@ abstract class Entity protected() extends GameObject with IDrawableInWorld {
 
   def getUndergroundTile: Tile = {
     val pos = (position + (size.x * Options.BLOCK_SIZE, size.y * Options.BLOCK_SIZE)).toWorldPosition
-    worldObj.getTile(pos.x, pos.y + 1)
+    worldObj.getTile(Vector2i(pos.x, pos.y + 1))
   }
 
   def getCurrentFriction: Double = {

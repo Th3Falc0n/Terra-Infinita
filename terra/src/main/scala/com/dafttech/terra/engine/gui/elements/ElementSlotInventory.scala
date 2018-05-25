@@ -9,7 +9,7 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.resources.Resources
 
-class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends GUIElement(p, new Vector2(32, 32)) {
+class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends GUIElement(p, Vector2(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false

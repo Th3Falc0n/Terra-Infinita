@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
 
-abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p, new Vector2(100, 20)) {
+abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p, Vector2(100, 20)) {
   image = Resources.GUI.getImage("button")
 
   override def draw(screen: AbstractScreen): Unit = {

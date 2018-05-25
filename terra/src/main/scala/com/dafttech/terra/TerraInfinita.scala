@@ -32,7 +32,7 @@ object TerraInfinita extends Game with ApplicationListener {
     InputHandler.init
     Tooltip.init
     MouseSlot.init
-    world = new World(new Vector2(2000, 1000))
+    world = new World(Vector2(2000, 1000))
     screenIngame = new ScreenIngame(world)
     screenPause = new ScreenPauseMenu(world)
     setScreen(screenPause)

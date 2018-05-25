@@ -14,7 +14,7 @@ class WeatherRainy extends Weather {
       new ParticleRain(
         top + ((TerraInfinita.rnd.nextFloat - 0.5f) * Gdx.graphics.getWidth, 0),
         world
-      ).setVelocity(new Vector2((TerraInfinita.rnd.nextFloat - 0.1 /* Rain direction */) * 25, (TerraInfinita.rnd.nextFloat + 5) * 15))
+      ).setVelocity(Vector2((TerraInfinita.rnd.nextFloat - 0.1 /* Rain direction */) * 25, (TerraInfinita.rnd.nextFloat + 5) * 15))
   }
 
   override def getWindSpeed(world: World): Float = 0

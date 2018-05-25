@@ -20,7 +20,7 @@ class ModuleCrafting extends GUIModule {
 
   def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(Vector2.Null, new Vector2(312, 200))
+    container = new ContainerBlock(Vector2.Null, Vector2(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     container.assignAnchorSet(set)
@@ -42,12 +42,12 @@ class ModuleCrafting extends GUIModule {
     btnResearch.assignAnchorSet(new GUIAnchorSet(new AnchorRightNextTo(btnRecipe, 10)))
     container.addObject(btnRecipe)
     container.addObject(btnResearch)
-    shown = new ContainerBlock(new Vector2(0, 20), new Vector2(312, 150))
-    recipeList = new ContainerBlock(new Vector2(0, 0), new Vector2(312, 150))
-    researchList = new ContainerBlock(new Vector2(0, 0), new Vector2(312, 150))
+    shown = new ContainerBlock(Vector2(0, 20), Vector2(312, 150))
+    recipeList = new ContainerBlock(Vector2(0, 0), Vector2(312, 150))
+    researchList = new ContainerBlock(Vector2(0, 0), Vector2(312, 150))
     shown.addObject(researchList)
     container.addObject(shown)
-    recipeList.addObject(new ElementLabel(new Vector2(0, 0), "Learned Recipes:"))
-    researchList.addObject(new ElementLabel(new Vector2(0, 0), "Research new Recipes:"))
+    recipeList.addObject(new ElementLabel(Vector2(0, 0), "Learned Recipes:"))
+    researchList.addObject(new ElementLabel(Vector2(0, 0), "Research new Recipes:"))
   }
 }

@@ -5,10 +5,10 @@ import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.renderer.TileRendererMultiblock
 import com.dafttech.terra.resources.Resources
 
-class TileDirt() extends Tile {
+class TileDirt extends Tile {
   setHardness(3)
 
   override def getImage: TextureRegion = Resources.TILES.getImage("dirt")
 
-  override def getRenderer = new TileRendererMultiblock(new Vector2i(2, 2))
+  override def getRenderer = new TileRendererMultiblock(Vector2i(2, 2))
 }

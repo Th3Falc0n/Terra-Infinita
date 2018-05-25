@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.resources.Resources
 
-class ElementSkill(p: Vector2, val player: Player, val label: String, val skillID: Int) extends GUIElement(p, new Vector2(32, 32)) {
+class ElementSkill(p: Vector2, val player: Player, val label: String, val skillID: Int) extends GUIElement(p, Vector2(32, 32)) {
   var active: Boolean = false
 
   image = Resources.GUI.getImage("slot")

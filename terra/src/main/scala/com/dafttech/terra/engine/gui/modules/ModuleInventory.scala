@@ -52,7 +52,7 @@ class ModuleInventory extends GUIModule {
 
   def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(Vector2.Null, new Vector2(312, 200))
+    container = new ContainerBlock(Vector2.Null, Vector2(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     container.assignAnchorSet(set)
@@ -60,7 +60,7 @@ class ModuleInventory extends GUIModule {
     invLabel = new ElementLabel(Vector2.Null, "Inventory:")
     invLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)))
     container.addObject(invLabel)
-    invList = new ContainerList(Vector2.Null, new Vector2(500, 200)) {
+    invList = new ContainerList(Vector2.Null, Vector2(500, 200)) {
       override def onClick(button: Int) {
         super.onClick(button)
         if (MouseSlot.getAssignedStack != null) {

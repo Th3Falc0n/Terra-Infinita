@@ -4,15 +4,16 @@ import java.util.Random
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
 
-class ParticleExplosion(pos: Vector2, world: World, var radius: Int) extends Particle(pos, world, 0.3f, new Vector2(radius * 2, radius * 2)) {
+class ParticleExplosion(pos: Vector2, world: World, var radius: Int) extends Particle(pos, world, 0.3f, Vector2(radius * 2, radius * 2)) {
   private val midpos: Vector2 = pos
 
-  private val light: PointLight = new PointLight(getPosition, 60)
+  private val light: PointLight = new PointLight(60)
   light.setColor(new Color(1, 0.9f, 0.9f, 0.4f))
   light.setSize((getSize.xFloat + getSize.yFloat) * 6 + Options.BLOCK_SIZE)
 
@@ -21,8 +22,8 @@ class ParticleExplosion(pos: Vector2, world: World, var radius: Int) extends Par
 
   override def getImage: TextureRegion = Resources.ENTITIES.getImage("explosion")
 
-  override def update(world: World, delta: Float): Unit = {
-    super.update(world, delta)
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.update(delta)
 
     val rnd = new Random
     val blockSRad = radius * Options.BLOCK_SIZE * 3

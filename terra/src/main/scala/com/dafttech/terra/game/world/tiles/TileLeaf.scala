@@ -18,5 +18,5 @@ class TileLeaf extends TileLog {
 
   override def getFilterColor: Color = new Color(0.94f, 0.99f, 0.91f, 1)
 
-  override def getRenderer: TileRenderer = new TileRendererMultiblock(new Vector2i(3, 3))
+  override def getRenderer: TileRenderer = new TileRendererMultiblock(Vector2i(3, 3))
 }

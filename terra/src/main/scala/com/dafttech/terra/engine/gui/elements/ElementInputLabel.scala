@@ -23,7 +23,7 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     time += delta
     renderText = ">" + text + (if ((time % 1f) < 0.5 && FocusManager.hasTypeFocus(this)) "_" else "")
     val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
-    size = new Vector2(bnds.width, bnds.height)
+    size = Vector2(bnds.width, bnds.height)
   }
 
   override def draw(screen: AbstractScreen): Unit = {

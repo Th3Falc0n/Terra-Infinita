@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.Resources
 
-class ParticleRain(pos: Vector2, world: World) extends Particle(pos, world, 4, new Vector2(0.1, 1)) {
+class ParticleRain(pos: Vector2, world: World) extends Particle(pos, world, 4, Vector2(0.1, 1)) {
   setHasGravity(true)
   setGravityFactor(0.05)
 

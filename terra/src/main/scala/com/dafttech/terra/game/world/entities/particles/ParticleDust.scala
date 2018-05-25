@@ -10,7 +10,7 @@ class ParticleDust(pos: Vector2, world: World, assignedTexture: TextureRegion) e
 
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2f + 0.25f
 
-  setVelocity(new Vector2((TerraInfinita.rnd.nextFloat - 0.5f) * 5f, (TerraInfinita.rnd.nextFloat - 1f) * 2f))
+  setVelocity(Vector2((TerraInfinita.rnd.nextFloat - 0.5f) * 5f, (TerraInfinita.rnd.nextFloat - 1f) * 2f))
   setHasGravity(false)
   setMidPos(pos)
 
@@ -18,7 +18,7 @@ class ParticleDust(pos: Vector2, world: World, assignedTexture: TextureRegion) e
 
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
-    setSize(new Vector2(particleSize * (1 - (lifetime / lifetimeMax)), getSize.x))
+    setSize(Vector2(particleSize * (1 - (lifetime / lifetimeMax)), getSize.x))
   }
 
   override def checkTerrainCollisions(world: World): Unit = ()

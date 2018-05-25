@@ -9,7 +9,7 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.resources.Resources
 
-class ElementSlot(p: Vector2) extends GUIElement(p, new Vector2(32, 32)) {
+class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false

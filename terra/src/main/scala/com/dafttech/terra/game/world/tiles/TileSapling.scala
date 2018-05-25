@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
@@ -12,9 +13,9 @@ class TileSapling extends TileFalling {
 
   override def getImage: TextureRegion = Resources.TILES.getImage("sapling")
 
-  override def onTick(world: World, delta: Float): Unit = {
-    super.onTick(world, delta)
-    if (grothDelay <= 0) world.setTile(getPosition, new TileLog().setLiving(true), notify = true)
+  override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.onTick(delta)
+    if (grothDelay <= 0) tilePosition.world.setTile(tilePosition.pos, new TileLog().setLiving(true), notify = true)
     else grothDelay -= delta
   }
 

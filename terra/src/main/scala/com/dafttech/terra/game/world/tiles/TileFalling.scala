@@ -1,19 +1,22 @@
 package com.dafttech.terra.game.world.tiles
 
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererBlock}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
-abstract class TileFalling() extends Tile {
+abstract class TileFalling extends Tile {
   private var renderOffset: Vector2 = Vector2.Null
   private var createTime: Float = 0
 
-  override def onTick(world: World, delta: Float): Unit = {
-    super.onTick(world, delta)
-    fallIfPossible(world)
+  override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.onTick(delta)
+
+    fallIfPossible
+
     if (!renderOffset.isNull) {
-      val possSpeed = getFallSpeed(world) * delta
+      val possSpeed = getFallSpeed(tilePosition.world) * delta
       if (renderOffset.x > 0) renderOffset = renderOffset - (if (possSpeed > renderOffset.x) renderOffset.x else possSpeed, 0)
       if (renderOffset.y > 0) renderOffset = renderOffset - (0, if (possSpeed > renderOffset.y) renderOffset.y else possSpeed)
       if (renderOffset.x < 0) renderOffset = renderOffset + (if (possSpeed > -renderOffset.x) -renderOffset.x else possSpeed, 0)
@@ -21,15 +24,15 @@ abstract class TileFalling() extends Tile {
     }
   }
 
-  def fall(world: World, x: Int, y: Int): Unit = {
-    renderOffset = renderOffset.$minus(x, y)
-    world.setTile(getPosition.$plus(x, y), this, notify = true)
+  def fall(x: Int, y: Int)(implicit tilePosition: TilePosition): Unit = {
+    renderOffset = renderOffset - (x, y)
+    tilePosition.world.setTile(tilePosition.pos + (x, y), this, notify = true)
   }
 
-  def fallIfPossible(world: World): Unit =
+  def fallIfPossible(implicit tilePosition: TilePosition): Unit =
     if (renderOffset.isNull) {
-      if (createTime == 0) createTime = world.time
-      if (createTime + getFallDelay(world) < world.time && world.getTile(getPosition.$plus(0, 1)).isReplacable) fall(world, 0, 1)
+      if (createTime == 0) createTime = tilePosition.world.time
+      if (createTime + getFallDelay(tilePosition.world) < tilePosition.world.time && tilePosition.world.getTile(tilePosition.pos + (0, 1)).isReplacable) fall(0, 1)
     }
 
   def getRenderOffset: Vector2 = renderOffset
@@ -40,15 +43,9 @@ abstract class TileFalling() extends Tile {
     tileRenderer
   }
 
-  override def onTileSet(world: World): Unit = fallIfPossible(world)
+  override def onTileSet(implicit tilePosition: TilePosition): Unit = fallIfPossible
 
-  override def onNeighborChange(world: World, changed: Tile): Unit = fallIfPossible(world)
-
-  override def onTileDestroyed(world: World, causer: Entity): Unit = {
-  }
-
-  override def onTilePlaced(world: World, causer: Entity): Unit = {
-  }
+  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = fallIfPossible
 
   def getFallSpeed(world: World): Float
 

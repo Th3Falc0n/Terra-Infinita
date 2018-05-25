@@ -8,5 +8,5 @@ import com.dafttech.terra.resources.Resources
 class TileStone() extends Tile {
   override def getImage: TextureRegion = Resources.TILES.getImage("stone")
 
-  override def getRenderer = new TileRendererMultiblock(new Vector2i(2, 2))
+  override def getRenderer = new TileRendererMultiblock(Vector2i(2, 2))
 }

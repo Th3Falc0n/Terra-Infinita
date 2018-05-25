@@ -14,7 +14,7 @@ object ElementBar {
   private var ciBuffer: FrameBuffer = new FrameBuffer(Format.RGBA8888, 128, 16, false)
 }
 
-class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement(p, new Vector2(128, 16)) {
+class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement(p, Vector2(128, 16)) {
   private[elements] var bufferMatrix: Matrix4 = new Matrix4().setToOrtho(0, 128, 16, 0, 0, 1)
   var imageMask: TextureRegion = _
   var value: Float = .0f

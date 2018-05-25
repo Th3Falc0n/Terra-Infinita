@@ -19,7 +19,7 @@ import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.game.world.tiles._
 import com.dafttech.terra.resources.{Options, Resources}
 
-class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, new Vector2(1.9f, 3.8f)) {
+class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, Vector2(1.9f, 3.8f)) {
   Events.EVENTMANAGER.registerEventListener(this)
 
   val inventory = new Inventory()

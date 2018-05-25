@@ -18,13 +18,13 @@ class ModuleChat extends GUIModule with IStringInputHandler {
 
   def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(Vector2.Null, new Vector2(400, 280))
+    container = new ContainerBlock(Vector2.Null, Vector2(400, 280))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorLeft(0.01f))
     set.addAnchor(new AnchorBottom(0.01f))
     container.assignAnchorSet(set)
-    inputLabel = new ElementInputLabel(new Vector2(10, 250), this)
-    messageList = new ContainerList(new Vector2(10, 10), new Vector2(380, 230))
+    inputLabel = new ElementInputLabel(Vector2(10, 250), this)
+    messageList = new ContainerList(Vector2(10, 10), Vector2(380, 230))
     container.addObject(messageList)
     container.addObject(inputLabel)
   }

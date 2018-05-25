@@ -21,7 +21,7 @@ abstract class Item extends GameObject with IDrawableInventory {
 
   def getEmittedLight: PointLight = null
 
-  def spawnAsEntity(position: Vector2, world: World) = new EntityItem(position, world, new Vector2(0.5f, 0.5f), this)
+  def spawnAsEntity(position: Vector2, world: World) = new EntityItem(position, world, Vector2(0.5f, 0.5f), this)
 
   override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit =
     screen.batch.draw(
@@ -33,4 +33,8 @@ abstract class Item extends GameObject with IDrawableInventory {
     )
 
   def maxStackSize: Int = 99
+}
+
+abstract class ItemTile extends Item {
+  override def update(delta: Float): Unit = ()
 }
