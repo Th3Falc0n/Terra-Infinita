@@ -21,7 +21,7 @@ class EntityFlamingArrow(pos: Vector2, world: World) extends EntityArrow(pos, wo
   override def update(world: World, delta: Float): Unit = {
     super.update(world, delta)
 
-    light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
+    light.setPosition(getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
     light.setSize(90 + new Random().nextInt(10))
 
     for (_ <- 0 until 5)

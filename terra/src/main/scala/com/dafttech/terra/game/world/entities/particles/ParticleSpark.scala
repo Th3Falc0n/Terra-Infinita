@@ -26,7 +26,7 @@ class ParticleSpark(val pos: Vector2, val world: World) extends Particle(pos, wo
     setSize(new Vector2(particleSize * (lifetime / lifetimeMax), getSize.x))
 
     light.setSize(55 * 2 * (lifetime / lifetimeMax))
-    light.setPosition(getPosition.$plus(getSize.x * Options.BLOCK_SIZE / 2, getSize.y * Options.BLOCK_SIZE / 2))
+    light.setPosition(getPosition + (getSize.x * Options.BLOCK_SIZE / 2, getSize.y * Options.BLOCK_SIZE / 2))
   }
 
   override def isLightEmitter: Boolean = true

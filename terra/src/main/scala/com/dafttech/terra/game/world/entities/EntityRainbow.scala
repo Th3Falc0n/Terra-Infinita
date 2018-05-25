@@ -25,7 +25,7 @@ class EntityRainbow(pos: Vector2, world: World) extends EntityThrown(pos, world,
     super.update(world, delta)
 
     light.setSize(90 + new Random().nextInt(10))
-    light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
+    light.setPosition(getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
 
     if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1) worldObj.removeEntity(this)
   }

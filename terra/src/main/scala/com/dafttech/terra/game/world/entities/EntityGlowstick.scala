@@ -27,7 +27,7 @@ class EntityGlowstick(pos: Vector2, world: World) extends Entity(pos, world, new
     gsRotation += velocity.x * delta * 50
 
     light.setSize(90 + new Random().nextInt(10))
-    light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
+    light.setPosition(getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
 
     setRotation((velocity.rotation + Math.PI / 2 + gsRotation).toFloat)
   }

@@ -16,7 +16,7 @@ class EntityDynamite(pos: Vector2, world: World, var explodeTimer: Float, var ra
     explodeTimer -= delta
     if (explodeTimer <= 0) {
       worldObj.removeEntity(this)
-      new ParticleExplosion(getPosition.$plus(Options.BLOCK_SIZE * 0.75f, Options.BLOCK_SIZE * 0.75f), worldObj, radius)
+      new ParticleExplosion(getPosition + (Options.BLOCK_SIZE * 0.75f, Options.BLOCK_SIZE * 0.75f), worldObj, radius)
       val destroyPos = getPosition.toWorldPosition
 
       for {
