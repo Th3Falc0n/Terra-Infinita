@@ -98,7 +98,7 @@ abstract class Tile extends Item with IDrawableInWorld {
   }
 
   override def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
-    getRenderer.draw2(pos, world, screen, this, pointOfView)
+    getRenderer.draw(pos, world, screen, this, pointOfView)
 
     for (subtile <- subtiles) subtile.draw(pos, world, screen, pointOfView)
   }
