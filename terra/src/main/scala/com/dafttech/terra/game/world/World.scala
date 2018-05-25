@@ -171,7 +171,7 @@ class World {
     entity.remove
   }
 
-  def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+  def update(delta: Float): Unit = {
     time += delta
     weather.update(delta)(this)
     val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
@@ -182,7 +182,7 @@ class World {
       y <- (localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy) until (localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy)
     } {
       tile = getTile(Vector2i(x, y))
-      if (tile != null) tile.update(delta)
+      if (tile != null) tile.update(delta)(TilePosition(this, Vector2i(x, y)))
     }
 
     /*var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
@@ -210,7 +210,7 @@ class World {
     TimeKeeping.timeKeeping("Tile update")
     for (chunk <- localChunks.get.values) {
       for (entity <- chunk.getLocalEntities) {
-        entity.update(delta)
+        entity.update(delta)(TilePosition(this, entity.getPosition.toWorldPosition))
       }
     }
     TimeKeeping.timeKeeping("Entity update")

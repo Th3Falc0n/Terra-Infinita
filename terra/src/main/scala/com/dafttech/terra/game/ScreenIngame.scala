@@ -80,7 +80,7 @@ class ScreenIngame extends AbstractScreen {
 
   override def render(delta: Float): Unit = {
     super.render(delta)
-    localWorld.update(delta)(null)
+    localWorld.update(delta)
     TimeKeeping.timeKeeping("screen after update")
     update(delta)
     TimeKeeping.timeKeeping("Screen update")
