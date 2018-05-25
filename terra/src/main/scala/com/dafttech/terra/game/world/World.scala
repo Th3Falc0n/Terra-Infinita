@@ -226,8 +226,8 @@ class World {
     RenderingPass.rpObjects.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpObj")
 
-    /*RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
-    TimeKeeping.timeKeeping("rpLig")*/
+    RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
+    TimeKeeping.timeKeeping("rpLig")
 
   }
 }
