@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
 
-class TileTorch() extends TileFalling {
+class TileTorch(implicit val world: World) extends TileFalling {
   private[tiles] var light = new PointLight(95)
 
   override def getImage: TextureRegion = Resources.TILES.getImage("torch")
@@ -20,7 +20,7 @@ class TileTorch() extends TileFalling {
 
     for (_ <- 0 until 5)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0), tilePosition.world).addVelocity(Vector2(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0)).addVelocity(Vector2(0, -1))
   }
 
   override def isCollidableWith(entity: Entity): Boolean = false

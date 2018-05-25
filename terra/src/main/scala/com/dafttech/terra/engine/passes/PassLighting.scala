@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.graphics.glutils.{FloatFrameBuffer, FrameBuffer}
 import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Rectangle
+import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
@@ -16,12 +18,12 @@ class PassLighting extends RenderingPass {
   private[passes] var buffer: FrameBuffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
   var sunlevel: Int = BLOCK_SIZE
 
-  def getSunlightRect(t: Tile, pointOfView: Entity): Rectangle = {
-    val v: Vector2 = t.getPosition.toScreenPos(pointOfView)
-    if (t.sunlightFilter == null)
+  def getSunlightRect(t: TilePosition, pointOfView: Entity): Rectangle = {
+    val v: Vector2 = t.pos.toScreenPos(pointOfView)
+    if (t.tile.sunlightFilter == null)
       Vector2(v.x - sunlevel, 0) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y + sunlevel)
     else {
-      val f: Vector2 = t.sunlightFilter.getPosition.toScreenPos(pointOfView)
+      val f: Vector2 = t.tile.sunlightFilter.pos.toScreenPos(pointOfView)
       Vector2(v.x - sunlevel, f.y) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel)
     }
   }
@@ -48,20 +50,20 @@ class PassLighting extends RenderingPass {
     while (x < pointOfView.getPosition.x.toInt / BLOCK_SIZE + sx) {
       var y: Int = pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy
       while (y < pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy) {
-        if (world.getTile(x, y) != null) {
-          if (world.getTile(x, y).receivesSunlight) {
-            nextClr = world.getTile(x, y).getSunlightColor
+        if (world.getTile(Vector2i(x, y)) != null) {
+          if (world.getTile(Vector2i(x, y)).receivesSunlight) {
+            nextClr = world.getTile(Vector2i(x, y)).getSunlightColor
             if (nextClr ne activeClr) {
               activeClr = nextClr
               screen.shr.end()
               screen.shr.setColor(nextClr)
               screen.shr.begin(ShapeType.Filled)
             }
-            val rect: Rectangle = getSunlightRect(world.getTile(x, y), pointOfView)
+            val rect: Rectangle = getSunlightRect(TilePosition(world, Vector2i(x, y)), pointOfView)
             screen.shr.rect(rect.x, rect.y, rect.width, rect.height)
           }
-          if (world.getTile(x, y).isLightEmitter && world.getTile(x, y).getEmittedLight != null) {
-            world.getTile(x, y).getEmittedLight.drawToLightmap(screen, pointOfView)
+          if (world.getTile(Vector2i(x, y)).isLightEmitter && world.getTile(Vector2i(x, y)).getEmittedLight != null) {
+            world.getTile(Vector2i(x, y)).getEmittedLight.drawToLightmap(screen, pointOfView, Vector2i(x, y).toEntityPos)
           }
         }
         y += 1
@@ -75,7 +77,7 @@ class PassLighting extends RenderingPass {
     for (chunk <- world.getChunks.values) {
       for (entity <- chunk.getLocalEntities) {
         if (entity.isLightEmitter && entity.getEmittedLight != null && world.isInRenderRange(entity.getPosition)) {
-          entity.getEmittedLight.drawToLightmap(screen, pointOfView)
+          entity.getEmittedLight.drawToLightmap(screen, pointOfView, entity.getPosition)
         }
       }
     }

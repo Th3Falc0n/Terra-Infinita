@@ -46,7 +46,7 @@ class ScreenPauseMenu extends AbstractScreen {
 
   override def render(delta: Float): Unit = {
     super.render(delta)
-    localWorld.draw(null, null, this, localWorld.localPlayer)
+    localWorld.draw(this, localWorld.localPlayer)
     guiContainerScreen.update(delta)
     RenderingPass.rpGUIContainer.applyPass(this, null, null, guiContainerScreen)
   }

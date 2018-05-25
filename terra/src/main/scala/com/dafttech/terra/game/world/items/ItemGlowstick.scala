@@ -9,7 +9,7 @@ import com.dafttech.terra.resources.Resources
 
 class ItemGlowstick extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2): Boolean = {
-    val a = new EntityGlowstick(causer.getPosition, causer.worldObj)
+    val a = new EntityGlowstick(causer.getPosition)(causer.world)
     a.setVelocity((Vector2.mousePos - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.08)
     true
   }

@@ -16,12 +16,14 @@ import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.game.world.{Chunk, Facing, World}
 import com.dafttech.terra.resources.Options
 
-abstract class Entity protected(implicit worldObj: World) extends GameObject with IDrawableInWorld {
+abstract class Entity(pos: Vector2, s: Vector2)(implicit val world: World) extends GameObject with IDrawableInWorld {
+  addToWorld(world, pos)
+
   private[entities] var chunk: Chunk = _
-  @Persistent protected var position: Vector2 = Vector2.Null
+  @Persistent protected var position: Vector2 = pos
   @Persistent protected var velocity: Vector2 = Vector2.Null
   protected var accelleration: Vector2 = Vector2.Null
-  @Persistent protected var size: Vector2 = Vector2.Null
+  @Persistent protected var size: Vector2 = s
   @Persistent protected var rotation: Double = 0
 
   protected var color: Color = Color.WHITE
@@ -29,13 +31,6 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
   protected var inAir = false
   protected var inWorld = true
   @Persistent protected var isDynamicEntity: Boolean = false
-
-  def this(pos: Vector2, s: Vector2)(implicit worldObj: World) {
-    this()
-    addToWorld(worldObj, pos)
-    setPosition(pos)
-    size = s
-  }
 
   def setMidPos(pos: Vector2): Unit = setPosition(pos + (-size.x * Options.BLOCK_SIZE / 2f, -size.y * Options.BLOCK_SIZE / 2f))
 
@@ -50,7 +45,7 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
   def getPosition: Vector2 = position
 
   def setPosition(pos: Vector2): Entity = {
-    val newChunk = worldObj.getOrCreateChunk(pos)
+    val newChunk = world.getOrCreateChunk(pos)
     if (newChunk != null && (chunk ne newChunk)) {
       addToWorld(newChunk, pos)
       onRechunk(newChunk, pos)
@@ -77,7 +72,7 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
     if (chunk.addEntity(this)) this.chunk = chunk
   }
 
-  def getWorld: World = worldObj
+  def getWorld: World = world
 
   def isInAir: Boolean = inAir
 
@@ -126,7 +121,7 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
       if (world.getTile(Vector2i(x, y)) != null && world.getTile(Vector2i(x, y)).isCollidableWith(this)) {
         val tileRect = new Rectangle(x * Options.BLOCK_SIZE, y * Options.BLOCK_SIZE, Options.BLOCK_SIZE, Options.BLOCK_SIZE)
         val playerRect = Vector2(getPosition.x, getPosition.y).rectangleTo(Vector2(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
-        if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(new TilePosition(worldObj, Vector2i(x, y)))
+        if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(new TilePosition(world, Vector2i(x, y)))
       }
     }
   }
@@ -240,7 +235,7 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
 
         if (!inWorld) return
 
-        checkTerrainCollisions(worldObj.localPlayer.getWorld)
+        checkTerrainCollisions(world.localPlayer.getWorld)
         if (hasEntityCollision) checkEntityCollisions()
       }
     }
@@ -256,7 +251,7 @@ abstract class Entity protected(implicit worldObj: World) extends GameObject wit
 
   def getUndergroundTile: Tile = {
     val pos = (position + (size.x * Options.BLOCK_SIZE, size.y * Options.BLOCK_SIZE)).toWorldPosition
-    worldObj.getTile(Vector2i(pos.x, pos.y + 1))
+    world.getTile(Vector2i(pos.x, pos.y + 1))
   }
 
   def getCurrentFriction: Double = {

@@ -1,5 +1,6 @@
 package com.dafttech.terra.engine.renderer
 
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
@@ -9,7 +10,7 @@ import com.dafttech.terra.game.world.tiles.Tile
 abstract class TileRenderer {
   protected var offset: Vector2 = Vector2.Null
 
-  def draw(pos: Vector2i, world: World, screen: AbstractScreen, render: Tile, pointOfView: Entity, rendererArguments: AnyRef*)
+  def draw(screen: AbstractScreen, render: Tile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition)
 
   def setOffset(offset: Vector2): Unit = this.offset = offset
 

@@ -8,7 +8,7 @@ import com.dafttech.terra.resources.Resources
 
 class ItemDynamite extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2): Boolean = {
-    new EntityDynamite(causer.getPosition, causer.worldObj, 3, 4)
+    new EntityDynamite(causer.getPosition, 3, 4)(causer.world)
     true
   }
 

@@ -1,6 +1,7 @@
 package com.dafttech.terra.game.world.items
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInventory, Vector2}
 import com.dafttech.terra.game.world.World
@@ -21,7 +22,7 @@ abstract class Item extends GameObject with IDrawableInventory {
 
   def getEmittedLight: PointLight = null
 
-  def spawnAsEntity(position: Vector2, world: World) = new EntityItem(position, world, Vector2(0.5f, 0.5f), this)
+  def spawnAsEntity(tilePosition: TilePosition) = new EntityItem(tilePosition.pos.toEntityPos, Vector2(0.5f, 0.5f), this)(tilePosition.world)
 
   override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit =
     screen.batch.draw(
@@ -36,5 +37,5 @@ abstract class Item extends GameObject with IDrawableInventory {
 }
 
 abstract class ItemTile extends Item {
-  override def update(delta: Float): Unit = ()
+  final override def update(delta: Float): Unit = ()
 }

@@ -9,7 +9,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
 
-class SubtileGlowGoo() extends SubtileFluid {
+class SubtileGlowGoo extends SubtileFluid {
   private[subtiles] var img: Float = 0
   private[subtiles] var light = new PointLight(95)
 
@@ -25,7 +25,7 @@ class SubtileGlowGoo() extends SubtileFluid {
 
     for (_ <- 0 until pressure.toInt)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5f)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0), tilePosition.world).addVelocity(Vector2(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2(0, -1))
   }
 
   override def getImage: TextureRegion = Resources.TILES.getImage("glowgoo", img.toInt)

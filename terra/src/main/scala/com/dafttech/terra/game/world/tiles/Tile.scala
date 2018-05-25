@@ -18,7 +18,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   private var hardness: Float = 1
 
   var receivesSunlight: Boolean = false
-  var sunlightFilter: Tile = _
+  var sunlightFilter: TilePosition = _
 
   override def use(causer: EntityLiving, position: Vector2): Boolean =
     if (causer.getPosition.$minus(position).length < 100) {
@@ -45,10 +45,10 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   def getDroppedItem: Item = this
 
-  def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
+  override def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
     val dropped = getDroppedItem
     if (dropped == null) null
-    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), tilePosition.world, Vector2(0.5, 0.5), dropped)
+    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2(0.5, 0.5), dropped)(tilePosition.world)
   }
 
   def getRenderer: TileRenderer = TileRendererBlock.$Instance
@@ -84,7 +84,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     ).orNull
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
-    getRenderer.draw(tilePosition.pos, tilePosition.world, screen, this, pointOfView)
+    getRenderer.draw(screen, this, pointOfView)
 
     for (subtile <- subtiles) subtile.draw(screen, pointOfView)
   }
@@ -106,7 +106,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   def onTilePlaced(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
-    subtiles.foreach(_.update(delta)) // TODO Why no world???
+    subtiles.foreach(_.update(delta))
 
     if (breakingProgress > 0) breakingProgress -= delta
   }
@@ -120,9 +120,9 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     receivesSunlight = is
     if (!is) this.sunlightFilter = null
     if (!isOpaque)
-      tilePosition.world.getNextTileBelow(tilePosition.pos).filter(_ != this).foreach {b =>
-        b.setReceivesSunlight(is) //FIXME: Implicit tilePosition is invalid, because it is not the position of the tile below
-        b.sunlightFilter = if (is) this else null
+      tilePosition.world.getNextTileBelow(tilePosition.pos).filter(_.tile != this).foreach {b =>
+        b.tile.setReceivesSunlight(is)
+        b.tile.sunlightFilter = if (is) tilePosition else null
       }
   }
 
@@ -131,9 +131,9 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   final def getSunlightColor: Color =
     if (sunlightFilter == null) Color.WHITE
     else {
-      var sunlightColor = sunlightFilter.getSunlightColor.cpy.mul(sunlightFilter.getFilterColor)
+      var sunlightColor = sunlightFilter.tile.getSunlightColor.cpy.mul(sunlightFilter.tile.getFilterColor)
 
-      for (subtile <- sunlightFilter.subtiles)
+      for (subtile <- sunlightFilter.tile.subtiles)
         if (subtile.providesSunlightFilter) sunlightColor = sunlightColor.cpy.mul(subtile.getFilterColor)
 
       sunlightColor

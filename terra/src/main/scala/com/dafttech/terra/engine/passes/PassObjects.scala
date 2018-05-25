@@ -24,7 +24,7 @@ class PassObjects extends RenderingPass {
       x <- (pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx) until (pointOfView.getPosition.x.toInt / BLOCK_SIZE + sx)
       y <- (pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy) until (pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy)
     } {
-      tile = world.getTile(x, y)
+      tile = world.getTile(Vector2i(x, y))
       if (tile != null) tile.draw(screen, pointOfView)(new TilePosition(world, Vector2i(x, y)))
     }
 
@@ -43,7 +43,7 @@ class PassObjects extends RenderingPass {
       chunk <- world.getChunks.values
       entity <- chunk.getLocalEntities
     } {
-      entity.draw(entity.getPosition, world, screen, pointOfView)
+      entity.draw(screen, pointOfView)(TilePosition(world, entity.getPosition.toWorldPosition))
     }
     screen.batch.end()
   }

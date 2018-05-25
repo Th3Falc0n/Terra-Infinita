@@ -17,8 +17,8 @@ class PointLight extends Light {
 
   def setSize(size: Double): Unit = this.size = size
 
-  def drawToLightmap(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition) {
-    val p: Vector2 = tilePosition.pos.toEntityPos.toRenderPosition(pointOfView.getPosition)
+  def drawToLightmap(screen: AbstractScreen, pointOfView: Entity, pos: Vector2) {
+    val p: Vector2 = pos.toRenderPosition(pointOfView.getPosition)
     if (!(screen.batch.getColor == color)) {
       screen.batch.end()
       screen.batch.setColor(color)

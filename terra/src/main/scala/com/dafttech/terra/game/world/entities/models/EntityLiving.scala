@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
-abstract class EntityLiving(pos: Vector2, world: World, s: Vector2) extends Entity(pos, world, s) {
+abstract class EntityLiving(pos: Vector2, s: Vector2)(implicit world: World) extends Entity(pos, s) {
   private var maxHealth: Float = 10
   private var health: Float = maxHealth
 

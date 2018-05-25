@@ -1,11 +1,12 @@
 package com.dafttech.terra.game.world.entities.models
 
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
-abstract class EntityThrown(pos: Vector2, world: World, size: Vector2) extends Entity(pos, world, size) {
-  override def update(world: World, delta: Float): Unit = super.update(world, delta)
+abstract class EntityThrown(pos: Vector2, size: Vector2)(implicit world: World) extends Entity(pos, size) {
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = super.update(delta)
 
   override def alignToVelocity: Boolean = true
 

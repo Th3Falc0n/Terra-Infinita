@@ -6,7 +6,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
-abstract class Particle(pos: Vector2, world: World, life: Double, s: Vector2) extends Entity(pos, world, s) {
+abstract class Particle(pos: Vector2, life: Double, s: Vector2)(implicit world: World) extends Entity(pos, s) {
   val lifetimeMax: Double = life
   var lifetime: Double = lifetimeMax
 

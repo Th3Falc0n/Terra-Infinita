@@ -37,7 +37,7 @@ class BiomeDesert(name: String) extends Biome(name) {
             tile
           }
 
-        gen.world.setTile(x, y, tile, notify = false)
+        gen.world.setTile(Vector2i(x, y), tile, notify = false)
       }
     }
   }

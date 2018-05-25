@@ -7,7 +7,7 @@ import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.game.world.{Facing, World}
 import com.dafttech.terra.resources.Resources
 
-class SubtileWater() extends SubtileFluid {
+class SubtileWater extends SubtileFluid {
   private[subtiles] var img: Float = 0
   private[subtiles] var wavephase = false
 

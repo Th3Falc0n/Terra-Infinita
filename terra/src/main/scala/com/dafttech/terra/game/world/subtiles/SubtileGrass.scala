@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.tiles.TileDirt
 import com.dafttech.terra.resources.Resources
 
-class SubtileGrass() extends Subtile {
+class SubtileGrass extends Subtile {
   override def getImage: TextureRegion = Resources.TILES.getImage("mask_grass")
 
   private val spreadDistance: Int = 3

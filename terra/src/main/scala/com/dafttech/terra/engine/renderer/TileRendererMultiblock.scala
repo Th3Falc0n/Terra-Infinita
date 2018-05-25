@@ -1,6 +1,7 @@
 package com.dafttech.terra.engine.renderer
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.{AbstractScreen, Vector2, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
@@ -23,15 +24,15 @@ class TileRendererMultiblock extends TileRendererBlock {
     this.multiblockSize = multiblockSize
   }
 
-  override def draw(pos: Vector2, world: World, screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*): Unit = {
-    val screenVec: Vector2 = tile.getPosition.toScreenPos(pointOfView)
+  override def draw(screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition): Unit = {
+    val screenVec: Vector2 = tp.pos.toScreenPos(pointOfView)
     val texture: TextureRegion = tile.getImage
     val cols: Int = multiblockSize.x
     val rows: Int = multiblockSize.y
-    var col: Int = Math.abs(pos.x).toInt % cols
-    var row: Int = Math.abs(pos.y).toInt % rows
-    if (pos.x < 0) col = ((cols - 1) - col + (cols - 1)) % cols
-    if (pos.y < 0) row = ((rows - 1) - row + (rows - 1)) % rows
+    var col: Int = Math.abs(tp.pos.x).toInt % cols
+    var row: Int = Math.abs(tp.pos.y).toInt % rows
+    if (tp.pos.x < 0) col = ((cols - 1) - col + (cols - 1)) % cols
+    if (tp.pos.y < 0) row = ((rows - 1) - row + (rows - 1)) % rows
     val newTexture: TextureRegion = new TextureRegion(texture)
     val width: Double = newTexture.getRegionWidth / cols.toDouble
     val height: Double = newTexture.getRegionHeight / rows.toDouble

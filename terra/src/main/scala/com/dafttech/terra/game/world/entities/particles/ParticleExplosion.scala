@@ -10,7 +10,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
 
-class ParticleExplosion(pos: Vector2, world: World, var radius: Int) extends Particle(pos, world, 0.3f, Vector2(radius * 2, radius * 2)) {
+class ParticleExplosion(pos: Vector2, var radius: Int)(implicit world: World) extends Particle(pos, 0.3f, Vector2(radius * 2, radius * 2)) {
   private val midpos: Vector2 = pos
 
   private val light: PointLight = new PointLight(60)
@@ -28,7 +28,7 @@ class ParticleExplosion(pos: Vector2, world: World, var radius: Int) extends Par
     val rnd = new Random
     val blockSRad = radius * Options.BLOCK_SIZE * 3
 
-    new ParticleSpark(midpos - (blockSRad, blockSRad) + (rnd.nextFloat * blockSRad * 2, rnd.nextFloat * blockSRad * 2), worldObj)
+    new ParticleSpark(midpos - (blockSRad, blockSRad) + (rnd.nextFloat * blockSRad * 2, rnd.nextFloat * blockSRad * 2))
 
     setSize(getSize + (delta * 30, delta * 30))
     setMidPos(midpos)

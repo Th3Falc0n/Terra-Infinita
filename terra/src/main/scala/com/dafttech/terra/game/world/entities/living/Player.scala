@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
+import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.engine.lighting.PointLight
@@ -19,7 +21,7 @@ import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.game.world.tiles._
 import com.dafttech.terra.resources.{Options, Resources}
 
-class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, Vector2(1.9f, 3.8f)) {
+class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vector2(1.9f, 3.8f)) {
   Events.EVENTMANAGER.registerEventListener(this)
 
   val inventory = new Inventory()
@@ -49,25 +51,25 @@ class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, Vector
 
   private[living] val light: PointLight = null
 
-  override def update(world: World, delta: Float): Unit = {
-    super.update(world, delta)
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.update(delta)
     if (InputHandler.isKeyDown("LEFT")) walkLeft()
     if (InputHandler.isKeyDown("RIGHT")) walkRight()
     if (InputHandler.isKeyDown("JUMP") && !this.isInAir) jump()
 
     if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
       val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
-      if (!hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, true) && System.currentTimeMillis - left > 10) {
+      if (!hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = true) && System.currentTimeMillis - left > 10) {
         left = System.currentTimeMillis
         val destroy = (Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
-        val damagedTile = getWorld.getTile(destroy.x, destroy.y)
-        if (damagedTile != null) damagedTile.damage(world, 0.2f, this)
+        val damagedTile = getWorld.getTile(Vector2i(destroy.x, destroy.y))
+        if (damagedTile != null) damagedTile.damage(0.2f, this)
       }
     }
 
     if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
       val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
-      hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, false)
+      hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = false)
     }
 
     if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) right = false
@@ -78,7 +80,6 @@ class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, Vector
           new ParticleDust(
             getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE) +
               ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
-            worldObj,
             getUndergroundTile.getImage
           )
 
@@ -90,7 +91,7 @@ class Player(pos: Vector2, world: World) extends EntityLiving(pos, world, Vector
 
   def getInventory: Inventory = inventory
 
-  override def draw(pos: Vector2, world: World, screen: AbstractScreen, pointOfView: Entity): Unit = {
+  override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
     screen.batch.draw(this.getImage, screenVec.xFloat, screenVec.yFloat, Options.BLOCK_SIZE * size.xFloat, Options.BLOCK_SIZE * size.yFloat)

@@ -8,7 +8,7 @@ import com.dafttech.terra.engine.renderer.{SubtileRenderer, SubtileRendererFluid
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.game.world.{Facing, World}
 
-abstract class SubtileFluid() extends Subtile {
+abstract class SubtileFluid extends Subtile {
   var maxPressure: Float = 10
   var pressure: Float = maxPressure
 

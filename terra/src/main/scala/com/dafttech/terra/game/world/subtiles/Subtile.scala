@@ -11,7 +11,7 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.ItemTile
 import com.dafttech.terra.game.world.tiles.Tile
 
-abstract class Subtile() extends ItemTile with IDrawableInWorld {
+abstract class Subtile extends ItemTile with IDrawableInWorld {
   override def use(causer: EntityLiving, position: Vector2): Boolean = false
 
   def getRenderer: SubtileRenderer = SubtileRendererMask.$Instance
@@ -19,7 +19,7 @@ abstract class Subtile() extends ItemTile with IDrawableInWorld {
   def canBePlacedOn(tile: Tile) = true
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit =
-    getRenderer.draw2(screen, this, pointOfView)
+    getRenderer.draw(screen, this, pointOfView)
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = ()
 

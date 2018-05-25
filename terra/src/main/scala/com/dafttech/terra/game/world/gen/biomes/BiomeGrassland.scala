@@ -40,7 +40,7 @@ class BiomeGrassland(name: String) extends Biome(name) {
             }
           }
 
-        gen.world.setTile(x, y, tile, notify = false)
+        gen.world.setTile(Vector2i(x, y), tile, notify = false)
       }
     }
   }

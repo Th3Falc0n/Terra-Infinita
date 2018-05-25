@@ -1,5 +1,6 @@
 package com.dafttech.terra.engine.renderer
 
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
@@ -10,13 +11,13 @@ object SubtileRendererMask {
 }
 
 class SubtileRendererMask extends SubtileRenderer {
-  def draw(screen: AbstractScreen, render: Subtile, pointOfView: Entity, rendererArguments: AnyRef*) {
-    val screenVec: Vector2 = render.getTile.getPosition.toScreenPos(pointOfView)
+  def draw(screen: AbstractScreen, render: Subtile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition) {
+    val screenVec: Vector2 = tp.pos.toScreenPos(pointOfView)
     val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
-    if (!render.isTileIndependent && render.getTile != null) {
-      val offset: Vector2 = render.getTile.getRenderer.getOffset
+    if (!render.isTileIndependent && tp.tile != null) {
+      val offset: Vector2 = tp.tile.getRenderer.getOffset
       if (offset != null) {
         offX = offset.x.toFloat * BLOCK_SIZE
         offY = offset.y.toFloat * BLOCK_SIZE

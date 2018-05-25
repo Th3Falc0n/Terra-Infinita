@@ -4,14 +4,16 @@ import java.util.Random
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.{Options, Resources}
 
-class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, world, Vector2(4f, 2f)) {
+class EntityDiggerBeam(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(4f, 2f)) {
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(0, 1, 0.3f, 1))
 
@@ -20,20 +22,19 @@ class EntityDiggerBeam(pos: Vector2, world: World) extends EntityThrown(pos, wor
 
   override def getImage: TextureRegion = Resources.ENTITIES.getImage("beamDig")
 
-  override def update(world: World, delta: Float): Unit = {
-    super.update(world, delta)
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.update(delta)
 
     light.setSize(90 + new Random().nextInt(10))
-    light.setPosition(getPosition.$plus(size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE / 2))
 
     if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1)
-      worldObj.removeEntity(this)
+      world.removeEntity(this)
   }
 
   override def collidesWith(e: Entity): Boolean = false
 
-  override def onTerrainCollision(tile: Tile): Unit = if (!tile.isAir) {
-    worldObj.destroyTile(tile.getPosition.x, tile.getPosition.y, this)
+  override def onTerrainCollision(t: TilePosition): Unit = if (!t.tile.isAir) {
+    world.destroyTile(Vector2i(t.pos.x, t.pos.y), this)
       .foreach(_.addVelocity(velocity.$times(-1)))
     this.remove
   }

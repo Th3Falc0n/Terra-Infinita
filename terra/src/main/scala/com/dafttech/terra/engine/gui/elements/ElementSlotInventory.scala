@@ -15,9 +15,9 @@ class ElementSlotInventory(p: Vector2, val assignedInventory: Inventory) extends
   var active: Boolean = false
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
-    if (assignedStack != null && assignedStack.size > 0 && causer.worldObj.time > cooldownTime)
+    if (assignedStack != null && assignedStack.size > 0 && causer.world.time > cooldownTime)
       if (!leftClick && assignedStack.use(causer, pos).size < assignedStack.size) {
-        setCooldownTime(causer.worldObj, assignedStack.prototype.toGameObject.asInstanceOf[Item].getNextUseDelay(causer, pos, leftClick).toFloat)
+        setCooldownTime(causer.world, assignedStack.prototype.toGameObject.asInstanceOf[Item].getNextUseDelay(causer, pos, leftClick).toFloat)
         return true
       }
     false

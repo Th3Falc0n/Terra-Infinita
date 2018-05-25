@@ -2,11 +2,11 @@ package com.dafttech.terra.game.world.entities.particles
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
+import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 
-class ParticleDust(pos: Vector2, world: World, assignedTexture: TextureRegion) extends
-  Particle(pos, world, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2.Null) {
+class ParticleDust(pos: Vector2, assignedTexture: TextureRegion)(implicit world: World) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2.Null) {
 
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2f + 0.25f
 
@@ -16,8 +16,8 @@ class ParticleDust(pos: Vector2, world: World, assignedTexture: TextureRegion) e
 
   override def getImage: TextureRegion = assignedTexture
 
-  override def update(world: World, delta: Float): Unit = {
-    super.update(world, delta)
+  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.update(delta)
     setSize(Vector2(particleSize * (1 - (lifetime / lifetimeMax)), getSize.x))
   }
 
