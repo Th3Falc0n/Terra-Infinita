@@ -120,9 +120,9 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     receivesSunlight = is
     if (!is) this.sunlightFilter = null
     if (!isOpaque)
-      tilePosition.world.getNextTileBelow(tilePosition.pos).filter(_.tile != this).foreach {b =>
-        b.tile.setReceivesSunlight(is)
-        b.tile.sunlightFilter = if (is) tilePosition else null
+      tilePosition.world.getNextTileBelow(tilePosition.pos).filter(_.getTile != this).foreach { b =>
+        b.getTile.setReceivesSunlight(is)
+        b.getTile.sunlightFilter = if (is) tilePosition else null
       }
   }
 
@@ -131,9 +131,9 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   final def getSunlightColor: Color =
     if (sunlightFilter == null) Color.WHITE
     else {
-      var sunlightColor = sunlightFilter.tile.getSunlightColor.cpy.mul(sunlightFilter.tile.getFilterColor)
+      var sunlightColor = sunlightFilter.getTile.getSunlightColor.cpy.mul(sunlightFilter.getTile.getFilterColor)
 
-      for (subtile <- sunlightFilter.tile.subtiles)
+      for (subtile <- sunlightFilter.getTile.subtiles)
         if (subtile.providesSunlightFilter) sunlightColor = sunlightColor.cpy.mul(subtile.getFilterColor)
 
       sunlightColor

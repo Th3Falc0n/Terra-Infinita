@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.tiles.TileTorch
 
 class EntityTorchArrow(pos: Vector2)(implicit world: World) extends EntityFlamingArrow(pos) {
   override def placeBlockOnHit(tilePosition: TilePosition): Unit = {
-    val spreadTile = tilePosition.tile
+    val spreadTile = tilePosition.getTile
     if (spreadTile.isReplacable) world.setTile(tilePosition.pos, new TileTorch, notify = true)
   }
 }

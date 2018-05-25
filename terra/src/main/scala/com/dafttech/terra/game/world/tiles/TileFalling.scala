@@ -26,7 +26,7 @@ abstract class TileFalling extends Tile {
 
   def fall(x: Int, y: Int)(implicit tilePosition: TilePosition): Unit = {
     renderOffset = renderOffset - (x, y)
-    tilePosition.world.setTile(tilePosition.pos + (x, y), this, notify = true)
+    tilePosition.moveTile(tilePosition.pos + (x, y))
   }
 
   def fallIfPossible(implicit tilePosition: TilePosition): Unit =

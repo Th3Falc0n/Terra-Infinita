@@ -20,10 +20,10 @@ class PassLighting extends RenderingPass {
 
   def getSunlightRect(t: TilePosition, pointOfView: Entity): Rectangle = {
     val v: Vector2 = t.pos.toScreenPos(pointOfView)
-    if (t.tile.sunlightFilter == null)
+    if (t.getTile.sunlightFilter == null)
       Vector2(v.x - sunlevel, 0) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y + sunlevel)
     else {
-      val f: Vector2 = t.tile.sunlightFilter.pos.toScreenPos(pointOfView)
+      val f: Vector2 = t.getTile.sunlightFilter.pos.toScreenPos(pointOfView)
       Vector2(v.x - sunlevel, f.y) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel)
     }
   }

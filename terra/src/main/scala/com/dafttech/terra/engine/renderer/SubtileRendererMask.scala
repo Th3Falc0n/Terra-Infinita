@@ -16,8 +16,8 @@ class SubtileRendererMask extends SubtileRenderer {
     val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
-    if (!render.isTileIndependent && tp.tile != null) {
-      val offset: Vector2 = tp.tile.getRenderer.getOffset
+    if (!render.isTileIndependent && tp.getTile != null) {
+      val offset: Vector2 = tp.getTile.getRenderer.getOffset
       if (offset != null) {
         offX = offset.x.toFloat * BLOCK_SIZE
         offY = offset.y.toFloat * BLOCK_SIZE

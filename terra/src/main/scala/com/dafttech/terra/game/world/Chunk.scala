@@ -19,7 +19,7 @@ class Chunk(val world: World, val pos: Vector2i) {
     for {
       y <- map(0).indices
       x <- map.indices
-    } world.setTile(Vector2i(x, y).getBlockInWorldPos(this), new TileAir(), notify = false)
+    } world.setTile(Vector2i(x, y).getBlockInWorldPos(this), new TileAir, notify = false)
 
   @deprecated def update(delta: Float) {
     var tile: Tile = null

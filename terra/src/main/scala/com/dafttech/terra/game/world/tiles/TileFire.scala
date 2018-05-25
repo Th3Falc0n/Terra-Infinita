@@ -12,7 +12,7 @@ import com.dafttech.terra.resources.{Options, Resources}
 
 object TileFire {
   def createFire(tilePosition: TilePosition): Boolean = {
-    val spreadTile = tilePosition.tile
+    val spreadTile = tilePosition.getTile
 
     if (spreadTile.isFlammable || areSurroundingTilesFlammable(tilePosition)) {
       tilePosition.world.setTile(tilePosition.pos, new TileFire, notify = true)
