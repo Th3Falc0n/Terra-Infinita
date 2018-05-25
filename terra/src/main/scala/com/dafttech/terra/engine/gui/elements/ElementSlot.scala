@@ -53,8 +53,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
     val p: Vector2 = getScreenPosition
     screen.batch.begin()
     if (assignedStack != null) {
-      //FIXME prototype instantiation
-      //assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)
+      assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)
       Resources.GUI_FONT.setColor(if (active) Color.YELLOW else Color.WHITE)
       Resources.GUI_FONT.draw(screen.batch, "" + assignedStack.size, p.x.toFloat, 6 + p.y.toFloat)
     }
