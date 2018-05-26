@@ -9,7 +9,7 @@ import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import scala.concurrent.duration._
 
-object TileRendererMultiblock {
+/*object TileRendererMultiblock {
   def setRegion(texture: TextureRegion, x: Float, y: Float, width: Float, height: Float): Unit = {
     val invTexWidth: Float = 1.0F / texture.getTexture.getWidth
     val invTexHeight: Float = 1.0F / texture.getTexture.getHeight
@@ -42,6 +42,6 @@ class TileRendererMultiblock extends TileRendererBlock {
     val y: Double = height * row
     TileRendererMultiblock.setRegion(newTexture, x.toFloat, y.toFloat, width.toFloat, height.toFloat)
     newTexture.flip(texture.isFlipX, texture.isFlipY)
-    screen.batch.draw(newTexture, (screenVec.x + offset.x * BLOCK_SIZE).toFloat, (screenVec.y + offset.y * BLOCK_SIZE).toFloat, BLOCK_SIZE, BLOCK_SIZE)
+    //screen.batch.draw(newTexture, (screenVec.x + offset.x * BLOCK_SIZE).toFloat, (screenVec.y + offset.y * BLOCK_SIZE).toFloat, BLOCK_SIZE, BLOCK_SIZE)
   }
-}
+}*/

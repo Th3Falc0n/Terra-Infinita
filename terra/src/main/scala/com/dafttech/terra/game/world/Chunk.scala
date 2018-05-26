@@ -5,12 +5,13 @@ import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vec
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.gen.biomes.{Biome, BiomeDesert, BiomeGrassland}
+import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 import scala.util.Random
 
-class Chunk(val world: World, val pos: Vector2i) {
+class Chunk(val world: World, val pos: Vector2i) extends GameObject {
   val map: Array[Array[Tile]] = Array.ofDim[Tile](world.chunksize.x, world.chunksize.y)
   private var localEntities: Seq[Entity] = Seq.empty
   var stayLoaded: Boolean = false

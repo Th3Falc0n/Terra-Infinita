@@ -3,12 +3,18 @@ package com.dafttech.terra.game.world.items.persistence
 import java.lang.reflect.Field
 
 object GameObject {
+  private var currentUUID: Int = 0
+
   private def getAllDeclaredFields(targetClass: Class[_]): List[Field] =
     (targetClass.getDeclaredFields ++ Option(targetClass.getSuperclass).toList.flatMap(getAllDeclaredFields)).distinct.toList
 }
 
 // ****FOLLOWING PERSISTENCE CODE**** May harm your brain
 abstract class GameObject() {
+  val uuid: Int = { GameObject.currentUUID = GameObject.currentUUID + 1; GameObject.currentUUID }
+
+  override def hashCode(): Int = uuid
+
   lazy val annotatedFields: List[Field] = {
     val fields: List[Field] = GameObject.getAllDeclaredFields(this.getClass).toList
     fields.flatMap { field =>

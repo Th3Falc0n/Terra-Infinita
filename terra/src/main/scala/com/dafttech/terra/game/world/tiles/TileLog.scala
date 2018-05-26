@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2i
-import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMultiblock}
+import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
+import com.dafttech.terra.engine.renderer.TileRenderer
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
@@ -92,5 +93,5 @@ class TileLog() extends Tile {
   def isFlatTo(world: World, pos: Vector2i): Boolean =
     world.getTile(pos).isInstanceOf[TileLog] || world.getTile(pos).isOpaque
 
-  override def getRenderer: TileRenderer = new TileRendererMultiblock(Vector2i(4, 4))
+  override def getRenderer: TileRenderer = new TileRendererMarchingSquares
 }

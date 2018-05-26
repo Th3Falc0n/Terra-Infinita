@@ -1,8 +1,11 @@
 package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererBlock}
+import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMarchingSquares}
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityLiving
@@ -10,8 +13,13 @@ import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.ItemTile
 import com.dafttech.terra.game.world.subtiles.Subtile
+import com.dafttech.terra.resources.Options
+import com.dafttech.terra.resources.Resources
 
 abstract class Tile extends ItemTile with IDrawableInWorld {
+  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGB888)
+  var texture: Texture = null
+
   private var subtiles: List[Subtile] = List.empty
 
   private var breakingProgress: Float = 0
@@ -19,6 +27,13 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   var receivesSunlight: Boolean = false
   var sunlightFilter: TilePosition = _
+
+  /**
+    * Defines whether this tile graphically connects with another one.
+    * @param tile
+    * @return
+    */
+  def connectsTo(tile: Tile): Boolean = true
 
   override def use(causer: EntityLiving, position: Vector2): Boolean =
     if (causer.getPosition.$minus(position).length < 100) {
@@ -51,7 +66,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2(0.5, 0.5), dropped)(tilePosition.world)
   }
 
-  def getRenderer: TileRenderer = TileRendererBlock.$Instance
+  def getRenderer: TileRenderer = TileRendererMarchingSquares.$Instance
 
   def getWalkFriction: Float = 1
 
@@ -84,7 +99,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     ).orNull
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
-    getRenderer.draw(screen, this, pointOfView)
+    getRenderer.draw(screen, pointOfView)
 
     for (subtile <- subtiles) subtile.draw(screen, pointOfView)
   }
