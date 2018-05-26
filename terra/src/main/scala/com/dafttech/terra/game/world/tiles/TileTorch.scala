@@ -14,7 +14,7 @@ import monix.eval.Task
 class TileTorch extends TileFalling {
   private[tiles] var light = new PointLight(95)
 
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("torch")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("torch")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

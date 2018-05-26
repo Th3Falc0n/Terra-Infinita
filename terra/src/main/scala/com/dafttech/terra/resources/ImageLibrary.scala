@@ -31,7 +31,7 @@ class ImageLibrary {
   val errorImageTask: Task[TextureRegion] = Task.defer(getImage("error")).memoizeOnSuccess
 
   def getImage(name: String): Task[TextureRegion] =
-    Task.defer(atomicLibrary.get.get(name).map(Task.now).getOrElse(errorImageTask))
+    Task.defer(atomicLibrary.get.get(name).map(Task.now).getOrElse(errorImageTask)) //.memoizeOnSuccess
 
   def getImage(name: String, num: Int): Task[TextureRegion] =
     getImage(name + num)

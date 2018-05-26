@@ -6,7 +6,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class TileStone() extends Tile {
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("stone")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("stone")
 
   override def getRenderer = new TileRendererMarchingSquares
 }

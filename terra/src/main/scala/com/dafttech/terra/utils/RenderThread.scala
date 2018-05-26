@@ -17,7 +17,7 @@ object RenderThread {
       }
     }
 
-  val scheduler = Scheduler(executionContext)
+  implicit val scheduler: Scheduler = Scheduler(executionContext)
 
   def apply[A](task: Task[A]): Task[A] =
     task.executeOn(scheduler)

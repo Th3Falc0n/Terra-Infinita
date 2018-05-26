@@ -10,7 +10,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class TileWeed() extends Tile {
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("weed")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("weed")
 
   override def isCollidableWith(entity: Entity): Boolean = false
 

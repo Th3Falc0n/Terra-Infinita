@@ -7,7 +7,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class TileFence extends Tile {
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("fence")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("fence")
 
   override def isCollidableWith(entity: Entity): Boolean = !entity.isInstanceOf[Player]
 

@@ -6,7 +6,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class TileSand() extends TileFalling {
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("sand")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("sand")
 
   override def getFallSpeed(world: World) = 20
 

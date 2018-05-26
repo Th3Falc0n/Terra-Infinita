@@ -9,7 +9,7 @@ import monix.eval.Task
 class TileDirt extends Tile {
   setHardness(3)
 
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("dirt")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("dirt")
 
   override def getRenderer = new TileRendererMarchingSquares
 }

@@ -12,7 +12,7 @@ import monix.eval.Task
 import scala.concurrent.duration._
 
 abstract class Item extends GameObject with IDrawableInventory {
-  def getImage: Task[TextureRegion]
+  val getImage: Task[TextureRegion]
 
   def use(causer: EntityLiving, position: Vector2): Boolean
 
