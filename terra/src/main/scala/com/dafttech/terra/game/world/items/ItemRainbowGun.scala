@@ -14,9 +14,9 @@ class ItemRainbowGun extends ItemEntitySpawner {
     a.setVelocity((Vector2.mousePos - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.08)
     val time = (System.currentTimeMillis() % 1000) / 100f
     val offset120 = Math.PI * 2 / 3
-    val r = Math.sin(time + offset120 * 0).toFloat / 2f + 0.5f
-    val g = Math.sin(time + offset120 * 1).toFloat / 2f + 0.5f
-    val b = Math.sin(time + offset120 * 2).toFloat / 2f + 0.5f
+    val r = Math.max(Math.sin(time + offset120 * 0).toFloat, 0)
+    val g = Math.max(Math.sin(time + offset120 * 1).toFloat, 0)
+    val b = Math.max(Math.sin(time + offset120 * 2).toFloat, 0)
     a.getEmittedLight.setColor(new Color(r, g, b, 0.5f))
     true
   }
