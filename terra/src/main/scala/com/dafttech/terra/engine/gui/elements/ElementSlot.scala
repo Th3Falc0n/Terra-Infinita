@@ -8,13 +8,17 @@ import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.resources.Resources
+import scala.concurrent.duration._
 
 class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false
 
-  image = Resources.GUI.getImage("slot")
+  image = { // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    Resources.GUI.getImage("slot").runSyncUnsafe(5.seconds)
+  }
 
   def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
     if (assignedStack != null && assignedStack.size > 0 && causer.world.time > cooldownTime) {
@@ -23,7 +27,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
         return true
       }
     }
-    return false
+    false
   }
 
   def setCooldownTime(world: World, cooldownTime: Float): Unit = {

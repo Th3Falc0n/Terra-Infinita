@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Matrix4
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.resources.Resources
+import scala.concurrent.duration._
 
 object ElementBar {
   private var ciBuffer: FrameBuffer = new FrameBuffer(Format.RGBA8888, 128, 16, false)
@@ -20,8 +21,9 @@ class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement
   var value: Float = .0f
 
   clr.a = 1
-  image = Resources.GUI.getImage("bar")
-  imageMask = Resources.GUI.getImage("bar_mask")
+  import monix.execution.Scheduler.Implicits.global
+  image = Resources.GUI.getImage("bar").runSyncUnsafe(5.seconds)
+  imageMask = Resources.GUI.getImage("bar_mask").runSyncUnsafe(5.seconds)
 
   def setValue(v: Float) {
     value = v

@@ -9,11 +9,12 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class TileTorch extends TileFalling {
   private[tiles] var light = new PointLight(95)
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("torch")
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("torch")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

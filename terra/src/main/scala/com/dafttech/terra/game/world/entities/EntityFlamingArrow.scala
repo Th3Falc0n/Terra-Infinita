@@ -12,12 +12,13 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.game.world.tiles.{Tile, TileFire}
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class EntityFlamingArrow(pos: Vector2)(implicit world: World) extends EntityArrow(pos) {
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(255, 200, 40, 255))
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("arrow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("arrow")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

@@ -6,6 +6,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.entities.EntityDiggerBeam
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ItemDigStaff extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2): Boolean = {
@@ -16,5 +17,5 @@ class ItemDigStaff extends ItemEntitySpawner {
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2, leftClick: Boolean): Double = 1
 
-  override def getImage: TextureRegion = Resources.ITEMS.getImage("digStaff")
+  override def getImage: Task[TextureRegion] = Resources.ITEMS.getImage("digStaff")
 }

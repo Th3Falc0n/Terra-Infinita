@@ -7,9 +7,10 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.EntityArrow
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ItemArrow extends ItemEntitySpawner {
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("arrow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("arrow")
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2, leftClick: Boolean): Double = 0.2
 

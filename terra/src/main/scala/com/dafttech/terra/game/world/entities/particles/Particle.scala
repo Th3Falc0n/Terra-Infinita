@@ -5,6 +5,7 @@ import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
+import monix.eval.Task
 
 abstract class Particle(pos: Vector2, life: Double, s: Vector2)(implicit world: World) extends Entity(pos, s) {
   val lifetimeMax: Double = life
@@ -16,7 +17,7 @@ abstract class Particle(pos: Vector2, life: Double, s: Vector2)(implicit world: 
 
   def setFadeOut(fo: Boolean): Unit = fadeOut = fo
 
-  override def getImage: TextureRegion = null
+  override def getImage: Task[TextureRegion] = null
 
   override def collidesWith(e: Entity): Boolean = false
 

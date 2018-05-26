@@ -6,8 +6,9 @@ import com.dafttech.terra.game.world.Facing
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.{Subtile, SubtileFluid}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import scala.concurrent.duration._
 
-object SubtileRendererFluid {
+object SubtileRendererFluid { // TODO: SINGLETON?
   var $Instance: SubtileRenderer = new SubtileRendererFluid
 }
 
@@ -35,6 +36,9 @@ class SubtileRendererFluid extends SubtileRendererMask {
       if (below.pressure < below.maxPressure) height = 0
     }
     if (height > BLOCK_SIZE) height = BLOCK_SIZE
-    screen.batch.draw(render.getImage, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation)
+    // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    val image = render.getImage.runSyncUnsafe(5.seconds)
+    screen.batch.draw(image, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation)
   }
 }

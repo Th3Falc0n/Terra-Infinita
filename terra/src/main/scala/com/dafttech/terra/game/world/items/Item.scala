@@ -8,9 +8,11 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.EntityItem
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.items.persistence.GameObject
+import monix.eval.Task
+import scala.concurrent.duration._
 
 abstract class Item extends GameObject with IDrawableInventory {
-  def getImage: TextureRegion
+  def getImage: Task[TextureRegion]
 
   def use(causer: EntityLiving, position: Vector2): Boolean
 
@@ -24,14 +26,17 @@ abstract class Item extends GameObject with IDrawableInventory {
 
   def spawnAsEntity(tilePosition: TilePosition) = new EntityItem(tilePosition.pos.toEntityPos, Vector2(0.5f, 0.5f), this)(tilePosition.world)
 
-  override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit =
+  override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit = { // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    val image = getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(
-      getImage,
+      image,
       pos.x.toFloat + 4,
-      (pos.y + 4 + 12 * (1 - (getImage.getRegionHeight / getImage.getRegionWidth))).toFloat,
+      (pos.y + 4 + 12 * (1 - (image.getRegionHeight / image.getRegionWidth))).toFloat,
       24,
-      (24 * (getImage.getRegionHeight / getImage.getRegionWidth)).toFloat
+      (24 * (image.getRegionHeight / image.getRegionWidth)).toFloat
     )
+  }
 
   def maxStackSize: Int = 99
 }

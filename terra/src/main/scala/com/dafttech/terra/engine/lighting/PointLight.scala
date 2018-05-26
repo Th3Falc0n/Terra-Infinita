@@ -4,6 +4,7 @@ import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.resources.Resources
+import scala.concurrent.duration._
 
 class PointLight extends Light {
   private[lighting] var size: Double = 0
@@ -24,6 +25,9 @@ class PointLight extends Light {
       screen.batch.setColor(color)
       screen.batch.begin()
     }
-    screen.batch.draw(Resources.LIGHT.getImage("pointlight"), (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
+    // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    val image = Resources.LIGHT.getImage("pointlight").runSyncUnsafe(5.seconds)
+    screen.batch.draw(image, (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
   }
 }

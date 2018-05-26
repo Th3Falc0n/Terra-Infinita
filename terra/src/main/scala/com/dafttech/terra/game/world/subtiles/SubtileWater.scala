@@ -6,12 +6,13 @@ import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.game.world.{Facing, World}
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class SubtileWater extends SubtileFluid {
   private[subtiles] var img: Float = 0
   private[subtiles] var wavephase = false
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("wateranim", img.toInt)
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("wateranim", img.toInt)
 
   override def getNewFluid = new SubtileWater
 

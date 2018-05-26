@@ -9,6 +9,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class EntityGlowstick(pos: Vector2)(implicit world: World) extends Entity(pos, Vector2(1.5, 1.5)) {
   private val light: PointLight = new PointLight(95)
@@ -18,7 +19,7 @@ class EntityGlowstick(pos: Vector2)(implicit world: World) extends Entity(pos, V
 
   setGravityFactor(0.125)
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("glowstick")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("glowstick")
 
   override def collidesWith(e: Entity): Boolean = false
 

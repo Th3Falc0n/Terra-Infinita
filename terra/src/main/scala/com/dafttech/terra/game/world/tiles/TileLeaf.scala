@@ -6,11 +6,12 @@ import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMultiblock}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class TileLeaf extends TileLog {
   override def getLog: TileLog = new TileLeaf()
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("leaf")
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("leaf")
 
   override def isOpaque: Boolean = false
 

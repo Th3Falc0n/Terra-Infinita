@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
+import monix.eval.Task
 
 abstract class EntityLiving(pos: Vector2, s: Vector2)(implicit world: World) extends Entity(pos, s) {
   private var maxHealth: Float = 10
   private var health: Float = maxHealth
 
-  override def getImage: TextureRegion = null
+  override def getImage: Task[TextureRegion] = null
 
   def damage(damage: Float): EntityLiving = heal(-damage)
 

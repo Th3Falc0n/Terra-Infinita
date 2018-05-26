@@ -5,6 +5,7 @@ import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ParticleRain(pos: Vector2)(implicit world: World) extends Particle(pos, 4, Vector2(0.1, 1)) {
   setHasGravity(true)
@@ -19,5 +20,5 @@ class ParticleRain(pos: Vector2)(implicit world: World) extends Particle(pos, 4,
 
   override def getVelocityOffsetAngle: Double = 90
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("raindrop")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("raindrop")
 }

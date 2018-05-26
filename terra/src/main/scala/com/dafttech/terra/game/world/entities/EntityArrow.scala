@@ -8,13 +8,14 @@ import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.models.{EntityLiving, EntityThrown}
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class EntityArrow(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(2, 0.6f)) {
   private[entities] var stuckIn: TilePosition = _
 
   setGravityFactor(0.25)
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("arrow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("arrow")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

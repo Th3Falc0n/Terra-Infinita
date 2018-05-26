@@ -7,6 +7,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.entities.EntityRainbow
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ItemRainbowGun extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2): Boolean = {
@@ -25,5 +26,5 @@ class ItemRainbowGun extends ItemEntitySpawner {
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2, leftClick: Boolean): Double = 0
 
-  override def getImage: TextureRegion = Resources.ITEMS.getImage("rainbowgun")
+  override def getImage: Task[TextureRegion] = Resources.ITEMS.getImage("rainbowgun")
 }

@@ -7,11 +7,12 @@ import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleExplosion
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class EntityDynamite(pos: Vector2, var explodeTimer: Float, var radius: Int)(implicit world: World) extends Entity(pos, Vector2(1.5, 1.5)) {
   setGravityFactor(0.125)
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("dynamite")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("dynamite")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

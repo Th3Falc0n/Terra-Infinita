@@ -6,12 +6,13 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.subtiles.SubtileGlowGoo
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ItemGlowGooBucket extends Item {
   override def update(delta: Float): Unit = {
   }
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("glowgoo", 0)
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("glowgoo", 0)
 
   override def use(causer: EntityLiving, position: Vector2): Boolean = {
     val tile = causer.world.getTile(position.toWorldPosition)

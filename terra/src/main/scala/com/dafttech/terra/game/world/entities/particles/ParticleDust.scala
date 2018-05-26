@@ -5,8 +5,9 @@ import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.game.world.World
+import monix.eval.Task
 
-class ParticleDust(pos: Vector2, assignedTexture: TextureRegion)(implicit world: World) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2.Null) {
+class ParticleDust(pos: Vector2, assignedTexture: Task[TextureRegion])(implicit world: World) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2.Null) {
 
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2f + 0.25f
 
@@ -14,7 +15,7 @@ class ParticleDust(pos: Vector2, assignedTexture: TextureRegion)(implicit world:
   setHasGravity(false)
   setMidPos(pos)
 
-  override def getImage: TextureRegion = assignedTexture
+  override def getImage: Task[TextureRegion] = assignedTexture
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

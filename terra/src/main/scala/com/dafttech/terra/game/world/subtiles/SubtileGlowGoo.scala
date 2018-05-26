@@ -8,6 +8,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class SubtileGlowGoo extends SubtileFluid {
   private[subtiles] var img: Float = 0
@@ -28,7 +29,7 @@ class SubtileGlowGoo extends SubtileFluid {
         new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2(0, -1))
   }
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("glowgoo", img.toInt)
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("glowgoo", img.toInt)
 
   override def getMaxReach: Int = 0
 

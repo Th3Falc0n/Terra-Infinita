@@ -20,6 +20,8 @@ import com.dafttech.terra.game.world.items._
 import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.game.world.tiles._
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
+import scala.concurrent.duration._
 
 class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vector2(1.9f, 3.8f)) {
   Events.EVENTMANAGER.registerEventListener(this)
@@ -74,27 +76,31 @@ class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vect
 
     if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) right = false
 
-    for (_ <- 0 until 5)
-      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 2f)
-        if (getUndergroundTile != null && !inAir)
+    if (getUndergroundTile != null && !inAir) {
+      for (_ <- 0 until 5)
+        if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 2f)
           new ParticleDust(
             getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE) +
               ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
             getUndergroundTile.getImage
           )
+    }
 
     hudBottom.healthBar.setValue(getHealth / getMaxHealth * 100)
     guiInventory.update(delta)
   }
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("player")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("player")
 
   def getInventory: Inventory = inventory
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
-    screen.batch.draw(this.getImage, screenVec.xFloat, screenVec.yFloat, Options.BLOCK_SIZE * size.xFloat, Options.BLOCK_SIZE * size.yFloat)
+    // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    val image = getImage.runSyncUnsafe(5.seconds)
+    screen.batch.draw(image, screenVec.xFloat, screenVec.yFloat, Options.BLOCK_SIZE * size.xFloat, Options.BLOCK_SIZE * size.yFloat)
     screen.batch.flush()
     // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
   }

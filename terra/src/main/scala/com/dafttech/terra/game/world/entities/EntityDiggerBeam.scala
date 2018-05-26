@@ -12,6 +12,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class EntityDiggerBeam(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(4f, 2f)) {
   private val light: PointLight = new PointLight(95)
@@ -20,7 +21,7 @@ class EntityDiggerBeam(pos: Vector2)(implicit world: World) extends EntityThrown
   setGravityFactor(0)
   isDynamicEntity = true
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("beamDig")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("beamDig")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

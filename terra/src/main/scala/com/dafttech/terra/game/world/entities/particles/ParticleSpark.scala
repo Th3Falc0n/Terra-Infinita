@@ -8,6 +8,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class ParticleSpark(val pos: Vector2)(implicit world: World) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2(0.5, 0.5)) {
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2 + 0.1
@@ -19,7 +20,7 @@ class ParticleSpark(val pos: Vector2)(implicit world: World) extends Particle(po
   setGravityFactor(0.05)
   setVelocity(Vector2(4f * (0.5f - TerraInfinita.rnd.nextFloat), 4f * (0.5f - TerraInfinita.rnd.nextFloat)))
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("flame")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("flame")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

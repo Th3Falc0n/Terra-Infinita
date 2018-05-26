@@ -8,9 +8,10 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.game.world.items.persistence.Prototype
 import com.dafttech.terra.resources.Options
+import monix.eval.Task
 
 class EntityItem(pos: Vector2, size: Vector2, val wrapped: Item)(implicit world: World) extends Entity(pos, size) {
-  override def getImage: TextureRegion = wrapped.getImage
+  override def getImage: Task[TextureRegion] = wrapped.getImage
 
   override def toPrototype: Prototype = wrapped.toPrototype
 

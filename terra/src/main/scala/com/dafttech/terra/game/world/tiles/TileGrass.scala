@@ -10,11 +10,12 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.items.persistence.Persistent
 import com.dafttech.terra.game.world.subtiles.SubtileGrass
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class TileGrass() extends Tile {
   @Persistent private val grassIndex: Int = TerraInfinita.rnd.nextInt(5)
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("grass", grassIndex)
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("grass", grassIndex)
 
   override def isCollidableWith(entity: Entity): Boolean = false
 

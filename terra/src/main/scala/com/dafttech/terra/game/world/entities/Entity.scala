@@ -15,6 +15,8 @@ import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.game.world.{Chunk, Facing, World}
 import com.dafttech.terra.resources.Options
+import monix.eval.Task
+import scala.concurrent.duration._
 
 abstract class Entity(pos: Vector2, s: Vector2)(implicit val world: World) extends GameObject with IDrawableInWorld {
   addToWorld(world, pos)
@@ -191,8 +193,11 @@ abstract class Entity(pos: Vector2, s: Vector2)(implicit val world: World) exten
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
+    // TODO: Scheduler
+    import monix.execution.Scheduler.Implicits.global
+    val image = getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(
-      this.getImage,
+      image,
       screenVec.x.toFloat,
       screenVec.y.toFloat,
       (Options.BLOCK_SIZE * size.x / 2).toFloat,
@@ -202,7 +207,7 @@ abstract class Entity(pos: Vector2, s: Vector2)(implicit val world: World) exten
       1, 1, rotation.toFloat)
   }
 
-  def getImage: TextureRegion
+  def getImage: Task[TextureRegion]
 
   def setVelocity(velocity: Vector2): Entity = {
     this.velocity = velocity

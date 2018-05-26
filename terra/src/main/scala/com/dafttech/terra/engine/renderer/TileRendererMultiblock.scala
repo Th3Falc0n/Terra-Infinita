@@ -7,6 +7,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import scala.concurrent.duration._
 
 object TileRendererMultiblock {
   def setRegion(texture: TextureRegion, x: Float, y: Float, width: Float, height: Float): Unit = {
@@ -26,7 +27,8 @@ class TileRendererMultiblock extends TileRendererBlock {
 
   override def draw(screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition): Unit = {
     val screenVec: Vector2 = tp.pos.toScreenPos(pointOfView)
-    val texture: TextureRegion = tile.getImage
+    import monix.execution.Scheduler.Implicits.global
+    val texture = tile.getImage.runSyncUnsafe(5.seconds)
     val cols: Int = multiblockSize.x
     val rows: Int = multiblockSize.y
     var col: Int = Math.abs(tp.pos.x).toInt % cols

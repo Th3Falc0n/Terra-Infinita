@@ -2,6 +2,7 @@ package com.dafttech.terra.resources
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import monix.eval.Task
 //import monix.eval.{MVar, Task}
 //import com.dafttech.terra.utils._
 
@@ -40,9 +41,9 @@ class ImageLibrary {
 
   lazy val errorImage: TextureRegion = library("error")
 
-  def getImage(name: String): TextureRegion =
-    library.getOrElse(name, errorImage)
+  def getImage(name: String): Task[TextureRegion] =
+    Task.now(library.getOrElse(name, errorImage))
 
-  def getImage(name: String, num: Int): TextureRegion =
-    library.getOrElse(name + num, errorImage)
+  def getImage(name: String, num: Int): Task[TextureRegion] =
+    Task.now(library.getOrElse(name + num, errorImage))
 }

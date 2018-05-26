@@ -10,6 +10,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class EntityRainbow(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(1.5, 1.5)) {
   private val light: PointLight = new PointLight(120)
@@ -18,7 +19,7 @@ class EntityRainbow(pos: Vector2)(implicit world: World) extends EntityThrown(po
   setGravityFactor(0.125)
   isDynamicEntity = true
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("rainbow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("rainbow")
 
   override def collidesWith(e: Entity): Boolean = false
 

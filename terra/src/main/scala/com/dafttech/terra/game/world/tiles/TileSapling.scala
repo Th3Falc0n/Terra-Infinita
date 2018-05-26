@@ -7,11 +7,12 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class TileSapling extends TileFalling {
   private var grothDelay: Float = 4
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("sapling")
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("sapling")
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.onTick(delta)

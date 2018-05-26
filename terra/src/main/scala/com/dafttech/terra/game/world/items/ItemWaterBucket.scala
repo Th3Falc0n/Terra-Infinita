@@ -6,12 +6,13 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.subtiles.SubtileWater
 import com.dafttech.terra.resources.Resources
+import monix.eval.Task
 
 class ItemWaterBucket extends Item {
   override def update(delta: Float): Unit = {
   }
 
-  override def getImage: TextureRegion = Resources.TILES.getImage("water")
+  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("water")
 
   override def use(causer: EntityLiving, position: Vector2): Boolean = {
     val tile = causer.world.getTile(position.toWorldPosition)

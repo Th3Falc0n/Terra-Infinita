@@ -9,6 +9,7 @@ import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
+import monix.eval.Task
 
 class ParticleExplosion(pos: Vector2, var radius: Int)(implicit world: World) extends Particle(pos, 0.3f, Vector2(radius * 2, radius * 2)) {
   private val midpos: Vector2 = pos
@@ -20,7 +21,7 @@ class ParticleExplosion(pos: Vector2, var radius: Int)(implicit world: World) ex
   setGravityFactor(0)
   setMidPos(midpos)
 
-  override def getImage: TextureRegion = Resources.ENTITIES.getImage("explosion")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("explosion")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
