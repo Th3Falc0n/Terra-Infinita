@@ -30,21 +30,24 @@ class ModuleInventory extends GUIModule {
         index = 0
       }
       event.cancel()
-
-      invList.clearObjects
-
-      var n = 0
-      while (n < 5) {
-        if (index + n < inv.getList.size) {
-          val slot: ElementSlotInventory = new ElementSlotInventory(Vector2.Null, inv)
-          slot.assignStack(inv.getList.get(index + n))
-          invList.addObject(slot)
-        }
-        n += 1
-      }
-
-      invList.addObject(new ElementLabel(Vector2.Null, index + "-" + (index + 5) + " / " + inv.getList.size))
+      updateObjects()
     }
+  }
+
+  def updateObjects(): Unit = {
+    invList.clearObjects
+
+    var n = 0
+    while (n < 5) {
+      if (index + n < inv.getList.size) {
+        val slot: ElementSlotInventory = new ElementSlotInventory(Vector2.Null, inv)
+        slot.assignStack(inv.getList.get(index + n))
+        invList.addObject(slot)
+      }
+      n += 1
+    }
+
+    invList.addObject(new ElementLabel(Vector2.Null, index + "-" + (index + 5) + " / " + inv.getList.size))
   }
 
   override def update(delta: Float): Unit = {
@@ -71,5 +74,6 @@ class ModuleInventory extends GUIModule {
     }
     invList.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)))
     container.addObject(invList)
+    updateObjects()
   }
 }
