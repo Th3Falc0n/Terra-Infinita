@@ -25,7 +25,7 @@ class SubtileRendererMask extends SubtileRenderer {
       }
     }
     // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = render.getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(image, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY, 1, 1, BLOCK_SIZE, BLOCK_SIZE, 1, 1, rotation)
   }

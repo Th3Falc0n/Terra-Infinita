@@ -20,7 +20,7 @@ class ImageLibrary {
     }).memoize
 
   def loadImage(name: String, path: String): Unit = {
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     load(name, path).runSyncUnsafe(5.seconds)
   }
 

@@ -26,7 +26,7 @@ class PointLight extends Light {
       screen.batch.begin()
     }
     // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = Resources.LIGHT.getImage("pointlight").runSyncUnsafe(5.seconds)
     screen.batch.draw(image, (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
   }

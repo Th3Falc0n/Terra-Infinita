@@ -27,7 +27,7 @@ abstract class Item extends GameObject with IDrawableInventory {
   def spawnAsEntity(tilePosition: TilePosition) = new EntityItem(tilePosition.pos.toEntityPos, Vector2(0.5f, 0.5f), this)(tilePosition.world)
 
   override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit = { // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(
       image,

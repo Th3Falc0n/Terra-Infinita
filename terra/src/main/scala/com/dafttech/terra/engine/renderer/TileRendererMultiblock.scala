@@ -27,7 +27,7 @@ class TileRendererMultiblock extends TileRendererBlock {
 
   override def draw(screen: AbstractScreen, tile: Tile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition): Unit = {
     val screenVec: Vector2 = tp.pos.toScreenPos(pointOfView)
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val texture = tile.getImage.runSyncUnsafe(5.seconds)
     val cols: Int = multiblockSize.x
     val rows: Int = multiblockSize.y

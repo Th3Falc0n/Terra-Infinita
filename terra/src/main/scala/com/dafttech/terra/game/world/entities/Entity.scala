@@ -194,7 +194,7 @@ abstract class Entity(pos: Vector2, s: Vector2)(implicit val world: World) exten
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
     // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(
       image,

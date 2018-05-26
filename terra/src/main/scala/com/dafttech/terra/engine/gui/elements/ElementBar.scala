@@ -21,7 +21,7 @@ class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement
   var value: Float = .0f
 
   clr.a = 1
-  import monix.execution.Scheduler.Implicits.global
+  import com.dafttech.terra.utils.RenderThread._
   image = Resources.GUI.getImage("bar").runSyncUnsafe(5.seconds)
   imageMask = Resources.GUI.getImage("bar_mask").runSyncUnsafe(5.seconds)
 

@@ -37,7 +37,7 @@ class SubtileRendererFluid extends SubtileRendererMask {
     }
     if (height > BLOCK_SIZE) height = BLOCK_SIZE
     // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = render.getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(image, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY + (BLOCK_SIZE - height), 1, 1, BLOCK_SIZE, height, 1, 1, rotation)
   }

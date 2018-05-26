@@ -132,7 +132,7 @@ class TileRendererMarchingSquares extends TileRenderer {
     else
     {
       if(state.countTrues >= 2) {
-        import monix.execution.Scheduler.Implicits.global
+        import com.dafttech.terra.utils.RenderThread._
         val td = tp.getTile.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
         if(!td.isPrepared) td.prepare()
         dest.setColor(td.consumePixmap().getPixel(state.x, state.y))
