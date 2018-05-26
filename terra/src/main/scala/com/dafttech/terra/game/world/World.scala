@@ -11,6 +11,7 @@ import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
 import com.dafttech.terra.game.world.gen.WorldGenerator
+import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.game.{Events, TimeKeeping}
@@ -19,7 +20,7 @@ import monix.execution.atomic.Atomic
 
 import scala.collection.JavaConverters._
 
-class World {
+class World extends GameObject {
   var size: Vector2i = Vector2i(0, 0)
   var chunksize: Vector2i = Vector2i(32, 32)
   var time: Float = 0

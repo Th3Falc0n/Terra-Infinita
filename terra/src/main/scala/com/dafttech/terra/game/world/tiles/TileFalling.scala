@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles
 
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2
-import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererBlock}
+import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMarchingSquares}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
@@ -40,7 +40,7 @@ abstract class TileFalling extends Tile {
   def getRenderOffset: Vector2 = renderOffset
 
   override def getRenderer: TileRenderer = {
-    val tileRenderer = new TileRendererBlock
+    val tileRenderer = new TileRendererMarchingSquares
     tileRenderer.setOffset(getRenderOffset)
     tileRenderer
   }

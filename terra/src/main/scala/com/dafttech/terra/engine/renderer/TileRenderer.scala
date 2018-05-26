@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.tiles.Tile
 abstract class TileRenderer {
   protected var offset: Vector2 = Vector2.Null
 
-  def draw(screen: AbstractScreen, render: Tile, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition)
+  def draw(screen: AbstractScreen, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition)
 
   def setOffset(offset: Vector2): Unit = this.offset = offset
 
