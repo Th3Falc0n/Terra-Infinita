@@ -8,11 +8,19 @@ case class TilePosition(world: World, pos: Vector2i) {
 
   def setTile(tile: Tile, notify: Boolean = true): Unit = world.setTile(pos, tile, notify = true)
 
-  def moveTile(target: Vector2i): TilePosition = {
+  def moveTile(target: TilePosition): TilePosition = {
     val tile = getTile
-    val targetPos = TilePosition(world, target)
     setTile(new TileAir)
-    targetPos.setTile(tile)
-    targetPos
+    target.setTile(tile)
+    target
   }
+
+  def withWorld(world: World): TilePosition =
+    TilePosition(world, pos)
+
+  def withPosition(position: Vector2i): TilePosition =
+    TilePosition(world, position)
+
+  def mapPosition(f: Vector2i => Vector2i): TilePosition =
+    withPosition(f(pos))
 }

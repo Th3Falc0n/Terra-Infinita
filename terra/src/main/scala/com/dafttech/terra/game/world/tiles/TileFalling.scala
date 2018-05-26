@@ -26,13 +26,15 @@ abstract class TileFalling extends Tile {
 
   def fall(x: Int, y: Int)(implicit tilePosition: TilePosition): Unit = {
     renderOffset = renderOffset - (x, y)
-    tilePosition.moveTile(tilePosition.pos + (x, y))
+    tilePosition.moveTile(tilePosition.mapPosition(_ + (x, y)))
   }
 
   def fallIfPossible(implicit tilePosition: TilePosition): Unit =
     if (renderOffset.isNull) {
       if (createTime == 0) createTime = tilePosition.world.time
-      if (createTime + getFallDelay(tilePosition.world) < tilePosition.world.time && tilePosition.world.getTile(tilePosition.pos + (0, 1)).isReplacable) fall(0, 1)
+      if (createTime + getFallDelay(tilePosition.world) < tilePosition.world.time &&
+        tilePosition.world.getTile(tilePosition.pos + (0, 1)).isReplacable)
+        fall(0, 1)
     }
 
   def getRenderOffset: Vector2 = renderOffset
@@ -43,13 +45,11 @@ abstract class TileFalling extends Tile {
     tileRenderer
   }
 
-  override def onTileSet(implicit tilePosition: TilePosition): Unit = fallIfPossible
+  override def onTileSet(implicit tilePosition: TilePosition): Unit =
+    fallIfPossible
 
-  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = fallIfPossible
-
-  //override def onTileDestroyed(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
-
-  //override def onTilePlaced(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
+  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit =
+    fallIfPossible
 
   def getFallSpeed(world: World): Float
 
