@@ -21,9 +21,11 @@ class TileGrass() extends Tile {
 
   override def isOpaque: Boolean = false
 
-  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit =
+  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
+    super.onNeighborChange(changed)
     if (tilePosition.world.getTile(tilePosition.pos + (0, 1)).isAir)
       tilePosition.world.destroyTile(tilePosition.pos + (0, 1), null)
+  }
 
   override def isFlammable: Boolean = true
 

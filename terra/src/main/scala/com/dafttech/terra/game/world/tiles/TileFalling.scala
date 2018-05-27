@@ -48,8 +48,10 @@ abstract class TileFalling extends Tile {
   override def onTileSet(implicit tilePosition: TilePosition): Unit =
     fallIfPossible
 
-  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit =
+  override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
+    super.onNeighborChange(changed)
     fallIfPossible
+  }
 
   def getFallSpeed(world: World): Float
 

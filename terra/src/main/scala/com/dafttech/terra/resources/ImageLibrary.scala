@@ -13,10 +13,16 @@ class ImageLibrary {
 
   def load(name: String, path: String): Task[TextureRegion] =
     RenderThread(Task {
-      val texture = new TextureRegion(new Texture(path))
-      texture.flip(false, true)
-      atomicLibrary.transform(_ + (name -> texture))
-      texture
+      val pixmap = {
+        val textureRegion = new TextureRegion(new Texture(path))
+        val textureData = textureRegion.getTexture.getTextureData
+        if (!textureData.isPrepared) textureData.prepare()
+        textureData.consumePixmap()
+      }
+      val textureRegion = new TextureRegion(new Texture(pixmap))
+      textureRegion.flip(false, true)
+      atomicLibrary.transform(_ + (name -> textureRegion))
+      textureRegion
     }).memoize
 
   def loadImage(name: String, path: String): Unit = {

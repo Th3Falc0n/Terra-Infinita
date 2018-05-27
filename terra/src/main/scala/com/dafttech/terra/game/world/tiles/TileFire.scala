@@ -59,7 +59,7 @@ class TileFire extends TileFalling {
         tilePosition.world.setTile(spreadPosition, new TileFire, notify = true)
       }
     }
-    if (lifetime <= 0) tilePosition.world.setTile(tilePosition.pos, null, notify = true)
+    if (lifetime <= 0) tilePosition.setTile(null)
   }
 
   def dontSpread: TileFire = {

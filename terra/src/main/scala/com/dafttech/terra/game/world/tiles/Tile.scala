@@ -114,7 +114,9 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   def onTileSet(implicit tilePosition: TilePosition): Unit = ()
 
-  def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = ()
+  def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
+    texture = null
+  }
 
   def onTileDestroyed(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
 
