@@ -12,7 +12,7 @@ import monix.eval.Task
 class TileSapling extends TileFalling {
   private var grothDelay: Float = 4
 
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("sapling")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("sapling")
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.onTick(delta)

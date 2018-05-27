@@ -28,7 +28,7 @@ abstract class Skill extends IDrawableInventory {
 
   override def drawInventory(pos: Vector2, screen: AbstractScreen): Unit = {
     // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
     screen.batch.draw(image, pos.xFloat + 4, pos.yFloat + 4, 24, 24)
   }

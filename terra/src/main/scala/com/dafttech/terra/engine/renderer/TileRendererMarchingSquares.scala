@@ -95,9 +95,9 @@ class TileRendererMarchingSquares extends TileRenderer {
     }
     else {
       if (state.m.pressure > 3) {
-        import monix.execution.Scheduler.Implicits.global
-        val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
-        if (!td.isPrepared) td.prepare()
+        import com.dafttech.terra.utils.RenderThread._
+        val td = tp.getTile.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
+        if(!td.isPrepared) td.prepare()
 
         val xm = BLOCK_SIZE.toFloat / td.getWidth
         val ym = BLOCK_SIZE.toFloat / td.getHeight

@@ -12,7 +12,7 @@ import monix.eval.Task
 class TileLeaf extends TileLog {
   override def getLog: TileLog = new TileLeaf()
 
-  override def getImage: Task[TextureRegion] = Resources.TILES.getImage("leaf")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("leaf")
 
   override def isOpaque: Boolean = false
 

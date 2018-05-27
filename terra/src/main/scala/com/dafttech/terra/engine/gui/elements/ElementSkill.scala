@@ -10,7 +10,7 @@ class ElementSkill(p: Vector2, val player: Player, val label: String, val skillI
   var active: Boolean = false
 
   image = { // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     Resources.GUI.getImage("slot").runSyncUnsafe(5.seconds)
   }
 

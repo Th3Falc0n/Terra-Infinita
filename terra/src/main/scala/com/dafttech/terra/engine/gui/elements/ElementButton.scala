@@ -7,7 +7,7 @@ import scala.concurrent.duration._
 
 abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p, Vector2(100, 20)) {
   image = { // TODO: Scheduler
-    import monix.execution.Scheduler.Implicits.global
+    import com.dafttech.terra.utils.RenderThread._
     Resources.GUI.getImage("button").runSyncUnsafe(5.seconds)
   }
 
