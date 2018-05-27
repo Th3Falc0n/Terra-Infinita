@@ -108,7 +108,7 @@ class TileRendererMarchingSquares extends TileRenderer {
       doDraw(state.bottomRight)
     }
     else {
-      if (state.m.pressure >= BLOCK_SIZE / 2) {
+      if (state.m.pressure > BLOCK_SIZE / 2) {
         import com.dafttech.terra.utils.RenderThread._
         val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
         if(!td.isPrepared) td.prepare()
