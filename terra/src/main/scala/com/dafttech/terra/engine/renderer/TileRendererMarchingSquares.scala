@@ -6,20 +6,30 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.resources.Options
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import monix.execution.atomic.Atomic
 import org.lwjgl.opengl.PixelFormatLWJGL
 
+import scala.collection.mutable
 import scala.concurrent.duration.Duration
 
 object TileRendererMarchingSquares {
   var $Instance: TileRenderer = new TileRendererMarchingSquares
 }
 
+class TileCache {
+  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGB888)
+  var texture: Texture = _
+}
+
 class TileRendererMarchingSquares extends TileRenderer {
+  val renderPositions = new mutable.HashMap[TilePosition, TileCache]
 
   case class CornerState(pressure: Int, t: Tile)
 
@@ -36,12 +46,16 @@ class TileRendererMarchingSquares extends TileRenderer {
     )
 
     def topLeft: State = State(tl, t, l, m, x, y, level / 2)
-
     def topRight: State = State(t, tr, m, r, x + level, y, level / 2)
-
     def bottomLeft: State = State(l, m, bl, b, x, y + level, level / 2)
-
     def bottomRight: State = State(m, r, b, br, x + level, y + level, level / 2)
+  }
+
+  def invalidateCache(tp: TilePosition): Unit = {
+    renderPositions.remove(tp)
+    renderPositions.remove(tp.withPosition(tp.pos - (0, 1)))
+    renderPositions.remove(tp.withPosition(tp.pos - (1, 0)))
+    renderPositions.remove(tp.withPosition(tp.pos - (1, 1)))
   }
 
   //TL, TR, BL, BR
@@ -115,7 +129,7 @@ class TileRendererMarchingSquares extends TileRenderer {
     val tBL = tp.withPosition(tp.pos + (0, 1)).getTile
     val tBR = tp.withPosition(tp.pos + (1, 1)).getTile
 
-    if (tTL.texture == null) {
+    if (renderPositions.getOrElseUpdate(tp, new TileCache).texture == null) {
       doDraw(State(
         CornerState(if(!tTL.isAir) BLOCK_SIZE else 0, tTL),
         CornerState(if(!tTR.isAir) BLOCK_SIZE else 0, tTR),
@@ -123,14 +137,14 @@ class TileRendererMarchingSquares extends TileRenderer {
         CornerState(if(!tBR.isAir) BLOCK_SIZE else 0, tBR),
         0,
         0)
-      )(tTL.pixmap, tp)
+      )(renderPositions(tp).pixmap, tp)
 
-      tTL.texture = new Texture(tTL.pixmap)
+      renderPositions(tp).texture = new Texture(renderPositions(tp).pixmap)
     }
 
     val tpx = tp.pos.toScreenPos(pointOfView).x.toFloat
     val tpy = tp.pos.toScreenPos(pointOfView).y.toFloat
 
-    screen.batch.draw(tTL.texture, tpx, tpy)
+    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE/2, tpy + BLOCK_SIZE/2)
   }
 }

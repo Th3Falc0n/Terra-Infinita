@@ -1,6 +1,7 @@
 package com.dafttech.terra.resources
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.TextureData
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.utils._
 import monix.eval.Task

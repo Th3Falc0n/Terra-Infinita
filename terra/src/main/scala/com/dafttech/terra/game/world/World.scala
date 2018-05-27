@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.passes.RenderingPass
+import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
@@ -31,6 +32,8 @@ class World extends GameObject {
   var localPlayer: Player = _
   var weather: Weather = new WeatherRainy
   var sunmap: SunMap = new SunMap
+
+  val renderer = new TileRendererMarchingSquares
 
   def this(size: Vector2) {
     this()
@@ -132,6 +135,8 @@ class World extends GameObject {
         notifyNeighborTiles(Vector2i(pos.x, pos.y))
       }
     }
+
+    renderer.invalidateCache(TilePosition(this, pos))
     this
   }
 

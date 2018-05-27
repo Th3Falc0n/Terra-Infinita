@@ -12,14 +12,14 @@ import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import scala.util.Random
 
 class Chunk(val world: World, val pos: Vector2i) extends GameObject {
-  val map: Array[Array[Tile]] = Array.ofDim[Tile](world.chunksize.x, world.chunksize.y)
+  val tiles: Array[Array[Tile]] = Array.ofDim[Tile](world.chunksize.x, world.chunksize.y)
   private var localEntities: Seq[Entity] = Seq.empty
   var stayLoaded: Boolean = false
 
   def fillAir(): Unit =
     for {
-      y <- map(0).indices
-      x <- map.indices
+      y <- tiles(0).indices
+      x <- tiles.indices
     } world.setTile(Vector2i(x, y).getBlockInWorldPos(this), new TileAir, notify = false)
 
   @deprecated def update(delta: Float) {
@@ -65,14 +65,14 @@ class Chunk(val world: World, val pos: Vector2i) extends GameObject {
   def getTile(blockInChunkPos: Vector2i): Tile = {
     checkPosInChunk(blockInChunkPos)
 
-    map(blockInChunkPos.x)(blockInChunkPos.y)
+    tiles(blockInChunkPos.x)(blockInChunkPos.y)
   }
 
   def setTile(blockInChunkPos: Vector2i, tile: Tile): Chunk = {
     checkPosInChunk(blockInChunkPos)
 
     if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled)
-      map(blockInChunkPos.x)(blockInChunkPos.y) = tile
+      tiles(blockInChunkPos.x)(blockInChunkPos.y) = tile
 
     this
   }

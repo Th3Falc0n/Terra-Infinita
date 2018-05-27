@@ -17,9 +17,6 @@ import com.dafttech.terra.resources.Options
 import com.dafttech.terra.resources.Resources
 
 abstract class Tile extends ItemTile with IDrawableInWorld {
-  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGB888)
-  var texture: Texture = null
-
   private var subtiles: List[Subtile] = List.empty
 
   private var breakingProgress: Float = 0
@@ -66,8 +63,6 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2(0.5, 0.5), dropped)(tilePosition.world)
   }
 
-  def getRenderer: TileRenderer = TileRendererMarchingSquares.$Instance
-
   def getWalkFriction: Float = 1
 
   def getWalkAcceleration: Float = 1
@@ -99,8 +94,6 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     ).orNull
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
-    getRenderer.draw(screen, pointOfView)
-
     for (subtile <- subtiles) subtile.draw(screen, pointOfView)
   }
 
@@ -114,9 +107,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   def onTileSet(implicit tilePosition: TilePosition): Unit = ()
 
-  def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
-    texture = null
-  }
+  def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = ()
 
   def onTileDestroyed(causer: Entity)(implicit tilePosition: TilePosition): Unit = ()
 
