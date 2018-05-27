@@ -20,64 +20,28 @@ object TileRendererMarchingSquares {
 }
 
 class TileRendererMarchingSquares extends TileRenderer {
-  case class CornerState(is: Boolean, t: Tile)
+
+  case class CornerState(pressure: Int, t: Tile)
 
   case class State(tl: CornerState, tr: CornerState, bl: CornerState, br: CornerState, x: Int, y: Int, level: Int = BLOCK_SIZE / 2) {
-    def countTrues: Int = (if (tl.is) 1 else 0) + (if (tr.is) 1 else 0) + (if (bl.is) 1 else 0) + (if (br.is) 1 else 0)
 
-    def topLeft: State = {
-      new State(
-        tl,
-        CornerState(countTrues >= 2 ||(tl.is && tr.is && tl.t.connectsTo(tr.t) || (tl.t == tr.t && tl.is)), tl.t),
-        CornerState(countTrues >= 2 ||(tl.is && bl.is && tl.t.connectsTo(bl.t) || (tl.t == bl.t && tl.is)), tl.t),
-        CornerState(countTrues >= 2 && tl.t.connectsTo(br.t), tl.t),
-        x,
-        y,
-        level / 2
-      )
-    }
+    val l = CornerState((tl.pressure + bl.pressure) / 2, if (tl.pressure > bl.pressure) tl.t else bl.t)
+    val t = CornerState((tl.pressure + tr.pressure) / 2, if (tl.pressure > tr.pressure) tl.t else tr.t)
+    val r = CornerState((tr.pressure + br.pressure) / 2, if (tr.pressure > br.pressure) tr.t else br.t)
+    val b = CornerState((bl.pressure + br.pressure) / 2, if (bl.pressure > br.pressure) bl.t else br.t)
 
-    def topRight: State = {
-      new State(
-        CornerState(countTrues >= 2 ||(tr.is && tl.is && tr.t.connectsTo(tl.t) || (tr.t == tl.t && tr.is)), tr.t),
-        tr,
-        CornerState(countTrues >= 2 && tr.t.connectsTo(bl.t), tr.t),
-        CornerState(countTrues >= 2 ||(tr.is && br.is && tr.t.connectsTo(br.t) || (tr.t == br.t && tr.is)), tr.t),
-        x + level,
-        y,
-        level / 2
-      )
-    }
+    val m = CornerState(
+      (tl.pressure + tr.pressure + bl.pressure + br.pressure) / 4,
+      Seq(tl, tr, bl, br).maxBy(_.pressure).t
+    )
 
-    def bottomLeft: State = {
-      new State(
-        CornerState(countTrues >= 2 ||(bl.is && tl.is && bl.t.connectsTo(tl.t) || (bl.t == tl.t && bl.is)), bl.t),
-        CornerState(countTrues >= 2 && bl.t.connectsTo(tr.t), bl.t),
-        bl,
-        CornerState(countTrues >= 2 ||(bl.is && br.is && bl.t.connectsTo(br.t) || (bl.t == br.t && bl.is)), bl.t),
-        x,
-        y + level,
-        level / 2
-      )
-    }
+    def topLeft: State = new State(tl, t, l, m, x, y, level / 2)
 
-    def bottomRight: State = {
-      new State(
-        CornerState(countTrues >= 2 && br.t.connectsTo(tl.t), br.t),
-        CornerState(countTrues >= 2 ||(br.is && tr.is && br.t.connectsTo(tr.t) || (br.t == tr.t && br.is)), br.t),
-        CornerState(countTrues >= 2 ||(br.is && bl.is && br.t.connectsTo(bl.t) || (br.t == bl.t && br.is)), br.t),
-        br,
-        x + level,
-        y + level,
-        level / 2
-      )
-    }
-  }
+    def topRight: State = new State(t, tr, m, r, x + level, y, level / 2)
 
-  object State {
-    def unapply(arg: State): Option[(Boolean, Boolean, Boolean, Boolean)] = {
-      Some((arg.tl.is, arg.tr.is, arg.bl.is, arg.br.is))
-    }
+    def bottomLeft: State = new State(l, m, bl, b, x, y + level, level / 2)
+
+    def bottomRight: State = new State(m, r, b, br, x + level, y + level, level / 2)
   }
 
   //TL, TR, BL, BR
@@ -123,19 +87,22 @@ class TileRendererMarchingSquares extends TileRenderer {
     dest.setColor(Color.CYAN)
     dest.drawRectangle(0, 0, BLOCK_SIZE, BLOCK_SIZE)*/
 
-    if(state.level != 1) {
+    if (state.level != 1) {
       doDraw(state.topLeft)
       doDraw(state.topRight)
       doDraw(state.bottomLeft)
       doDraw(state.bottomRight)
     }
-    else
-    {
-      if(state.countTrues >= 2) {
+    else {
+      if (state.m.pressure > 3) {
         import monix.execution.Scheduler.Implicits.global
-        val td = tp.getTile.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
-        if(!td.isPrepared) td.prepare()
-        dest.setColor(td.consumePixmap().getPixel(state.x, state.y))
+        val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
+        if (!td.isPrepared) td.prepare()
+
+        val xm = BLOCK_SIZE.toFloat / td.getWidth
+        val ym = BLOCK_SIZE.toFloat / td.getHeight
+
+        dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt))
 
         dest.fillRectangle(state.x, BLOCK_SIZE - 2 - state.y, state.level * 2, state.level * 2)
       }
@@ -148,12 +115,12 @@ class TileRendererMarchingSquares extends TileRenderer {
     val tBL = tp.withPosition(tp.pos + (0, 1)).getTile
     val tBR = tp.withPosition(tp.pos + (1, 1)).getTile
 
-    if(tTL.texture == null) {
+    if (tTL.texture == null) {
       doDraw(State(
-        CornerState(!tTL.isAir, tTL),
-        CornerState(!tTR.isAir, tTR),
-        CornerState(!tBL.isAir, tBL),
-        CornerState(!tBR.isAir, tBR),
+        CornerState(if(!tTL.isAir) BLOCK_SIZE else 0, tTL),
+        CornerState(if(!tTR.isAir) BLOCK_SIZE else 0, tTR),
+        CornerState(if(!tBL.isAir) BLOCK_SIZE else 0, tBL),
+        CornerState(if(!tBR.isAir) BLOCK_SIZE else 0, tBR),
         0,
         0)
       )(tTL.pixmap, tp)
