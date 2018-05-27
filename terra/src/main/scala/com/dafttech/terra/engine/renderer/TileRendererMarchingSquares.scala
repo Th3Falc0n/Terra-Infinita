@@ -41,8 +41,8 @@ class TileRendererMarchingSquares extends TileRenderer {
     val b = CornerState((bl.pressure + br.pressure) / 2, if (bl.pressure > br.pressure) bl.t else br.t)
 
     val m = CornerState(
-      (tl.pressure + tr.pressure + bl.pressure + br.pressure) / 4,
-      Seq(tl, tr, bl, br).maxBy(_.pressure).t
+      (l.pressure + t.pressure + r.pressure + b.pressure) / 4,
+      Seq(l, t, r, b).maxBy(_.pressure).t
     )
 
     def topLeft: State = State(tl, t, l, m, x, y, level / 2)
