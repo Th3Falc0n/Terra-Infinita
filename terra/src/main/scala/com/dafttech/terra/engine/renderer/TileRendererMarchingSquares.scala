@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.game.world.tiles.TileFalling
 import com.dafttech.terra.resources.Options
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import monix.execution.atomic.Atomic
@@ -41,7 +43,7 @@ class TileRendererMarchingSquares extends TileRenderer {
     val b = CornerState((bl.pressure + br.pressure) / 2, if (bl.pressure > br.pressure) bl.t else br.t)
 
     val m = CornerState(
-      (l.pressure + t.pressure + r.pressure + b.pressure) / 4,
+      (l.pressure + t.pressure + r.pressure + b.pressure) / 4 + (TerraInfinita.rnd.nextInt(3) - 2),
       Seq(l, t, r, b).maxBy(_.pressure).t
     )
 
@@ -108,7 +110,7 @@ class TileRendererMarchingSquares extends TileRenderer {
       doDraw(state.bottomRight)
     }
     else {
-      if (state.m.pressure > BLOCK_SIZE / 2) {
+      if (state.m.pressure >= BLOCK_SIZE / 2) {
         import com.dafttech.terra.utils.RenderThread._
         val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
         if(!td.isPrepared) td.prepare()
@@ -145,6 +147,11 @@ class TileRendererMarchingSquares extends TileRenderer {
     val tpx = tp.pos.toScreenPos(pointOfView).x.toFloat
     val tpy = tp.pos.toScreenPos(pointOfView).y.toFloat
 
-    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE/2, tpy + BLOCK_SIZE/2)
+    val yOff = tp.getTile match {
+      case falling: TileFalling => falling.renderOffset.x.toFloat
+      case _ => 0
+    }
+
+    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE/2, tpy + BLOCK_SIZE/2 + yOff)
   }
 }
