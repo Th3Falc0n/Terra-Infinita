@@ -5,7 +5,9 @@ import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.Facing
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.{Subtile, SubtileFluid}
+import com.dafttech.terra.game.world.tiles.TileFalling
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+
 import scala.concurrent.duration._
 
 object SubtileRendererFluid { // TODO: SINGLETON?
@@ -18,13 +20,15 @@ class SubtileRendererFluid extends SubtileRendererMask {
     val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
-    if (!render.isTileIndependent && tp.getTile != null) {
-      val offset: Vector2 = tp.getTile.getRenderer.getOffset
+
+    if (!render.isTileIndependent && tp.getTile != null && tp.getTile.isInstanceOf[TileFalling]) {
+      val offset: Vector2 = tp.getTile.asInstanceOf[TileFalling].renderOffset
       if (offset != null) {
         offX = offset.x.toFloat * BLOCK_SIZE
         offY = offset.y.toFloat * BLOCK_SIZE
       }
     }
+
     val renderFluid = render.asInstanceOf[SubtileFluid]
     var height: Float = renderFluid.pressure / renderFluid.maxPressure * BLOCK_SIZE
     if (height < BLOCK_SIZE && renderFluid.isFluid(tp, Facing.Top)) {

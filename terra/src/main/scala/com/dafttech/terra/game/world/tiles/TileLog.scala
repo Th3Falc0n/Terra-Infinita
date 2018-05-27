@@ -92,6 +92,4 @@ class TileLog() extends Tile {
 
   def isFlatTo(world: World, pos: Vector2i): Boolean =
     world.getTile(pos).isInstanceOf[TileLog] || world.getTile(pos).isOpaque
-
-  override def getRenderer: TileRenderer = new TileRendererMarchingSquares
 }

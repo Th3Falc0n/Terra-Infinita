@@ -4,7 +4,9 @@ import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.{AbstractScreen, Vector2}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
+import com.dafttech.terra.game.world.tiles.TileFalling
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
+
 import scala.concurrent.duration._
 
 object SubtileRendererMask { // TODO: SINGLETON?
@@ -17,13 +19,15 @@ class SubtileRendererMask extends SubtileRenderer {
     val rotation: Float = if (rendererArguments.nonEmpty) rendererArguments(0).asInstanceOf[Float] else 0
     var offX: Float = 0
     var offY: Float = 0
-    if (!render.isTileIndependent && tp.getTile != null) {
-      val offset: Vector2 = tp.getTile.getRenderer.getOffset
+
+    if (!render.isTileIndependent && tp.getTile != null && tp.getTile.isInstanceOf[TileFalling]) {
+      val offset: Vector2 = tp.getTile.asInstanceOf[TileFalling].renderOffset
       if (offset != null) {
         offX = offset.x.toFloat * BLOCK_SIZE
         offY = offset.y.toFloat * BLOCK_SIZE
       }
     }
+
     // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     val image = render.getImage.runSyncUnsafe(5.seconds)

@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
 abstract class TileFalling extends Tile {
-  private var renderOffset: Vector2 = Vector2.Null
+  var renderOffset: Vector2 = Vector2.Null
   private var createTime: Float = 0
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
@@ -39,17 +39,10 @@ abstract class TileFalling extends Tile {
 
   def getRenderOffset: Vector2 = renderOffset
 
-  override def getRenderer: TileRenderer = {
-    val tileRenderer = new TileRendererMarchingSquares
-    tileRenderer.setOffset(getRenderOffset)
-    tileRenderer
-  }
-
   override def onTileSet(implicit tilePosition: TilePosition): Unit =
     fallIfPossible
 
   override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
-    super.onNeighborChange(changed)
     fallIfPossible
   }
 

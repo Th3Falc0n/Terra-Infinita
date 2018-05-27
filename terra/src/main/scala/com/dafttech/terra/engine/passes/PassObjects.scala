@@ -25,7 +25,8 @@ class PassObjects extends RenderingPass {
       y <- (pointOfView.getPosition.y.toInt / BLOCK_SIZE - sy) until (pointOfView.getPosition.y.toInt / BLOCK_SIZE + sy)
     } {
       tile = world.getTile(Vector2i(x, y))
-      if (tile != null) tile.draw(screen, pointOfView)(new TilePosition(world, Vector2i(x, y)))
+      if (tile != null) tile.draw(screen, pointOfView)(TilePosition(world, Vector2i(x, y)))
+      world.renderer.draw(screen, pointOfView)(TilePosition(world, Vector2i(x, y)))
     }
 
     /*var x: Int = pointOfView.getPosition.x.toInt / BLOCK_SIZE - sx
