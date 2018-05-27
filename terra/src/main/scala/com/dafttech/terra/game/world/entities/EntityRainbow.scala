@@ -13,8 +13,9 @@ import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
 class EntityRainbow(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(1.5, 1.5)) {
-  private val light: PointLight = new PointLight(120)
-  light.setColor(new Color(1, 1, 1, 1))
+  //private val light: PointLight = new PointLight(120)
+  //light.setColor(new Color(1, 1, 1, 1))
+  var lightColor: Color = Color.WHITE
 
   setGravityFactor(0.125)
   isDynamicEntity = true
@@ -33,5 +34,10 @@ class EntityRainbow(pos: Vector2)(implicit world: World) extends EntityThrown(po
 
   override def isLightEmitter: Boolean = true
 
-  override def getEmittedLight: PointLight = light
+  override def getEmittedLight: PointLight = {
+    val tmpLight = new PointLight(0)
+    tmpLight.setSize(Math.min(velocity.`length²` * 2, 120))
+    tmpLight.setColor(lightColor)
+    tmpLight
+  }
 }

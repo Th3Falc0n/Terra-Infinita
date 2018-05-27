@@ -18,7 +18,7 @@ class ItemRainbowGun extends ItemEntitySpawner {
     val r = Math.max(Math.sin(time + offset120 * 0).toFloat, 0)
     val g = Math.max(Math.sin(time + offset120 * 1).toFloat, 0)
     val b = Math.max(Math.sin(time + offset120 * 2).toFloat, 0)
-    a.getEmittedLight.setColor(new Color(r, g, b, 0.5f))
+    a.lightColor = new Color(r, g, b, 0.5f)
     true
   }
 
