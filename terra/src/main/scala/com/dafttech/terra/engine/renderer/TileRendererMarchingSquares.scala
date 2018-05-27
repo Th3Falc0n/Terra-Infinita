@@ -35,13 +35,13 @@ class TileRendererMarchingSquares extends TileRenderer {
       Seq(tl, tr, bl, br).maxBy(_.pressure).t
     )
 
-    def topLeft: State = new State(tl, t, l, m, x, y, level / 2)
+    def topLeft: State = State(tl, t, l, m, x, y, level / 2)
 
-    def topRight: State = new State(t, tr, m, r, x + level, y, level / 2)
+    def topRight: State = State(t, tr, m, r, x + level, y, level / 2)
 
-    def bottomLeft: State = new State(l, m, bl, b, x, y + level, level / 2)
+    def bottomLeft: State = State(l, m, bl, b, x, y + level, level / 2)
 
-    def bottomRight: State = new State(m, r, b, br, x + level, y + level, level / 2)
+    def bottomRight: State = State(m, r, b, br, x + level, y + level, level / 2)
   }
 
   //TL, TR, BL, BR
@@ -94,9 +94,9 @@ class TileRendererMarchingSquares extends TileRenderer {
       doDraw(state.bottomRight)
     }
     else {
-      if (state.m.pressure > 3) {
+      if (state.m.pressure >= BLOCK_SIZE / 2) {
         import com.dafttech.terra.utils.RenderThread._
-        val td = tp.getTile.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
+        val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
         if(!td.isPrepared) td.prepare()
 
         val xm = BLOCK_SIZE.toFloat / td.getWidth
@@ -104,7 +104,7 @@ class TileRendererMarchingSquares extends TileRenderer {
 
         dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt))
 
-        dest.fillRectangle(state.x, BLOCK_SIZE - 2 - state.y, state.level * 2, state.level * 2)
+        dest.fillRectangle(state.x, BLOCK_SIZE - 2 - state.y, 2, 2)
       }
     }
   }
