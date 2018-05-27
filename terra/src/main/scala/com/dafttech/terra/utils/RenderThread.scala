@@ -20,12 +20,12 @@ object RenderThread {
   implicit val scheduler: Scheduler = Scheduler(executionContext)
 
   def apply[A](task: Task[A]): Task[A] = Task.defer {
-    if (isCurrentThread) {
+    if (isCurrentThread)
       task.runSyncMaybe(scheduler) match {
         case Right(result) => Task.now(result)
-        case Left(future) => Task.eval(Await.result(future, Duration.Inf))
+        case Left(future) => Task.fromFuture(future)
       }
-    } else
+    else
       task.executeOn(scheduler)
   }
 
