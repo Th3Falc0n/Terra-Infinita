@@ -1,14 +1,5 @@
 package com.dafttech.terra.engine.renderer
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.{AbstractScreen, Vector2, Vector2i}
-import com.dafttech.terra.game.world.World
-import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
-import scala.concurrent.duration._
-
 /*object TileRendererMultiblock {
   def setRegion(texture: TextureRegion, x: Float, y: Float, width: Float, height: Float): Unit = {
     val invTexWidth: Float = 1.0F / texture.getTexture.getWidth

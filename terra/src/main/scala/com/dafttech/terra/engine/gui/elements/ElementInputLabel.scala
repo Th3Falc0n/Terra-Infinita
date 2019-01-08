@@ -3,12 +3,13 @@ package com.dafttech.terra.engine.gui.elements
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.input.handlers.IStringInputHandler
 import com.dafttech.terra.engine.input.{FocusManager, IFocusableTyping}
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
 
-class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GUIElement(p, Vector2.Null) with IFocusableTyping {
+class ElementInputLabel(p: Vector2d, val handler: IStringInputHandler) extends GUIElement(p, Vector2d.Zero) with IFocusableTyping {
   private var text: String = ""
   private var renderText: String = ""
   var clr: Color = Color.WHITE
@@ -23,11 +24,11 @@ class ElementInputLabel(p: Vector2, val handler: IStringInputHandler) extends GU
     time += delta
     renderText = ">" + text + (if ((time % 1f) < 0.5 && FocusManager.hasTypeFocus(this)) "_" else "")
     val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
-    size = Vector2(bnds.width, bnds.height)
+    size = Vector2d(bnds.width, bnds.height)
   }
 
   override def draw(screen: AbstractScreen): Unit = {
-    val p: Vector2 = getScreenPosition
+    val p: Vector2d = getScreenPosition
     screen.batch.begin
     Resources.GUI_FONT.setColor(clr)
     Resources.GUI_FONT.draw(screen.batch, renderText, p.x.toFloat, 6 + p.y.toFloat)

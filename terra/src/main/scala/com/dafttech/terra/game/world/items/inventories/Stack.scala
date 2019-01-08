@@ -1,6 +1,6 @@
 package com.dafttech.terra.game.world.items.inventories
 
-import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.persistence.Prototype
@@ -16,7 +16,7 @@ case class Stack(prototype: Prototype, size: Int) {
 
   def withSize(size: Int): Stack = copy(size = size)
 
-  def use(causer: EntityLiving, position: Vector2): Stack = {
+  def use(causer: EntityLiving, position: Vector2d): Stack = {
     val item = prototype.toGameObject.asInstanceOf[Item]
     val usedItemNum = item.getUsedItemNum(causer, position)
 

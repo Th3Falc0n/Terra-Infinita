@@ -5,12 +5,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.graphics.glutils.{FloatFrameBuffer, FrameBuffer}
 import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Rectangle
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventListener}
 
@@ -19,12 +17,12 @@ class PassLighting extends RenderingPass {
   var sunlevel: Int = BLOCK_SIZE
 
   def getSunlightRect(t: TilePosition, pointOfView: Entity): Rectangle = {
-    val v: Vector2 = t.pos.toScreenPos(pointOfView)
+    val v: Vector2d = t.pos.toScreenPos(pointOfView)
     if (t.getTile.sunlightFilter == null)
-      Vector2(v.x - sunlevel, 0) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y + sunlevel)
+      Vector2d(v.x - sunlevel, 0) rectangleTo Vector2d(BLOCK_SIZE + sunlevel * 2, v.y + sunlevel)
     else {
-      val f: Vector2 = t.getTile.sunlightFilter.pos.toScreenPos(pointOfView)
-      Vector2(v.x - sunlevel, f.y) rectangleTo Vector2(BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel)
+      val f: Vector2d = t.getTile.sunlightFilter.pos.toScreenPos(pointOfView)
+      Vector2d(v.x - sunlevel, f.y) rectangleTo Vector2d(BLOCK_SIZE + sunlevel * 2, v.y - f.y + sunlevel)
     }
   }
 

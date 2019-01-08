@@ -4,12 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
@@ -21,9 +20,10 @@ import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.game.world.tiles._
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
+
 import scala.concurrent.duration._
 
-class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vector2(1.9f, 3.8f)) {
+class Player(pos: Vector2d)(implicit world: World) extends EntityLiving(pos, Vector2d(1.9f, 3.8f)) {
   Events.EVENTMANAGER.registerEventListener(this)
 
   val inventory = new Inventory()
@@ -60,17 +60,17 @@ class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vect
     if (InputHandler.isKeyDown("JUMP") && !this.isInAir) jump()
 
     if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-      val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       if (!hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = true) && System.currentTimeMillis - left > 10) {
         left = System.currentTimeMillis
-        val destroy = (Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
+        val destroy = (Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
         val damagedTile = getWorld.getTile(Vector2i(destroy.x, destroy.y))
         if (damagedTile != null) damagedTile.damage(0.2f, this)
       }
     }
 
     if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
-      val mouseInWorldPos = Vector2.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = false)
     }
 
@@ -100,7 +100,7 @@ class Player(pos: Vector2)(implicit world: World) extends EntityLiving(pos, Vect
     // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
-    screen.batch.draw(image, screenVec.xFloat, screenVec.yFloat, Options.BLOCK_SIZE * size.xFloat, Options.BLOCK_SIZE * size.yFloat)
+    screen.batch.draw(image, screenVec.x.toFloat, screenVec.y.toFloat, Options.BLOCK_SIZE * size.x.toFloat, Options.BLOCK_SIZE * size.y.toFloat)
     screen.batch.flush()
     // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
   }

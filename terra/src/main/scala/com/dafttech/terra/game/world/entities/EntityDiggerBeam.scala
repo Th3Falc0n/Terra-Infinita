@@ -5,16 +5,14 @@ import java.util.Random
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
-import com.dafttech.terra.engine.Vector2i
 import com.dafttech.terra.engine.lighting.PointLight
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityThrown
-import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.resources.{Options, Resources}
+import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityDiggerBeam(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(4f, 2f)) {
+class EntityDiggerBeam(pos: Vector2d)(implicit world: World) extends EntityThrown(pos, Vector2d(4f, 2f)) {
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(0, 1, 0.3f, 1))
 

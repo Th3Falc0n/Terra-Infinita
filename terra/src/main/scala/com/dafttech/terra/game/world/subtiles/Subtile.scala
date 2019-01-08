@@ -1,18 +1,16 @@
 package com.dafttech.terra.game.world.subtiles
 
 import com.badlogic.gdx.graphics.Color
-import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.renderer.{SubtileRenderer, SubtileRendererMask}
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2}
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.engine.vector.Vector2d
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
-import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.ItemTile
 import com.dafttech.terra.game.world.tiles.Tile
 
 abstract class Subtile extends ItemTile with IDrawableInWorld {
-  override def use(causer: EntityLiving, position: Vector2): Boolean = false
+  override def use(causer: EntityLiving, position: Vector2d): Boolean = false
 
   def getRenderer: SubtileRenderer = SubtileRendererMask.$Instance
 

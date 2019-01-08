@@ -3,8 +3,8 @@ package com.dafttech.terra.game.world.tiles
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
@@ -23,7 +23,7 @@ class TileTorch extends TileFalling {
 
     for (_ <- 0 until 5)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0)).addVelocity(Vector2(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0)).addVelocity(Vector2d(0, -1))
   }
 
   override def isCollidableWith(entity: Entity): Boolean = false

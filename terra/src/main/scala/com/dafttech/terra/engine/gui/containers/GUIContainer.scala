@@ -1,12 +1,13 @@
 package com.dafttech.terra.engine.gui.containers
 
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.GUIObject
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import org.lolhens.eventmanager.{Event, EventListener}
 
 import scala.collection.mutable
 
-abstract class GUIContainer(p: Vector2, s: Vector2) extends GUIObject(p, s) {
+abstract class GUIContainer(p: Vector2d, s: Vector2d) extends GUIObject(p, s) {
   val objects: mutable.ArrayBuffer[GUIObject] = new mutable.ArrayBuffer[GUIObject]
 
   def draw(screen: AbstractScreen): Unit = {
@@ -53,7 +54,7 @@ abstract class GUIContainer(p: Vector2, s: Vector2) extends GUIObject(p, s) {
       for (e <- objects) {
         val x: Int = event.in.get[Integer](1, classOf[Integer])
         val y: Int = event.in.get[Integer](2, classOf[Integer])
-        val p: Vector2 = e.getScreenPosition
+        val p: Vector2d = e.getScreenPosition
         if (e.size != null) {
           if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y && !e.mouseHover) {
             e.onMouseIn
@@ -77,7 +78,7 @@ abstract class GUIContainer(p: Vector2, s: Vector2) extends GUIObject(p, s) {
         val button: Int = event.in.get[Integer](0, classOf[Integer])
         val x: Int = event.in.get[Integer](1, classOf[Integer])
         val y: Int = event.in.get[Integer](2, classOf[Integer])
-        val p: Vector2 = e.getScreenPosition
+        val p: Vector2d = e.getScreenPosition
         if (e.size != null) {
           if (x > p.x && x < p.x + e.size.x && y > p.y && y < p.y + e.size.y) {
             e.onClick(button)

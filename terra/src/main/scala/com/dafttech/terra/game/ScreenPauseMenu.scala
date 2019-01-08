@@ -2,12 +2,13 @@ package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.TerraInfinita
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.Tooltip
 import com.dafttech.terra.engine.gui.anchors.{AnchorCenterX, AnchorRight, AnchorTop, GUIAnchorSet}
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.passes.RenderingPass
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 
 class ScreenPauseMenu extends AbstractScreen {
@@ -19,7 +20,7 @@ class ScreenPauseMenu extends AbstractScreen {
     this()
     localWorld = w
     guiContainerScreen = new ContainerOnscreen
-    exitButton = new ElementButton(Vector2.Null, "Exit") {
+    exitButton = new ElementButton(Vector2d.Zero, "Exit") {
       def actionPerformed(button: Int) {
         Gdx.app.exit()
       }
@@ -29,7 +30,7 @@ class ScreenPauseMenu extends AbstractScreen {
 
     exitButton.assignAnchorSet(exitButtonSet)
     exitButton.setTooltip("Close the game")
-    resumeButton = new ElementButton(Vector2.Null, "Resume") {
+    resumeButton = new ElementButton(Vector2d.Zero, "Resume") {
       def actionPerformed(button: Int) {
         TerraInfinita.setScreen(TerraInfinita.screenIngame)
       }

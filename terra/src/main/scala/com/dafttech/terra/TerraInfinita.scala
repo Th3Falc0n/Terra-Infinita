@@ -3,9 +3,9 @@ package com.dafttech.terra
 import java.util.Random
 
 import com.badlogic.gdx.{ApplicationListener, Game, Gdx}
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.input.InputHandler
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.{Events, ScreenIngame, ScreenPauseMenu}
 import com.dafttech.terra.resources.Resources
@@ -32,7 +32,7 @@ object TerraInfinita extends Game with ApplicationListener {
     InputHandler.init
     Tooltip.init
     MouseSlot.init
-    world = new World(Vector2(2000, 1000))
+    world = new World(Vector2d(2000, 1000))
     screenIngame = new ScreenIngame(world)
     screenPause = new ScreenPauseMenu(world)
     setScreen(screenPause)

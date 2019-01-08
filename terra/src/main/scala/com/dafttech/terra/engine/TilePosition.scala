@@ -1,5 +1,6 @@
 package com.dafttech.terra.engine
 
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 

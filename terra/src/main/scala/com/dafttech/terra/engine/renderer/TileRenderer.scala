@@ -1,21 +1,15 @@
 package com.dafttech.terra.engine.renderer
 
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.resources.Options
 
 abstract class TileRenderer {
-  protected var offset: Vector2 = Vector2.Null
+  protected var offset: Vector2d = Vector2d.Zero
 
   def draw(screen: AbstractScreen, pointOfView: Entity, rendererArguments: AnyRef*)(implicit tp: TilePosition)
 
-  def setOffset(offset: Vector2): Unit = this.offset = offset
+  def setOffset(offset: Vector2d): Unit = this.offset = offset
 
-  def getOffset: Vector2 = offset
+  def getOffset: Vector2d = offset
 }

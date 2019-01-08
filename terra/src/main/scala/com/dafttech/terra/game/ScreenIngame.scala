@@ -2,13 +2,14 @@ package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.TerraInfinita
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.anchors._
 import com.dafttech.terra.engine.gui.containers.{ContainerList, ContainerOnscreen}
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.gui.modules.ModuleChat
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.passes.RenderingPass
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import org.lolhens.eventmanager.{Event, EventListener}
 
@@ -23,7 +24,7 @@ class ScreenIngame extends AbstractScreen {
     Events.EVENTMANAGER.registerEventListener(this)
     localWorld = w
     guiContainerScreen = new ContainerOnscreen
-    exitButton = new ElementButton(Vector2.Null, "Exit") {
+    exitButton = new ElementButton(Vector2d.Zero, "Exit") {
       def actionPerformed(button: Int) {
         Gdx.app.exit
       }
@@ -35,7 +36,7 @@ class ScreenIngame extends AbstractScreen {
     exitButton.setTooltip("Close the game")
     //chat = new ModuleChat
     //chat.create
-    midContainer = new ContainerList(Vector2.Null, Vector2(320, 800), 45)
+    midContainer = new ContainerList(Vector2d.Zero, Vector2d(320, 800), 45)
     midContainer.assignAnchorSet(new GUIAnchorSet(new AnchorBottom(0.15f), new AnchorCenterX))
     //guiContainerScreen.addObject(chat.getContainer) TODO
     guiContainerScreen.addObject(localWorld.localPlayer.hudBottom.getContainer)

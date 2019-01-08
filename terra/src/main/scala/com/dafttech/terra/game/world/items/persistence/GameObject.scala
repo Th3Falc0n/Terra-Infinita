@@ -11,7 +11,9 @@ object GameObject {
 
 // ****FOLLOWING PERSISTENCE CODE**** May harm your brain
 abstract class GameObject() {
-  val uuid: Int = { GameObject.currentUUID = GameObject.currentUUID + 1; GameObject.currentUUID }
+  val uuid: Int = {
+    GameObject.currentUUID = GameObject.currentUUID + 1; GameObject.currentUUID
+  }
 
   override def hashCode(): Int = uuid
 

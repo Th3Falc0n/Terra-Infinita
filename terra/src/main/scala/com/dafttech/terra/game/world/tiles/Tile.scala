@@ -1,20 +1,12 @@
 package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.renderer.{TileRenderer, TileRendererMarchingSquares}
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition}
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
-import com.dafttech.terra.game.world.items.Item
-import com.dafttech.terra.game.world.items.ItemTile
+import com.dafttech.terra.game.world.items.{Item, ItemTile}
 import com.dafttech.terra.game.world.subtiles.Subtile
-import com.dafttech.terra.resources.Options
-import com.dafttech.terra.resources.Resources
 
 abstract class Tile extends ItemTile with IDrawableInWorld {
   private var subtiles: List[Subtile] = List.empty
@@ -27,12 +19,13 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   /**
     * Defines whether this tile graphically connects with another one.
+    *
     * @param tile
     * @return
     */
   def connectsTo(tile: Tile): Boolean = true
 
-  override def use(causer: EntityLiving, position: Vector2): Boolean =
+  override def use(causer: EntityLiving, position: Vector2d): Boolean =
     if (causer.getPosition.$minus(position).length < 100) {
       val pos = position.toWorldPosition
       causer.getWorld.placeTile(Vector2i(pos.x, pos.y), this, causer)
@@ -60,7 +53,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   override def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
     val dropped = getDroppedItem
     if (dropped == null) null
-    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2(0.5, 0.5), dropped)(tilePosition.world)
+    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2d(0.5, 0.5), dropped)(tilePosition.world)
   }
 
   def getWalkFriction: Float = 1

@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world
 
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.gen.biomes.{Biome, BiomeDesert, BiomeGrassland}

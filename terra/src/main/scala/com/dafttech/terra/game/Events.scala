@@ -2,9 +2,8 @@ package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.World
-import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventManager, EventType, ListenerContainer}
 import org.lolhens.storage.tuple.Tuple

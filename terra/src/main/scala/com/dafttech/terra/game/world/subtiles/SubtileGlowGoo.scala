@@ -3,9 +3,8 @@ package com.dafttech.terra.game.world.subtiles
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
@@ -26,7 +25,7 @@ class SubtileGlowGoo extends SubtileFluid {
 
     for (_ <- 0 until pressure.toInt)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5f)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2d(0, -1))
   }
 
   override val getImage: Task[TextureRegion] = Resources.TILES.getImage("glowgoo", img.toInt)

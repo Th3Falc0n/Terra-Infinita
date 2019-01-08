@@ -1,7 +1,6 @@
 package com.dafttech.terra.engine.renderer
 
-import com.dafttech.terra.engine.AbstractScreen
-import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
 

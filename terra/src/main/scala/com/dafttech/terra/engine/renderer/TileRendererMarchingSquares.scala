@@ -1,22 +1,12 @@
 package com.dafttech.terra.engine.renderer
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.graphics.{Pixmap, Texture}
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.tiles.TileFalling
+import com.dafttech.terra.game.world.tiles.{Tile, TileFalling}
 import com.dafttech.terra.resources.Options
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
-import monix.execution.atomic.Atomic
-import org.lwjgl.opengl.PixelFormatLWJGL
 
 import scala.collection.mutable
 import scala.concurrent.duration.Duration
@@ -113,7 +103,7 @@ class TileRendererMarchingSquares extends TileRenderer {
       if (state.m.pressure >= BLOCK_SIZE / 2) {
         import com.dafttech.terra.utils.RenderThread._
         val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
-        if(!td.isPrepared) td.prepare()
+        if (!td.isPrepared) td.prepare()
 
         val xm = BLOCK_SIZE.toFloat / td.getWidth
         val ym = BLOCK_SIZE.toFloat / td.getHeight
@@ -133,10 +123,10 @@ class TileRendererMarchingSquares extends TileRenderer {
 
     if (renderPositions.getOrElseUpdate(tp, new TileCache).texture == null) {
       doDraw(State(
-        CornerState(if(!tTL.isAir) BLOCK_SIZE else 0, tTL),
-        CornerState(if(!tTR.isAir) BLOCK_SIZE else 0, tTR),
-        CornerState(if(!tBL.isAir) BLOCK_SIZE else 0, tBL),
-        CornerState(if(!tBR.isAir) BLOCK_SIZE else 0, tBR),
+        CornerState(if (!tTL.isAir) BLOCK_SIZE else 0, tTL),
+        CornerState(if (!tTR.isAir) BLOCK_SIZE else 0, tTR),
+        CornerState(if (!tBL.isAir) BLOCK_SIZE else 0, tBL),
+        CornerState(if (!tBR.isAir) BLOCK_SIZE else 0, tBR),
         0,
         0)
       )(renderPositions(tp).pixmap, tp)
@@ -152,6 +142,6 @@ class TileRendererMarchingSquares extends TileRenderer {
       case _ => 0
     }
 
-    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE/2, tpy + BLOCK_SIZE/2 + yOff)
+    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE / 2, tpy + BLOCK_SIZE / 2 + yOff)
   }
 }

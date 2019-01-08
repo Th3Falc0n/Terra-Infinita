@@ -5,9 +5,7 @@ import java.util.Random
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
-import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
-import com.dafttech.terra.engine.renderer.TileRenderer
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving

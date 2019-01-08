@@ -5,18 +5,18 @@ import java.util.Random
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
-class ParticleExplosion(pos: Vector2, var radius: Int)(implicit world: World) extends Particle(pos, 0.3f, Vector2(radius * 2, radius * 2)) {
-  private val midpos: Vector2 = pos
+class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: World) extends Particle(pos, 0.3f, Vector2d(radius * 2, radius * 2)) {
+  private val midpos: Vector2d = pos
 
   private val light: PointLight = new PointLight(60)
   light.setColor(new Color(1, 0.9f, 0.9f, 0.4f))
-  light.setSize((getSize.xFloat + getSize.yFloat) * 6 + Options.BLOCK_SIZE)
+  light.setSize((getSize.x.toFloat + getSize.y.toFloat) * 6 + Options.BLOCK_SIZE)
 
   setGravityFactor(0)
   setMidPos(midpos)

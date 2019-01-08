@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
@@ -20,7 +20,7 @@ class TileSapling extends TileFalling {
     else grothDelay -= delta
   }
 
-  override def getNextUseDelay(causer: EntityLiving, position: Vector2, leftClick: Boolean): Double = 0.2
+  override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 0.2
 
   override def isFlammable: Boolean = true
 

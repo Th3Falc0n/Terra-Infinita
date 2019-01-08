@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.entities
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.items.persistence.Prototype
 import com.dafttech.terra.resources.Options
 import monix.eval.Task
 
-class EntityItem(pos: Vector2, size: Vector2, val wrapped: Item)(implicit world: World) extends Entity(pos, size) {
+class EntityItem(pos: Vector2d, size: Vector2d, val wrapped: Item)(implicit world: World) extends Entity(pos, size) {
   override def getImage: Task[TextureRegion] = wrapped.getImage
 
   override def toPrototype: Prototype = wrapped.toPrototype

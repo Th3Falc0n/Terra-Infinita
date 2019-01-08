@@ -1,10 +1,10 @@
 package com.dafttech.terra.engine.gui.modules
 
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.gui.MouseSlot
 import com.dafttech.terra.engine.gui.anchors.{AnchorCenterX, AnchorLeft, AnchorTop, GUIAnchorSet}
 import com.dafttech.terra.engine.gui.containers.{ContainerBlock, ContainerList}
 import com.dafttech.terra.engine.gui.elements.{ElementLabel, ElementSlotInventory}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.items.inventories.Inventory
 import org.lolhens.eventmanager.{Event, EventListener}
@@ -40,14 +40,14 @@ class ModuleInventory extends GUIModule {
     var n = 0
     while (n < 5) {
       if (index + n < inv.getList.size) {
-        val slot: ElementSlotInventory = new ElementSlotInventory(Vector2.Null, inv)
+        val slot: ElementSlotInventory = new ElementSlotInventory(Vector2d.Zero, inv)
         slot.assignStack(inv.getList.get(index + n))
         invList.addObject(slot)
       }
       n += 1
     }
 
-    invList.addObject(new ElementLabel(Vector2.Null, index + "-" + (index + 5) + " / " + inv.getList.size))
+    invList.addObject(new ElementLabel(Vector2d.Zero, index + "-" + (index + 5) + " / " + inv.getList.size))
   }
 
   override def update(delta: Float): Unit = {
@@ -56,15 +56,15 @@ class ModuleInventory extends GUIModule {
 
   def create(): Unit = {
     Events.EVENTMANAGER.registerEventListener(this)
-    container = new ContainerBlock(Vector2.Null, Vector2(312, 200))
+    container = new ContainerBlock(Vector2d.Zero, Vector2d(312, 200))
     val set: GUIAnchorSet = new GUIAnchorSet
     set.addAnchor(new AnchorCenterX)
     container.assignAnchorSet(set)
     var invLabel: ElementLabel = null
-    invLabel = new ElementLabel(Vector2.Null, "Inventory:")
+    invLabel = new ElementLabel(Vector2d.Zero, "Inventory:")
     invLabel.assignAnchorSet(new GUIAnchorSet().addAnchor(new AnchorLeft(0)).addAnchor(new AnchorTop(0)))
     container.addObject(invLabel)
-    invList = new ContainerList(Vector2.Null, Vector2(500, 200)) {
+    invList = new ContainerList(Vector2d.Zero, Vector2d(500, 200)) {
       override def onClick(button: Int) {
         super.onClick(button)
         if (MouseSlot.getAssignedStack != null) {

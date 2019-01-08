@@ -1,18 +1,16 @@
 package com.dafttech.terra.game.world.entities
 
-import java.util.Random
-
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
 import com.dafttech.terra.engine.lighting.PointLight
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.models.EntityThrown
-import com.dafttech.terra.resources.{Options, Resources}
+import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityRainbow(pos: Vector2)(implicit world: World) extends EntityThrown(pos, Vector2(1.5, 1.5)) {
+class EntityRainbow(pos: Vector2d)(implicit world: World) extends EntityThrown(pos, Vector2d(1.5, 1.5)) {
   //private val light: PointLight = new PointLight(120)
   //light.setColor(new Color(1, 1, 1, 1))
   var lightColor: Color = Color.WHITE

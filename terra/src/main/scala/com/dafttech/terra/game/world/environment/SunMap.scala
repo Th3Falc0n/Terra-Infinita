@@ -1,8 +1,6 @@
 package com.dafttech.terra.game.world.environment
 
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.game.world.World
-import com.dafttech.terra.game.world.tiles.Tile
 
 class SunMap {
   private var heights = Map.empty[Int, Int]

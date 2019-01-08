@@ -1,7 +1,8 @@
 package com.dafttech.terra.engine.gui
 
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.elements.ElementSlot
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
@@ -9,18 +10,18 @@ import org.lolhens.eventmanager.{Event, EventListener}
 
 object MouseSlot {
 
-  private class MouseRenderSlot(p: Vector2) extends ElementSlot(p) {
+  private class MouseRenderSlot(p: Vector2d) extends ElementSlot(p) {
     Events.EVENTMANAGER.registerEventListener(this)
 
     @EventListener(Array("MOUSEMOVE"))
     def onEventMouseMove(event: Event): Unit = {
       val x: Int = event.in.get[Integer](1, classOf[Integer])
       val y: Int = event.in.get[Integer](2, classOf[Integer])
-      position = Vector2(x, y)
+      position = Vector2d(x, y)
     }
 
     override def draw(screen: AbstractScreen): Unit = {
-      val p: Vector2 = getScreenPosition
+      val p: Vector2d = getScreenPosition
       screen.batch.begin()
       if (assignedStack != null) {
         assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)
@@ -30,7 +31,7 @@ object MouseSlot {
   }
 
   private var assignedStack: Stack = null
-  private var renderSlot: MouseSlot.MouseRenderSlot = new MouseSlot.MouseRenderSlot(Vector2(0, 0))
+  private var renderSlot: MouseSlot.MouseRenderSlot = new MouseSlot.MouseRenderSlot(Vector2d(0, 0))
 
   def init: Unit = {
   }

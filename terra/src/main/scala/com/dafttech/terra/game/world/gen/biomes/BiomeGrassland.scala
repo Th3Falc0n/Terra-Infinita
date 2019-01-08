@@ -1,7 +1,7 @@
 package com.dafttech.terra.game.world.gen.biomes
 
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.Chunk
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.subtiles.{SubtileBone, SubtileGrass}
@@ -14,7 +14,7 @@ object BiomeGrassland {
 class BiomeGrassland(name: String) extends Biome(name) {
   override def generateChunk(gen: WorldGenerator, chunk: Chunk): Unit = {
     val noise = gen.getNoise
-    val chunkPos = Vector2i.Null.getBlockInWorldPos(chunk)
+    val chunkPos = Vector2i.Zero.getBlockInWorldPos(chunk)
 
     for (x <- chunkPos.x until chunkPos.x + chunk.world.chunksize.x) {
       val h: Int = ((1f + noise.perlinNoise(x / 150f)) * 75).toInt

@@ -1,12 +1,12 @@
 package com.dafttech.terra.game.world.entities.models
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.dafttech.terra.engine.Vector2
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import monix.eval.Task
 
-abstract class EntityLiving(pos: Vector2, s: Vector2)(implicit world: World) extends Entity(pos, s) {
+abstract class EntityLiving(pos: Vector2d, s: Vector2d)(implicit world: World) extends Entity(pos, s) {
   private var maxHealth: Float = 10
   private var health: Float = maxHealth
 
@@ -21,11 +21,11 @@ abstract class EntityLiving(pos: Vector2, s: Vector2)(implicit world: World) ext
     this
   }
 
-  def jump(): Unit = addVelocity(Vector2(0, -30))
+  def jump(): Unit = addVelocity(Vector2d(0, -30))
 
-  def walkLeft(): Unit = addForce(Vector2(-10f * getCurrentAcceleration, 0))
+  def walkLeft(): Unit = addForce(Vector2d(-10f * getCurrentAcceleration, 0))
 
-  def walkRight(): Unit = addForce(Vector2(10f * getCurrentAcceleration, 0))
+  def walkRight(): Unit = addForce(Vector2d(10f * getCurrentAcceleration, 0))
 
   protected def setMaxHealth(maxHealth: Float): EntityLiving = {
     this.maxHealth = maxHealth

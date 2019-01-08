@@ -1,21 +1,22 @@
 package com.dafttech.terra.engine.gui
 
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.anchors.GUIAnchorSet
 import com.dafttech.terra.engine.gui.containers.GUIContainer
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.Events
 import org.lolhens.eventmanager.EventListener
 
 abstract class GUIObject {
-  var position: Vector2 = Vector2.Null
-  var size: Vector2 = null
+  var position: Vector2d = Vector2d.Zero
+  var size: Vector2d = null
   var mouseHover: Boolean = false
   protected var registeredEvents: Boolean = false
   protected var assignedAnchors: GUIAnchorSet = null
   var container: GUIContainer = null
   private[gui] var tooltipText: String = ""
 
-  def this(p: Vector2, s: Vector2) {
+  def this(p: Vector2d, s: Vector2d) {
     this()
     position = p
     size = s
@@ -24,7 +25,7 @@ abstract class GUIObject {
 
   def draw(screen: AbstractScreen)
 
-  def getScreenPosition: Vector2 = position + Option(container).map(_.getScreenPosition).getOrElse(Vector2.Null)
+  def getScreenPosition: Vector2d = position + Option(container).map(_.getScreenPosition).getOrElse(Vector2d.Zero)
 
   def providesActiveHierarchy: Boolean = false
 

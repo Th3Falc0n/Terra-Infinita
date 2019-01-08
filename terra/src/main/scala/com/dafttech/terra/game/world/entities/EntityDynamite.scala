@@ -2,14 +2,13 @@ package com.dafttech.terra.game.world.entities
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.particles.ParticleExplosion
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
-class EntityDynamite(pos: Vector2, var explodeTimer: Float, var radius: Int)(implicit world: World) extends Entity(pos, Vector2(1.5, 1.5)) {
+class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(implicit world: World) extends Entity(pos, Vector2d(1.5, 1.5)) {
   setGravityFactor(0.125)
 
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("dynamite")

@@ -1,9 +1,10 @@
 package com.dafttech.terra.engine.lighting
 
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.AbstractScreen
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.resources.Resources
+
 import scala.concurrent.duration._
 
 class PointLight extends Light {
@@ -18,8 +19,8 @@ class PointLight extends Light {
 
   def setSize(size: Double): Unit = this.size = size
 
-  def drawToLightmap(screen: AbstractScreen, pointOfView: Entity, pos: Vector2) {
-    val p: Vector2 = pos.toRenderPosition(pointOfView.getPosition)
+  def drawToLightmap(screen: AbstractScreen, pointOfView: Entity, pos: Vector2d) {
+    val p: Vector2d = pos.toRenderPosition(pointOfView.getPosition)
     if (!(screen.batch.getColor == color)) {
       screen.batch.end()
       screen.batch.setColor(color)

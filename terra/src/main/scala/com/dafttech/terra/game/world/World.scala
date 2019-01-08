@@ -1,13 +1,10 @@
 package com.dafttech.terra.game.world
 
-import java.util
-import java.util.concurrent.ConcurrentHashMap
-
 import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, Vector2, Vector2i}
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
 import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
@@ -18,8 +15,6 @@ import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import monix.execution.atomic.Atomic
-
-import scala.collection.JavaConverters._
 
 class World extends GameObject {
   var size: Vector2i = Vector2i(0, 0)
@@ -35,22 +30,22 @@ class World extends GameObject {
 
   val renderer = new TileRendererMarchingSquares
 
-  def this(size: Vector2) {
+  def this(size: Vector2d) {
     this()
     this.size = Vector2i(size.x.toInt, size.y.toInt)
     gen = new WorldGenerator(this)
-    println(Vector2.Null)
-    localPlayer = new Player(Vector2.Null)(this)
-    localPlayer.setPosition(Vector2(0, -100))
+    println(Vector2d.Zero)
+    localPlayer = new Player(Vector2d.Zero)(this)
+    localPlayer.setPosition(Vector2d(0, -100))
   }
 
   def getChunks: Map[Vector2i, Chunk] = localChunks.get
 
   def getChunk(blockInWorldPos: Vector2i): Option[Chunk] = // TODO: Option
-  Option(blockInWorldPos).flatMap {blockInWorldPos =>
-    val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
-    localChunks.get.get(chunkPos)
-  }
+    Option(blockInWorldPos).flatMap { blockInWorldPos =>
+      val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
+      localChunks.get.get(chunkPos)
+    }
 
   def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk =
     getChunk(blockInWorldPos).getOrElse {
@@ -62,10 +57,10 @@ class World extends GameObject {
       chunk
     }
 
-  def getChunk(blockInWorldPos: Vector2): Option[Chunk] =
+  def getChunk(blockInWorldPos: Vector2d): Option[Chunk] =
     getChunk(Option(blockInWorldPos).map(_.toVector2i).orNull)
 
-  def getOrCreateChunk(blockInWorldPos: Vector2): Chunk = {
+  def getOrCreateChunk(blockInWorldPos: Vector2d): Chunk = {
     if (blockInWorldPos != null) getOrCreateChunk(blockInWorldPos.toVector2i) else null
   }
 
@@ -158,7 +153,7 @@ class World extends GameObject {
       tile.onTileDestroyed(causer)(TilePosition(this, pos))
       Some(entity)
     } else
-    None
+      None
   }
 
   private def notifyNeighborTiles(pos: Vector2i): Unit = {
@@ -225,7 +220,7 @@ class World extends GameObject {
     TimeKeeping.timeKeeping("Tick update")
   }
 
-  def isInRenderRange(position: Vector2): Boolean = true
+  def isInRenderRange(position: Vector2d): Boolean = true
 
   def draw(screen: AbstractScreen, pointOfView: Entity): Unit = {
 

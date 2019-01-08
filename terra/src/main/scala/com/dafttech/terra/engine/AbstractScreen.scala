@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.{Gdx, Screen}
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
+import com.dafttech.terra.engine.vector.Vector2d
 
 abstract class AbstractScreen extends Screen {
   var projection: Matrix4 = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
@@ -17,7 +18,7 @@ abstract class AbstractScreen extends Screen {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
-    guiContainerScreen.size = Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
+    guiContainerScreen.size = Vector2d(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
   }
 
@@ -27,7 +28,7 @@ abstract class AbstractScreen extends Screen {
     projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
     batch.setProjectionMatrix(projection)
     shr.setProjectionMatrix(projection)
-    guiContainerScreen.size = Vector2(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
+    guiContainerScreen.size = Vector2d(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
     guiContainerScreen.setActive(true)
   }

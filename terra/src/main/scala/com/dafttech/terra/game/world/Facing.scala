@@ -1,6 +1,6 @@
 package com.dafttech.terra.game.world
 
-import com.dafttech.terra.engine.{Vector2, Vector2i}
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.world.Facing._
 
 /**
@@ -23,7 +23,7 @@ sealed abstract class Facing(val index: Int,
 
   def getIndex: Int = index
 
-  def vector: Vector2 = Vector2(xOff, yOff)
+  def vector: Vector2d = Vector2d(xOff, yOff)
 
   def intVector: Vector2i = Vector2i(xOff, yOff)
 }

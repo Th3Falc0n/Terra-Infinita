@@ -1,16 +1,18 @@
 package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.graphics.Color
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.MouseSlot
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.resources.Resources
+
 import scala.concurrent.duration._
 
-class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
+class ElementSlot(p: Vector2d) extends GUIElement(p, Vector2d(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false
@@ -20,7 +22,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
     Resources.GUI.getImage("slot").runSyncUnsafe(5.seconds)
   }
 
-  def useAssignedItem(causer: Player, pos: Vector2, leftClick: Boolean): Boolean = {
+  def useAssignedItem(causer: Player, pos: Vector2d, leftClick: Boolean): Boolean = {
     if (assignedStack != null && assignedStack.size > 0 && causer.world.time > cooldownTime) {
       if (!leftClick && assignedStack.use(causer, pos).size < assignedStack.size) {
         setCooldownTime(causer.world, assignedStack.prototype.toGameObject.asInstanceOf[Item].getNextUseDelay(causer, pos, leftClick).toFloat)
@@ -54,7 +56,7 @@ class ElementSlot(p: Vector2) extends GUIElement(p, Vector2(32, 32)) {
   override def draw(screen: AbstractScreen): Unit = {
     screen.batch.setColor(if (active) Color.YELLOW else Color.WHITE)
     super.draw(screen)
-    val p: Vector2 = getScreenPosition
+    val p: Vector2d = getScreenPosition
     screen.batch.begin()
     if (assignedStack != null) {
       assignedStack.prototype.toGameObject.asInstanceOf[Item].drawInventory(p, screen)

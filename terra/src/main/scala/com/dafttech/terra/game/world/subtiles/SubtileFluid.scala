@@ -5,8 +5,8 @@ import java.util.Random
 
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.renderer.{SubtileRenderer, SubtileRendererFluid}
+import com.dafttech.terra.game.world.Facing
 import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{Facing, World}
 
 abstract class SubtileFluid extends Subtile {
   var maxPressure: Float = 10

@@ -1,6 +1,5 @@
 package com.dafttech.terra.engine
 
-import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
 trait IDrawableInWorld {

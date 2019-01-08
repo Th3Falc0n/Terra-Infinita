@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.input.InputHandler
-import com.dafttech.terra.game.world.{Facing, World}
+import com.dafttech.terra.game.world.Facing
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 

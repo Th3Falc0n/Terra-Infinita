@@ -8,7 +8,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
-import com.dafttech.terra.resources.{Options, Resources}
+import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 object TileFire {
@@ -28,9 +28,9 @@ object TileFire {
 
   def areSurroundingTilesFlammable(tilePosition: TilePosition): Boolean =
     tilePosition.world.getTile(tilePosition.pos + (1, 0)).isFlammable ||
-    tilePosition.world.getTile(tilePosition.pos - (1, 0)).isFlammable ||
-    tilePosition.world.getTile(tilePosition.pos + (0, 1)).isFlammable ||
-    tilePosition.world.getTile(tilePosition.pos - (0, 1)).isFlammable
+      tilePosition.world.getTile(tilePosition.pos - (1, 0)).isFlammable ||
+      tilePosition.world.getTile(tilePosition.pos + (0, 1)).isFlammable ||
+      tilePosition.world.getTile(tilePosition.pos - (0, 1)).isFlammable
 }
 
 class TileFire extends TileFalling {

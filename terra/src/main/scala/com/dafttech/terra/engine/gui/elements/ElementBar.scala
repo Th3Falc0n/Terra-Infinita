@@ -7,21 +7,25 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Matrix4
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.AbstractScreen
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
+
 import scala.concurrent.duration._
 
 object ElementBar {
   private var ciBuffer: FrameBuffer = new FrameBuffer(Format.RGBA8888, 128, 16, false)
 }
 
-class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement(p, Vector2(128, 16)) {
+class ElementBar(p: Vector2d, clr: Color, val maxValue: Float) extends GUIElement(p, Vector2d(128, 16)) {
   private[elements] var bufferMatrix: Matrix4 = new Matrix4().setToOrtho(0, 128, 16, 0, 0, 1)
   var imageMask: TextureRegion = _
   var value: Float = .0f
 
   clr.a = 1
+
   import com.dafttech.terra.utils.RenderThread._
+
   image = Resources.GUI.getImage("bar").runSyncUnsafe(5.seconds)
   imageMask = Resources.GUI.getImage("bar_mask").runSyncUnsafe(5.seconds)
 
@@ -30,7 +34,7 @@ class ElementBar(p: Vector2, clr: Color, val maxValue: Float) extends GUIElement
   }
 
   override def draw(screen: AbstractScreen) {
-    val p: Vector2 = getScreenPosition
+    val p: Vector2d = getScreenPosition
     screen.batch.setShader(null)
     ElementBar.ciBuffer.begin()
     screen.batch.setProjectionMatrix(bufferMatrix)

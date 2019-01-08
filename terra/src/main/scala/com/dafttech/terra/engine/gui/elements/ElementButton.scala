@@ -1,18 +1,20 @@
 package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.graphics.Color
-import com.dafttech.terra.engine.{AbstractScreen, Vector2}
+import com.dafttech.terra.engine.AbstractScreen
+import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
+
 import scala.concurrent.duration._
 
-abstract class ElementButton(p: Vector2, val text: String) extends GUIElement(p, Vector2(100, 20)) {
+abstract class ElementButton(p: Vector2d, val text: String) extends GUIElement(p, Vector2d(100, 20)) {
   image = { // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     Resources.GUI.getImage("button").runSyncUnsafe(5.seconds)
   }
 
   override def draw(screen: AbstractScreen): Unit = {
-    val p: Vector2 = getScreenPosition
+    val p: Vector2d = getScreenPosition
     if (mouseHover) {
       screen.batch.setColor(Color.GREEN)
       Resources.GUI_FONT.setColor(Color.GREEN)

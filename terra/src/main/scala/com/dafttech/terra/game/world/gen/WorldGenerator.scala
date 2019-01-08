@@ -1,8 +1,8 @@
 package com.dafttech.terra.game.world.gen
 
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.game.world.{Chunk, World}
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise
+import com.dafttech.terra.game.world.{Chunk, World}
 
 class WorldGenerator(val world: World) {
   var noise: PerlinNoise = new PerlinNoise(TerraInfinita.rnd.nextInt, 9, 0.48f)

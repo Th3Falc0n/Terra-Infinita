@@ -7,18 +7,19 @@ import com.badlogic.gdx.{Gdx, InputProcessor}
 import com.dafttech.terra.game.Events
 
 object InputHandler extends InputProcessor {
+
   case class Key(id: Int) extends AnyVal {
     def isDown: Boolean = Option(keyDown.get(id)).getOrElse(false)
     def isUp: Boolean = !isDown
   }
-  
+
   case class KeyBinding(name: String, defaultKey: Key) {
     var key: Key = defaultKey
-    
+
     def isDown: Boolean = key.isDown
     def isUp: Boolean = key.isUp
   }
-  
+
   private[input] var keyNames: Map[String, Integer] = new HashMap[String, Integer]
   private[input] var keyIds: Map[Integer, String] = new HashMap[Integer, String]
   private[input] var keyDown: Map[Integer, Boolean] = new HashMap[Integer, Boolean]

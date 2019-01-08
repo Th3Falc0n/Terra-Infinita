@@ -1,9 +1,8 @@
 package com.dafttech.terra.engine.passes
 
 import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.AbstractScreen
-import com.dafttech.terra.engine.TilePosition
-import com.dafttech.terra.engine.Vector2i
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
