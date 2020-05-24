@@ -75,16 +75,16 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     this
   }
 
-  def getSubtiles = subtiles
+  def getSubtiles: List[Subtile] = subtiles
 
-  def hasSubtile(subtileClass: Class[_ <: Subtile], inherited: Boolean): Boolean =
+  def hasSubtile[A <: Subtile](subtileClass: Class[A], inherited: Boolean): Boolean =
     getSubtile(subtileClass, inherited) != null
 
-  def getSubtile(subtileClass: Class[_ <: Subtile], inherited: Boolean): Subtile =
+  def getSubtile[A <: Subtile](subtileClass: Class[A], inherited: Boolean): A =
     subtiles.find(subtile =>
       (inherited && subtileClass.isAssignableFrom(subtile.getClass)) ||
         (!inherited && subtileClass == subtile.getClass)
-    ).orNull
+    ).map(_.asInstanceOf[A]).getOrElse(null.asInstanceOf[A])
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     for (subtile <- subtiles) subtile.draw(screen, pointOfView)
