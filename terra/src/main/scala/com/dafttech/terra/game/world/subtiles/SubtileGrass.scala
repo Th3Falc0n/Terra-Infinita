@@ -9,7 +9,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class SubtileGrass extends Subtile {
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("mask_grass")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("mask_grass")
 
   private val spreadDistance: Int = 3
 

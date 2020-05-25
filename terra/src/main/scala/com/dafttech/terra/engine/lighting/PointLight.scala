@@ -5,8 +5,6 @@ import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.resources.Resources
 
-import scala.concurrent.duration._
-
 class PointLight extends Light {
   private[lighting] var size: Double = 0
 
@@ -27,8 +25,7 @@ class PointLight extends Light {
       screen.batch.begin()
     }
     // TODO: Scheduler
-    import com.dafttech.terra.utils.RenderThread._
-    val image = Resources.LIGHT.getImage("pointlight").runSyncUnsafe(5.seconds)
+    val image = Resources.LIGHT.getImage("pointlight")
     screen.batch.draw(image, (p.x - size).toFloat, (p.y - size).toFloat, size.toFloat * 2, size.toFloat * 2)
   }
 }

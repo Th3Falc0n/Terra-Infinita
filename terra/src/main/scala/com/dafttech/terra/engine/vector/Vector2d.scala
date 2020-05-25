@@ -13,16 +13,21 @@ final case class Vector2d private(override val x: Double,
     else Vector2d(x, y)
 
   override def isZero: Boolean = x == 0 && y == 0
+
   override def isOne: Boolean = x == 1 && y == 1
 
   override def unary_- : Vector2d = Vector2d(-x, -y)
 
   override def +(x: Double, y: Double): Vector2d = if (x == 0 && y == 0) this else Vector2d(this.x + x, this.y + y)
+
   override def -(x: Double, y: Double): Vector2d = if (x == 0 && y == 0) this else Vector2d(this.x - x, this.y - y)
+
   override def *(x: Double, y: Double): Vector2d = if (x == 1 && y == 1) this else Vector2d(this.x * x, this.y * y)
+
   override def /(x: Double, y: Double): Vector2d = if (x == 1 && y == 1) this else Vector2d(this.x / x, this.y / y)
 
   override def `length²`: Double = x * x + y * y
+
   override def length: Double = Math.sqrt(`length²`)
 
   def rotation: Double = {
@@ -61,7 +66,4 @@ object Vector2d {
     if (x == 0 && y == 0) Zero
     else if (x == 1 && y == 1) One
     else new Vector2d(x, y)
-
-  @deprecated
-  def mousePos = Vector2d(Gdx.input.getX, Gdx.input.getY)
 }

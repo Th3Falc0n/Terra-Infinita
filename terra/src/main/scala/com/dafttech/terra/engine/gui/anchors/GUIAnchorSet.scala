@@ -3,10 +3,10 @@ package com.dafttech.terra.engine.gui.anchors
 import com.dafttech.terra.engine.gui.GUIObject
 import com.dafttech.terra.engine.gui.containers.GUIContainer
 
-import scala.collection.mutable;
+import scala.collection.mutable.ArrayBuffer
 
 class GUIAnchorSet {
-  private val anchors: mutable.MutableList[GUIAnchor] = new mutable.MutableList[GUIAnchor]
+  private val anchors: ArrayBuffer[GUIAnchor] = new ArrayBuffer[GUIAnchor]
 
   def this(can: GUIAnchor*) {
     this()

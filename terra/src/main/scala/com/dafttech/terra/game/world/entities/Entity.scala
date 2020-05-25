@@ -209,7 +209,8 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
     if (velocity.`length²` > 0) {
       val stepLength = 10f / velocity.length.toFloat
       inAir = true
-      for (i <- 0f until newDelta by stepLength) {
+      var i = 0f
+      while (i < newDelta) {
         var asl = stepLength
         if (i + asl > newDelta) asl -= (i + asl) - newDelta
 
@@ -217,6 +218,8 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
 
         checkTerrainCollisions(world.localPlayer.getWorld)
         if (hasEntityCollision) checkEntityCollisions()
+
+        i += stepLength
       }
     }
     velocity = velocity.withY(velocity.y * (1 - 0.025f * newDelta))

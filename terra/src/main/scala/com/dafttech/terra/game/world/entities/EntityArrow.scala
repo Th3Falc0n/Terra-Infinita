@@ -14,7 +14,7 @@ class EntityArrow(pos: Vector2d)(implicit world: World) extends EntityThrown(pos
 
   setGravityFactor(0.25)
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("arrow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("arrow")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

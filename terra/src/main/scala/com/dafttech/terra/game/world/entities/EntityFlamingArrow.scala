@@ -18,7 +18,7 @@ class EntityFlamingArrow(pos: Vector2d)(implicit world: World) extends EntityArr
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(255, 200, 40, 255))
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("arrow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("arrow")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

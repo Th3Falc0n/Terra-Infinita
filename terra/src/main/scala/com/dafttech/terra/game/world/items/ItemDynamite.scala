@@ -13,7 +13,7 @@ class ItemDynamite extends ItemEntitySpawner {
     true
   }
 
-  override val getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("dynamite")
+  override val getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("dynamite")
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 1
 }

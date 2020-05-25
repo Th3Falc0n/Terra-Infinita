@@ -6,5 +6,5 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class SkillSingleSwing extends Skill {
-  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImage("aa_single")
+  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImageTask("aa_single")
 }

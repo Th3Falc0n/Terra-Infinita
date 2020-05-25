@@ -6,7 +6,7 @@ import monix.execution.Scheduler
 import org.lwjgl.opengl.GLContext
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutor}
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 
 object RenderThread {
   def isCurrentThread: Boolean = GLContext.getCapabilities != null
@@ -21,18 +21,14 @@ object RenderThread {
 
   def apply[A](task: Task[A]): Task[A] = Task.defer {
     if (isCurrentThread)
-      task.runSyncMaybe(scheduler) match {
+      task.runSyncStep(scheduler) match {
         case Right(result) => Task.now(result)
-        case Left(future) => Task.fromFuture(future)
+        case Left(task) => task.executeOn(scheduler)
       }
     else
       task.executeOn(scheduler)
   }
 
-  def sync[E](task: Task[E])(implicit scheduler: Scheduler): Task[E] = Task.defer {
-    task.runSyncMaybe(scheduler) match {
-      case Right(result) => Task.now(result)
-      case Left(future) => Task.eval(Await.result(future, Duration.Inf))
-    }
-  }
+  def sync[A](task: Task[A])(implicit scheduler: Scheduler): Task[A] =
+    Task.eval(apply(task).runSyncUnsafe(Duration.Inf))
 }

@@ -11,7 +11,7 @@ class ItemWaterBucket extends Item {
   override def update(delta: Float): Unit = {
   }
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("water")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("water")
 
   override def use(causer: EntityLiving, position: Vector2d): Boolean = {
     val tile = causer.world.getTile(position.toWorldPosition)

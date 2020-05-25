@@ -42,7 +42,7 @@ class TileFire extends TileFalling {
   private val speedMod: Float = 0.05f
   private var spread: Boolean = true
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("fire")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("fire")
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.onTick(delta)

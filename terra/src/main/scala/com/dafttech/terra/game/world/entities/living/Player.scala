@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
-import com.dafttech.terra.engine.input.InputHandler
+import com.dafttech.terra.engine.input.{InputHandler, MousePos}
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
@@ -60,17 +60,17 @@ class Player(pos: Vector2d)(implicit world: World) extends EntityLiving(pos, Vec
     if (InputHandler.isKeyDown("JUMP") && !this.isInAir) jump()
 
     if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-      val mouseInWorldPos = Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = MousePos.vector2d + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       if (!hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = true) && System.currentTimeMillis - left > 10) {
         left = System.currentTimeMillis
-        val destroy = (Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
+        val destroy = (MousePos.vector2d + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)).toWorldPosition
         val damagedTile = getWorld.getTile(Vector2i(destroy.x, destroy.y))
         if (damagedTile != null) damagedTile.damage(0.2f, this)
       }
     }
 
     if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !right) {
-      val mouseInWorldPos = Vector2d.mousePos + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
+      val mouseInWorldPos = MousePos.vector2d + getPosition - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)
       hudBottom.getActiveSlot.useAssignedItem(this, mouseInWorldPos, leftClick = false)
     }
 
@@ -90,7 +90,7 @@ class Player(pos: Vector2d)(implicit world: World) extends EntityLiving(pos, Vec
     guiInventory.update(delta)
   }
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("player")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("player")
 
   def getInventory: Inventory = inventory
 

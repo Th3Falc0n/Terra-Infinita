@@ -20,5 +20,5 @@ class ParticleRain(pos: Vector2d)(implicit world: World) extends Particle(pos, 4
 
   override def getVelocityOffsetAngle: Double = 90
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("raindrop")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("raindrop")
 }

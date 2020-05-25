@@ -6,5 +6,5 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class SkillHealingStrike extends Skill {
-  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImage("smashing_strike")
+  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImageTask("smashing_strike")
 }

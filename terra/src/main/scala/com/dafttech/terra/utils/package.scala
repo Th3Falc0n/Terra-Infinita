@@ -6,7 +6,7 @@ import monix.execution.Scheduler
 package object utils {
 
   implicit class SyncTaskOps[A](val task: Task[A]) extends AnyVal {
-    def getSyncUnsafe: A = task.runSyncMaybe(Scheduler.global).getOrElse {
+    def getSyncUnsafe: A = task.runSyncStep(Scheduler.global).getOrElse {
       throw new RuntimeException("Task not synchronous!")
     }
   }

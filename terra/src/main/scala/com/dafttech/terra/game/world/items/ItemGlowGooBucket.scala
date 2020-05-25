@@ -11,7 +11,7 @@ class ItemGlowGooBucket extends Item {
   override def update(delta: Float): Unit = {
   }
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("glowgoo", 0)
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("glowgoo", 0)
 
   override def use(causer: EntityLiving, position: Vector2d): Boolean = {
     val tile = causer.world.getTile(position.toWorldPosition)

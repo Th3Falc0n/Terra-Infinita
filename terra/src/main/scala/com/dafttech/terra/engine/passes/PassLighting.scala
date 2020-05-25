@@ -1,19 +1,23 @@
 package com.dafttech.terra.engine.passes
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.backends.lwjgl.UnsafeLwjglGraphics
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.graphics.glutils.{FloatFrameBuffer, FrameBuffer}
 import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Rectangle
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventListener}
 
 class PassLighting extends RenderingPass {
-  private[passes] var buffer: FrameBuffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
+  private[passes] var buffer: FrameBuffer = {
+    UnsafeLwjglGraphics.bufferHack()
+    new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
+  }
   var sunlevel: Int = BLOCK_SIZE
 
   def getSunlightRect(t: TilePosition, pointOfView: Entity): Rectangle = {

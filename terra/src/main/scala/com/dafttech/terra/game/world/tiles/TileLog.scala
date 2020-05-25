@@ -22,7 +22,7 @@ class TileLog() extends Tile {
 
   override def isCollidableWith(entity: Entity): Boolean = super.isCollidableWith(entity) && !entity.isInstanceOf[EntityLiving]
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("log")
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("log")
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.onTick(delta)

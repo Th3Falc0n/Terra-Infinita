@@ -21,7 +21,7 @@ class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: World) e
   setGravityFactor(0)
   setMidPos(midpos)
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("explosion")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("explosion")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

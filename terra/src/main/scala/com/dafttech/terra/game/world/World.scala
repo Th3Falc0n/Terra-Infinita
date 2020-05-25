@@ -35,7 +35,7 @@ class World(val size: Vector2i) extends GameObject {
 
   var sunmap: SunMap = new SunMap
 
-  val renderer = new TileRendererMarchingSquares
+  val renderer = new TileRendererMarchingSquares()
 
   gen.generateWorld(this)
 

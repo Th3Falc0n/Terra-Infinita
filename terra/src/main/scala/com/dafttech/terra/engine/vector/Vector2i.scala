@@ -31,7 +31,7 @@ final case class Vector2i private(override val x: Int,
 
   def toEntityPos: Vector2d = Vector2d(x * BLOCK_SIZE, y * BLOCK_SIZE)
 
-  def toVector2: Vector2d = Vector2d(x, y)
+  def toVector2d: Vector2d = Vector2d(x, y)
 
   def isInRect(x: Int, y: Int, sizeX: Int, sizeY: Int): Boolean = {
     this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY
