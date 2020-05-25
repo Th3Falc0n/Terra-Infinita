@@ -1,10 +1,10 @@
 package com.dafttech.terra.engine.renderer
 
-import com.badlogic.gdx.graphics.{Pixmap, Texture}
+import com.badlogic.gdx.graphics.{ Color, Pixmap, Texture }
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.{Tile, TileFalling}
+import com.dafttech.terra.game.world.tiles.{ Tile, TileFalling }
 import com.dafttech.terra.resources.Options
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
@@ -16,7 +16,7 @@ object TileRendererMarchingSquares {
 }
 
 class TileCache {
-  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGB888)
+  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGBA8888)
   var texture: Texture = _
 }
 
@@ -108,7 +108,12 @@ class TileRendererMarchingSquares extends TileRenderer {
         val xm = BLOCK_SIZE.toFloat / td.getWidth
         val ym = BLOCK_SIZE.toFloat / td.getHeight
 
-        dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt))
+        if(state.m.pressure ==  BLOCK_SIZE / 2) {
+          dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt) & 0x000000FF)
+        }
+        else {
+          dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt))
+        }
 
         dest.fillRectangle(state.x, BLOCK_SIZE - 2 - state.y, 2, 2)
       }

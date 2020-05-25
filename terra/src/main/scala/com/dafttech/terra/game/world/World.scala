@@ -223,6 +223,8 @@ class World extends GameObject {
   def isInRenderRange(position: Vector2d): Boolean = true
 
   def draw(screen: AbstractScreen, pointOfView: Entity): Unit = {
+    RenderingPass.rpBackground.applyPass(screen, pointOfView, this)
+    TimeKeeping.timeKeeping("rpBack")
 
     RenderingPass.rpObjects.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpObj")

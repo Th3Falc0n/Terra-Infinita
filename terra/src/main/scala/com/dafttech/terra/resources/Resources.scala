@@ -15,17 +15,19 @@ object Resources {
   var SKILLS: ImageLibrary = new ImageLibrary
   var GUI: ImageLibrary = new ImageLibrary
   var LIGHT: ImageLibrary = new ImageLibrary
+  var BACKGROUND: ImageLibrary = new ImageLibrary
   var GUI_FONT: BitmapFont = _
 
   def init() {
+    TILES.loadImage("dirt", "tilesnew/dirt.png")
+    TILES.loadImage("sand", "tilesnew/sand.png")
+
     TILES.loadImage("error", "error.png")
     TILES.loadImage("air", "tiles/air.png")
-    TILES.loadImage("dirt", "tiles/dirt.png")
     TILES.loadImage("stone", "tiles/stone.png")
     TILES.loadImage("grass", "tiles/grass.png", 4)
     TILES.loadImage("torch", "tiles/torch.png")
     TILES.loadImage("weed", "tiles/weed.png")
-    TILES.loadImage("sand", "tiles/sand.png")
     TILES.loadImage("fire", "tiles/fire.png")
     TILES.loadImage("fence", "tiles/fence.png")
     TILES.loadImage("fence_cracks", "tiles/fence_cracks.png")
@@ -67,6 +69,12 @@ object Resources {
     GUI.loadImage("bar", "ui/bar.png")
     GUI.loadImage("bar_mask", "ui/bar_mask.png")
     GUI.loadImage("button", "ui/button_empty.png")
+
+    BACKGROUND.loadImage("pm0", "background/pm0.png")
+    BACKGROUND.loadImage("pm1", "background/pm1.png")
+    BACKGROUND.loadImage("pm2", "background/pm2.png")
+    BACKGROUND.loadImage("pm3", "background/pm3.png")
+    BACKGROUND.loadImage("pm4", "background/pm4.png")
 
     LIGHT.loadImage("pointlight", "lighting/pointlight.png")
 

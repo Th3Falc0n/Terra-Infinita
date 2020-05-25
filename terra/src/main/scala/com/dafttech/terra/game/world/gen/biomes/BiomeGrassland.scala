@@ -29,8 +29,8 @@ class BiomeGrassland(name: String) extends Biome(name) {
           } else {
             if (y < (gen.world.size.y - h) / 5 + h) {
               val tile = new TileDirt()
-              if (y - 2 == h)
-                tile.addSubtile(new SubtileGrass())
+              /*if (y - 2 == h)
+                tile.addSubtile(new SubtileGrass())*/
               tile
             } else {
               val tile = new TileStone()

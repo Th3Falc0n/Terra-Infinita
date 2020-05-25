@@ -196,6 +196,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
     // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
+
     screen.batch.draw(
       image,
       screenVec.x.toFloat,

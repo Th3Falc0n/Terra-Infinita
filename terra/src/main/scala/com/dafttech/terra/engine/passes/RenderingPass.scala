@@ -6,10 +6,11 @@ import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.world.entities.Entity
 
 object RenderingPass {
-  var rpObjects: PassObjects = new PassObjects
-  var rpLighting: PassLighting = new PassLighting
-  var rpGaussian: PassGaussian = new PassGaussian
-  var rpGUIContainer: PassGUIContainer = new PassGUIContainer
+  val rpObjects = new PassObjects
+  val rpLighting = new PassLighting
+  val rpGaussian = new PassGaussian
+  val rpGUIContainer = new PassGUIContainer
+  val rpBackground = new PassBackgrounds
 }
 
 abstract class RenderingPass {
