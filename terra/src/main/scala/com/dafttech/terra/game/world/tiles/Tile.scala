@@ -26,7 +26,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   def connectsTo(tile: Tile): Boolean = true
 
   override def use(causer: EntityLiving, position: Vector2d): Boolean =
-    if (causer.getPosition.$minus(position).length < 100) {
+    if ((causer.getPosition - position).length < 100) {
       val pos = position.toWorldPosition
       causer.getWorld.placeTile(Vector2i(pos.x, pos.y), this, causer)
     } else
