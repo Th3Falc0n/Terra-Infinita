@@ -1,26 +1,21 @@
 package com.dafttech.terra.engine.shaders
 
-import java.io.{IOException, InputStream, InputStreamReader}
-import java.nio.CharBuffer
+import java.io.IOException
 
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
+import com.dafttech.terra.resources.Resource
 
 object ShaderLibrary {
   private var library = Map.empty[String, ShaderProgram]
 
   @throws(classOf[IOException])
-  def loadShader(name: String, vertex: String, fragment: String) {
+  def loadShader(name: String, vertex: String, fragment: String): Unit = {
     ShaderProgram.pedantic = false
-    val vertIS: InputStream = getClass.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + vertex + ".vert")
-    val fragIS: InputStream = getClass.getResourceAsStream("/com/dafttech/terra/engine/shaders/" + fragment + ".frag")
-    val vertBF: CharBuffer = CharBuffer.allocate(vertIS.available)
-    val fragBF: CharBuffer = CharBuffer.allocate(fragIS.available)
-    new InputStreamReader(vertIS).read(vertBF)
-    new InputStreamReader(fragIS).read(fragBF)
-    val vert: String = new String(vertBF.array)
-    val frag: String = new String(fragBF.array)
-    vertIS.close()
-    fragIS.close()
+
+    import monix.execution.Scheduler.Implicits.global
+    val vert = Resource.fromClasspath("/com/dafttech/terra/engine/shaders/" + vertex + ".vert").through(fs2.text.utf8Decode).compile.string.runSyncUnsafe()
+    val frag = Resource.fromClasspath("/com/dafttech/terra/engine/shaders/" + fragment + ".frag").through(fs2.text.utf8Decode).compile.string.runSyncUnsafe()
+
     library = library + (name -> new ShaderProgram(vert, frag))
     getShader(name).enableVertexAttribute(ShaderProgram.COLOR_ATTRIBUTE)
     getShader(name).enableVertexAttribute(ShaderProgram.TEXCOORD_ATTRIBUTE)

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.utils._
 import monix.eval.Task
+import monix.execution.Scheduler
 import monix.execution.atomic.Atomic
+import monix.execution.schedulers.CanBlock
 
 import scala.concurrent.duration._
 
@@ -13,17 +15,12 @@ class ImageLibrary {
 
   def load(name: String, path: String): Task[TextureRegion] =
     RenderThread(Task {
-      val pixmap = {
-        val textureRegion = new TextureRegion(new Texture(path))
-        val textureData = textureRegion.getTexture.getTextureData
-        if (!textureData.isPrepared) textureData.prepare()
-        textureData.consumePixmap()
-      }
-      val textureRegion = new TextureRegion(new Texture(pixmap))
+      val textureData = Resource.toTextureData(Resource.fromClasspath(path)).runSyncUnsafe(Duration.Inf)(Scheduler.global, CanBlock.permit)
+      val textureRegion = new TextureRegion(new Texture(textureData))
       textureRegion.flip(false, true)
       atomicLibrary.transform(_ + (name -> textureRegion))
       textureRegion
-    }).memoize
+    }).memoizeOnSuccess
 
   def loadImage(name: String, path: String): Unit = {
     import com.dafttech.terra.utils.RenderThread._
