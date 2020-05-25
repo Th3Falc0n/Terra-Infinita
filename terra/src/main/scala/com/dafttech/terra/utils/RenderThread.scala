@@ -7,9 +7,10 @@ import org.lwjgl.opengl.GLContext
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
+import scala.util.Try
 
 object RenderThread {
-  def isCurrentThread: Boolean = GLContext.getCapabilities != null
+  def isCurrentThread: Boolean = Try(GLContext.getCapabilities).isSuccess
 
   val executionContext: ExecutionContextExecutor =
     ExecutionContext.fromExecutor { runnable =>

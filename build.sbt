@@ -25,7 +25,8 @@ lazy val engine = project
       "com.badlogicgames.gdx" % "gdx-platform" % "1.9.10" classifier "natives-desktop",
       "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.9.10" classifier "natives-desktop",
       "org.typelevel" %% "cats-core" % "2.1.1",
-      "io.monix" %% "monix" % "3.2.1"
+      "io.monix" %% "monix" % "3.2.1",
+      "co.fs2" %% "fs2-io" % "2.2.1"
     )
   )
 
