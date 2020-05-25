@@ -3,6 +3,7 @@ package com.dafttech.terra.game.world.items
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.input.MousePos
 import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.EntityRainbow
 import com.dafttech.terra.game.world.entities.models.EntityLiving
@@ -12,7 +13,7 @@ import monix.eval.Task
 class ItemRainbowGun extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2d): Boolean = {
     val a = new EntityRainbow(causer.getPosition)(causer.world)
-    a.setVelocity((Vector2d.mousePos - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.08)
+    a.setVelocity((MousePos.vector2d - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.08)
     val time = (System.currentTimeMillis() % 1000) / 100f
     val offset120 = Math.PI * 2 / 3
     val r = Math.max(Math.sin(time + offset120 * 0).toFloat, 0)

@@ -3,6 +3,7 @@ package com.dafttech.terra.engine.gui.elements
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.dafttech.terra.engine.AbstractScreen
+import com.dafttech.terra.engine.renderer.TextBounds
 import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
 
@@ -12,8 +13,7 @@ class ElementLabel(p: Vector2d, var text: String) extends GUIElement(p, null) {
 
   def setText(txt: String): Unit = {
     text = txt
-    val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
-    size = Vector2d(bnds.width, bnds.height)
+    size = TextBounds.getBounds(Resources.GUI_FONT, text)
   }
 
   def setColor(c: Color): Unit = {

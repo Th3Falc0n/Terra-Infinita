@@ -232,7 +232,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
     if (velocity.`length²` > 0) {
       val stepLength = 10f / velocity.length.toFloat
       inAir = true
-      for (i <- 0f until newDelta by stepLength) {
+      for (i <- Iterable.iterate(0f, (newDelta / stepLength).toInt)(_ + stepLength)) {
         var asl = stepLength
         if (i + asl > newDelta) asl -= (i + asl) - newDelta
 
