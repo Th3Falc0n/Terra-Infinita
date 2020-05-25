@@ -5,7 +5,7 @@ import java.util.Random
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
@@ -85,7 +85,7 @@ class TileFire extends TileFalling {
 
   override def getEmittedLight: PointLight = light
 
-  override def getFallSpeed(world: World): Float = 10
+  override def getFallSpeed(world: GameWorld): Float = 10
 
-  override def getFallDelay(world: World): Float = 0.2F
+  override def getFallDelay(world: GameWorld): Float = 0.2F
 }

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.{Color, GL20}
 import com.badlogic.gdx.math.Rectangle
 import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventListener}
@@ -34,7 +34,7 @@ class PassLighting extends RenderingPass {
     buffer = new FloatFrameBuffer(Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
   }
 
-  @SuppressWarnings(Array("unused")) def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*): Unit = {
+  @SuppressWarnings(Array("unused")) def applyPass(screen: AbstractScreen, pointOfView: Entity, world: GameWorld, arguments: AnyRef*): Unit = {
     buffer.begin()
     Gdx.graphics.getGL20.glClearColor(0, 0, 0, 0)
     Gdx.graphics.getGL20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT)

@@ -3,14 +3,14 @@ package com.dafttech.terra.engine.passes
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.Tile
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lwjgl.opengl.GL11
 
 class PassObjects extends RenderingPass {
-  def applyPass(screen: AbstractScreen, pointOfView: Entity, world: World, arguments: AnyRef*): Unit = {
+  def applyPass(screen: AbstractScreen, pointOfView: Entity, world: GameWorld, arguments: AnyRef*): Unit = {
     screen.batch.setShader(null)
     screen.batch.enableBlending()
     screen.batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)

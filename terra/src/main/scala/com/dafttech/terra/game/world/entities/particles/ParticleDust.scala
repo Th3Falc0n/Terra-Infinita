@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import monix.eval.Task
 
-class ParticleDust(pos: Vector2d, assignedTexture: Task[TextureRegion])(implicit world: World) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2d.Zero) {
+class ParticleDust(pos: Vector2d, assignedTexture: Task[TextureRegion])(implicit world: GameWorld) extends Particle(pos, 0.6f + (0.75f * TerraInfinita.rnd.nextFloat), Vector2d.Zero) {
 
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2f + 0.25f
 
@@ -22,5 +22,5 @@ class ParticleDust(pos: Vector2d, assignedTexture: Task[TextureRegion])(implicit
     setSize(Vector2d(particleSize * (1 - (lifetime / lifetimeMax)), getSize.x))
   }
 
-  override def checkTerrainCollisions(world: World): Unit = ()
+  override def checkTerrainCollisions(world: GameWorld): Unit = ()
 }

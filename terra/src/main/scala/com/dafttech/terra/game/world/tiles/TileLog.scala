@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
@@ -88,6 +88,6 @@ class TileLog() extends Tile {
 
   override def isFlammable: Boolean = true
 
-  def isFlatTo(world: World, pos: Vector2i): Boolean =
+  def isFlatTo(world: GameWorld, pos: Vector2i): Boolean =
     world.getTile(pos).isInstanceOf[TileLog] || world.getTile(pos).isOpaque
 }

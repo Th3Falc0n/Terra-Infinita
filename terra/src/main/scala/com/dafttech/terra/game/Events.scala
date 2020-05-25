@@ -3,7 +3,7 @@ package com.dafttech.terra.game
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import org.lolhens.eventmanager.{Event, EventManager, EventType, ListenerContainer}
 import org.lolhens.storage.tuple.Tuple
@@ -42,7 +42,7 @@ object Events {
 
   val EVENT_WORLDTICK: EventType = new EventType("GAMETICK", EVENTMANAGER) {
     protected override def onEvent(event: Event) {
-      val world: World = event.in.get(0, classOf[World])
+      val world: GameWorld = event.in.get(0, classOf[GameWorld])
       val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
       val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
 

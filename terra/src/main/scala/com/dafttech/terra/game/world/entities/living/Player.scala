@@ -10,7 +10,7 @@ import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.Events
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.entities.particles.ParticleDust
@@ -23,7 +23,7 @@ import monix.eval.Task
 
 import scala.concurrent.duration._
 
-class Player(pos: Vector2d)(implicit world: World) extends EntityLiving(pos, Vector2d(1.9f, 3.8f)) {
+class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos, Vector2d(1.9f, 3.8f)) {
   Events.EVENTMANAGER.registerEventListener(this)
 
   val inventory = new Inventory()

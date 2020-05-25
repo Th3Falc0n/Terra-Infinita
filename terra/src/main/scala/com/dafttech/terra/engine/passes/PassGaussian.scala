@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer
 import com.badlogic.gdx.graphics.{GL20, Texture}
 import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.shaders.ShaderLibrary
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import org.lolhens.eventmanager.{Event, EventListener}
 
@@ -21,7 +21,7 @@ class PassGaussian extends RenderingPass {
     bfPass2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth, Gdx.graphics.getHeight, false)
   }
 
-  def applyPass(screen: AbstractScreen, pointOfView: Entity, w: World, arguments: AnyRef*) {
+  def applyPass(screen: AbstractScreen, pointOfView: Entity, w: GameWorld, arguments: AnyRef*) {
     if (!arguments(0).isInstanceOf[Texture]) throw new IllegalArgumentException("Need a texture to draw")
     screen.batch.disableBlending()
     var size: Float = 0.010f

@@ -1,9 +1,9 @@
 package com.dafttech.terra.game.world.environment
 
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 
 abstract class Weather {
-  def update(delta: Float)(implicit world: World): Unit
+  def update(delta: Float)(implicit world: GameWorld): Unit
 
-  def getWindSpeed(implicit world: World): Float
+  def getWindSpeed(implicit world: GameWorld): Float
 }

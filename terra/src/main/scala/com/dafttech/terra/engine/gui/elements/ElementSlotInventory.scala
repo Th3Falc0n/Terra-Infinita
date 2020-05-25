@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.gui.MouseSlot
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
@@ -24,7 +24,7 @@ class ElementSlotInventory(p: Vector2d, val assignedInventory: Inventory) extend
     false
   }
 
-  def setCooldownTime(world: World, cooldownTime: Float): Unit = {
+  def setCooldownTime(world: GameWorld, cooldownTime: Float): Unit = {
     this.cooldownTime = world.time + cooldownTime
   }
 

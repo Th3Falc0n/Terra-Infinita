@@ -2,7 +2,7 @@ package com.dafttech.terra.game.world.tiles
 
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 
 abstract class TileFalling extends Tile {
   var renderOffset: Vector2d = Vector2d.Zero
@@ -44,7 +44,7 @@ abstract class TileFalling extends Tile {
     fallIfPossible
   }
 
-  def getFallSpeed(world: World): Float
+  def getFallSpeed(world: GameWorld): Float
 
-  def getFallDelay(world: World): Float
+  def getFallDelay(world: GameWorld): Float
 }

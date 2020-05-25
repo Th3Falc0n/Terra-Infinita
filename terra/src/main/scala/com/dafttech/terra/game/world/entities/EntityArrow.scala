@@ -3,13 +3,13 @@ package com.dafttech.terra.game.world.entities
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.entities.models.{EntityLiving, EntityThrown}
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityArrow(pos: Vector2d)(implicit world: World) extends EntityThrown(pos, Vector2d(2, 0.6f)) {
+class EntityArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown(pos, Vector2d(2, 0.6f)) {
   private[entities] var stuckIn: TilePosition = _
 
   setGravityFactor(0.25)

@@ -1,22 +1,24 @@
 package com.dafttech.terra.game.world
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, Box2DDebugRenderer, PolygonShape, World }
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
-import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
+import com.dafttech.terra.game.world.entities.{ Entity, EntityItem }
+import com.dafttech.terra.game.world.environment.{ SunMap, Weather, WeatherRainy }
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
-import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
-import com.dafttech.terra.game.{Events, TimeKeeping}
+import com.dafttech.terra.game.world.tiles.{ Tile, TileAir }
+import com.dafttech.terra.game.{ Events, TimeKeeping }
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import monix.execution.atomic.Atomic
 
-class World(val size: Vector2i) extends GameObject {
+class GameWorld(val size: Vector2i) extends GameObject {
 
   val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
 
@@ -38,6 +40,36 @@ class World(val size: Vector2i) extends GameObject {
   val renderer = new TileRendererMarchingSquares()
 
   gen.generateWorld(this)
+
+  val physicsWorld = new World(new Vector2(0, 9.81f), true)
+  val b2drdr = new Box2DDebugRenderer()
+
+  for(x <- 0 until size.x) {
+    for(y <- 0 until size.y) {
+      val tile = getTile(Vector2i(x, y))
+
+      val l = getTile(Vector2i(x-1, y))
+      val r = getTile(Vector2i(x+1, y))
+      val t = getTile(Vector2i(x, y-1))
+      val b = getTile(Vector2i(x, y+1))
+
+      if(!tile.isAir && (l.isAir || r.isAir || t.isAir || b.isAir)) {
+        val bodyDef = new BodyDef
+
+        bodyDef.`type` = BodyDef.BodyType.StaticBody
+        bodyDef.position.set(x * BLOCK_SIZE, y * BLOCK_SIZE)
+
+        val shape = new PolygonShape()
+
+        shape.setAsBox(BLOCK_SIZE/2, BLOCK_SIZE/2)
+
+        val body = physicsWorld.createBody(bodyDef)
+
+        body.createFixture(shape, 0)
+        shape.dispose()
+      }
+    }
+  }
 
   def getEntities: Seq[Entity] = entities
 
@@ -77,7 +109,7 @@ class World(val size: Vector2i) extends GameObject {
     None
   }
 
-  def setTile(pos: Vector2i, _tile: Tile, notify: Boolean): World = {
+  def setTile(pos: Vector2i, _tile: Tile, notify: Boolean): GameWorld = {
     var tile = _tile
 
     var tileIndependentSubtiles: List[Subtile] = Nil
@@ -191,15 +223,21 @@ class World(val size: Vector2i) extends GameObject {
         x - 1
       }
     }*/
+
     TimeKeeping.timeKeeping("Tile update")
+
     for (entity <- entities) {
       entity.update(delta)(TilePosition(this, entity.getPosition.toWorldPosition))
     }
-
     TimeKeeping.timeKeeping("Entity update")
+
     Events.EVENTMANAGER.callSync(Events.EVENT_WORLDTICK, this, (time - lastTick).asInstanceOf[AnyRef])
     lastTick = time
     TimeKeeping.timeKeeping("Tick update")
+
+    physicsWorld.step(delta, 6, 2);
+
+    TimeKeeping.timeKeeping("Physics update")
   }
 
   def isInRenderRange(position: Vector2d): Boolean = true
@@ -213,6 +251,8 @@ class World(val size: Vector2i) extends GameObject {
 
     RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpLig")
+
+    b2drdr.render(physicsWorld, screen.projection.cpy().translate(-pointOfView.getPosition.x.toFloat + Gdx.graphics.getWidth/2 + BLOCK_SIZE/2, -pointOfView.getPosition.y.toFloat + Gdx.graphics.getHeight/2 + BLOCK_SIZE/2,  0))
 
   }
 }

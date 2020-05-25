@@ -6,7 +6,7 @@ import com.badlogic.gdx.{ApplicationListener, Game, Gdx}
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.input.InputHandler
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.{Events, ScreenIngame, ScreenPauseMenu}
 import com.dafttech.terra.resources.Resources
 import org.lwjgl.opengl.Display
@@ -17,7 +17,7 @@ object TerraInfinita extends Game with ApplicationListener {
   private[terra] val fpsLogger: FPSLogger = new FPSLogger()
   var screenIngame: ScreenIngame = null
   var screenPause: ScreenPauseMenu = null
-  var world: World = null
+  var world: GameWorld = null
   private[terra] var wasFocused: Boolean = false
 
   def isFocused: Boolean = {
@@ -32,7 +32,7 @@ object TerraInfinita extends Game with ApplicationListener {
     InputHandler.init
     Tooltip.init
     MouseSlot.init
-    world = new World(Vector2i(1000, 1000))
+    world = new GameWorld(Vector2i(1000, 1000))
     screenIngame = new ScreenIngame(world)
     screenPause = new ScreenPauseMenu(world)
     setScreen(screenPause)

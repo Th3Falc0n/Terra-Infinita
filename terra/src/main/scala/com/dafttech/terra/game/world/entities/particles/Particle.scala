@@ -3,11 +3,11 @@ package com.dafttech.terra.game.world.entities.particles
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import monix.eval.Task
 
-abstract class Particle(pos: Vector2d, life: Double, s: Vector2d)(implicit world: World) extends Entity(pos, s) {
+abstract class Particle(pos: Vector2d, life: Double, s: Vector2d)(implicit world: GameWorld) extends Entity(pos, s) {
   val lifetimeMax: Double = life
   var lifetime: Double = lifetimeMax
 

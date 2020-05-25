@@ -12,13 +12,13 @@ import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
 import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{Facing, World}
+import com.dafttech.terra.game.world.{Facing, GameWorld}
 import com.dafttech.terra.resources.Options
 import monix.eval.Task
 
 import scala.concurrent.duration._
 
-abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) extends GameObject with IDrawableInWorld {
+abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld) extends GameObject with IDrawableInWorld {
   @Persistent protected var position: Vector2d = pos
   @Persistent protected var velocity: Vector2d = Vector2d.Zero
   protected var accelleration: Vector2d = Vector2d.Zero
@@ -50,7 +50,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
     this
   }
 
-  def getWorld: World = world
+  def getWorld: GameWorld = world
 
   def isInAir: Boolean = inAir
 
@@ -88,7 +88,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
     }
   }
 
-  def checkTerrainCollisions(world: World): Unit = {
+  def checkTerrainCollisions(world: GameWorld): Unit = {
     val mid = getPosition.toWorldPosition
     val oVel = velocity
 
@@ -262,8 +262,8 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
 
   def getSize: Vector2d = size
 
-  final def tick(world: World): Unit = onTick(world)
+  final def tick(world: GameWorld): Unit = onTick(world)
 
-  def onTick(world: World): Unit = {
+  def onTick(world: GameWorld): Unit = {
   }
 }

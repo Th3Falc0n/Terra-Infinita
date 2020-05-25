@@ -39,7 +39,6 @@ abstract class AbstractScreen extends Screen {
 
   val batch: SpriteBatch = new SpriteBatch()
   val shr: ShapeRenderer = new ShapeRenderer()
-  var cam: OrthographicCamera = _
 
   def render(delta: Float) {
     Gdx.gl.glClearColor(0f, 0f, 0f, 1f)

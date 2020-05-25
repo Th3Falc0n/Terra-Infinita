@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
-class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: World) extends Particle(pos, 0.3f, Vector2d(radius * 2, radius * 2)) {
+class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorld) extends Particle(pos, 0.3f, Vector2d(radius * 2, radius * 2)) {
   private val midpos: Vector2d = pos
 
   private val light: PointLight = new PointLight(60)

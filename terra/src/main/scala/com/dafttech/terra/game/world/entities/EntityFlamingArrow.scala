@@ -8,13 +8,13 @@ import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.game.world.tiles.TileFire
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityFlamingArrow(pos: Vector2d)(implicit world: World) extends EntityArrow(pos) {
+class EntityFlamingArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityArrow(pos) {
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(255, 200, 40, 255))
 

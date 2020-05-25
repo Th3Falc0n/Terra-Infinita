@@ -18,6 +18,8 @@ lazy val engine = project
   .settings(
     libraryDependencies ++= Seq(
       "com.badlogicgames.gdx" % "gdx" % "1.9.10",
+      "com.badlogicgames.gdx" % "gdx-box2d" % "1.9.10",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % "1.9.10" classifier "natives-desktop",
       "com.badlogicgames.gdx" % "gdx-freetype" % "1.9.10",
       "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % "1.9.10",
       "com.badlogicgames.gdx" % "gdx-platform" % "1.9.10" classifier "natives-desktop",

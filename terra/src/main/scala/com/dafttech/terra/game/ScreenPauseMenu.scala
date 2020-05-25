@@ -9,14 +9,14 @@ import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 import com.dafttech.terra.engine.gui.elements.ElementButton
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 
 class ScreenPauseMenu extends AbstractScreen {
-  private[game] var localWorld: World = _
+  private[game] var localWorld: GameWorld = _
   private[game] var exitButton: ElementButton = _
   private[game] var resumeButton: ElementButton = _
 
-  def this(w: World) {
+  def this(w: GameWorld) {
     this()
     localWorld = w
     guiContainerScreen = new ContainerOnscreen

@@ -3,16 +3,16 @@ package com.dafttech.terra.game.world.gen
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.subtiles.SubtileBone
 import com.dafttech.terra.game.world.tiles.{ Tile, TileAir, TileDirt, TileGrass, TileLog, TileStone }
 
-class WorldGenerator(val world: World) {
+class WorldGenerator(val world: GameWorld) {
   var noise: PerlinNoise = new PerlinNoise(TerraInfinita.rnd.nextInt, 9, 0.48f)
 
-  def generateWorld(world: World): Unit = {
+  def generateWorld(world: GameWorld): Unit = {
     for (x <- 0 until world.size.x) {
-      val h: Int = ((1f + noise.perlinNoise(x / 150f)) * 75).toInt
+      val h: Int = math.min(world.size.y, math.max(0, ((1f + noise.perlinNoise(x / 150f)) * 75).toInt))
 
       for (y <- 0 until world.size.y - h) {
         world.setTile(Vector2i(x, y), new TileAir, notify = false)

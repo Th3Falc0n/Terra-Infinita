@@ -3,7 +3,7 @@ package com.dafttech.terra.game.world.tiles
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.resources.Resources
@@ -28,7 +28,7 @@ class TileSapling extends TileFalling {
 
   override def isCollidableWith(entity: Entity): Boolean = false
 
-  override def getFallSpeed(world: World): Float = 10
+  override def getFallSpeed(world: GameWorld): Float = 10
 
-  override def getFallDelay(world: World): Float = 0.2f
+  override def getFallDelay(world: GameWorld): Float = 0.2f
 }

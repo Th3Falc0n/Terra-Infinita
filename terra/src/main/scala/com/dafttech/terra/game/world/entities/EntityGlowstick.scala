@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityGlowstick(pos: Vector2d)(implicit world: World) extends Entity(pos, Vector2d(1.5, 1.5)) {
+class EntityGlowstick(pos: Vector2d)(implicit world: GameWorld) extends Entity(pos, Vector2d(1.5, 1.5)) {
   private val light: PointLight = new PointLight(95)
   light.setColor(new Color(0.1f, 1, 0.1f, 1))
 

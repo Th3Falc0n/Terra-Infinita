@@ -10,16 +10,16 @@ import com.dafttech.terra.engine.gui.modules.ModuleChat
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import org.lolhens.eventmanager.{Event, EventListener}
 
 class ScreenIngame extends AbstractScreen {
-  private[game] var localWorld: World = null
+  private[game] var localWorld: GameWorld = null
   private[game] var exitButton: ElementButton = null
   private[game] var chat: ModuleChat = null
   private[game] var midContainer: ContainerList = null
 
-  def this(w: World) {
+  def this(w: GameWorld) {
     this()
     Events.EVENTMANAGER.registerEventListener(this)
     localWorld = w
@@ -77,7 +77,7 @@ class ScreenIngame extends AbstractScreen {
     super.hide()
   }
 
-  def getWorld: World = localWorld
+  def getWorld: GameWorld = localWorld
 
   override def render(delta: Float): Unit = {
     super.render(delta)

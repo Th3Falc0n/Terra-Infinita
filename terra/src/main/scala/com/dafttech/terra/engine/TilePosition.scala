@@ -1,10 +1,10 @@
 package com.dafttech.terra.engine
 
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
 
-case class TilePosition(world: World, pos: Vector2i) {
+case class TilePosition(world: GameWorld, pos: Vector2i) {
   def getTile: Tile = world.getTile(pos)
 
   def setTile(tile: Tile, notify: Boolean = true): Unit = world.setTile(pos, tile, notify = true)
@@ -16,7 +16,7 @@ case class TilePosition(world: World, pos: Vector2i) {
     target
   }
 
-  def withWorld(world: World): TilePosition =
+  def withWorld(world: GameWorld): TilePosition =
     TilePosition(world, pos)
 
   def withPosition(position: Vector2i): TilePosition =

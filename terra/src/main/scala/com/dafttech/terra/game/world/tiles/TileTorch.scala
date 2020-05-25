@@ -5,7 +5,7 @@ import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
 import com.dafttech.terra.resources.{Options, Resources}
@@ -19,7 +19,7 @@ class TileTorch extends TileFalling {
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
 
-    implicit val world: World = tilePosition.world
+    implicit val world: GameWorld = tilePosition.world
 
     for (_ <- 0 until 5)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5)
@@ -34,7 +34,7 @@ class TileTorch extends TileFalling {
 
   override def getEmittedLight: PointLight = light
 
-  override def getFallSpeed(world: World): Float = 10
+  override def getFallSpeed(world: GameWorld): Float = 10
 
-  override def getFallDelay(world: World): Float = 0.2f
+  override def getFallDelay(world: GameWorld): Float = 0.2f
 }

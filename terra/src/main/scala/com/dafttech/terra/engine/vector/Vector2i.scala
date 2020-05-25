@@ -2,7 +2,7 @@ package com.dafttech.terra.engine.vector
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.World
+import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 final case class Vector2i private(override val x: Int,
