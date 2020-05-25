@@ -53,7 +53,7 @@ object TerraInfinita extends Game with ApplicationListener {
 
   override def resize(arg0: Int, arg1: Int) {
     super.resize(arg0, arg1)
-    Gdx.graphics.setDisplayMode(arg0, arg1, false)
+    Gdx.graphics.setWindowedMode(arg0, arg1)
     this.getScreen.resize(arg0, arg1)
     Events.EVENTMANAGER.callSync(Events.EVENT_WINRESIZE, this)
   }
