@@ -1,8 +1,9 @@
 package com.dafttech.terra.utils
 
-import monix.eval.{MVar, Task}
+import monix.catnap.MVar
+import monix.eval.Task
 
-final class MLock(mvar: MVar[Unit]) {
+final class MLock(mvar: MVar[Task, Unit]) {
   def acquire: Task[Unit] = mvar.take
 
   def release: Task[Unit] = mvar.put(())
@@ -12,5 +13,5 @@ final class MLock(mvar: MVar[Unit]) {
 }
 
 object MLock {
-  def apply(): Task[MLock] = MVar(()).map(v => new MLock(v))
+  def apply(): Task[MLock] = MVar.of[Task, Unit](()).map(v => new MLock(v))
 }

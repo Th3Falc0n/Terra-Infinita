@@ -18,7 +18,7 @@ class EntityRainbow(pos: Vector2d)(implicit world: World) extends EntityThrown(p
   setGravityFactor(0.125)
   isDynamicEntity = true
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("rainbow")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("rainbow")
 
   override def collidesWith(e: Entity): Boolean = false
 

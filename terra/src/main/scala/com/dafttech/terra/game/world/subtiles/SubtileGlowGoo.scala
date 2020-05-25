@@ -28,7 +28,7 @@ class SubtileGlowGoo extends SubtileFluid {
         new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2d(0, -1))
   }
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("glowgoo", img.toInt)
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("glowgoo", img.toInt)
 
   override def getMaxReach: Int = 0
 

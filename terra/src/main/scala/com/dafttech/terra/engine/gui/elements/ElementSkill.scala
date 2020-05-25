@@ -6,14 +6,11 @@ import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.resources.Resources
 
-import scala.concurrent.duration._
-
 class ElementSkill(p: Vector2d, val player: Player, val label: String, val skillID: Int) extends GUIElement(p, Vector2d(32, 32)) {
   var active: Boolean = false
 
   image = { // TODO: Scheduler
-    import com.dafttech.terra.utils.RenderThread._
-    Resources.GUI.getImage("slot").runSyncUnsafe(5.seconds)
+    Resources.GUI.getImage("slot")
   }
 
   override def onClick(button: Int): Unit = {

@@ -6,5 +6,5 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class SkillStab extends Skill {
-  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImage("stab")
+  override def getImage: Task[TextureRegion] = Resources.SKILLS.getImageTask("stab")
 }

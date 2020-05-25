@@ -12,7 +12,7 @@ class SubtileWater extends SubtileFluid {
   private[subtiles] var img: Float = 0
   private[subtiles] var wavephase = false
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("wateranim", img.toInt)
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("wateranim", img.toInt)
 
   override def getNewFluid = new SubtileWater
 

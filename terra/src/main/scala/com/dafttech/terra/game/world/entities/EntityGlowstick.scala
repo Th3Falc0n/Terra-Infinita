@@ -19,7 +19,7 @@ class EntityGlowstick(pos: Vector2d)(implicit world: World) extends Entity(pos, 
 
   setGravityFactor(0.125)
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("glowstick")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("glowstick")
 
   override def collidesWith(e: Entity): Boolean = false
 

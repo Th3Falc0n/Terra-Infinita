@@ -6,12 +6,9 @@ import com.dafttech.terra.engine.renderer.TextBounds
 import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
 
-import scala.concurrent.duration._
-
 abstract class ElementButton(p: Vector2d, val text: String) extends GUIElement(p, Vector2d(100, 20)) {
   image = { // TODO: Scheduler
-    import com.dafttech.terra.utils.RenderThread._
-    Resources.GUI.getImage("button").runSyncUnsafe(5.seconds)
+    Resources.GUI.getImage("button")
   }
 
   override def draw(screen: AbstractScreen): Unit = {

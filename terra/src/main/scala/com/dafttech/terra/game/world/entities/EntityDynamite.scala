@@ -11,7 +11,7 @@ import monix.eval.Task
 class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(implicit world: World) extends Entity(pos, Vector2d(1.5, 1.5)) {
   setGravityFactor(0.125)
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("dynamite")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("dynamite")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

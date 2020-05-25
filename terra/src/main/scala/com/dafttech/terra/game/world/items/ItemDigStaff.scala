@@ -18,5 +18,5 @@ class ItemDigStaff extends ItemEntitySpawner {
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 1
 
-  override val getImage: Task[TextureRegion] = Resources.ITEMS.getImage("digStaff")
+  override val getImage: Task[TextureRegion] = Resources.ITEMS.getImageTask("digStaff")
 }

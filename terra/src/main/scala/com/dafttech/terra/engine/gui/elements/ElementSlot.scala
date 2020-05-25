@@ -10,16 +10,13 @@ import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.inventories.Stack
 import com.dafttech.terra.resources.Resources
 
-import scala.concurrent.duration._
-
 class ElementSlot(p: Vector2d) extends GUIElement(p, Vector2d(32, 32)) {
   private var cooldownTime: Float = 0
   var assignedStack: Stack = null
   var active: Boolean = false
 
   image = { // TODO: Scheduler
-    import com.dafttech.terra.utils.RenderThread._
-    Resources.GUI.getImage("slot").runSyncUnsafe(5.seconds)
+    Resources.GUI.getImage("slot")
   }
 
   def useAssignedItem(causer: Player, pos: Vector2d, leftClick: Boolean): Boolean = {

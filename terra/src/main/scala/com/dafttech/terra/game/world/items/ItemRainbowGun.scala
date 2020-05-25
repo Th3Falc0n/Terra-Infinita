@@ -27,5 +27,5 @@ class ItemRainbowGun extends ItemEntitySpawner {
 
   override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 0
 
-  override val getImage: Task[TextureRegion] = Resources.ITEMS.getImage("rainbowgun")
+  override val getImage: Task[TextureRegion] = Resources.ITEMS.getImageTask("rainbowgun")
 }

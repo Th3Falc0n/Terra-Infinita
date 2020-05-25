@@ -20,7 +20,7 @@ class ParticleSpark(val pos: Vector2d)(implicit world: World) extends Particle(p
   setGravityFactor(0.05)
   setVelocity(Vector2d(4f * (0.5f - TerraInfinita.rnd.nextFloat), 4f * (0.5f - TerraInfinita.rnd.nextFloat)))
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("flame")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("flame")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

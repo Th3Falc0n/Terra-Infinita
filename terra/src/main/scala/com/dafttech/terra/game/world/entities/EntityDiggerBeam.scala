@@ -19,7 +19,7 @@ class EntityDiggerBeam(pos: Vector2d)(implicit world: World) extends EntityThrow
   setGravityFactor(0)
   isDynamicEntity = true
 
-  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImage("beamDig")
+  override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("beamDig")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)

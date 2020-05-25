@@ -34,11 +34,18 @@ class ImageLibrary {
     for (i <- 0 to num)
       loadImage(name + i, path.substring(0, path.lastIndexOf(".")) + "_" + i + path.substring(path.lastIndexOf(".")))
 
-  val errorImageTask: Task[TextureRegion] = Task.defer(getImage("error")).memoizeOnSuccess
+  private def getImageOption(name: String): Option[TextureRegion] =
+    atomicLibrary.get.get(name)
 
-  def getImage(name: String): Task[TextureRegion] =
-    Task.defer(atomicLibrary.get.get(name).map(Task.now).getOrElse(errorImageTask)) //.memoizeOnSuccess
+  lazy val errorImage: TextureRegion = getImageOption("error").getOrElse(throw new RuntimeException("Failed to load error image!"))
 
-  def getImage(name: String, num: Int): Task[TextureRegion] =
+  def getImage(name: String): TextureRegion =
+    getImageOption(name).getOrElse(errorImage)
+
+  def getImage(name: String, num: Int): TextureRegion =
     getImage(name + num)
+
+  def getImageTask(name: String): Task[TextureRegion] = Task.now(getImage(name))
+
+  def getImageTask(name: String, num: Int): Task[TextureRegion] = Task.now(getImage(name, num))
 }

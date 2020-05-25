@@ -14,7 +14,7 @@ import monix.eval.Task
 class TileGrass() extends Tile {
   @Persistent private val grassIndex: Int = TerraInfinita.rnd.nextInt(5)
 
-  override val getImage: Task[TextureRegion] = Resources.TILES.getImage("grass", grassIndex)
+  override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("grass", grassIndex)
 
   override def isCollidableWith(entity: Entity): Boolean = false
 

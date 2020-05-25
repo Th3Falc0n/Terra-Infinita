@@ -11,8 +11,6 @@ import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
 
-import scala.concurrent.duration._
-
 object ElementBar {
   private var ciBuffer: FrameBuffer = new FrameBuffer(Format.RGBA8888, 128, 16, false)
 }
@@ -24,10 +22,8 @@ class ElementBar(p: Vector2d, clr: Color, val maxValue: Float) extends GUIElemen
 
   clr.a = 1
 
-  import com.dafttech.terra.utils.RenderThread._
-
-  image = Resources.GUI.getImage("bar").runSyncUnsafe(5.seconds)
-  imageMask = Resources.GUI.getImage("bar_mask").runSyncUnsafe(5.seconds)
+  image = Resources.GUI.getImage("bar")
+  imageMask = Resources.GUI.getImage("bar_mask")
 
   def setValue(v: Float) {
     value = v
