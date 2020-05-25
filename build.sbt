@@ -16,12 +16,13 @@ lazy val root = project.in(file("."))
 
 lazy val engine = project
   .settings(
+    // TODO: gdx 1.9.7: com.badlogic.gdx.utils.GdxRuntimeException: Float texture FrameBuffer Attachment not available on GLES 2.0
     libraryDependencies ++= Seq(
-      "com.badlogicgames.gdx" % "gdx" % "1.9.10",
-      "com.badlogicgames.gdx" % "gdx-freetype" % "1.9.10",
-      "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % "1.9.10",
-      "com.badlogicgames.gdx" % "gdx-platform" % "1.9.10" classifier "natives-desktop",
-      "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.9.10" classifier "natives-desktop",
+      "com.badlogicgames.gdx" % "gdx" % "1.9.6",
+      "com.badlogicgames.gdx" % "gdx-freetype" % "1.9.6",
+      "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % "1.9.6",
+      "com.badlogicgames.gdx" % "gdx-platform" % "1.9.6" classifier "natives-desktop",
+      "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.9.6" classifier "natives-desktop",
       "org.typelevel" %% "cats-core" % "2.1.1",
       "io.monix" %% "monix" % "3.2.1"
     )
