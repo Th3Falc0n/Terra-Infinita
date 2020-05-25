@@ -2,12 +2,11 @@ package com.dafttech.terra.game.world.gen.biomes
 
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.Chunk
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.subtiles.{SubtileBone, SubtileGrass}
 import com.dafttech.terra.game.world.tiles._
 
-object BiomeGrassland {
+/*object BiomeGrassland {
   var instance = new BiomeGrassland("Grassland")
 }
 
@@ -46,4 +45,4 @@ class BiomeGrassland(name: String) extends Biome(name) {
   }
 
   override def populateChunk(gen: WorldGenerator, chunk: Chunk): Unit = ()
-}
+}*/

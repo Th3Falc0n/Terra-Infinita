@@ -72,13 +72,12 @@ class PassLighting extends RenderingPass {
     screen.batch.end()
     screen.batch.begin()
 
-    for (chunk <- world.getChunks.values) {
-      for (entity <- chunk.getLocalEntities) {
-        if (entity.isLightEmitter && entity.getEmittedLight != null && world.isInRenderRange(entity.getPosition)) {
-          entity.getEmittedLight.drawToLightmap(screen, pointOfView, entity.getPosition)
-        }
+    for (entity <- world.getEntities) {
+      if (entity.isLightEmitter && entity.getEmittedLight != null && world.isInRenderRange(entity.getPosition)) {
+        entity.getEmittedLight.drawToLightmap(screen, pointOfView, entity.getPosition)
       }
     }
+
     screen.batch.end()
     screen.batch.setColor(Color.WHITE)
     buffer.end()

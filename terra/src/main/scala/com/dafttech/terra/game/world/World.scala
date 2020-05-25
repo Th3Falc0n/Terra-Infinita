@@ -16,64 +16,49 @@ import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import monix.execution.atomic.Atomic
 
-class World extends GameObject {
-  var size: Vector2i = Vector2i(0, 0)
-  var chunksize: Vector2i = Vector2i(32, 32)
+class World(val size: Vector2i) extends GameObject {
+
+  val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
+
   var time: Float = 0
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
-  var gen: WorldGenerator = _
-  private val localChunks: Atomic[Map[Vector2i, Chunk]] = Atomic(Map.empty[Vector2i, Chunk])
-  var localPlayer: Player = _
+
+  private var entities: Seq[Entity] = Seq.empty
+
+  var gen: WorldGenerator = new WorldGenerator(this)
+
+  var localPlayer: Player = new Player(Vector2d.Zero)(this)
+  localPlayer.setPosition(Vector2d(0, -100))
+
   var weather: Weather = new WeatherRainy
+
   var sunmap: SunMap = new SunMap
 
   val renderer = new TileRendererMarchingSquares
 
-  def this(size: Vector2d) {
-    this()
-    this.size = Vector2i(size.x.toInt, size.y.toInt)
-    gen = new WorldGenerator(this)
-    println(Vector2d.Zero)
-    localPlayer = new Player(Vector2d.Zero)(this)
-    localPlayer.setPosition(Vector2d(0, -100))
+  gen.generateWorld(this)
+
+  def getEntities: Seq[Entity] = entities
+
+  def addEntity(entity: Entity) = {
+    entities = entities :+ entity
   }
 
-  def getChunks: Map[Vector2i, Chunk] = localChunks.get
-
-  def getChunk(blockInWorldPos: Vector2i): Option[Chunk] = // TODO: Option
-    Option(blockInWorldPos).flatMap { blockInWorldPos =>
-      val chunkPos: Vector2i = blockInWorldPos.getChunkPos(this)
-      localChunks.get.get(chunkPos)
+  def getTile(pos: Vector2i): Tile = {
+    if(pos.x >= 0 && pos.x < size.x && pos.y >= 0 && pos.y < size.y) {
+      tiles(pos.x)(pos.y)
     }
-
-  def getOrCreateChunk(blockInWorldPos: Vector2i): Chunk =
-    getChunk(blockInWorldPos).getOrElse {
-      val chunk = new Chunk(this, blockInWorldPos.getChunkPos(this))
-      val chunkPos = blockInWorldPos.getChunkPos(this)
-      localChunks.transform(_ + (chunkPos -> chunk))
-      chunk.fillAir()
-      gen.generateChunk(chunk)
-      chunk
+    else {
+      new TileAir()
     }
-
-  def getChunk(blockInWorldPos: Vector2d): Option[Chunk] =
-    getChunk(Option(blockInWorldPos).map(_.toVector2i).orNull)
-
-  def getOrCreateChunk(blockInWorldPos: Vector2d): Chunk = {
-    if (blockInWorldPos != null) getOrCreateChunk(blockInWorldPos.toVector2i) else null
   }
-
-  def doesChunkExist(x: Int, y: Int): Boolean = getChunk(Vector2i(x, y)).isDefined
-
-  def getTile(pos: Vector2i): Tile =
-    getOrCreateChunk(pos).getTile(pos.getBlockInChunkPos(this))
 
   def getNextTileBelow(pos: Vector2i): Option[TilePosition] = {
     var y = pos.y
 
     y += 1
-    while (doesChunkExist(pos.x, y)) {
+    while (y < size.y) {
       val tile = Option(getTile(Vector2i(pos.x, y))).filter(!_.isAir)
       if (tile.isDefined) return Some(TilePosition(this, Vector2i(pos.x, y)))
       y += 1
@@ -85,7 +70,7 @@ class World extends GameObject {
     var y = pos.y
 
     y -= 1
-    while (doesChunkExist(pos.x, y)) {
+    while (y >= 0) {
       if (getTile(Vector2i(pos.x, y)) != null && !getTile(Vector2i(pos.x, y)).isAir) return Some(TilePosition(this, Vector2i(pos.x, y)))
       y -= 1
     }
@@ -95,40 +80,38 @@ class World extends GameObject {
   def setTile(pos: Vector2i, _tile: Tile, notify: Boolean): World = {
     var tile = _tile
 
-    val chunk: Chunk = getOrCreateChunk(pos)
+    var tileIndependentSubtiles: List[Subtile] = Nil
+    var notifyOldRemoval: Vector2i = null
 
-    if (chunk != null) {
-      var tileIndependentSubtiles: List[Subtile] = Nil
-      var notifyOldRemoval: Vector2i = null
+    if (tile != null && pos != null && (getTile(pos) eq tile)) {
+      notifyOldRemoval = pos
+      setTile(notifyOldRemoval, null, false)
+    }
 
-      if (tile != null && pos != null && (getTile(pos) eq tile)) {
-        notifyOldRemoval = pos
-        setTile(notifyOldRemoval, null, false)
-      }
+    if (tile == null) tile = new TileAir
 
-      if (tile == null) tile = new TileAir
+    val oldTile: Tile = getTile(pos)
 
-      val oldTile: Tile = getTile(pos)
+    if (oldTile != null) {
+      sunmap.postTileRemove(TilePosition(this, pos))
+      for (subtile <- oldTile.getSubtiles)
+        if (subtile.isTileIndependent)
+          tileIndependentSubtiles = tileIndependentSubtiles :+ subtile
+      oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles: _*)
+    }
 
-      if (oldTile != null) {
-        sunmap.postTileRemove(TilePosition(this, pos))
-        for (subtile <- oldTile.getSubtiles)
-          if (subtile.isTileIndependent)
-            tileIndependentSubtiles = tileIndependentSubtiles :+ subtile
-        oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles: _*)
-      }
+    if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled)
+      tiles(pos.x)(pos.y) = tile
 
-      chunk.setTile(pos.getBlockInChunkPos(this), tile)
-      tile.addSubtile(tileIndependentSubtiles: _*)
+    tile.addSubtile(tileIndependentSubtiles: _*)
 
-      sunmap.postTilePlace(TilePosition(this, pos))
+    sunmap.postTilePlace(TilePosition(this, pos))
 
-      if (notify) {
-        tile.onTileSet(TilePosition(this, pos))
+    if (notify) {
+      tile.onTileSet(TilePosition(this, pos))
 
-        if (notifyOldRemoval != null) notifyNeighborTiles(Vector2i(notifyOldRemoval.x, notifyOldRemoval.y))
-        notifyNeighborTiles(Vector2i(pos.x, pos.y))
-      }
+      if (notifyOldRemoval != null) notifyNeighborTiles(Vector2i(notifyOldRemoval.x, notifyOldRemoval.y))
+      notifyNeighborTiles(Vector2i(pos.x, pos.y))
     }
 
     renderer.invalidateCache(TilePosition(this, pos))
@@ -169,7 +152,7 @@ class World extends GameObject {
   }
 
   def removeEntity(entity: Entity): Unit = {
-    entity.remove
+    entities = entities.filter(_ != entity)
   }
 
   def update(delta: Float): Unit = {
@@ -209,11 +192,10 @@ class World extends GameObject {
       }
     }*/
     TimeKeeping.timeKeeping("Tile update")
-    for (chunk <- localChunks.get.values) {
-      for (entity <- chunk.getLocalEntities) {
-        entity.update(delta)(TilePosition(this, entity.getPosition.toWorldPosition))
-      }
+    for (entity <- entities) {
+      entity.update(delta)(TilePosition(this, entity.getPosition.toWorldPosition))
     }
+
     TimeKeeping.timeKeeping("Entity update")
     Events.EVENTMANAGER.callSync(Events.EVENT_WORLDTICK, this, (time - lastTick).asInstanceOf[AnyRef])
     lastTick = time

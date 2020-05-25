@@ -2,18 +2,17 @@ package com.dafttech.terra.game.world.gen.biomes
 
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.Chunk
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.gen.calc.PerlinNoise
 import com.dafttech.terra.game.world.subtiles.{SubtileBone, SubtileDryGrass}
 import com.dafttech.terra.game.world.tiles.{Tile, TileSand, TileStone}
 
-object BiomeDesert {
+/*object BiomeDesert {
   var instance = new BiomeDesert("Desert")
 }
 
 class BiomeDesert(name: String) extends Biome(name) {
-  override def generateChunk(gen: WorldGenerator, chunk: Chunk): Unit = {
+  override def generateChunk(gen: WorldGenerator): Unit = {
     val noise: PerlinNoise = gen.getNoise
 
     val chunkPos: Vector2i = Vector2i.Zero.getBlockInWorldPos(chunk)
@@ -43,4 +42,4 @@ class BiomeDesert(name: String) extends Biome(name) {
   }
 
   override def populateChunk(gen: WorldGenerator, chunk: Chunk): Unit = ()
-}
+}*/

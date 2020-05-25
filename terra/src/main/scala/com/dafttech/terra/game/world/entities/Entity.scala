@@ -12,16 +12,13 @@ import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition
 import com.dafttech.terra.game.world.entities.living.Player
 import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
 import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{Chunk, Facing, World}
+import com.dafttech.terra.game.world.{Facing, World}
 import com.dafttech.terra.resources.Options
 import monix.eval.Task
 
 import scala.concurrent.duration._
 
 abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) extends GameObject with IDrawableInWorld {
-  addToWorld(world, pos)
-
-  private[entities] var chunk: Chunk = _
   @Persistent protected var position: Vector2d = pos
   @Persistent protected var velocity: Vector2d = Vector2d.Zero
   protected var accelleration: Vector2d = Vector2d.Zero
@@ -31,7 +28,9 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
   protected var color: Color = Color.WHITE
   private[entities] var gravityFactor: Double = 1
   protected var inAir = false
-  protected var inWorld = true
+
+  world.addEntity(this)
+
   @Persistent protected var isDynamicEntity: Boolean = false
 
   def setMidPos(pos: Vector2d): Unit = setPosition(pos + (-size.x * Options.BLOCK_SIZE / 2f, -size.y * Options.BLOCK_SIZE / 2f))
@@ -47,31 +46,8 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
   def getPosition: Vector2d = position
 
   def setPosition(pos: Vector2d): Entity = {
-    val newChunk = world.getOrCreateChunk(pos)
-    if (newChunk != null && (chunk ne newChunk)) {
-      addToWorld(newChunk, pos)
-      onRechunk(newChunk, pos)
-    }
     position = pos
     this
-  }
-
-  def onRechunk(newChunk: Chunk, pos: Vector2d): Unit = {
-  }
-
-  def remove: Boolean =
-    if (chunk != null) {
-      inWorld = false
-      chunk.removeEntity(this)
-    } else
-      false
-
-  private def addToWorld(world: World, pos: Vector2d): Unit = addToWorld(world.getOrCreateChunk(pos), pos)
-
-  private def addToWorld(chunk: Chunk, pos: Vector2d): Unit = {
-    remove
-    inWorld = true
-    if (chunk.addEntity(this)) this.chunk = chunk
   }
 
   def getWorld: World = world
@@ -103,7 +79,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
 
   def checkEntityCollisions(): Unit = {
     val oVel = velocity
-    for (entity <- chunk.getLocalEntities) {
+    for (entity <- world.getEntities) {
       if (!((entity == this) || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.`length²` < entity.velocity.`length²`)) {
         val otherRect = Vector2d(entity.getPosition.x, entity.getPosition.y).rectangleTo(Vector2d(entity.getSize.x * Options.BLOCK_SIZE, entity.getSize.y * Options.BLOCK_SIZE))
         val playerRect = Vector2d(getPosition.x, getPosition.y).rectangleTo(Vector2d(Options.BLOCK_SIZE * size.x, Options.BLOCK_SIZE * size.y))
@@ -238,8 +214,6 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: World) ext
         if (i + asl > newDelta) asl -= (i + asl) - newDelta
 
         setPosition(getPosition + (velocity * asl))
-
-        if (!inWorld) return
 
         checkTerrainCollisions(world.localPlayer.getWorld)
         if (hasEntityCollision) checkEntityCollisions()

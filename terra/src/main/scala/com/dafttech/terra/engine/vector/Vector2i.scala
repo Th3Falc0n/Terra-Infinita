@@ -2,7 +2,7 @@ package com.dafttech.terra.engine.vector
 
 import com.badlogic.gdx.Gdx
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.{Chunk, World}
+import com.dafttech.terra.game.world.World
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 
 final case class Vector2i private(override val x: Int,
@@ -36,15 +36,6 @@ final case class Vector2i private(override val x: Int,
   def isInRect(x: Int, y: Int, sizeX: Int, sizeY: Int): Boolean = {
     this.x >= x && this.y >= y && this.x < x + sizeX && this.y < y + sizeY
   }
-
-  def getChunkPos(world: World): Vector2i =
-    new Vector2i(Vector2i.getChunkPos(x, world.chunksize.x), Vector2i.getChunkPos(y, world.chunksize.y))
-
-  def getBlockInChunkPos(world: World): Vector2i =
-    new Vector2i(Vector2i.getBlockInChunkPos(x, world.chunksize.x), Vector2i.getBlockInChunkPos(y, world.chunksize.y))
-
-  def getBlockInWorldPos(chunk: Chunk): Vector2i =
-    new Vector2i(Vector2i.getBlockInWorldPos(chunk.pos.x, chunk.world.chunksize.x, x), Vector2i.getBlockInWorldPos(chunk.pos.y, chunk.world.chunksize.y, y))
 }
 
 object Vector2i {

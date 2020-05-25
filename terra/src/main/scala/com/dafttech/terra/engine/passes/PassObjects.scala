@@ -40,8 +40,7 @@ class PassObjects extends RenderingPass {
     }*/
 
     for {
-      chunk <- world.getChunks.values
-      entity <- chunk.getLocalEntities
+      entity <- world.getEntities
     } {
       entity.draw(screen, pointOfView)(TilePosition(world, entity.getPosition.toWorldPosition))
     }

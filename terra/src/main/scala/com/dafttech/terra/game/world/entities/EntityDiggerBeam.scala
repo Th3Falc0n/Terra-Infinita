@@ -35,7 +35,7 @@ class EntityDiggerBeam(pos: Vector2d)(implicit world: World) extends EntityThrow
   override def onTerrainCollision(t: TilePosition): Unit = if (!t.getTile.isAir) {
     world.destroyTile(Vector2i(t.pos.x, t.pos.y), this)
       .foreach(_.addVelocity(velocity.$times(-1)))
-    this.remove
+    world.removeEntity(this)
   }
 
   override def getInAirFriction: Double = 0
