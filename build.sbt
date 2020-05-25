@@ -5,14 +5,7 @@ inThisBuild(Seq(
   organization := "com.dafttech",
   version := "0.1.0",
 
-  scalaVersion := "2.12.6",
-
-  resolvers ++= Seq(
-    "artifactory-maven" at "http://artifactory.lolhens.de/artifactory/maven-public/",
-    Resolver.url("artifactory-ivy", url("http://artifactory.lolhens.de/artifactory/ivy-public/"))(Resolver.ivyStylePatterns)
-  ),
-
-  scalacOptions ++= Seq("-Xmax-classfile-name", "127")
+  scalaVersion := "2.13.1"
 ))
 
 lazy val root = project.in(file("."))
@@ -24,13 +17,13 @@ lazy val root = project.in(file("."))
 lazy val engine = project
   .settings(
     libraryDependencies ++= Seq(
-      "com.badlogicgames.gdx" % "gdx" % "1.5.5",
-      "com.badlogicgames.gdx" % "gdx-freetype" % "1.5.5",
-      "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % "1.5.5",
-      "com.badlogicgames.gdx" % "gdx-platform" % "1.5.5" classifier "natives-desktop",
-      "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.5.5" classifier "natives-desktop",
-      "org.typelevel" %% "cats-core" % "1.1.0",
-      "io.monix" %% "monix" % "3.0.0-RC1"
+      "com.badlogicgames.gdx" % "gdx" % "1.9.10",
+      "com.badlogicgames.gdx" % "gdx-freetype" % "1.9.10",
+      "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % "1.9.10",
+      "com.badlogicgames.gdx" % "gdx-platform" % "1.9.10" classifier "natives-desktop",
+      "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.9.10" classifier "natives-desktop",
+      "org.typelevel" %% "cats-core" % "2.1.1",
+      "io.monix" %% "monix" % "3.2.1"
     )
   )
 

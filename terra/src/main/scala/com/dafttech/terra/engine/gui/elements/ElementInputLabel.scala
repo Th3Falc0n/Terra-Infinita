@@ -2,10 +2,11 @@ package com.dafttech.terra.engine.gui.elements
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.{BitmapFont, GlyphLayout}
 import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.engine.input.handlers.IStringInputHandler
 import com.dafttech.terra.engine.input.{FocusManager, IFocusableTyping}
+import com.dafttech.terra.engine.renderer.TextBounds
 import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.resources.Resources
 
@@ -23,8 +24,7 @@ class ElementInputLabel(p: Vector2d, val handler: IStringInputHandler) extends G
     super.update(delta)
     time += delta
     renderText = ">" + text + (if ((time % 1f) < 0.5 && FocusManager.hasTypeFocus(this)) "_" else "")
-    val bnds: BitmapFont.TextBounds = Resources.GUI_FONT.getBounds(text)
-    size = Vector2d(bnds.width, bnds.height)
+    size = TextBounds.getBounds(Resources.GUI_FONT, text)
   }
 
   override def draw(screen: AbstractScreen): Unit = {

@@ -5,7 +5,7 @@ import java.util.Random
 import com.badlogic.gdx.{ApplicationListener, Game, Gdx}
 import com.dafttech.terra.engine.gui.{MouseSlot, Tooltip}
 import com.dafttech.terra.engine.input.InputHandler
-import com.dafttech.terra.engine.vector.Vector2d
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
 import com.dafttech.terra.game.world.World
 import com.dafttech.terra.game.{Events, ScreenIngame, ScreenPauseMenu}
 import com.dafttech.terra.resources.Resources
@@ -20,9 +20,7 @@ object TerraInfinita extends Game with ApplicationListener {
   var world: World = null
   private[terra] var wasFocused: Boolean = false
 
-  def isFocused: Boolean = {
-    return Display.isActive
-  }
+  def isFocused: Boolean = Display.isActive
 
   def create: Unit = {
     Gdx.app.log(Thread.currentThread.getName, "Creating game...")
@@ -32,7 +30,7 @@ object TerraInfinita extends Game with ApplicationListener {
     InputHandler.init
     Tooltip.init
     MouseSlot.init
-    world = new World(Vector2d(2000, 1000))
+    world = new World(Vector2i(2000, 1000))
     screenIngame = new ScreenIngame(world)
     screenPause = new ScreenPauseMenu(world)
     setScreen(screenPause)
@@ -51,10 +49,10 @@ object TerraInfinita extends Game with ApplicationListener {
     fpsLogger.tick
   }
 
-  override def resize(arg0: Int, arg1: Int) {
-    super.resize(arg0, arg1)
-    Gdx.graphics.setDisplayMode(arg0, arg1, false)
-    this.getScreen.resize(arg0, arg1)
+  override def resize(width: Int, height: Int) {
+    super.resize(width, height)
+    Gdx.graphics.setWindowedMode(width, height)
+    this.getScreen.resize(width, height)
     Events.EVENTMANAGER.callSync(Events.EVENT_WINRESIZE, this)
   }
 

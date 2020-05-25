@@ -16,28 +16,20 @@ import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.BLOCK_SIZE
 import monix.execution.atomic.Atomic
 
-class World extends GameObject {
-  var size: Vector2i = Vector2i(0, 0)
+class World(val size: Vector2i) extends GameObject {
   var chunksize: Vector2i = Vector2i(32, 32)
   var time: Float = 0
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
-  var gen: WorldGenerator = _
+  var gen: WorldGenerator = new WorldGenerator(this)
   private val localChunks: Atomic[Map[Vector2i, Chunk]] = Atomic(Map.empty[Vector2i, Chunk])
-  var localPlayer: Player = _
-  var weather: Weather = new WeatherRainy
-  var sunmap: SunMap = new SunMap
+  var weather: Weather = new WeatherRainy()
+  var sunmap: SunMap = new SunMap()
 
-  val renderer = new TileRendererMarchingSquares
+  val renderer = new TileRendererMarchingSquares()
 
-  def this(size: Vector2d) {
-    this()
-    this.size = Vector2i(size.x.toInt, size.y.toInt)
-    gen = new WorldGenerator(this)
-    println(Vector2d.Zero)
-    localPlayer = new Player(Vector2d.Zero)(this)
-    localPlayer.setPosition(Vector2d(0, -100))
-  }
+  var localPlayer: Player = new Player(Vector2d.Zero)(this)
+  localPlayer.setPosition(Vector2d(0, -100))
 
   def getChunks: Map[Vector2i, Chunk] = localChunks.get
 
@@ -186,28 +178,6 @@ class World extends GameObject {
       if (tile != null) tile.update(delta)(TilePosition(this, Vector2i(x, y)))
     }
 
-    /*var x: Int = localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx
-    while (x < localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx) {
-      {
-        {
-          var y: Int = localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy
-          while (y < localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy) {
-            {
-              tile = getTile(x, y)
-              if (tile != null) tile.update(this, delta)
-            }
-            {
-              y += 1;
-              y - 1
-            }
-          }
-        }
-      }
-      {
-        x += 1;
-        x - 1
-      }
-    }*/
     TimeKeeping.timeKeeping("Tile update")
     for (chunk <- localChunks.get.values) {
       for (entity <- chunk.getLocalEntities) {

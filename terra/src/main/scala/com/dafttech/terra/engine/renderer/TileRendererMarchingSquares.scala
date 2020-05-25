@@ -12,7 +12,7 @@ import scala.collection.mutable
 import scala.concurrent.duration.Duration
 
 object TileRendererMarchingSquares {
-  var $Instance: TileRenderer = new TileRendererMarchingSquares
+  var $Instance: TileRenderer = new TileRendererMarchingSquares()
 }
 
 class TileCache {
