@@ -12,7 +12,6 @@ class ParticleDust(pos: Vector2d, assignedTexture: Task[TextureRegion])(implicit
   private val particleSize: Double = TerraInfinita.rnd.nextFloat * 0.2f + 0.25f
 
   body.setLinearVelocity((TerraInfinita.rnd.nextFloat - 0.5f) * 5f, (TerraInfinita.rnd.nextFloat - 1f) * 2f)
-  setHasGravity(false)
 
   override def getImage: Task[TextureRegion] = assignedTexture
 

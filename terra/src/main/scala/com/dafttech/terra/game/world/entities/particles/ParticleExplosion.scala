@@ -18,8 +18,6 @@ class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorl
   light.setColor(new Color(1, 0.9f, 0.9f, 0.4f))
   light.setSize(6 + Options.METERS_PER_BLOCK)
 
-  setGravityFactor(0)
-
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("explosion")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
@@ -32,8 +30,6 @@ class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorl
 
     //setSize(getSize + (delta * 30, delta * 30))
   }
-
-  override def isLightEmitter = true
 
   override def getEmittedLight: PointLight = light
 }

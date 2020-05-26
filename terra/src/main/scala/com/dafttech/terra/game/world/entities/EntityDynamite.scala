@@ -9,8 +9,6 @@ import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
 class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(implicit world: GameWorld) extends Entity(pos) {
-  setGravityFactor(0.125)
-
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("dynamite")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {

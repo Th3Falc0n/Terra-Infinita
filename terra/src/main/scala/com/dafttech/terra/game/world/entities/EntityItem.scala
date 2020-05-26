@@ -15,8 +15,6 @@ class EntityItem(pos: Vector2d, val wrapped: Item)(implicit world: GameWorld) ex
 
   override def toPrototype: Prototype = wrapped.toPrototype
 
-  override def collidesWith(e: Entity): Boolean = false
-
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     val vp = getWorld.localPlayer.getPosition - getPosition
 

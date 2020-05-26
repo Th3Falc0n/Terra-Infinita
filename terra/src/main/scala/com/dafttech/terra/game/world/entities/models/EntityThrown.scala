@@ -7,8 +7,4 @@ import com.dafttech.terra.game.world.entities.Entity
 
 abstract class EntityThrown(pos: Vector2d)(implicit world: GameWorld) extends Entity(pos) {
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = super.update(delta)
-
-  override def alignToVelocity: Boolean = true
-
-  override def getInAirFriction: Double = 0.025
 }

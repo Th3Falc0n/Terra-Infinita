@@ -3,7 +3,7 @@ package com.dafttech.terra.game.world.entities.living
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, PolygonShape }
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.gui.modules.{ ModuleCrafting, ModuleHUDBottom, ModuleInventory }
 import com.dafttech.terra.engine.input.{ InputHandler, MousePos }
@@ -19,12 +19,13 @@ import com.dafttech.terra.game.world.interaction.Skill
 import com.dafttech.terra.game.world.items._
 import com.dafttech.terra.game.world.items.inventories.{ Inventory, Stack }
 import com.dafttech.terra.game.world.tiles._
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 import com.dafttech.terra.resources.{ Options, Resources }
 import monix.eval.Task
 
 import scala.concurrent.duration._
 
-class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos, Vector2d(1.9f, 3.8f)) {
+class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos) {
   Events.EVENTMANAGER.registerEventListener(this)
 
   val inventory = new Inventory()
@@ -54,6 +55,19 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos,
 
   private[living] val light: PointLight = null
 
+  override def modifyBodyDef(bodyDef: BodyDef): Unit = {
+    bodyDef.fixedRotation = true
+  }
+
+  override def createFixture(body: Body) = {
+    val shape = new PolygonShape()
+
+    shape.setAsBox(1.1f, 1.8f)
+
+    body.createFixture(shape, 1)
+    shape.dispose()
+  }
+
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
     if (InputHandler.isKeyDown("LEFT")) walkLeft()
@@ -77,7 +91,7 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos,
 
     if (!Gdx.input.isButtonPressed(Buttons.RIGHT) && right) right = false
 
-    if (getUndergroundTile != null && !inAir) {
+    /*if (getUndergroundTile != null && !inAir) {
       for (_ <- 0 until 5)
         if (TerraInfinita.rnd.nextDouble < delta * body.linVelWorld.len() * 2f)
           new ParticleDust(
@@ -85,7 +99,7 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos,
               ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.METERS_PER_BLOCK * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
             getUndergroundTile.getImage
           )
-    }
+    }*/
 
     hudBottom.healthBar.setValue(getHealth / getMaxHealth * 100)
     guiInventory.update(delta)

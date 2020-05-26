@@ -16,9 +16,6 @@ class EntityDiggerBeam(pos: Vector2d)(implicit world: GameWorld) extends EntityT
   private val light: PointLight = new PointLight(6)
   light.setColor(new Color(0, 1, 0.3f, 1))
 
-  setGravityFactor(0)
-  isDynamicEntity = true
-
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("beamDig")
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
@@ -30,17 +27,11 @@ class EntityDiggerBeam(pos: Vector2d)(implicit world: GameWorld) extends EntityT
       world.removeEntity(this)
   }
 
-  override def collidesWith(e: Entity): Boolean = false
-
   override def onTerrainCollision(t: TilePosition): Unit = if (!t.getTile.isAir) {
     world.destroyTile(Vector2i(t.pos.x, t.pos.y), this)
       //.foreach(_.addVelocity(velocity.$times(-1)))
     world.removeEntity(this)
   }
-
-  override def getInAirFriction: Double = 0
-
-  override def isLightEmitter: Boolean = true
 
   override def getEmittedLight: PointLight = light
 }

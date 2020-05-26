@@ -6,7 +6,7 @@ import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import monix.eval.Task
 
-abstract class EntityLiving(pos: Vector2d, s: Vector2d)(implicit world: GameWorld) extends Entity(pos) {
+abstract class EntityLiving(pos: Vector2d)(implicit world: GameWorld) extends Entity(pos) {
   private var maxHealth: Float = 10
   private var health: Float = maxHealth
 

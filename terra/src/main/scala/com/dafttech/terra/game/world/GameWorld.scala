@@ -184,6 +184,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
   }
 
   def removeEntity(entity: Entity): Unit = {
+    entity.onRemove()
     entities = entities.filter(_ != entity)
   }
 
@@ -258,7 +259,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
     RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpLig")
 
-    b2drdr.render(physicsWorld, screen.projectionIngame.cpy().translate(-pointOfView.getPosition.x.toFloat + AbstractScreen.getVWidth/2 + METERS_PER_BLOCK/2, -pointOfView.getPosition.y.toFloat + AbstractScreen.getVHeight/2 + METERS_PER_BLOCK/2,  0))
+    b2drdr.render(physicsWorld, screen.projectionIngame.cpy().translate(-pointOfView.getPosition.x.toFloat + AbstractScreen.getVWidth/2, -pointOfView.getPosition.y.toFloat + AbstractScreen.getVHeight/2,  0))
 
   }
 }

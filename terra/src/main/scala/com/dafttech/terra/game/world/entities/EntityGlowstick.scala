@@ -17,21 +17,13 @@ class EntityGlowstick(pos: Vector2d)(implicit world: GameWorld) extends Entity(p
 
   private[entities] var gsRotation: Double = 0
 
-  setGravityFactor(0.125)
-
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("glowstick")
-
-  override def collidesWith(e: Entity): Boolean = false
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
 
     light.setSize(90 + new Random().nextInt(10))
   }
-
-  override def getInAirFriction: Double = 0.025
-
-  override def isLightEmitter: Boolean = true
 
   override def getEmittedLight: PointLight = light
 }
