@@ -22,23 +22,16 @@ class Prototype {
   def addValue(field: Field, value: AnyRef): Unit = values = values + (field -> value)
 
   def toGameObject: GameObject = {
-    try {
-      Class.forName(className) match {
-        case tileItem if tileItem == classOf[TileItem] =>
-          TileItem(values(TileItem.tileField).asInstanceOf[Tile])
+    Class.forName(className) match {
+      case tileItem if tileItem == classOf[TileItem] =>
+        TileItem(values(TileItem.tileField).asInstanceOf[Tile])
 
-        case clazz =>
-          @SuppressWarnings(Array("unchecked"))
-          val cl = clazz.asInstanceOf[Class[GameObject]]
-          val obj = cl.newInstance()
-          for ((field, value) <- values) field.set(obj, value)
-          obj
-      }
-    } catch {
-      case e@(_: ClassNotFoundException | _: InstantiationException | _: IllegalAccessException) =>
-        // TODO Auto-generated catch block
-        e.printStackTrace()
-        null // TODO: NPE!
+      case clazz =>
+        @SuppressWarnings(Array("unchecked"))
+        val cl = clazz.asInstanceOf[Class[GameObject]]
+        val obj = cl.newInstance()
+        for ((field, value) <- values) field.set(obj, value)
+        obj
     }
   }
 }
