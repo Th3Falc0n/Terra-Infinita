@@ -3,12 +3,13 @@ package com.dafttech.terra.game.world.entities.living
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.physics.box2d.Body
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
-import com.dafttech.terra.engine.input.{InputHandler, MousePos}
+import com.dafttech.terra.engine.gui.modules.{ ModuleCrafting, ModuleHUDBottom, ModuleInventory }
+import com.dafttech.terra.engine.input.{ InputHandler, MousePos }
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
@@ -16,9 +17,9 @@ import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.entities.particles.ParticleDust
 import com.dafttech.terra.game.world.interaction.Skill
 import com.dafttech.terra.game.world.items._
-import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
+import com.dafttech.terra.game.world.items.inventories.{ Inventory, Stack }
 import com.dafttech.terra.game.world.tiles._
-import com.dafttech.terra.resources.{Options, Resources}
+import com.dafttech.terra.resources.{ Options, Resources }
 import monix.eval.Task
 
 import scala.concurrent.duration._
@@ -78,10 +79,10 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos,
 
     if (getUndergroundTile != null && !inAir) {
       for (_ <- 0 until 5)
-        if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 2f)
+        if (TerraInfinita.rnd.nextDouble < delta * body.linVelWorld.len() * 2f)
           new ParticleDust(
-            getPosition + (size.x * Options.BLOCK_SIZE / 2, size.y * Options.BLOCK_SIZE) +
-              ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.BLOCK_SIZE * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
+            getPosition +
+              ((TerraInfinita.rnd.nextFloat - 0.5f) * Options.METERS_PER_BLOCK * 2, (TerraInfinita.rnd.nextFloat - 1f) * 4f),
             getUndergroundTile.getImage
           )
     }
@@ -95,13 +96,15 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos,
   def getInventory: Inventory = inventory
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
-    val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
+    /*val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
     screen.batch.setColor(color)
     // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
-    screen.batch.draw(image, screenVec.x.toFloat, screenVec.y.toFloat, Options.BLOCK_SIZE * size.x.toFloat, Options.BLOCK_SIZE * size.y.toFloat)
-    screen.batch.flush()
+    screen.batch.draw(image, screenVec.x.toFloat, screenVec.y.toFloat, image.getRegionWidth, image.getRegionHeight)
+    screen.batch.flush()*/
+
+    super.draw(screen, this)
     // hudBottom.getActiveSlot().draw(screen, Entity pointOfView);
   }
 

@@ -5,7 +5,7 @@ import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.TileFalling
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
 import scala.concurrent.duration._
 
@@ -23,14 +23,14 @@ class SubtileRendererMask extends SubtileRenderer {
     if (!render.isTileIndependent && tp.getTile != null && tp.getTile.isInstanceOf[TileFalling]) {
       val offset: Vector2d = tp.getTile.asInstanceOf[TileFalling].renderOffset
       if (offset != null) {
-        offX = offset.x.toFloat * BLOCK_SIZE
-        offY = offset.y.toFloat * BLOCK_SIZE
+        offX = offset.x.toFloat * METERS_PER_BLOCK
+        offY = offset.y.toFloat * METERS_PER_BLOCK
       }
     }
 
     // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._
     val image = render.getImage.runSyncUnsafe(5.seconds)
-    screen.batch.draw(image, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY, 1, 1, BLOCK_SIZE, BLOCK_SIZE, 1, 1, rotation)
+    screen.batch.draw(image, screenVec.x.toFloat + offX, screenVec.y.toFloat + offY, 1, 1, METERS_PER_BLOCK, METERS_PER_BLOCK, 1, 1, rotation)
   }
 }

@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.items.persistence.Prototype
 import com.dafttech.terra.resources.Options
 import monix.eval.Task
 
-class EntityItem(pos: Vector2d, size: Vector2d, val wrapped: Item)(implicit world: GameWorld) extends Entity(pos, size) {
+class EntityItem(pos: Vector2d, val wrapped: Item)(implicit world: GameWorld) extends Entity(pos) {
   override def getImage: Task[TextureRegion] = wrapped.getImage
 
   override def toPrototype: Prototype = wrapped.toPrototype
@@ -18,16 +18,16 @@ class EntityItem(pos: Vector2d, size: Vector2d, val wrapped: Item)(implicit worl
   override def collidesWith(e: Entity): Boolean = false
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
-    val playerSize = getWorld.localPlayer.getSize
-    val vp = getWorld.localPlayer.getPosition +
-      (playerSize.x * Options.BLOCK_SIZE / 2, playerSize.y * Options.BLOCK_SIZE / 2) -
-      getPosition
+    val vp = getWorld.localPlayer.getPosition - getPosition
 
     if (vp.`length²` < 400) {
       getWorld.localPlayer.inventory.add(Stack.apply(wrapped, 1))
       getWorld.removeEntity(this)
     }
-    if (vp.`length²` < 10000) addForce(vp.normalized * (14f / vp.`length²`))
+
+    val force = vp.normalized * (14f / vp.`length²`)
+
+    if (vp.`length²` < 10000) body.applyForceToCenter(force.x.toFloat, force.y.toFloat, true)
     super.update(delta)
   }
 }

@@ -9,7 +9,7 @@ import com.dafttech.terra.game.world.entities.models.{EntityLiving, EntityThrown
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown(pos, Vector2d(2, 0.6f)) {
+class EntityArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown(pos) {
   private[entities] var stuckIn: TilePosition = _
 
   setGravityFactor(0.25)
@@ -25,7 +25,7 @@ class EntityArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown
   override def onTerrainCollision(tilePosition: TilePosition): Unit = {
     stuckIn = tilePosition
     setGravityFactor(0)
-    setVelocity(Vector2d(0, 0))
+    //setVelocity(Vector2d(0, 0))
   }
 
   override def getInAirFriction: Double = 0.025

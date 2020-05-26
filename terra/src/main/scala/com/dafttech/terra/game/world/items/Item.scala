@@ -24,7 +24,7 @@ abstract class Item extends GameObject with IDrawableInventory {
 
   def getEmittedLight: PointLight = null
 
-  def spawnAsEntity(tilePosition: TilePosition) = new EntityItem(tilePosition.pos.toEntityPos, Vector2d(0.5f, 0.5f), this)(tilePosition.world)
+  def spawnAsEntity(tilePosition: TilePosition) = new EntityItem(tilePosition.pos.toEntityPos, this)(tilePosition.world)
 
   override def drawInventory(pos: Vector2d, screen: AbstractScreen): Unit = { // TODO: Scheduler
     import com.dafttech.terra.utils.RenderThread._

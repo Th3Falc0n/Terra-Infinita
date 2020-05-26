@@ -11,15 +11,14 @@ import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
-class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorld) extends Particle(pos, 0.3f, Vector2d(radius * 2, radius * 2)) {
+class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorld) extends Particle(pos, 0.3f) {
   private val midpos: Vector2d = pos
 
   private val light: PointLight = new PointLight(60)
   light.setColor(new Color(1, 0.9f, 0.9f, 0.4f))
-  light.setSize((getSize.x.toFloat + getSize.y.toFloat) * 6 + Options.BLOCK_SIZE)
+  light.setSize(6 + Options.METERS_PER_BLOCK)
 
   setGravityFactor(0)
-  setMidPos(midpos)
 
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("explosion")
 
@@ -27,12 +26,11 @@ class ParticleExplosion(pos: Vector2d, var radius: Int)(implicit world: GameWorl
     super.update(delta)
 
     val rnd = new Random
-    val blockSRad = radius * Options.BLOCK_SIZE * 3
+    val blockSRad = radius * Options.METERS_PER_BLOCK * 3
 
     new ParticleSpark(midpos - (blockSRad, blockSRad) + (rnd.nextFloat * blockSRad * 2, rnd.nextFloat * blockSRad * 2))
 
-    setSize(getSize + (delta * 30, delta * 30))
-    setMidPos(midpos)
+    //setSize(getSize + (delta * 30, delta * 30))
   }
 
   override def isLightEmitter = true

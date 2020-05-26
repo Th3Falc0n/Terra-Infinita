@@ -6,24 +6,36 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, PolygonShape }
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
-import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition}
+import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
+import com.dafttech.terra.engine.{ AbstractScreen, IDrawableInWorld, TilePosition }
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.items.persistence.{GameObject, Persistent}
+import com.dafttech.terra.game.world.items.persistence.{ GameObject, Persistent }
 import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{Facing, GameWorld}
+import com.dafttech.terra.game.world.{ Facing, GameWorld }
 import com.dafttech.terra.resources.Options
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
+import com.dafttech.terra.resources.Options.PIXELS_PER_METER
 import monix.eval.Task
 
 import scala.concurrent.duration._
 
-abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld) extends GameObject with IDrawableInWorld {
-  @Persistent protected var position: Vector2d = pos
-  @Persistent protected var velocity: Vector2d = Vector2d.Zero
-  protected var accelleration: Vector2d = Vector2d.Zero
-  @Persistent protected var size: Vector2d = s
-  @Persistent protected var rotation: Double = 0
+abstract class Entity(pos: Vector2d)(implicit val world: GameWorld) extends GameObject with IDrawableInWorld {
+  val bodyDef = new BodyDef
+
+  bodyDef.`type` = BodyDef.BodyType.DynamicBody
+  bodyDef.position.set(pos.x.toFloat, pos.y.toFloat)
+  bodyDef.fixedRotation = true
+
+  val shape = new PolygonShape()
+
+  shape.setAsBox(METERS_PER_BLOCK/2, METERS_PER_BLOCK/2)
+
+  val body = world.physicsWorld.createBody(bodyDef)
+
+  body.createFixture(shape, 1)
+  shape.dispose()
 
   protected var color: Color = Color.WHITE
   private[entities] var gravityFactor: Double = 1
@@ -33,22 +45,17 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
 
   @Persistent protected var isDynamicEntity: Boolean = false
 
-  def setMidPos(pos: Vector2d): Unit = setPosition(pos + (-size.x * Options.BLOCK_SIZE / 2f, -size.y * Options.BLOCK_SIZE / 2f))
-
-  def getMidPos: Vector2d = getPosition + (size.x * Options.BLOCK_SIZE / 2f, size.y * Options.BLOCK_SIZE / 2f)
-
   def setColor(clr: Color): Unit = color = clr
 
   def setAlpha(v: Float): Unit = color.a = v
 
-  def setRotation(angle: Double): Unit = rotation = angle
+  def getPosition: Vector2d = {
+    val pos = body.getPosition
 
-  def getPosition: Vector2d = position
-
-  def setPosition(pos: Vector2d): Entity = {
-    position = pos
-    this
+    Vector2d(pos.x, pos.y)
   }
+
+  def setPosition(pos: Vector2d): Entity = ???
 
   def getWorld: GameWorld = world
 
@@ -57,10 +64,6 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
   def setHasGravity(v: Boolean): Unit = if (!v) gravityFactor = 0
 
   def setGravityFactor(f: Double): Unit = gravityFactor = f
-
-  def setSize(size: Vector2d): Unit = this.size = size
-
-  def setSize(x: Float, y: Float): Unit = setSize(Vector2d(x, y))
 
   @SuppressWarnings(Array("unused"))
   private def drawRect(rect: Rectangle, rend: ShapeRenderer, color: Color): Unit = {
@@ -77,7 +80,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
 
   def hasEntityCollision: Boolean = false
 
-  def checkEntityCollisions(): Unit = {
+  /*def checkEntityCollisions(): Unit = {
     val oVel = velocity
     for (entity <- world.getEntities) {
       if (!((entity == this) || !(entity.collidesWith(this) && this.collidesWith(entity)) || velocity.`length²` < entity.velocity.`length²`)) {
@@ -102,13 +105,13 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
         if (collisionDetect(oVel, playerRect, tileRect)) onTerrainCollision(new TilePosition(world, Vector2i(x, y)))
       }
     }
-  }
+  }*/
 
   def onTerrainCollision(tilePosition: TilePosition): Unit = ()
 
   def onEntityCollision(e: Entity): Unit = ()
 
-  def collisionDetect(oVel: Vector2d, a: Rectangle, b: Rectangle): Boolean = {
+  /*def collisionDetect(oVel: Vector2d, a: Rectangle, b: Rectangle): Boolean = {
     if (a.overlaps(b)) {
       var fVertical: Facing = null
       var fHorizontal: Facing = null
@@ -164,7 +167,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
       setPosition(getPosition.withX(`val`))
     }
     if (facing eq Facing.Bottom) inAir = false
-  }
+  }*/
 
   override def draw(screen: AbstractScreen, pointOfView: Entity)(implicit tilePosition: TilePosition): Unit = {
     val screenVec = this.getPosition.toRenderPosition(pointOfView.getPosition)
@@ -173,36 +176,24 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
     import com.dafttech.terra.utils.RenderThread._
     val image = getImage.runSyncUnsafe(5.seconds)
 
+    val width = (image.getRegionWidth * METERS_PER_BLOCK) / PIXELS_PER_METER.toFloat
+    val height = (image.getRegionHeight * METERS_PER_BLOCK) / PIXELS_PER_METER.toFloat
+
     screen.batch.draw(
       image,
       screenVec.x.toFloat,
       screenVec.y.toFloat,
-      (Options.BLOCK_SIZE * size.x / 2).toFloat,
-      (Options.BLOCK_SIZE * size.y / 2).toFloat,
-      (Options.BLOCK_SIZE * size.x).toFloat,
-      (Options.BLOCK_SIZE * size.y).toFloat,
-      1, 1, rotation.toFloat)
+      width / 2,
+      height / 2,
+      width,
+      height,
+      1, 1, body.getAngle)
   }
 
   def getImage: Task[TextureRegion]
 
-  def setVelocity(velocity: Vector2d): Entity = {
-    this.velocity = velocity
-    this
-  }
-
-  def addForce(f: Vector2d): Entity = {
-    accelleration = accelleration + f
-    this
-  }
-
-  def addVelocity(v: Vector2d): Entity = {
-    velocity = velocity + v
-    this
-  }
-
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
-    val newDelta = delta * Options.BLOCK_SIZE
+    /*val newDelta = delta * Options.BLOCK_SIZE
     if (gravityFactor != 0) addForce(Vector2d(0, 9.81f * gravityFactor))
     velocity = velocity + (accelleration.x * newDelta, accelleration.y * newDelta)
     accelleration = Vector2d.Zero
@@ -225,7 +216,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
     velocity = velocity.withY(velocity.y * (1 - 0.025f * newDelta))
     velocity = velocity.withX(velocity.x * (1 - getCurrentFriction * newDelta))
     if (alignToVelocity && velocity.`length²` > 0.1f) setRotation(velocity.rotation + getVelocityOffsetAngle)
-    if (isDynamicEntity && !isInRenderRange(tilePosition.world.localPlayer)) tilePosition.world.removeEntity(this)
+    if (isDynamicEntity && !isInRenderRange(tilePosition.world.localPlayer)) tilePosition.world.removeEntity(this)*/
   }
 
   def alignToVelocity: Boolean = false
@@ -233,7 +224,7 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
   def getVelocityOffsetAngle: Double = 0
 
   def getUndergroundTile: Tile = {
-    val pos = (position + (size.x * Options.BLOCK_SIZE, size.y * Options.BLOCK_SIZE)).toWorldPosition
+    val pos = getPosition.toWorldPosition
     world.getTile(Vector2i(pos.x, pos.y + 1))
   }
 
@@ -250,17 +241,15 @@ abstract class Entity(pos: Vector2d, s: Vector2d)(implicit val world: GameWorld)
   def getInAirFriction: Double = 1
 
   def isInRenderRange(player: Player): Boolean = {
-    val sx = 2 + Gdx.graphics.getWidth / Options.BLOCK_SIZE / 2
-    val sy = 2 + Gdx.graphics.getHeight / Options.BLOCK_SIZE / 2
-    if (position.x >= player.getPosition.x - sx * Options.BLOCK_SIZE && position.x <= player.getPosition.x + sx * Options.BLOCK_SIZE && position.y >= player.getPosition.y - sy * Options.BLOCK_SIZE && position.y <= player.getPosition.y + sy * Options.BLOCK_SIZE) return true
+    val sx = 2 + Gdx.graphics.getWidth / Options.METERS_PER_BLOCK / 2
+    val sy = 2 + Gdx.graphics.getHeight / Options.METERS_PER_BLOCK / 2
+    if (getPosition.x >= player.getPosition.x - sx * Options.METERS_PER_BLOCK && getPosition.x <= player.getPosition.x + sx * Options.METERS_PER_BLOCK && getPosition.y >= player.getPosition.y - sy * Options.METERS_PER_BLOCK && getPosition.y <= player.getPosition.y + sy * Options.METERS_PER_BLOCK) return true
     false
   }
 
   def isLightEmitter: Boolean = false
 
   def getEmittedLight: PointLight = null
-
-  def getSize: Vector2d = size
 
   final def tick(world: GameWorld): Unit = onTick(world)
 

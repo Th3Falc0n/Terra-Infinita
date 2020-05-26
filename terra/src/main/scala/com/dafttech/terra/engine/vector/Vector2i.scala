@@ -1,9 +1,10 @@
 package com.dafttech.terra.engine.vector
 
 import com.badlogic.gdx.Gdx
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.GameWorld
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
 final case class Vector2i private(override val x: Int,
                                   override val y: Int) extends Vector2[Int](x, y) {
@@ -27,9 +28,9 @@ final case class Vector2i private(override val x: Int,
   override def length: Int = Math.sqrt(`length²`).toInt
 
   def toScreenPos(pointOfView: Entity): Vector2d =
-    Vector2d(x * BLOCK_SIZE - pointOfView.getPosition.x + Gdx.graphics.getWidth / 2, y * BLOCK_SIZE - pointOfView.getPosition.y + Gdx.graphics.getHeight / 2)
+    Vector2d(x * METERS_PER_BLOCK - pointOfView.getPosition.x + AbstractScreen.getVWidth / 2f, y * METERS_PER_BLOCK - pointOfView.getPosition.y + AbstractScreen.getVHeight / 2f)
 
-  def toEntityPos: Vector2d = Vector2d(x * BLOCK_SIZE, y * BLOCK_SIZE)
+  def toEntityPos: Vector2d = Vector2d(x * METERS_PER_BLOCK, y * METERS_PER_BLOCK)
 
   def toVector2d: Vector2d = Vector2d(x, y)
 

@@ -1,5 +1,6 @@
 package com.dafttech.terra.resources
 
 object Options {
-  val BLOCK_SIZE: Int = 16
+  val METERS_PER_BLOCK: Float = 1f
+  val PIXELS_PER_METER: Int = 16
 }

@@ -8,7 +8,7 @@ import com.dafttech.terra.game.world.entities.particles.ParticleExplosion
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
-class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(implicit world: GameWorld) extends Entity(pos, Vector2d(1.5, 1.5)) {
+class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(implicit world: GameWorld) extends Entity(pos) {
   setGravityFactor(0.125)
 
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("dynamite")
@@ -18,7 +18,7 @@ class EntityDynamite(pos: Vector2d, var explodeTimer: Float, var radius: Int)(im
     explodeTimer -= delta
     if (explodeTimer <= 0) {
       world.removeEntity(this)
-      new ParticleExplosion(getPosition + (Options.BLOCK_SIZE * 0.75f, Options.BLOCK_SIZE * 0.75f), radius)
+      new ParticleExplosion(getPosition + (Options.METERS_PER_BLOCK * 0.75f, Options.METERS_PER_BLOCK * 0.75f), radius)
       val destroyPos = getPosition.toWorldPosition
 
       for {

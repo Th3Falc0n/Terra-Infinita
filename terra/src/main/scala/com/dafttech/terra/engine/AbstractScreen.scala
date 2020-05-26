@@ -2,22 +2,31 @@ package com.dafttech.terra.engine
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
+import com.badlogic.gdx.graphics.{ GL20, OrthographicCamera }
 import com.badlogic.gdx.math.Matrix4
-import com.badlogic.gdx.{Gdx, Screen}
+import com.badlogic.gdx.{ Gdx, Screen }
 import com.dafttech.terra.engine.gui.containers.ContainerOnscreen
 import com.dafttech.terra.engine.vector.Vector2d
+import com.dafttech.terra.resources.Options
+
+object AbstractScreen {
+  def getVWidth = Gdx.graphics.getWidth / Options.PIXELS_PER_METER.toFloat
+  def getVHeight = Gdx.graphics.getHeight / Options.PIXELS_PER_METER.toFloat
+}
 
 abstract class AbstractScreen extends Screen {
-  var projection: Matrix4 = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
+  import AbstractScreen._
+
+  var projectionIngame: Matrix4 = new Matrix4().setToOrtho(0, getVWidth, getVHeight, 0, 0, 1)
+  var projectionWholeScreen: Matrix4 = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
   protected var guiContainerScreen: ContainerOnscreen = _
 
   def dispose(): Unit = ()
 
   def resize(arg0: Int, arg1: Int): Unit = {
-    projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
-    batch.setProjectionMatrix(projection)
-    shr.setProjectionMatrix(projection)
+    projectionIngame = new Matrix4().setToOrtho(0, getVWidth, getVHeight, 0, 0, 1)
+    projectionWholeScreen = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
+
     guiContainerScreen.size = Vector2d(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
   }
@@ -25,9 +34,9 @@ abstract class AbstractScreen extends Screen {
   def resume(): Unit = ()
 
   def show(): Unit = {
-    projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
-    batch.setProjectionMatrix(projection)
-    shr.setProjectionMatrix(projection)
+    projectionIngame = new Matrix4().setToOrtho(0, getVWidth, getVHeight, 0, 0, 1)
+    projectionWholeScreen = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth, Gdx.graphics.getHeight, 0, 0, 1)
+
     guiContainerScreen.size = Vector2d(Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     guiContainerScreen.applyAllAssignedAnchorSets
     guiContainerScreen.setActive(true)

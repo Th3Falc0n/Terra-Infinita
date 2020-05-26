@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class ParticleRain(pos: Vector2d)(implicit world: GameWorld) extends Particle(pos, 4, Vector2d(0.1, 1)) {
+class ParticleRain(pos: Vector2d)(implicit world: GameWorld) extends Particle(pos, 4) {
   setHasGravity(true)
   setGravityFactor(0.05)
 

@@ -7,7 +7,7 @@ import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import monix.eval.Task
 
-abstract class Particle(pos: Vector2d, life: Double, s: Vector2d)(implicit world: GameWorld) extends Entity(pos, s) {
+abstract class Particle(pos: Vector2d, life: Double)(implicit world: GameWorld) extends Entity(pos) {
   val lifetimeMax: Double = life
   var lifetime: Double = lifetimeMax
 
