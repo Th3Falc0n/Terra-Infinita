@@ -6,7 +6,6 @@ import com.dafttech.terra.utils._
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.execution.atomic.Atomic
-import monix.execution.schedulers.CanBlock
 
 import scala.concurrent.duration._
 
@@ -14,13 +13,19 @@ class ImageLibrary {
   private val atomicLibrary: Atomic[Map[String, TextureRegion]] = Atomic(Map.empty[String, TextureRegion])
 
   def load(name: String, path: String): Task[TextureRegion] =
-    RenderThread(Task {
-      val textureData = Resource.toTextureData(Resource.fromClasspath(path)).runSyncUnsafe(Duration.Inf)(Scheduler.global, CanBlock.permit)
-      val textureRegion = new TextureRegion(new Texture(textureData))
-      textureRegion.flip(false, true)
-      atomicLibrary.transform(_ + (name -> textureRegion))
-      textureRegion
-    }).memoizeOnSuccess
+    (for {
+      textureData <- RenderThread.sync {
+        Resource.toTextureData(Resource.fromClasspath(path))
+      }(Scheduler.global)
+      result <- RenderThread(Task {
+        val textureRegion = new TextureRegion(new Texture(textureData))
+        textureRegion.flip(false, true)
+        atomicLibrary.transform(_ + (name -> textureRegion))
+        textureRegion
+      })
+    } yield result)
+      .memoizeOnSuccess
+
 
   def loadImage(name: String, path: String): Unit = {
     import com.dafttech.terra.utils.RenderThread._

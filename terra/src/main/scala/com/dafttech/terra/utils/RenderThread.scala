@@ -3,6 +3,7 @@ package com.dafttech.terra.utils
 import com.badlogic.gdx.Gdx
 import monix.eval.Task
 import monix.execution.Scheduler
+import monix.execution.schedulers.CanBlock
 import org.lwjgl.opengl.GLContext
 
 import scala.concurrent.duration.Duration
@@ -30,6 +31,7 @@ object RenderThread {
       task.executeOn(scheduler)
   }
 
-  def sync[A](task: Task[A])(implicit scheduler: Scheduler): Task[A] =
-    Task.eval(apply(task).runSyncUnsafe(Duration.Inf))
+  def sync[A](task: Task[A])(implicit scheduler: Scheduler): Task[A] = Task.eval {
+    task.runSyncUnsafe(Duration.Inf)(scheduler, CanBlock.permit)
+  }
 }
