@@ -10,7 +10,7 @@ import com.dafttech.terra.game.world.entities.models.EntityThrown
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
-class EntityRainbow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown(pos, Vector2d(1.5, 1.5)) {
+class EntityRainbow(pos: Vector2d)(implicit world: GameWorld) extends EntityThrown(pos) {
   //private val light: PointLight = new PointLight(120)
   //light.setColor(new Color(1, 1, 1, 1))
   var lightColor: Color = Color.WHITE
@@ -27,14 +27,14 @@ class EntityRainbow(pos: Vector2d)(implicit world: GameWorld) extends EntityThro
 
     //light.setSize(90 + new Random().nextInt(10))
 
-    if (Math.abs(velocity.x) <= 0.1 && Math.abs(velocity.y) <= 0.1) world.removeEntity(this)
+    if (Math.abs(body.getLinearVelocity.x) <= 0.1 && Math.abs(body.getLinearVelocity.y) <= 0.1) world.removeEntity(this)
   }
 
   override def isLightEmitter: Boolean = true
 
   override def getEmittedLight: PointLight = {
     val tmpLight = new PointLight(0)
-    tmpLight.setSize(Math.min(velocity.`length²` * 2, 120))
+    tmpLight.setSize(Math.min(body.getLinearVelocity.len2() * 2, 120))
     tmpLight.setColor(lightColor)
     tmpLight
   }

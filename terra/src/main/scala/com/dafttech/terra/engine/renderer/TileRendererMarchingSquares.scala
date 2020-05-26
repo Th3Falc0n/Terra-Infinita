@@ -6,7 +6,7 @@ import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.tiles.{ Tile, TileFalling }
 import com.dafttech.terra.resources.Options
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
 import scala.collection.mutable
 import scala.concurrent.duration.Duration
@@ -16,7 +16,7 @@ object TileRendererMarchingSquares {
 }
 
 class TileCache {
-  val pixmap = new Pixmap(Options.BLOCK_SIZE, Options.BLOCK_SIZE, Pixmap.Format.RGBA8888)
+  val pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888)
   var texture: Texture = _
 }
 
@@ -25,7 +25,7 @@ class TileRendererMarchingSquares extends TileRenderer {
 
   case class CornerState(pressure: Int, t: Tile)
 
-  case class State(tl: CornerState, tr: CornerState, bl: CornerState, br: CornerState, x: Int, y: Int, level: Int = BLOCK_SIZE / 2) {
+  case class State(tl: CornerState, tr: CornerState, bl: CornerState, br: CornerState, x: Int, y: Int, level: Int = 8) {
 
     val l = CornerState((tl.pressure + bl.pressure) / 2, if (tl.pressure > bl.pressure) tl.t else bl.t)
     val t = CornerState((tl.pressure + tr.pressure) / 2, if (tl.pressure > tr.pressure) tl.t else tr.t)
@@ -100,22 +100,22 @@ class TileRendererMarchingSquares extends TileRenderer {
       doDraw(state.bottomRight)
     }
     else {
-      if (state.m.pressure >= BLOCK_SIZE / 2) {
+      if (state.m.pressure >= 8) {
         import com.dafttech.terra.utils.RenderThread._
         val td = state.m.t.getImage.runSyncUnsafe(Duration.Inf).getTexture.getTextureData
         if (!td.isPrepared) td.prepare()
 
-        val xm = BLOCK_SIZE.toFloat / td.getWidth
-        val ym = BLOCK_SIZE.toFloat / td.getHeight
+        val xm = 16.toFloat / td.getWidth
+        val ym = 16.toFloat / td.getHeight
 
-        if(state.m.pressure ==  BLOCK_SIZE / 2) {
+        if(state.m.pressure == 8) {
           dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt) & 0x000000FF)
         }
         else {
           dest.setColor(td.consumePixmap().getPixel((state.x / xm).toInt, (state.y / ym).toInt))
         }
 
-        dest.fillRectangle(state.x, BLOCK_SIZE - 2 - state.y, 2, 2)
+        dest.fillRectangle(state.x, 16 - 2 - state.y, 2, 2)
       }
     }
   }
@@ -128,10 +128,10 @@ class TileRendererMarchingSquares extends TileRenderer {
 
     if (renderPositions.getOrElseUpdate(tp, new TileCache).texture == null) {
       doDraw(State(
-        CornerState(if (!tTL.isAir) BLOCK_SIZE else 0, tTL),
-        CornerState(if (!tTR.isAir) BLOCK_SIZE else 0, tTR),
-        CornerState(if (!tBL.isAir) BLOCK_SIZE else 0, tBL),
-        CornerState(if (!tBR.isAir) BLOCK_SIZE else 0, tBR),
+        CornerState(if (!tTL.isAir) 16 else 0, tTL),
+        CornerState(if (!tTR.isAir) 16 else 0, tTR),
+        CornerState(if (!tBL.isAir) 16 else 0, tBL),
+        CornerState(if (!tBR.isAir) 16 else 0, tBR),
         0,
         0)
       )(renderPositions(tp).pixmap, tp)
@@ -147,6 +147,6 @@ class TileRendererMarchingSquares extends TileRenderer {
       case _ => 0
     }
 
-    screen.batch.draw(renderPositions(tp).texture, tpx + BLOCK_SIZE / 2, tpy + BLOCK_SIZE / 2 + yOff)
+    screen.batch.draw(renderPositions(tp).texture, tpx, tpy + yOff, METERS_PER_BLOCK, METERS_PER_BLOCK)
   }
 }

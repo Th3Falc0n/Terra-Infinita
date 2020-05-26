@@ -22,6 +22,9 @@ class PassGaussian extends RenderingPass {
   }
 
   def applyPass(screen: AbstractScreen, pointOfView: Entity, w: GameWorld, arguments: AnyRef*) {
+    screen.batch.setProjectionMatrix(screen.projectionWholeScreen)
+    screen.shr.setProjectionMatrix(screen.projectionWholeScreen)
+
     if (!arguments(0).isInstanceOf[Texture]) throw new IllegalArgumentException("Need a texture to draw")
     screen.batch.disableBlending()
     var size: Float = 0.010f

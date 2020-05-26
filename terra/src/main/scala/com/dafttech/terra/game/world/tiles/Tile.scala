@@ -53,7 +53,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
   override def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
     val dropped = getDroppedItem
     if (dropped == null) null
-    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), Vector2d(0.5, 0.5), dropped)(tilePosition.world)
+    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), dropped)(tilePosition.world)
   }
 
   def getWalkFriction: Float = 1

@@ -12,7 +12,10 @@ import monix.eval.Task
 class ItemDigStaff extends ItemEntitySpawner {
   override def spawnEntity(causer: EntityLiving, position: Vector2d): Boolean = {
     val a = new EntityDiggerBeam(causer.getPosition)(causer.world)
-    a.setVelocity((MousePos.vector2d - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.2)
+    
+    val velocity = (MousePos.vector2d - (Gdx.graphics.getWidth / 2, Gdx.graphics.getHeight / 2)) * 0.2
+    a.body.setLinearVelocity(velocity.x.toFloat, velocity.y.toFloat)
+
     false
   }
 

@@ -15,7 +15,7 @@ import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
 class EntityFlamingArrow(pos: Vector2d)(implicit world: GameWorld) extends EntityArrow(pos) {
-  private val light: PointLight = new PointLight(95)
+  private val light: PointLight = new PointLight(7)
   light.setColor(new Color(255, 200, 40, 255))
 
   override def getImage: Task[TextureRegion] = Resources.ENTITIES.getImageTask("arrow")
@@ -23,10 +23,10 @@ class EntityFlamingArrow(pos: Vector2d)(implicit world: GameWorld) extends Entit
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
 
-    light.setSize(90 + new Random().nextInt(10))
+    //light.setSize(90 + new Random().nextInt(10))
 
     for (_ <- 0 until 5)
-      if (TerraInfinita.rnd.nextDouble < delta * velocity.length * 0.5)
+      if (TerraInfinita.rnd.nextDouble < delta * body.linVelWorld.len() * 0.1)
         new ParticleSpark(getPosition)
   }
 

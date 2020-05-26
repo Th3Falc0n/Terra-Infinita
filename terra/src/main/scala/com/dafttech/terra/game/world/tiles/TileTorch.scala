@@ -23,7 +23,7 @@ class TileTorch extends TileFalling {
 
     for (_ <- 0 until 5)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0)).addVelocity(Vector2d(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.METERS_PER_BLOCK / 2, 0)).body.setLinearVelocity(0, -1)
   }
 
   override def isCollidableWith(entity: Entity): Boolean = false

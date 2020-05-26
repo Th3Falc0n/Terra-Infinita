@@ -2,6 +2,7 @@ package com.dafttech.terra.engine.vector
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Rectangle
+import com.dafttech.terra.engine.AbstractScreen
 import com.dafttech.terra.resources.Options
 
 final case class Vector2d private(override val x: Double,
@@ -43,13 +44,13 @@ final case class Vector2d private(override val x: Double,
 
 
   def toWorldPosition: Vector2i = {
-    val ox: Int = if (x.toInt >= 0) x.toInt / Options.BLOCK_SIZE else (x.toInt + 1) / Options.BLOCK_SIZE - 1
-    val oy: Int = if (y.toInt >= 0) y.toInt / Options.BLOCK_SIZE else (y.toInt + 1) / Options.BLOCK_SIZE - 1
+    val ox: Int = (if (x.toInt >= 0) x.toInt / Options.METERS_PER_BLOCK else (x.toInt + 1) / Options.METERS_PER_BLOCK - 1).toInt
+    val oy: Int = (if (y.toInt >= 0) y.toInt / Options.METERS_PER_BLOCK else (y.toInt + 1) / Options.METERS_PER_BLOCK - 1).toInt
     Vector2i(ox, oy)
   }
 
   def toRenderPosition(relateTo: Vector2d): Vector2d =
-    new Vector2d(x - relateTo.x + Gdx.graphics.getWidth / 2.0f, y - relateTo.y + Gdx.graphics.getHeight / 2.0f)
+    new Vector2d(x - relateTo.x + AbstractScreen.getVWidth / 2.0f, y - relateTo.y + AbstractScreen.getVHeight / 2.0f)
 
   def toVector2i: Vector2i =
     Vector2i(if (x.toInt >= 0) x.toInt else x.toInt - 1, if (y.toInt >= 0) y.toInt else y.toInt - 1)

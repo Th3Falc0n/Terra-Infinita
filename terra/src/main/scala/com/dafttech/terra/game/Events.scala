@@ -1,11 +1,11 @@
 package com.dafttech.terra.game
 
 import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.engine.vector.Vector2i
 import com.dafttech.terra.game.world.GameWorld
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
-import org.lolhens.eventmanager.{Event, EventManager, EventType, ListenerContainer}
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
+import org.lolhens.eventmanager.{ Event, EventManager, EventType, ListenerContainer }
 import org.lolhens.storage.tuple.Tuple
 
 object Events {
@@ -43,12 +43,12 @@ object Events {
   val EVENT_WORLDTICK: EventType = new EventType("GAMETICK", EVENTMANAGER) {
     protected override def onEvent(event: Event) {
       val world: GameWorld = event.in.get(0, classOf[GameWorld])
-      val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
-      val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
+      val sx: Int = (25 + AbstractScreen.getVWidth / METERS_PER_BLOCK / 2).toInt
+      val sy: Int = (25 + AbstractScreen.getVHeight / METERS_PER_BLOCK / 2).toInt
 
 
-      for (x <- (world.localPlayer.getPosition.x / BLOCK_SIZE - sx).toInt until (world.localPlayer.getPosition.x / BLOCK_SIZE + sx).toInt) {
-        for (y <- (world.localPlayer.getPosition.y / BLOCK_SIZE - sy).toInt until (world.localPlayer.getPosition.y / BLOCK_SIZE + sy).toInt) {
+      for (x <- (world.localPlayer.getPosition.x / METERS_PER_BLOCK - sx).toInt until (world.localPlayer.getPosition.x / METERS_PER_BLOCK + sx).toInt) {
+        for (y <- (world.localPlayer.getPosition.y / METERS_PER_BLOCK - sy).toInt until (world.localPlayer.getPosition.y / METERS_PER_BLOCK + sy).toInt) {
           val tile = world.getTile(Vector2i(x, y))
           if (tile != null) tile.tick(event.in.get(1, classOf[Float]))(TilePosition(world, Vector2i(x, y)))
         }

@@ -12,7 +12,8 @@ class WorldGenerator(val world: GameWorld) {
 
   def generateWorld(world: GameWorld): Unit = {
     for (x <- 0 until world.size.x) {
-      val h: Int = math.min(world.size.y, math.max(0, ((1f + noise.perlinNoise(x / 150f)) * 75).toInt))
+      val h: Int = math.min(world.size.y, math.max(0, ((4f + noise.perlinNoise(x / 150f)) * (world.size.y / 6)).toInt))
+      //val h: Int = 500
 
       for (y <- 0 until world.size.y - h) {
         world.setTile(Vector2i(x, y), new TileAir, notify = false)

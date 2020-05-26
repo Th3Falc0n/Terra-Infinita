@@ -15,34 +15,32 @@ import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.{ Tile, TileAir }
 import com.dafttech.terra.game.{ Events, TimeKeeping }
-import com.dafttech.terra.resources.Options.BLOCK_SIZE
+import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 import monix.execution.atomic.Atomic
 
 class GameWorld(val size: Vector2i) extends GameObject {
 
-  val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
 
   var time: Float = 0
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
 
+  val physicsWorld = new World(new Vector2(0, 9.81f), true)
+  val b2drdr = new Box2DDebugRenderer()
+
+
+  val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
   private var entities: Seq[Entity] = Seq.empty
-
-  var gen: WorldGenerator = new WorldGenerator(this)
-
-  var localPlayer: Player = new Player(Vector2d.Zero)(this)
-  localPlayer.setPosition(Vector2d(0, -100))
-
+  var sunmap: SunMap = new SunMap
   var weather: Weather = new WeatherRainy
 
-  var sunmap: SunMap = new SunMap
+  var localPlayer: Player = new Player(Vector2d(500, 0))(this)
+  //localPlayer.body.setLinearVelocity(1, 1)
 
   val renderer = new TileRendererMarchingSquares()
 
+  var gen: WorldGenerator = new WorldGenerator(this)
   gen.generateWorld(this)
-
-  val physicsWorld = new World(new Vector2(0, 9.81f), true)
-  val b2drdr = new Box2DDebugRenderer()
 
   for(x <- 0 until size.x) {
     for(y <- 0 until size.y) {
@@ -57,11 +55,13 @@ class GameWorld(val size: Vector2i) extends GameObject {
         val bodyDef = new BodyDef
 
         bodyDef.`type` = BodyDef.BodyType.StaticBody
-        bodyDef.position.set(x * BLOCK_SIZE, y * BLOCK_SIZE)
+        bodyDef.position.set(x * METERS_PER_BLOCK, y * METERS_PER_BLOCK)
 
         val shape = new PolygonShape()
 
-        shape.setAsBox(BLOCK_SIZE/2, BLOCK_SIZE/2)
+        shape.setAsBox(METERS_PER_BLOCK / 2f, METERS_PER_BLOCK / 2f)
+
+        println(s"Created physics tile at mpb=${METERS_PER_BLOCK} xc=${x} x=${x*METERS_PER_BLOCK} yc=${y} y=${y*METERS_PER_BLOCK}")
 
         val body = physicsWorld.createBody(bodyDef)
 
@@ -190,12 +190,16 @@ class GameWorld(val size: Vector2i) extends GameObject {
   def update(delta: Float): Unit = {
     time += delta
     weather.update(delta)(this)
-    val sx: Int = 25 + Gdx.graphics.getWidth / BLOCK_SIZE / 2
-    val sy: Int = 25 + Gdx.graphics.getHeight / BLOCK_SIZE / 2
+    val sx: Int = (25 + AbstractScreen.getVWidth / METERS_PER_BLOCK / 2).toInt
+    val sy: Int = (25 + AbstractScreen.getVHeight / METERS_PER_BLOCK / 2).toInt
+
+    val px: Int = (localPlayer.getPosition.x / METERS_PER_BLOCK).toInt
+    val py: Int = (localPlayer.getPosition.y / METERS_PER_BLOCK).toInt
+
     var tile: Tile = null
     for {
-      x <- (localPlayer.getPosition.x.toInt / BLOCK_SIZE - sx) until (localPlayer.getPosition.x.toInt / BLOCK_SIZE + sx)
-      y <- (localPlayer.getPosition.y.toInt / BLOCK_SIZE - sy) until (localPlayer.getPosition.y.toInt / BLOCK_SIZE + sy)
+      x <- (px - sx) until (px + sx)
+      y <- (py - sy) until (py + sy)
     } {
       tile = getTile(Vector2i(x, y))
       if (tile != null) tile.update(delta)(TilePosition(this, Vector2i(x, y)))
@@ -237,6 +241,8 @@ class GameWorld(val size: Vector2i) extends GameObject {
 
     physicsWorld.step(delta, 6, 2);
 
+    //println(s"PX: ${localPlayer.body.getPosition.x} PY: ${localPlayer.body.getPosition.y}")
+
     TimeKeeping.timeKeeping("Physics update")
   }
 
@@ -252,7 +258,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
     RenderingPass.rpLighting.applyPass(screen, pointOfView, this)
     TimeKeeping.timeKeeping("rpLig")
 
-    b2drdr.render(physicsWorld, screen.projection.cpy().translate(-pointOfView.getPosition.x.toFloat + Gdx.graphics.getWidth/2 + BLOCK_SIZE/2, -pointOfView.getPosition.y.toFloat + Gdx.graphics.getHeight/2 + BLOCK_SIZE/2,  0))
+    b2drdr.render(physicsWorld, screen.projectionIngame.cpy().translate(-pointOfView.getPosition.x.toFloat + AbstractScreen.getVWidth/2 + METERS_PER_BLOCK/2, -pointOfView.getPosition.y.toFloat + AbstractScreen.getVHeight/2 + METERS_PER_BLOCK/2,  0))
 
   }
 }

@@ -25,7 +25,7 @@ class SubtileGlowGoo extends SubtileFluid {
 
     for (_ <- 0 until pressure.toInt)
       if (TerraInfinita.rnd.nextDouble() < delta * 0.5f)
-        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.BLOCK_SIZE / 2, 0))(tilePosition.world).addVelocity(Vector2d(0, -1))
+        new ParticleSpark(tilePosition.pos.toEntityPos + (Options.METERS_PER_BLOCK / 2, 0))(tilePosition.world).body.setLinearVelocity(0, -1)
   }
 
   override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("glowgoo", img.toInt)
