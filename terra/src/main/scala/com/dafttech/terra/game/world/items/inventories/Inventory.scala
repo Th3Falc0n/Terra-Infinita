@@ -4,9 +4,10 @@ import java.util
 
 import com.dafttech.terra.game.world.items.Item
 import com.dafttech.terra.game.world.items.persistence.{GameObject, Prototype}
+import com.dafttech.terra.game.world.tiles.Tile
 
 import scala.annotation.tailrec
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /* MUTABLE */
 class Inventory {
@@ -14,7 +15,12 @@ class Inventory {
 
   def add(stack: Stack): Unit = {
     val stacks = content.getOrElse(stack.prototype, Nil)
-    val maxStackSize = stack.prototype.toGameObject.asInstanceOf[Item].maxStackSize
+    val maxStackSize = stack.prototype.toGameObject match {
+      case null =>
+        throw new RuntimeException(stack.prototype.className)
+      case item: Item => item.maxStackSize
+      case tile: Tile => tile.getDroppedItems.headOption.orNull.maxStackSize
+    }
 
     @tailrec
     def rec(stack: Stack, out: List[Stack], in: List[Stack]): List[Stack] =

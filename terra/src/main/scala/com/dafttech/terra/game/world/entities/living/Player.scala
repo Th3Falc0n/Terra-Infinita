@@ -3,27 +3,22 @@ package com.dafttech.terra.game.world.entities.living
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, PolygonShape }
-import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.gui.modules.{ ModuleCrafting, ModuleHUDBottom, ModuleInventory }
-import com.dafttech.terra.engine.input.{ InputHandler, MousePos }
+import com.badlogic.gdx.physics.box2d.{Body, BodyDef, PolygonShape}
+import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
+import com.dafttech.terra.engine.input.{InputHandler, MousePos}
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
-import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.Events
 import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
-import com.dafttech.terra.game.world.entities.particles.ParticleDust
 import com.dafttech.terra.game.world.interaction.Skill
 import com.dafttech.terra.game.world.items._
-import com.dafttech.terra.game.world.items.inventories.{ Inventory, Stack }
+import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
 import com.dafttech.terra.game.world.tiles._
-import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
-import com.dafttech.terra.resources.{ Options, Resources }
+import com.dafttech.terra.resources.Resources
 import monix.eval.Task
-
-import scala.concurrent.duration._
 
 class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos) {
   Events.EVENTMANAGER.registerEventListener(this)
@@ -38,17 +33,17 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos)
   val guiCrafting = new ModuleCrafting(this)
   guiCrafting.create()
 
-  hudBottom.slots(0).assignStack(Stack.apply(new TileDirt, 1000))
-  hudBottom.slots(1).assignStack(Stack.apply(new ItemFlamingArrow, 10000))
-  hudBottom.slots(2).assignStack(Stack.apply(new ItemGlowstick, 100))
-  hudBottom.slots(3).assignStack(Stack.apply(new ItemDynamite, 100))
-  hudBottom.slots(4).assignStack(Stack.apply(new ItemRainbowGun, 1))
-  hudBottom.slots(5).assignStack(Stack.apply(new ItemWaterBucket, 1))
-  hudBottom.slots(6).assignStack(Stack.apply(new TileTorch, 10000))
-  hudBottom.slots(7).assignStack(Stack.apply(new ItemDigStaff, 1))
-  inventory.add(Stack.apply(new TileSapling, 1000))
-  inventory.add(Stack.apply(new TileFence, 1000))
-  inventory.add(Stack.apply(new TileFire, 1000))
+  hudBottom.slots(0).assignStack(Stack.apply(TileItem(new TileDirt()), 1000))
+  hudBottom.slots(1).assignStack(Stack.apply(new ItemFlamingArrow(), 10000))
+  hudBottom.slots(2).assignStack(Stack.apply(new ItemGlowstick(), 100))
+  hudBottom.slots(3).assignStack(Stack.apply(new ItemDynamite(), 100))
+  hudBottom.slots(4).assignStack(Stack.apply(new ItemRainbowGun(), 1))
+  hudBottom.slots(5).assignStack(Stack.apply(new ItemWaterBucket(), 1))
+  hudBottom.slots(6).assignStack(Stack.apply(TileItem(new TileTorch()), 10000))
+  hudBottom.slots(7).assignStack(Stack.apply(new ItemDigStaff(), 1))
+  inventory.add(Stack.apply(TileItem(new TileSapling()), 1000))
+  inventory.add(Stack.apply(TileItem(new TileFence()), 1000))
+  inventory.add(Stack.apply(TileItem(new TileFire()), 1000))
 
   private[living] var left: Long = 0L
   private[living] var right = false

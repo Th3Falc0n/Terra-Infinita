@@ -2,6 +2,9 @@ package com.dafttech.terra.game.world.items.persistence
 
 import java.lang.reflect.Field
 
+import com.dafttech.terra.game.world.items.TileItem
+import com.dafttech.terra.game.world.tiles.Tile
+
 class Prototype {
   var className = ""
   private var values = Map[Field, AnyRef]()
@@ -20,11 +23,17 @@ class Prototype {
 
   def toGameObject: GameObject = {
     try {
-      @SuppressWarnings(Array("unchecked"))
-      val cl = Class.forName(className).asInstanceOf[Class[GameObject]]
-      val obj = cl.newInstance()
-      for ((field, value) <- values) field.set(obj, value)
-      obj
+      Class.forName(className) match {
+        case tileItem if tileItem == classOf[TileItem] =>
+          TileItem(values(TileItem.tileField).asInstanceOf[Tile])
+
+        case clazz =>
+          @SuppressWarnings(Array("unchecked"))
+          val cl = clazz.asInstanceOf[Class[GameObject]]
+          val obj = cl.newInstance()
+          for ((field, value) <- values) field.set(obj, value)
+          obj
+      }
     } catch {
       case e@(_: ClassNotFoundException | _: InstantiationException | _: IllegalAccessException) =>
         // TODO Auto-generated catch block

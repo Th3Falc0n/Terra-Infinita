@@ -6,6 +6,7 @@ import com.dafttech.terra.engine.vector.Vector2d
 import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
+import com.dafttech.terra.game.world.items.{Item, TileItem}
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
@@ -20,7 +21,9 @@ class TileSapling extends TileFalling {
     else grothDelay -= delta
   }
 
-  override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 0.2
+  override def getDroppedItems: Seq[Item] = List(new TileItem(this) {
+    override def getNextUseDelay(causer: EntityLiving, position: Vector2d, leftClick: Boolean): Double = 0.2
+  })
 
   override def isFlammable: Boolean = true
 

@@ -1,21 +1,29 @@
 package com.dafttech.terra.game.world.tiles
 
 import com.badlogic.gdx.graphics.Color
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.dafttech.terra.engine.lighting.PointLight
 import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition}
-import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
-import com.dafttech.terra.game.world.items.{Item, ItemTile}
+import com.dafttech.terra.game.world.items.persistence.GameObject
+import com.dafttech.terra.game.world.items.{Item, TileItem}
 import com.dafttech.terra.game.world.subtiles.Subtile
+import monix.eval.Task
 
-abstract class Tile extends ItemTile with IDrawableInWorld {
-  private var subtiles: List[Subtile] = List.empty
+abstract class Tile extends GameObject with IDrawableInWorld {
+  private var subtiles: Seq[Subtile] = List.empty
 
   private var breakingProgress: Float = 0
   private var hardness: Float = 1
 
   var receivesSunlight: Boolean = false
   var sunlightFilter: TilePosition = _
+
+  def isLightEmitter: Boolean = false
+
+  def getEmittedLight: PointLight = null
+
+  def getImage: Task[TextureRegion]
 
   /**
     * Defines whether this tile graphically connects with another one.
@@ -24,13 +32,6 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     * @return
     */
   def connectsTo(tile: Tile): Boolean = true
-
-  override def use(causer: EntityLiving, position: Vector2d): Boolean =
-    if ((causer.getPosition - position).length < 100) {
-      val pos = position.toWorldPosition
-      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), this, causer)
-    } else
-      false
 
   def isAir: Boolean = false
 
@@ -48,12 +49,12 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
 
   def getTemperature: Int = 0
 
-  def getDroppedItem: Item = this
+  def getDroppedItems: Seq[Item] = List(TileItem(this))
 
-  override def spawnAsEntity(tilePosition: TilePosition): EntityItem = {
-    val dropped = getDroppedItem
-    if (dropped == null) null
-    else new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), dropped)(tilePosition.world)
+  def spawnAsEntity(tilePosition: TilePosition): Seq[EntityItem] = {
+    getDroppedItems.map { item =>
+      new EntityItem(tilePosition.pos.toEntityPos + (0.5, 0.5), item)(tilePosition.world)
+    }
   }
 
   def getWalkFriction: Float = 1
@@ -75,7 +76,7 @@ abstract class Tile extends ItemTile with IDrawableInWorld {
     this
   }
 
-  def getSubtiles: List[Subtile] = subtiles
+  def getSubtiles: Seq[Subtile] = subtiles
 
   def hasSubtile[A <: Subtile](subtileClass: Class[A], inherited: Boolean): Boolean =
     getSubtile(subtileClass, inherited) != null

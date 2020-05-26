@@ -12,7 +12,7 @@ import monix.eval.Task
 import scala.concurrent.duration._
 
 abstract class Item extends GameObject with IDrawableInventory {
-  val getImage: Task[TextureRegion]
+  def getImage: Task[TextureRegion]
 
   def use(causer: EntityLiving, position: Vector2d): Boolean
 
@@ -39,8 +39,4 @@ abstract class Item extends GameObject with IDrawableInventory {
   }
 
   def maxStackSize: Int = 99
-}
-
-abstract class ItemTile extends Item {
-  final override def update(delta: Float): Unit = ()
 }

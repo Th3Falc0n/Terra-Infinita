@@ -1,22 +1,20 @@
 package com.dafttech.terra.game.world
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, Box2DDebugRenderer, PolygonShape, World }
+import com.badlogic.gdx.physics.box2d.{BodyDef, Box2DDebugRenderer, PolygonShape, World}
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
-import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
-import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.entities.{ Entity, EntityItem }
-import com.dafttech.terra.game.world.environment.{ SunMap, Weather, WeatherRainy }
+import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
+import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
-import com.dafttech.terra.game.world.tiles.{ Tile, TileAir }
-import com.dafttech.terra.game.{ Events, TimeKeeping }
+import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
+import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
-import monix.execution.atomic.Atomic
 
 class GameWorld(val size: Vector2i) extends GameObject {
 
@@ -160,15 +158,15 @@ class GameWorld(val size: Vector2i) extends GameObject {
       false
   }
 
-  def destroyTile(pos: Vector2i, causer: Entity): Option[EntityItem] = {
+  def destroyTile(pos: Vector2i, causer: Entity): Seq[EntityItem] = {
     val tile: Tile = getTile(pos)
     if (tile.isBreakable) {
       val entity = tile.spawnAsEntity(TilePosition(this, pos))
       setTile(pos, null, notify = true)
       tile.onTileDestroyed(causer)(TilePosition(this, pos))
-      Some(entity)
+      entity
     } else
-      None
+      List.empty
   }
 
   private def notifyNeighborTiles(pos: Vector2i): Unit = {
