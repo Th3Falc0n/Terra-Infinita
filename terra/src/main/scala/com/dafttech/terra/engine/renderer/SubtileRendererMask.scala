@@ -1,7 +1,7 @@
 package com.dafttech.terra.engine.renderer
 
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.vector.Vector2d
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.TileFalling
@@ -20,7 +20,7 @@ class SubtileRendererMask extends SubtileRenderer {
     var offX: Float = 0
     var offY: Float = 0
 
-    if (!render.isTileIndependent && tp.getTile != null && tp.getTile.isInstanceOf[TileFalling]) {
+    if (!render.isTileIndependent && tp.getTile != null && tp.getTile.tile.isInstanceOf[TileFalling]) {
       val offset: Vector2d = tp.getTile.asInstanceOf[TileFalling].renderOffset
       if (offset != null) {
         offX = offset.x.toFloat * METERS_PER_BLOCK

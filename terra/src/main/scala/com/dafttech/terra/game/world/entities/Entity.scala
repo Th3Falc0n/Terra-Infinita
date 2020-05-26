@@ -6,17 +6,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.math.Rectangle
-import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, FixtureDef, PolygonShape }
+import com.badlogic.gdx.physics.box2d.{Body, BodyDef, PolygonShape}
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
-import com.dafttech.terra.engine.{ AbstractScreen, IDrawableInWorld, TilePosition }
+import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.engine.{AbstractScreen, IDrawableInWorld, TilePosition}
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.items.persistence.{ GameObject, Persistent }
-import com.dafttech.terra.game.world.tiles.Tile
-import com.dafttech.terra.game.world.{ Facing, GameWorld }
+import com.dafttech.terra.game.world.items.persistence.GameObject
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.Options
-import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
-import com.dafttech.terra.resources.Options.PIXELS_PER_METER
+import com.dafttech.terra.resources.Options.{METERS_PER_BLOCK, PIXELS_PER_METER}
 import monix.eval.Task
 
 import scala.concurrent.duration._
@@ -111,7 +109,7 @@ abstract class Entity(pos: Vector2d)(implicit val world: GameWorld) extends Game
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = { }
 
-  def getUndergroundTile: Tile = {
+  def getUndergroundTile: TileInstance = {
     val pos = getPosition.toWorldPosition
     world.getTile(Vector2i(pos.x, pos.y + 1))
   }

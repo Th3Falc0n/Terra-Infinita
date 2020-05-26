@@ -5,6 +5,7 @@ import java.util.Random
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
+import com.dafttech.terra.game.world.TileInstance
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.items.persistence.Persistent
 import com.dafttech.terra.game.world.subtiles.SubtileGrass
@@ -21,7 +22,7 @@ class TileGrass() extends Tile {
   override def isOpaque: Boolean = false
 
   override def onNeighborChange(changed: TilePosition)(implicit tilePosition: TilePosition): Unit = {
-    if (tilePosition.world.getTile(tilePosition.pos + (0, 1)).isAir)
+    if (tilePosition.world.getTile(tilePosition.pos + (0, 1)).tile.isAir)
       tilePosition.world.destroyTile(tilePosition.pos + (0, 1), null)
   }
 
@@ -42,7 +43,7 @@ class TileGrass() extends Tile {
     spreadPosition - (0, 1)
 
     if (spreadTile != null &&
-      tilePosition.world.getTile(spreadPosition).isAir && spreadTile.hasSubtile(classOf[SubtileGrass], inherited = false))
-      tilePosition.world.setTile(spreadPosition, new TileGrass, notify = true)
+      tilePosition.world.getTile(spreadPosition).tile.isAir && spreadTile.hasSubtile(classOf[SubtileGrass], inherited = false))
+      tilePosition.world.setTile(spreadPosition, TileInstance(new TileGrass), notify = true)
   }
 }

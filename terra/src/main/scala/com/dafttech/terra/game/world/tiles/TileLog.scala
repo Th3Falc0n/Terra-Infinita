@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
@@ -35,30 +35,36 @@ class TileLog() extends Tile {
 
     if (living) {
       if (height <= maxHeight && (width == 0 || rnd.nextInt(5) == 0) &&
-        tilePosition.world.getTile(tilePosition.pos - (0, 1)).isReplacable) tilePosition.world.setTile(
+        tilePosition.world.getTile(tilePosition.pos - (0, 1)).tile.isReplacable) tilePosition.world.setTile(
         tilePosition.pos - (0, 1),
-        (if (height > maxHeight - getSmallLayerSize) getLeaf else getLog)
-          .setLiving(living)
-          .setSize(height + 1, width, maxHeight, maxWidth),
+        TileInstance(
+          (if (height > maxHeight - getSmallLayerSize) getLeaf else getLog)
+            .setLiving(living)
+            .setSize(height + 1, width, maxHeight, maxWidth)
+        ),
         notify = true
       )
 
       if (height > maxHeight / 2.5f) {
         if (rnd.nextInt((Math.abs(width).toFloat * (if (rnd.nextBoolean) 1 else height) / maxWidth).toInt + 1) == 0 &&
-          tilePosition.world.getTile(tilePosition.pos + (1, 0)).isReplacable) tilePosition.world.setTile(
+          tilePosition.world.getTile(tilePosition.pos + (1, 0)).tile.isReplacable) tilePosition.world.setTile(
           tilePosition.pos + (1, 0),
-          (if (rnd.nextBoolean) getLog else getLeaf)
-            .setLiving(living).setSize(height + 1, width + 1, maxHeight, maxWidth),
+          TileInstance(
+            (if (rnd.nextBoolean) getLog else getLeaf)
+              .setLiving(living).setSize(height + 1, width + 1, maxHeight, maxWidth)
+          ),
           notify = true
         )
 
         if (rnd.nextInt((Math.abs(width).toFloat * (if (rnd.nextBoolean) 1 else height) / maxWidth).toInt + 1) == 0 &&
-          tilePosition.world.getTile(tilePosition.pos - (1, 0)).isReplacable)
-          if (tilePosition.world.getTile(tilePosition.pos - (1, 0)).isReplacable) tilePosition.world.setTile(
+          tilePosition.world.getTile(tilePosition.pos - (1, 0)).tile.isReplacable)
+          if (tilePosition.world.getTile(tilePosition.pos - (1, 0)).tile.isReplacable) tilePosition.world.setTile(
             tilePosition.pos - (1, 0),
-            (if (height > maxHeight / 2 && rnd.nextBoolean) getLog else getLeaf)
-              .setLiving(living)
-              .setSize(height + 1, width - 1, maxHeight, maxWidth),
+            TileInstance(
+              (if (height > maxHeight / 2 && rnd.nextBoolean) getLog else getLeaf)
+                .setLiving(living)
+                .setSize(height + 1, width - 1, maxHeight, maxWidth)
+            ),
             notify = true
           )
       }
@@ -67,7 +73,7 @@ class TileLog() extends Tile {
     }
   }
 
-  private def setSize(height: Int, width: Int, maxHeight: Int, maxWidth: Int) = {
+  private def setSize(height: Int, width: Int, maxHeight: Int, maxWidth: Int): TileLog = {
     this.height = height
     this.width = width
     this.maxHeight = maxHeight
@@ -89,5 +95,5 @@ class TileLog() extends Tile {
   override def isFlammable: Boolean = true
 
   def isFlatTo(world: GameWorld, pos: Vector2i): Boolean =
-    world.getTile(pos).isInstanceOf[TileLog] || world.getTile(pos).isOpaque
+    world.getTile(pos).tile.isInstanceOf[TileLog] || world.getTile(pos).tile.isOpaque
 }

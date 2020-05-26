@@ -23,7 +23,7 @@ class SunMap {
   private def isReceivingTile(t: TilePosition): Boolean = getReceivingTile(t.pos.x) == t
 
   def postTilePlace(t: TilePosition): Unit =
-    if (!t.getTile.isAir)
+    if (!t.getTile.tile.isAir)
       if (getHeightForX(t.pos.x) > t.pos.y) {
         setHeightForX(t.pos.x, t.pos.y)
         unsetSunlightForX(t)

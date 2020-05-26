@@ -1,17 +1,17 @@
 package com.dafttech.terra.engine
 
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.GameWorld
-import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
+import com.dafttech.terra.game.world.tiles.TileAir
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 
 case class TilePosition(world: GameWorld, pos: Vector2i) {
-  def getTile: Tile = world.getTile(pos)
+  def getTile: TileInstance = world.getTile(pos)
 
-  def setTile(tile: Tile, notify: Boolean = true): Unit = world.setTile(pos, tile, notify = true)
+  def setTile(tile: TileInstance, notify: Boolean = true): Unit = world.setTile(pos, tile, notify = true)
 
   def moveTile(target: TilePosition): TilePosition = {
     val tile = getTile
-    setTile(new TileAir)
+    setTile(TileInstance(new TileAir))
     target.setTile(tile)
     target
   }

@@ -84,8 +84,8 @@ class PassLighting extends RenderingPass {
             val rect: Rectangle = getSunlightRect(TilePosition(world, Vector2i(x, y)), pointOfView)
             screen.shr.rect(rect.x, rect.y, rect.width, rect.height)
           }
-          if (world.getTile(Vector2i(x, y)).isLightEmitter && world.getTile(Vector2i(x, y)).getEmittedLight != null) {
-            world.getTile(Vector2i(x, y)).getEmittedLight.drawToLightmap(screen, pointOfView, Vector2i(x, y).toEntityPos)
+          if (world.getTile(Vector2i(x, y)).tile.isLightEmitter && world.getTile(Vector2i(x, y)).tile.getEmittedLight != null) {
+            world.getTile(Vector2i(x, y)).tile.getEmittedLight.drawToLightmap(screen, pointOfView, Vector2i(x, y).toEntityPos)
           }
         }
 

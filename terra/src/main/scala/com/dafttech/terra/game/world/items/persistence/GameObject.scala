@@ -61,12 +61,6 @@ abstract class GameObject() {
 
     for (f <- annotatedFields) {
       try {
-        /*
-               * if (!(f.get(this) instanceof Serializable))
-               * System.out.println("WARNING! Field " + f.getName() + " in " +
-               * this.getClass().getCanonicalName() +
-               * " is not Serializable and cannot be saved!");
-               */
         if (f.isAnnotationPresent(classOf[Persistent])) proto.addValue(f, f.get(this))
       } catch {
         case e@(_: IllegalArgumentException | _: IllegalAccessException) =>

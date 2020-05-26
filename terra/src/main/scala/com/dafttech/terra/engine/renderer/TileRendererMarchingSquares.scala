@@ -1,11 +1,10 @@
 package com.dafttech.terra.engine.renderer
 
-import com.badlogic.gdx.graphics.{ Color, Pixmap, Texture }
+import com.badlogic.gdx.graphics.{Pixmap, Texture}
 import com.dafttech.terra.TerraInfinita
-import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.{ Tile, TileFalling }
-import com.dafttech.terra.resources.Options
+import com.dafttech.terra.game.world.tiles.{Tile, TileFalling}
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
 import scala.collection.mutable
@@ -128,10 +127,10 @@ class TileRendererMarchingSquares extends TileRenderer {
 
     if (renderPositions.getOrElseUpdate(tp, new TileCache).texture == null) {
       doDraw(State(
-        CornerState(if (!tTL.isAir) 16 else 0, tTL),
-        CornerState(if (!tTR.isAir) 16 else 0, tTR),
-        CornerState(if (!tBL.isAir) 16 else 0, tBL),
-        CornerState(if (!tBR.isAir) 16 else 0, tBR),
+        CornerState(if (!tTL.tile.isAir) 16 else 0, tTL.tile),
+        CornerState(if (!tTR.tile.isAir) 16 else 0, tTR.tile),
+        CornerState(if (!tBL.tile.isAir) 16 else 0, tBL.tile),
+        CornerState(if (!tBR.tile.isAir) 16 else 0, tBR.tile),
         0,
         0)
       )(renderPositions(tp).pixmap, tp)
@@ -142,7 +141,7 @@ class TileRendererMarchingSquares extends TileRenderer {
     val tpx = tp.pos.toScreenPos(pointOfView).x.toFloat
     val tpy = tp.pos.toScreenPos(pointOfView).y.toFloat
 
-    val yOff = tp.getTile match {
+    val yOff = tp.getTile.tile match {
       case falling: TileFalling => falling.renderOffset.x.toFloat
       case _ => 0
     }

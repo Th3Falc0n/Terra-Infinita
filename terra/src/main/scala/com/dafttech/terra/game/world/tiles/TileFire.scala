@@ -5,9 +5,9 @@ import java.util.Random
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
@@ -15,22 +15,22 @@ object TileFire {
   def createFire(tilePosition: TilePosition): Boolean = {
     val spreadTile = tilePosition.getTile
 
-    if (spreadTile.isFlammable || areSurroundingTilesFlammable(tilePosition)) {
-      tilePosition.world.setTile(tilePosition.pos, new TileFire, notify = true)
+    if (spreadTile.tile.isFlammable || areSurroundingTilesFlammable(tilePosition)) {
+      tilePosition.world.setTile(tilePosition.pos, TileInstance(new TileFire), notify = true)
       true
     }
-    else if (spreadTile.isReplacable) {
-      tilePosition.world.setTile(tilePosition.pos, new TileFire().dontSpread, notify = true)
+    else if (spreadTile.tile.isReplacable) {
+      tilePosition.world.setTile(tilePosition.pos, TileInstance(new TileFire().dontSpread), notify = true)
       true
     } else
       false
   }
 
   def areSurroundingTilesFlammable(tilePosition: TilePosition): Boolean =
-    tilePosition.world.getTile(tilePosition.pos + (1, 0)).isFlammable ||
-      tilePosition.world.getTile(tilePosition.pos - (1, 0)).isFlammable ||
-      tilePosition.world.getTile(tilePosition.pos + (0, 1)).isFlammable ||
-      tilePosition.world.getTile(tilePosition.pos - (0, 1)).isFlammable
+    tilePosition.world.getTile(tilePosition.pos + (1, 0)).tile.isFlammable ||
+      tilePosition.world.getTile(tilePosition.pos - (1, 0)).tile.isFlammable ||
+      tilePosition.world.getTile(tilePosition.pos + (0, 1)).tile.isFlammable ||
+      tilePosition.world.getTile(tilePosition.pos - (0, 1)).tile.isFlammable
 }
 
 class TileFire extends TileFalling {
@@ -54,9 +54,9 @@ class TileFire extends TileFalling {
     if (spread && spreadCounter <= 0) {
       val spreadPosition = tilePosition.pos + (new Random().nextInt(spreadDistance * 2) - spreadDistance, new Random().nextInt(spreadDistance * 2) - spreadDistance)
       val spreadTile = tilePosition.world.getTile(spreadPosition)
-      if (spreadTile.isFlammable) {
+      if (spreadTile.tile.isFlammable) {
         spreadCounter = spreadCounterMax
-        tilePosition.world.setTile(spreadPosition, new TileFire, notify = true)
+        tilePosition.world.setTile(spreadPosition, TileInstance(new TileFire()), notify = true)
       }
     }
     if (lifetime <= 0) tilePosition.setTile(null)

@@ -5,8 +5,7 @@ import java.util.Random
 
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.renderer.{SubtileRenderer, SubtileRendererFluid}
-import com.dafttech.terra.game.world.Facing
-import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.game.world.{Facing, TileInstance}
 
 abstract class SubtileFluid extends Subtile {
   var maxPressure: Float = 10
@@ -52,9 +51,9 @@ abstract class SubtileFluid extends Subtile {
       var possAmount = change - fluid._1.pressure
       if (possAmount > amount) possAmount = amount
 
-      if ((possAmount > 0 && !fluid._2.isWaterproof) ||
-        (possAmount < 0 && !tilePosition.getTile.isWaterproof) ||
-        (fluid._2.isWaterproof == tilePosition.getTile.isWaterproof)) {
+      if ((possAmount > 0 && !fluid._2.tile.isWaterproof) ||
+        (possAmount < 0 && !tilePosition.getTile.tile.isWaterproof) ||
+        (fluid._2.tile.isWaterproof == tilePosition.getTile.tile.isWaterproof)) {
         addPressure(-possAmount)
         fluid._1.addPressure(possAmount)
         return if (amount - possAmount < 0) 0
@@ -66,7 +65,7 @@ abstract class SubtileFluid extends Subtile {
 
   def flowSide(tilePosition: TilePosition, amount: Float, pressCap: Float): Float = {
     if (amount > 0) {
-      var fluid: (SubtileFluid, Tile) = null
+      var fluid: (SubtileFluid, TileInstance) = null
       if (new Random().nextBoolean) {
         fluid = getFluid(tilePosition, Facing.Right)
         if (fluid != null) {
@@ -75,7 +74,7 @@ abstract class SubtileFluid extends Subtile {
             reach > 0 &&
               new Random().nextInt(5) > 0 &&
               fluid._1.isFluid(tilePosition, Facing.Right) &&
-              (fluid._1.getFluid(tilePosition, Facing.Right)._2.isWaterproof == fluid._2.isWaterproof) &&
+              (fluid._1.getFluid(tilePosition, Facing.Right)._2.tile.isWaterproof == fluid._2.tile.isWaterproof) &&
               fluid._1.getFluid(tilePosition, Facing.Right)._1.pressure > fluid._1.maxPressure / 20
           ) {
             reach -= 1
@@ -91,7 +90,7 @@ abstract class SubtileFluid extends Subtile {
             reach > 0 &&
               new Random().nextInt(5) > 0 &&
               fluid._1.isFluid(tilePosition, Facing.Left) &&
-              (fluid._1.getFluid(tilePosition, Facing.Left)._2.isWaterproof == fluid._2.isWaterproof) &&
+              (fluid._1.getFluid(tilePosition, Facing.Left)._2.tile.isWaterproof == fluid._2.tile.isWaterproof) &&
               fluid._1.getFluid(tilePosition, Facing.Left)._1.pressure > fluid._1.maxPressure / 20
           ) {
             reach -= 1
@@ -103,9 +102,9 @@ abstract class SubtileFluid extends Subtile {
         val avg = (pressure + fluid._1.pressure) / 2
         var possAmount = avg - fluid._1.pressure
         if (possAmount > amount) possAmount = amount
-        if ((possAmount > 0 && !fluid._2.isWaterproof) ||
-          (possAmount < 0 && !tilePosition.getTile.isWaterproof) ||
-          (fluid._2.isWaterproof == tilePosition.getTile.isWaterproof)) {
+        if ((possAmount > 0 && !fluid._2.tile.isWaterproof) ||
+          (possAmount < 0 && !tilePosition.getTile.tile.isWaterproof) ||
+          (fluid._2.tile.isWaterproof == tilePosition.getTile.tile.isWaterproof)) {
           addPressure(-possAmount)
           fluid._1.addPressure(possAmount)
           return if (amount - possAmount < 0) 0
@@ -129,7 +128,7 @@ abstract class SubtileFluid extends Subtile {
           reach > 0 &&
             new Random().nextInt(5) > 0 &&
             fluid._1.isFluid(tilePosition, facing) &&
-            (fluid._1.getFluid(tilePosition, facing)._2.isWaterproof == fluid._2.isWaterproof) &&
+            (fluid._1.getFluid(tilePosition, facing)._2.tile.isWaterproof == fluid._2.tile.isWaterproof) &&
             fluid._1.getFluid(tilePosition, facing)._1.pressure > fluid._1.maxPressure / 20
         ) {
           reach -= 1
@@ -143,9 +142,9 @@ abstract class SubtileFluid extends Subtile {
           // (pressure + fluid.pressure) / 2;
           var possAmount = avg - fluid._1.pressure
           if (possAmount > amount) possAmount = amount
-          if ((possAmount > 0 && !fluid._2.isWaterproof) ||
-            (possAmount < 0 && !tilePosition.getTile.isWaterproof) ||
-            (fluid._2.isWaterproof == tilePosition.getTile.isWaterproof)) {
+          if ((possAmount > 0 && !fluid._2.tile.isWaterproof) ||
+            (possAmount < 0 && !tilePosition.getTile.tile.isWaterproof) ||
+            (fluid._2.tile.isWaterproof == tilePosition.getTile.tile.isWaterproof)) {
             addPressure(-possAmount)
             fluid._1.addPressure(possAmount)
             return if (amount - possAmount < 0) 0
@@ -174,7 +173,7 @@ abstract class SubtileFluid extends Subtile {
         }
         var possAmount = change - pressure
         if (possAmount > amount) possAmount = amount
-        if ((possAmount > 0 && !tilePosition.getTile.isWaterproof) || (possAmount < 0 && !fluid._2.isWaterproof) || (fluid._2.isWaterproof == tilePosition.getTile.isWaterproof)) {
+        if ((possAmount > 0 && !tilePosition.getTile.tile.isWaterproof) || (possAmount < 0 && !fluid._2.tile.isWaterproof) || (fluid._2.tile.isWaterproof == tilePosition.getTile.tile.isWaterproof)) {
           fluid._1.addPressure(-possAmount)
           addPressure(possAmount)
           return if (amount - possAmount < 0) 0
@@ -194,12 +193,12 @@ abstract class SubtileFluid extends Subtile {
 
   override def getRenderer: SubtileRenderer = SubtileRendererFluid.$Instance
 
-  def getFluid(tilePosition: TilePosition, direction: Facing): (SubtileFluid, Tile) = {
+  def getFluid(tilePosition: TilePosition, direction: Facing): (SubtileFluid, TileInstance) = {
     val tile = tilePosition.world.getTile(tilePosition.pos + direction.intVector)
     // if (tile.isWaterproof()) return null;
     var fluid = tilePosition.getTile.getSubtile(getClass, inherited = false).asInstanceOf[SubtileFluid]
     if (fluid == null) {
-      if (tile.isWaterproof) return null
+      if (tile.tile.isWaterproof) return null
       fluid = getNewFluid.setPressure(0)
       tile.addSubtile(fluid)
     }

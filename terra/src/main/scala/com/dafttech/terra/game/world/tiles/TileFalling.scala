@@ -31,7 +31,7 @@ abstract class TileFalling extends Tile {
     if (renderOffset.isZero) {
       if (createTime == 0) createTime = tilePosition.world.time
       if (createTime + getFallDelay(tilePosition.world) < tilePosition.world.time &&
-        tilePosition.world.getTile(tilePosition.pos + (0, 1)).isReplacable)
+        tilePosition.world.getTile(tilePosition.pos + (0, 1)).tile.isReplacable)
         fall(0, 1)
     }
 

@@ -1,11 +1,9 @@
 package com.dafttech.terra.engine.passes
 
-import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.engine.vector.Vector2i
-import com.dafttech.terra.game.world.GameWorld
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.entities.Entity
-import com.dafttech.terra.game.world.tiles.Tile
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 import org.lwjgl.opengl.GL11
 
@@ -25,7 +23,7 @@ class PassObjects extends RenderingPass {
 
 
     screen.batch.begin()
-    var tile: Tile = null
+    var tile: TileInstance = null
 
     for {
       x <- (px - sx) until (px + sx)

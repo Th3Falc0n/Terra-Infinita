@@ -12,7 +12,7 @@ import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
-import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
+import com.dafttech.terra.game.world.tiles.TileAir
 import com.dafttech.terra.game.{Events, TimeKeeping}
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
@@ -27,7 +27,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
   val b2drdr = new Box2DDebugRenderer()
 
 
-  val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
+  val tiles: Array[Array[TileInstance]] = Array.ofDim[TileInstance](size.x, size.y)
   private var entities: Seq[Entity] = Seq.empty
   var sunmap: SunMap = new SunMap
   var weather: Weather = new WeatherRainy
@@ -49,7 +49,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
       val t = getTile(Vector2i(x, y-1))
       val b = getTile(Vector2i(x, y+1))
 
-      if(!tile.isAir && (l.isAir || r.isAir || t.isAir || b.isAir)) {
+      if (!tile.tile.isAir && (l.tile.isAir || r.tile.isAir || t.tile.isAir || b.tile.isAir)) {
         val bodyDef = new BodyDef
 
         bodyDef.`type` = BodyDef.BodyType.StaticBody
@@ -59,7 +59,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
 
         shape.setAsBox(METERS_PER_BLOCK / 2f, METERS_PER_BLOCK / 2f)
 
-        println(s"Created physics tile at mpb=${METERS_PER_BLOCK} xc=${x} x=${x*METERS_PER_BLOCK} yc=${y} y=${y*METERS_PER_BLOCK}")
+        println(s"Created physics tile at mpb=${METERS_PER_BLOCK} xc=${x} x=${x * METERS_PER_BLOCK} yc=${y} y=${y * METERS_PER_BLOCK}")
 
         val body = physicsWorld.createBody(bodyDef)
 
@@ -75,12 +75,12 @@ class GameWorld(val size: Vector2i) extends GameObject {
     entities = entities :+ entity
   }
 
-  def getTile(pos: Vector2i): Tile = {
-    if(pos.x >= 0 && pos.x < size.x && pos.y >= 0 && pos.y < size.y) {
+  def getTile(pos: Vector2i): TileInstance = {
+    if (pos.x >= 0 && pos.x < size.x && pos.y >= 0 && pos.y < size.y) {
       tiles(pos.x)(pos.y)
     }
     else {
-      new TileAir()
+      TileInstance(new TileAir())
     }
   }
 
@@ -89,7 +89,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
 
     y += 1
     while (y < size.y) {
-      val tile = Option(getTile(Vector2i(pos.x, y))).filter(!_.isAir)
+      val tile = Option(getTile(Vector2i(pos.x, y))).filter(!_.tile.isAir)
       if (tile.isDefined) return Some(TilePosition(this, Vector2i(pos.x, y)))
       y += 1
     }
@@ -101,44 +101,44 @@ class GameWorld(val size: Vector2i) extends GameObject {
 
     y -= 1
     while (y >= 0) {
-      if (getTile(Vector2i(pos.x, y)) != null && !getTile(Vector2i(pos.x, y)).isAir) return Some(TilePosition(this, Vector2i(pos.x, y)))
+      if (getTile(Vector2i(pos.x, y)) != null && !getTile(Vector2i(pos.x, y)).tile.isAir) return Some(TilePosition(this, Vector2i(pos.x, y)))
       y -= 1
     }
     None
   }
 
-  def setTile(pos: Vector2i, _tile: Tile, notify: Boolean): GameWorld = {
-    var tile = _tile
+  def setTile(pos: Vector2i, _tile: TileInstance, notify: Boolean): GameWorld = {
+    var tileInstance = _tile
 
     var tileIndependentSubtiles: List[Subtile] = Nil
     var notifyOldRemoval: Vector2i = null
 
-    if (tile != null && pos != null && (getTile(pos) eq tile)) {
+    if (tileInstance != null && pos != null && (getTile(pos) eq tileInstance)) {
       notifyOldRemoval = pos
       setTile(notifyOldRemoval, null, false)
     }
 
-    if (tile == null) tile = new TileAir
+    if (tileInstance == null) tileInstance = TileInstance(new TileAir)
 
-    val oldTile: Tile = getTile(pos)
+    val oldTile: TileInstance = getTile(pos)
 
     if (oldTile != null) {
       sunmap.postTileRemove(TilePosition(this, pos))
-      for (subtile <- oldTile.getSubtiles)
+      for (subtile <- oldTile.subtiles)
         if (subtile.isTileIndependent)
           tileIndependentSubtiles = tileIndependentSubtiles :+ subtile
-      oldTile.removeAndUnlinkSubtile(tileIndependentSubtiles: _*)
+      oldTile.removeSubtile(tileIndependentSubtiles: _*)
     }
 
-    if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tile).isCancelled)
-      tiles(pos.x)(pos.y) = tile
+    if (!Events.EVENTMANAGER.callSync(Events.EVENT_BLOCKCHANGE, tileInstance).isCancelled)
+      tiles(pos.x)(pos.y) = tileInstance
 
-    tile.addSubtile(tileIndependentSubtiles: _*)
+    tileInstance.addSubtile(tileIndependentSubtiles: _*)
 
     sunmap.postTilePlace(TilePosition(this, pos))
 
     if (notify) {
-      tile.onTileSet(TilePosition(this, pos))
+      tileInstance.tile.onTileSet(TilePosition(this, pos))
 
       if (notifyOldRemoval != null) notifyNeighborTiles(Vector2i(notifyOldRemoval.x, notifyOldRemoval.y))
       notifyNeighborTiles(Vector2i(pos.x, pos.y))
@@ -148,37 +148,37 @@ class GameWorld(val size: Vector2i) extends GameObject {
     this
   }
 
-  def placeTile(pos: Vector2i, t: Tile, causer: Entity): Boolean = {
-    val tile: Tile = getTile(pos)
-    if (tile.isAir || tile.isReplacable) {
+  def placeTile(pos: Vector2i, t: TileInstance, causer: Entity): Boolean = {
+    val tileInstance: TileInstance = getTile(pos)
+    if (tileInstance.tile.isAir || tileInstance.tile.isReplacable) {
       setTile(pos, t, notify = true)
-      tile.onTilePlaced(causer)(TilePosition(this, pos))
+      tileInstance.tile.onTilePlaced(causer)(TilePosition(this, pos))
       true
     } else
       false
   }
 
   def destroyTile(pos: Vector2i, causer: Entity): Seq[EntityItem] = {
-    val tile: Tile = getTile(pos)
-    if (tile.isBreakable) {
-      val entity = tile.spawnAsEntity(TilePosition(this, pos))
+    val tileInstance: TileInstance = getTile(pos)
+    if (tileInstance.tile.isBreakable) {
+      val entity = tileInstance.tile.spawnAsEntity(TilePosition(this, pos))
       setTile(pos, null, notify = true)
-      tile.onTileDestroyed(causer)(TilePosition(this, pos))
+      tileInstance.tile.onTileDestroyed(causer)(TilePosition(this, pos))
       entity
     } else
       List.empty
   }
 
   private def notifyNeighborTiles(pos: Vector2i): Unit = {
-    var tile: Tile = null
+    var tile: TileInstance = null
     tile = getTile(pos + (1, 0))
-    tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos + (1, 0)))
+    tile.tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos + (1, 0)))
     tile = getTile(pos + (0, 1))
-    tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos + (0, 1)))
+    tile.tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos + (0, 1)))
     tile = getTile(pos - (1, 0))
-    tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos - (1, 0)))
+    tile.tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos - (1, 0)))
     tile = getTile(pos - (0, 1))
-    tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos - (0, 1)))
+    tile.tile.onNeighborChange(TilePosition(this, pos))(TilePosition(this, pos - (0, 1)))
   }
 
   def removeEntity(entity: Entity): Unit = {
@@ -195,7 +195,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
     val px: Int = (localPlayer.getPosition.x / METERS_PER_BLOCK).toInt
     val py: Int = (localPlayer.getPosition.y / METERS_PER_BLOCK).toInt
 
-    var tile: Tile = null
+    var tile: TileInstance = null
     for {
       x <- (px - sx) until (px + sx)
       y <- (py - sy) until (py + sy)

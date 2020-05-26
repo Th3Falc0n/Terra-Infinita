@@ -1,11 +1,10 @@
 package com.dafttech.terra.game
 
-import com.badlogic.gdx.Gdx
-import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.engine.vector.Vector2i
+import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
 import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
-import org.lolhens.eventmanager.{ Event, EventManager, EventType, ListenerContainer }
+import org.lolhens.eventmanager.{Event, EventManager, EventType, ListenerContainer}
 import org.lolhens.storage.tuple.Tuple
 
 object Events {
@@ -50,7 +49,7 @@ object Events {
       for (x <- (world.localPlayer.getPosition.x / METERS_PER_BLOCK - sx).toInt until (world.localPlayer.getPosition.x / METERS_PER_BLOCK + sx).toInt) {
         for (y <- (world.localPlayer.getPosition.y / METERS_PER_BLOCK - sy).toInt until (world.localPlayer.getPosition.y / METERS_PER_BLOCK + sy).toInt) {
           val tile = world.getTile(Vector2i(x, y))
-          if (tile != null) tile.tick(event.in.get(1, classOf[Float]))(TilePosition(world, Vector2i(x, y)))
+          if (tile != null) tile.tile.tick(tile, event.in.get(1, classOf[Float]))(TilePosition(world, Vector2i(x, y)))
         }
       }
     }

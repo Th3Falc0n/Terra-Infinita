@@ -3,10 +3,10 @@ package com.dafttech.terra.game.world.tiles
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.items.{Item, TileItem}
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
 
@@ -17,7 +17,7 @@ class TileSapling extends TileFalling {
 
   override def onTick(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.onTick(delta)
-    if (grothDelay <= 0) tilePosition.world.setTile(tilePosition.pos, new TileLog().setLiving(true), notify = true)
+    if (grothDelay <= 0) tilePosition.world.setTile(tilePosition.pos, TileInstance(new TileLog().setLiving(true)), notify = true)
     else grothDelay -= delta
   }
 

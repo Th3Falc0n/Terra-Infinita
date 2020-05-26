@@ -4,10 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.TerraInfinita
 import com.dafttech.terra.engine.TilePosition
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.Vector2d
-import com.dafttech.terra.game.world.GameWorld
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.particles.ParticleSpark
+import com.dafttech.terra.game.world.{GameWorld, TileInstance}
 import com.dafttech.terra.resources.{Options, Resources}
 import monix.eval.Task
 
@@ -16,8 +15,8 @@ class TileTorch extends TileFalling {
 
   override val getImage: Task[TextureRegion] = Resources.TILES.getImageTask("torch")
 
-  override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
-    super.update(delta)
+  override def update(tileInstance: TileInstance, delta: Float)(implicit tilePosition: TilePosition): Unit = {
+    super.update(tileInstance, delta)
 
     implicit val world: GameWorld = tilePosition.world
 

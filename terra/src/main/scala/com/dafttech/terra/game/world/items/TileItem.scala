@@ -4,6 +4,7 @@ import java.lang.reflect.Field
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
+import com.dafttech.terra.game.world.TileInstance
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.items.persistence.Prototype
 import com.dafttech.terra.game.world.tiles.Tile
@@ -15,7 +16,7 @@ case class TileItem(tile: Tile) extends Item {
   override def use(causer: EntityLiving, position: Vector2d): Boolean =
     if ((causer.getPosition - position).length < 100) {
       val pos = position.toWorldPosition
-      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), tile, causer)
+      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), TileInstance(tile), causer)
     } else
       false
 
