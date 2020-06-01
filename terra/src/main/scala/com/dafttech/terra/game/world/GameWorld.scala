@@ -1,30 +1,65 @@
 package com.dafttech.terra.game.world
 
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.{BodyDef, Box2DDebugRenderer, PolygonShape, World}
+import com.badlogic.gdx.physics.box2d.{ BodyDef, Box2DDebugRenderer, Contact, ContactImpulse, ContactListener, Fixture, Manifold, PolygonShape, World, WorldManifold }
 import com.dafttech.terra.engine.passes.RenderingPass
 import com.dafttech.terra.engine.renderer.TileRendererMarchingSquares
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.{ Vector2d, Vector2i }
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.world.entities.living.Player
-import com.dafttech.terra.game.world.entities.{Entity, EntityItem}
-import com.dafttech.terra.game.world.environment.{SunMap, Weather, WeatherRainy}
+import com.dafttech.terra.game.world.entities.{ Entity, EntityItem }
+import com.dafttech.terra.game.world.environment.{ SunMap, Weather, WeatherRainy }
 import com.dafttech.terra.game.world.gen.WorldGenerator
 import com.dafttech.terra.game.world.items.persistence.GameObject
 import com.dafttech.terra.game.world.subtiles.Subtile
-import com.dafttech.terra.game.world.tiles.{Tile, TileAir}
-import com.dafttech.terra.game.{Events, TimeKeeping}
+import com.dafttech.terra.game.world.tiles.{ Tile, TileAir }
+import com.dafttech.terra.game.{ Events, TimeKeeping }
 import com.dafttech.terra.resources.Options.METERS_PER_BLOCK
 
-class GameWorld(val size: Vector2i) extends GameObject {
+trait CollisionReceiver {
+  def endContact(other: Fixture, worldManifold: WorldManifold): Unit
+  def beginContact(other: Fixture, worldManifold: WorldManifold): Unit
+}
 
+class GameWorld(val size: Vector2i) extends GameObject {
+  object WorldContactListener extends ContactListener {
+    override def endContact(contact: Contact): Unit = {
+      contact.getFixtureA.getUserData match {
+        case f: CollisionReceiver => f.endContact(contact.getFixtureB, contact.getWorldManifold)
+        case _ =>
+      }
+
+      contact.getFixtureB.getUserData match {
+        case f: CollisionReceiver => f.endContact(contact.getFixtureA, contact.getWorldManifold)
+        case _ =>
+      }
+    }
+
+    override def beginContact(contact: Contact): Unit = {
+      contact.getFixtureA.getUserData match {
+        case f: CollisionReceiver => f.beginContact(contact.getFixtureB, contact.getWorldManifold)
+        case _ =>
+      }
+
+      contact.getFixtureB.getUserData match {
+        case f: CollisionReceiver => f.beginContact(contact.getFixtureA, contact.getWorldManifold)
+        case _ =>
+      }
+    }
+
+    override def preSolve(contact: Contact, oldManifold: Manifold): Unit = { }
+
+    override def postSolve(contact: Contact, impulse: ContactImpulse): Unit = { }
+  }
 
   var time: Float = 0
   var lastTick: Float = 0
   var tickLength: Float = 0.005f
 
-  val physicsWorld = new World(new Vector2(0, 9.81f), true)
+  val physicsWorld = new World(new Vector2(0, 98.1f), true)
   val b2drdr = new Box2DDebugRenderer()
+
+  physicsWorld.setContactListener(WorldContactListener)
 
 
   val tiles: Array[Array[Tile]] = Array.ofDim[Tile](size.x, size.y)
@@ -63,7 +98,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
 
         val body = physicsWorld.createBody(bodyDef)
 
-        body.createFixture(shape, 0)
+        body.createFixture(shape, 0).setUserData(tile)
         shape.dispose()
       }
     }

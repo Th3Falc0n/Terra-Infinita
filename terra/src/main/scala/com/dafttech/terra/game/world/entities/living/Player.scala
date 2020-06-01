@@ -3,19 +3,19 @@ package com.dafttech.terra.game.world.entities.living
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.physics.box2d.{Body, BodyDef, PolygonShape}
-import com.dafttech.terra.engine.gui.modules.{ModuleCrafting, ModuleHUDBottom, ModuleInventory}
-import com.dafttech.terra.engine.input.{InputHandler, MousePos}
+import com.badlogic.gdx.physics.box2d.{ Body, BodyDef, Fixture, PolygonShape, WorldManifold }
+import com.dafttech.terra.engine.gui.modules.{ ModuleCrafting, ModuleHUDBottom, ModuleInventory }
+import com.dafttech.terra.engine.input.{ InputHandler, MousePos }
 import com.dafttech.terra.engine.lighting.PointLight
-import com.dafttech.terra.engine.vector.{Vector2d, Vector2i}
-import com.dafttech.terra.engine.{AbstractScreen, TilePosition}
+import com.dafttech.terra.engine.vector.{ Vector2d, Vector2f, Vector2i }
+import com.dafttech.terra.engine.{ AbstractScreen, TilePosition }
 import com.dafttech.terra.game.Events
-import com.dafttech.terra.game.world.GameWorld
+import com.dafttech.terra.game.world.{ CollisionReceiver, GameWorld }
 import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.entities.models.EntityLiving
 import com.dafttech.terra.game.world.interaction.Skill
 import com.dafttech.terra.game.world.items._
-import com.dafttech.terra.game.world.items.inventories.{Inventory, Stack}
+import com.dafttech.terra.game.world.items.inventories.{ Inventory, Stack }
 import com.dafttech.terra.game.world.tiles._
 import com.dafttech.terra.resources.Resources
 import monix.eval.Task
@@ -50,18 +50,9 @@ class Player(pos: Vector2d)(implicit world: GameWorld) extends EntityLiving(pos)
 
   private[living] val light: PointLight = null
 
-  override def modifyBodyDef(bodyDef: BodyDef): Unit = {
-    bodyDef.fixedRotation = true
-  }
+  override def isInAir: Boolean = super.isInAir
 
-  override def createFixture(body: Body) = {
-    val shape = new PolygonShape()
-
-    shape.setAsBox(1.1f, 1.8f)
-
-    body.createFixture(shape, 1)
-    shape.dispose()
-  }
+  override def getSize: Vector2f = Vector2f(1.1f, 1.8f)
 
   override def update(delta: Float)(implicit tilePosition: TilePosition): Unit = {
     super.update(delta)
