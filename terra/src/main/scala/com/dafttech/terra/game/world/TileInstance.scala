@@ -6,23 +6,23 @@ import com.dafttech.terra.game.world.entities.Entity
 import com.dafttech.terra.game.world.subtiles.Subtile
 import com.dafttech.terra.game.world.tiles.Tile
 
-// TODO
-case class TileInstance(tile: Tile,
-                        subtiles: Seq[Subtile] = List.empty) extends IDrawableInWorld {
+case class TileInstance[Props](tile: Tile[Props],
+                               props: Props,
+                               subtiles: Seq[Subtile] = List.empty) extends IDrawableInWorld {
   var breakingProgress: Float = 0
   var receivesSunlight: Boolean = false
   var sunlightFilter: TilePosition = _
 
-  def withSubtiles(subtiles: Seq[Subtile]): TileInstance = {
+  def withSubtiles(subtiles: Seq[Subtile]): TileInstance[Props] = {
     val newTileInstance = copy(subtiles = subtiles)
     newTileInstance.breakingProgress = breakingProgress
     newTileInstance
   }
 
-  def addSubtile(subtiles: Subtile*): TileInstance =
+  def addSubtile(subtiles: Subtile*): TileInstance[Props] =
     withSubtiles(this.subtiles ++ subtiles)
 
-  def removeSubtile(subtile: Subtile*): TileInstance =
+  def removeSubtile(subtile: Subtile*): TileInstance[Props] =
     withSubtiles(subtiles.diff(subtile))
 
   def hasSubtile[A <: Subtile](subtileClass: Class[A], inherited: Boolean): Boolean =

@@ -10,13 +10,13 @@ import com.dafttech.terra.game.world.items.persistence.Prototype
 import com.dafttech.terra.game.world.tiles.Tile
 import monix.eval.Task
 
-case class TileItem(tile: Tile) extends Item {
-  override val getImage: Task[TextureRegion] = tile.getImage
+case class TileItem(tile: Tile[_]) extends Item {
+  override val getImage: Task[TextureRegion] = tile.getImage(tile.defaultInstance, null, Vector2i.Zero)
 
   override def use(causer: EntityLiving, position: Vector2d): Boolean =
     if ((causer.getPosition - position).length < 100) {
       val pos = position.toWorldPosition
-      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), TileInstance(tile), causer)
+      causer.getWorld.placeTile(Vector2i(pos.x, pos.y), tile.defaultInstance, causer)
     } else
       false
 

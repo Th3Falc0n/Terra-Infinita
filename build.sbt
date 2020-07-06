@@ -26,7 +26,10 @@ lazy val engine = project
       "com.badlogicgames.gdx" % "gdx-freetype-platform" % "1.9.10" classifier "natives-desktop",
       "org.typelevel" %% "cats-core" % "2.1.1",
       "io.monix" %% "monix" % "3.2.1",
-      "co.fs2" %% "fs2-io" % "2.2.1"
+      "co.fs2" %% "fs2-io" % "2.2.1",
+      "io.circe" %% "circe-core" % "0.13.0",
+      "io.circe" %% "circe-generic" % "0.13.0",
+      "io.circe" %% "circe-parser" % "0.13.0",
     )
   )
 

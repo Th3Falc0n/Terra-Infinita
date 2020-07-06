@@ -148,8 +148,8 @@ class GameWorld(val size: Vector2i) extends GameObject {
     this
   }
 
-  def placeTile(pos: Vector2i, t: TileInstance, causer: Entity): Boolean = {
-    val tileInstance: TileInstance = getTile(pos)
+  def placeTile(pos: Vector2i, t: TileInstance[_], causer: Entity): Boolean = {
+    val tileInstance: TileInstance[_] = getTile(pos)
     if (tileInstance.tile.isAir || tileInstance.tile.isReplacable) {
       setTile(pos, t, notify = true)
       tileInstance.tile.onTilePlaced(causer)(TilePosition(this, pos))
@@ -159,7 +159,7 @@ class GameWorld(val size: Vector2i) extends GameObject {
   }
 
   def destroyTile(pos: Vector2i, causer: Entity): Seq[EntityItem] = {
-    val tileInstance: TileInstance = getTile(pos)
+    val tileInstance: TileInstance[_] = getTile(pos)
     if (tileInstance.tile.isBreakable) {
       val entity = tileInstance.tile.spawnAsEntity(TilePosition(this, pos))
       setTile(pos, null, notify = true)
